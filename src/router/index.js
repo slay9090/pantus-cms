@@ -1,6 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+// import VueBreadcrumbs from 'vue-2-breadcrumbs'
+//
+// Vue.use(VueBreadcrumbs,{
+//   template:
+//       '            <ul class="breadcrumb">\n' +
+//       '                <li v-for="(crumb, key) in $breadcrumbs" v-if="crumb.meta.breadcrumb" :key="key" class="breadcrumb-item active" aria-current="page">\n' +
+//       '                    <router-link :to="{ path: getPath(crumb) }">{{ getBreadcrumb(crumb.meta.breadcrumb) }}</router-link>' +
+//       '                </li>\n' +
+//       '            </ul>\n'
+// })
+
 
 Vue.use(VueRouter)
 
@@ -8,21 +19,43 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+
+
+
   },
-    {
-      path: '/about1',
-      name: 'Home',
-      component: () => import(/* webpackChunkName: "about" */ '../views/About1.vue')
-    },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+        {
+          path: '/catalog',
+          component: Home,
+          name: 'Home2',
+
+            meta: {
+              breadcrumb: [
+                { name: 'Catalog' }
+              ]
+            }
+
+
+
+        },
+
+        {
+
+          path: '/catalog/brands',
+          name: 'Brands',
+          component: () => import('../views/Brands.vue'),
+          meta: {
+            breadcrumb: [
+              { name: 'Catalog' },
+              { name: 'Brands' }
+            ]
+          }
+
+        },
+
+
+
+
 ]
 
 const router = new VueRouter({
@@ -32,3 +65,5 @@ const router = new VueRouter({
 })
 
 export default router
+
+

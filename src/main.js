@@ -12,6 +12,8 @@ import store from './store'
 
 
 
+
+
 Vue.config.productionTip = false
 
 new Vue({
@@ -20,5 +22,6 @@ new Vue({
   Vuex,
   router,
   store,
+
   render: h => h(App)
 }).$mount('#app')

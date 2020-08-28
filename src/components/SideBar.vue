@@ -45,9 +45,9 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-2-inner" class="">
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'Brands'}" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Бренды</span>
-        </a>
+       </router-link>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Категории</span>
         </a>
@@ -162,7 +162,11 @@
         </a>
       </b-collapse>
 
-      <a class="bg-dark list-group-item list-group-item-action">
+
+
+
+
+      <a href="#" class="bg-dark list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-comments fa-fw mr-3"></span>
           <span class="menu-collapsed">Отзывы</span>
