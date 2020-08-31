@@ -1,69 +1,43 @@
 <template>
-
   <div>
-
-    <h2>
-      Новости
-
-    </h2>
-
-    <div class="card">
-      <h4 class="card-header"> <small class="text-muted">Редактор новостей</small></h4>
-      <div class="card-body">
-        <ul>
-          <div>
-            <b-table
-                :items="items"
-                :fields="fields"
-                :sort-by.sync="sortBy"
-                :sort-desc.sync="sortDesc"
-                sort-icon-left
-                responsive="sm"
-            ></b-table>
-          </div>
-          <div>
-            Sorting By: <b>{{ sortBy }}</b>, Sort Direction:
-            <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
-          </div>
-        </ul>
-      </div>
-    </div>
-
+    <b-table
+        id="table-transition-example"
+        :items="items"
+        :fields="fields"
+        striped
+        small
+        primary-key="a"
+        :tbody-transition-props="transProps"
+    ></b-table>
   </div>
-
-
-
-
 </template>
+
+<style>
+table#table-transition-example .flip-list-move {
+  transition: transform 1s;
+}
+</style>
 
 <script>
 export default {
-name: "Brands",
-
   data() {
     return {
-      sortBy: 'age',
-      sortDesc: false,
-      fields: [
-        { key: 'last_name', sortable: true },
-        { key: 'first_name', sortable: true },
-        { key: 'age', sortable: true },
-        { key: 'isActive', sortable: false }
-      ],
+      transProps: {
+        // Transition name
+        name: 'flip-list'
+      },
       items: [
-        { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-        { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+        { a: 2, b: 'Two', c: 'Moose' },
+        { a: 1, b: 'Three', c: 'Dog' },
+        { a: 3, b: 'Four', c: 'Cat' },
+        { a: 4, b: 'One', c: 'Mouse' }
+      ],
+      fields: [
+        { key: 'a', sortable: true },
+        { key: 'b', sortable: true },
+        { key: 'c', sortable: true }
       ]
     }
   }
-
-
 }
-
 </script>
-
-<style>
-
-</style>

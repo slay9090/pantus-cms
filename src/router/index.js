@@ -53,6 +53,11 @@ Vue.use(VueRouter)
 
         },
 
+        { path: '/catalog/brands/edit',
+          component: () => import('../views/BrandsEdit.vue'),
+          props: route => ({ query: route.query.id })
+        },
+
 
 
 
