@@ -18,12 +18,13 @@
         </b-form-group>
 
 
-        <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
+        <b-form-group id="input-group-2" label="Name:" label-for="input-2">
           <b-form-input
               id="input-2"
               v-model="form.name"
               required
-              placeholder="Enter name"
+              placeholder="Enter brand name"
+              autofocus
           ></b-form-input>
         </b-form-group>
 
@@ -48,12 +49,12 @@ export default {
   data() {
     return {
       form: {
-        id: this.query,
+        id: '',
         name: '',
       },
-
       show: true
     }
+
   },
   methods: {
     onSubmit(evt) {
@@ -73,5 +74,14 @@ export default {
       })
     }
   },
+
+  async mounted() {
+      await this.$store.dispatch("Item");
+      let data =  await this.$store.getters.getTodoById(Number(this.query));
+      this.form.name = data.name;
+      this.form.id = data.id;
+  }
+
 };
 </script>
+

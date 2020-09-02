@@ -2,29 +2,25 @@
 
   <div class="home">
 
-
-
-<!--    {{ doneTodosCount }}-->
-<!--    <hr>-->
-<!--    {{ items }}-->
-
-
-
-
     <div class="card" id="tbl" >
       <h4 class="card-header"> <small class="text-muted">Редактор новостей</small></h4>
       <div class="card-body">
         <ul>
           <div>
-            <div class="py-3 d-flex">
-              <b-form-input size="sm" class="col-5"
-                  v-model="filter"
-                  type="search"
-                  id="filterInput"
-                  placeholder="Type to Search"
-              ></b-form-input>
-              <b-button class="ml-3" size="sm" :disabled="!filter" @click="filter = ''">Clear</b-button>
-
+            <div class="py-3 d-flex  align-items-center">
+              <div class="flex-grow-1 d-flex">
+                <b-form-input size="sm" class="col-3 py-3"
+                              v-model="filter"
+                              type="search"
+                              id="filterInput"
+                              placeholder="Type to Search"
+                ></b-form-input>
+                <b-button class="ml-3 py-1" :disabled="!filter" @click="filter = ''">Clear</b-button>
+              </div>
+              <div class="p-2 px-1">
+                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length == 0">Удалить</b-button>
+                <b-button variant="outline-success" class="py-1 ">Создать</b-button>
+              </div>
 
             </div>
 
@@ -33,10 +29,13 @@
                 ref="selectableTable"
                 selectable
                 select-mode="single"
-                @row-selected="onRowSelected"
+                selected-variant="warning"
 
+
+
+                @row-selected="onRowSelected"
                 id="my-table"
-                :items="itemsTabData"
+                :items="itemDataTab"
                 :fields="fields"
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
@@ -48,6 +47,18 @@
                 head-variant="light"
                 small
             >
+
+              <template v-slot:cell(selected)="{ rowSelected }">
+                <template  v-if="rowSelected">
+                  <span  aria-hidden="true">&check;</span>
+
+                </template>
+                <template  v-else>
+                  <span  aria-hidden="true">&nbsp;</span>
+
+                </template>
+              </template>
+
 
               <template v-slot:cell(name)="data">
                 <!-- `data.value` is the value after formatted by the Formatter -->
@@ -78,15 +89,6 @@
     </div>
 
 
-
-
-
-
-
-
-
-
-<!--    <button @click="data2">ОТПРАВИТЬ</button>-->
     <router-view></router-view>
   </div>
 
@@ -112,9 +114,14 @@ export default {
 
       selected: [],
 
+      itemDataTab: [],
+
+
+
       fields: [
-        { key: 'id', sortable: true },
-        { key: 'name', sortable: true },
+        { key: 'selected', label: '',  thStyle: {  width: '50px' }},
+        { key: 'id',  sortable: true ,   },
+        { key: 'name', sortable: true , },
       ],
 
       show: true,
@@ -127,11 +134,8 @@ export default {
       this.selected = items
     },
     openFormEdit: function (datarow) {
-     // this.show = !this.show
 
     this.$router.push({ path: 'catalog/brands/edit', query: { id: datarow.id } })
-
-     // console.log(datarow.id)
 
     },
   },
@@ -140,25 +144,27 @@ export default {
   },
   computed: {
 
-    itemsTabData () {
-      return this.$store.getters["GetItem"]
-    },
+    // itemsTabData () {
+    //   console.log(this.$store.getters["GetItem"])
+    //   return this.$store.getters["GetItem"]
+    // },
 
     rows() {
-
-      return this.itemsTabData.length
+      return this.itemDataTab.length
     }
-  },
 
-  mounted() {
-    this.$store.dispatch("Item");
+  },
+  async mounted() {
+    await this.$store.dispatch("Item");
+    let data = await this.$store.getters["GetItem"];
+    //console.log(data)
+    this.itemDataTab = data;
   }
 
 }
 
-
-
-
-
-
 </script>
+
+<style scoped>
+
+</style>

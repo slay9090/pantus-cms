@@ -48,9 +48,9 @@
         <router-link :to="{ name: 'Brands'}" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Бренды</span>
        </router-link>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'CatalogCategory'}" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Категории</span>
-        </a>
+        </router-link>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Применимости</span>
         </a>

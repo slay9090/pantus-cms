@@ -40,7 +40,9 @@
 
 
 <style>
-
+*:focus {
+  outline: none;
+}
 </style>
 
 <script>

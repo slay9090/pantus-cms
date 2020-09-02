@@ -13,11 +13,6 @@ import VueAxios from 'vue-axios'
 
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-
-
-
-
-
 Vue.config.productionTip = false
 
 new Vue({
@@ -29,6 +24,7 @@ new Vue({
   VueAxios,
   axios,
   BootstrapVueIcons,
+
 
   render: h => h(App)
 }).$mount('#app')

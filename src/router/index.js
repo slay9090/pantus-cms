@@ -43,7 +43,7 @@ Vue.use(VueRouter)
 
           path: '/catalog/brands',
           name: 'Brands',
-          component: () => import('../views/Brands.vue'),
+          component: () => import('../views/CatalogBrands.vue'),
           meta: {
             breadcrumb: [
               { name: 'Catalog' },
@@ -54,11 +54,27 @@ Vue.use(VueRouter)
         },
 
         { path: '/catalog/brands/edit',
-          component: () => import('../views/BrandsEdit.vue'),
+          component: () => import('../components/catalog/Brands/CatalogBrandsFormEdit.vue'),
           props: route => ({ query: route.query.id })
         },
 
+        {
 
+          path: '/catalog/category',
+          name: 'CatalogCategory',
+          component: () => import('../views/CatalogCategory'),
+          meta: {
+            breadcrumb: [
+              { name: 'Catalog' },
+              { name: 'Category' }
+            ]
+          }
+
+        },
+            { path: '/catalog/category/edit',
+              component: () => import('../components/catalog/Category/CatalogCategoryFormEdit'),
+              props: route => ({ query: route.query.id })
+            },
 
 
 ]
