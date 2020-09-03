@@ -144,10 +144,6 @@ export default {
   },
   computed: {
 
-    // itemsTabData () {
-    //   console.log(this.$store.getters["GetItem"])
-    //   return this.$store.getters["GetItem"]
-    // },
 
     rows() {
       return this.itemDataTab.length
@@ -155,8 +151,8 @@ export default {
 
   },
   async mounted() {
-    await this.$store.dispatch("Item");
-    let data = await this.$store.getters["GetItem"];
+    await this.$store.dispatch("Brands/Item");
+    let data = await this.$store.getters["Brands/GetItem"];
     //console.log(data)
     this.itemDataTab = data;
   }

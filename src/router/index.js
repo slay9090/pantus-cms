@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+
 // import VueBreadcrumbs from 'vue-2-breadcrumbs'
 //
 // Vue.use(VueBreadcrumbs,{
@@ -11,6 +12,7 @@ import Home from '../views/Home.vue'
 //       '                </li>\n' +
 //       '            </ul>\n'
 // })
+
 
 
 Vue.use(VueRouter)
@@ -24,6 +26,9 @@ Vue.use(VueRouter)
 
 
   },
+
+
+
         {
           path: '/catalog',
           component: Home,
@@ -71,9 +76,24 @@ Vue.use(VueRouter)
           }
 
         },
+
+
+
             { path: '/catalog/category/edit',
               component: () => import('../components/catalog/Category/CatalogCategoryFormEdit'),
-              props: route => ({ query: route.query.id })
+              props: route => ({ query: route.query.id }),
+
+
+
+                meta: {
+                    breadcrumb: [
+                        { name: 'Каталог' },
+                        { name: 'Категории' },
+                        { name: 'Редактор' },
+                    ]
+                }
+
+
             },
 
 

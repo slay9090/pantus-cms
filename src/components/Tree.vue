@@ -13,10 +13,19 @@ import NodeTree from "./NodeTree";
 export default {
   props: {
     treeData: Array
+
   },
   components: {
     NodeTree
+  },
+  computed: {
+  },
+
+  mounted() {
+    //console.log('OBJECT: ',this.treeData)
   }
+
+
 };
 </script>
 

@@ -20,8 +20,8 @@ const mutations = {
 }
 const actions = {
     async Item({commit}){
-            return  await Axios.get('https://www.pantus.ru/api/rest/2.0/brands').then( res =>{
-                commit("SetItem",res.data['data']);
+            return  await Axios.get('http://194.67.113.201:8080/brands').then( res =>{
+                commit("SetItem",res.data);
                 //console.log('мы в действиях получили ', res.data['data']);
             })
         }
@@ -29,7 +29,6 @@ const actions = {
 }
 const getters = {
     GetItem: s => s.todos,
-
 
     getTodoById: state => id => {
         return state.todos.find(todo => todo.id === id);
@@ -41,4 +40,5 @@ export  default {
     actions,
     mutations,
     state,
+    namespaced: true,
 }
