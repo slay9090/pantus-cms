@@ -82,19 +82,26 @@ Vue.use(VueRouter)
             { path: '/catalog/category/edit',
               component: () => import('../components/catalog/Category/CatalogCategoryFormEdit'),
               props: route => ({ query: route.query.id }),
-
-
-
                 meta: {
                     breadcrumb: [
                         { name: 'Каталог' },
                         { name: 'Категории' },
-                        { name: 'Редактор' },
+                        { name: 'Изменение' },
                     ]
                 }
-
-
             },
+
+          { path: '/catalog/category/add',
+              component: () => import('../components/catalog/Category/CatalogCategoryFormAdd'),
+              name: 'categoryAdd',
+                  meta: {
+                      breadcrumb: [
+                          { name: 'Каталог' },
+                          { name: 'Категории' },
+                          { name: 'Создание' },
+                      ]
+                  }
+          },
 
 
 ]

@@ -8,21 +8,10 @@
 
       <div class="row" id="body-row">
           <SideBar />
-
             <div class="col py-3">
-
-<!--              <b-breadcrumb :items="crumbs"></b-breadcrumb>-->
               <div class="text-muted">
               <breadcrumbs />
               </div>
-<!--              <div>-->
-<!--                <bread-crumbs :crumb-data="{{ $crumbs }}"></bread-crumbs>-->
-<!--              </div>-->
-
-<!--            <Crumbs />-->
-
-
-
 
               <!-- DYNAMIC PAGES -->
 
@@ -45,6 +34,7 @@
 }
 </style>
 
+
 <script>
 // @ is an alias to /src
 import NavBar from '@/components/NavBar'
@@ -58,15 +48,5 @@ export default {
     SideBar,
     Breadcrumbs,
   },
-
-
-
-
-
 }
-
-
-
-
-
 </script>

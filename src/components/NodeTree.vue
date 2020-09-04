@@ -1,7 +1,7 @@
 <template>
   <div class="node-tree">
 
-    <a v-on:click="openFormEdit(node.id)" class="label font-weight-bold">{{ node.name }}</a>
+    <a :href="'/catalog/category/edit?id=' + node.id" class="label font-weight-bold">{{ node.name }}</a>
 
     <a  v-if="node.children && node.children.length" v-b-toggle="node.id.toString()"  class="dropicn m-1 font-weight-bold"> > </a>
 
@@ -23,7 +23,7 @@ export default {
 
     openFormEdit: function (datarow) {
 
-      this.$router.push({ path: '/catalog/category/edit', query: { id: datarow } })
+      this.$router.push({ path: '/catalog/category/edit', query: { id: datarow } }) //через роуер оч быстро работает ес чё
 
     },
 

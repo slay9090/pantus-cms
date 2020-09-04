@@ -11,19 +11,17 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+//import  'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
 Vue.config.productionTip = false
-
+Vue.use(BootstrapVueIcons);
+Vue.use(BootstrapVue);
 new Vue({
   VueRouter,
-  BootstrapVue,
   Vuex,
   router,
   store,
   VueAxios,
   axios,
-  BootstrapVueIcons,
-
 
   render: h => h(App)
 }).$mount('#app')
