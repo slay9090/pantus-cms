@@ -27,8 +27,6 @@ Vue.use(VueRouter)
 
   },
 
-
-
         {
           path: '/catalog',
           component: Home,
@@ -39,9 +37,6 @@ Vue.use(VueRouter)
                 { name: 'Catalog' }
               ]
             }
-
-
-
         },
 
         {
@@ -85,7 +80,7 @@ Vue.use(VueRouter)
                 meta: {
                     breadcrumb: [
                         { name: 'Каталог' },
-                        { name: 'Категории' },
+                        { name: 'Категории', link: '/catalog/category/' },
                         { name: 'Изменение' },
                     ]
                 }
@@ -97,7 +92,7 @@ Vue.use(VueRouter)
                   meta: {
                       breadcrumb: [
                           { name: 'Каталог' },
-                          { name: 'Категории' },
+                          { name: 'Категории', link: '/catalog/category/' },
                           { name: 'Создание' },
                       ]
                   }
@@ -127,7 +122,7 @@ Vue.use(VueRouter)
           meta: {
               breadcrumb: [
                   { name: 'Каталог' },
-                  { name: 'Применяемость' },
+                  { name: 'Применяемости', link: '/catalog/applicabilities/' },
                   { name: 'Изменение' },
               ]
           }
@@ -139,12 +134,11 @@ Vue.use(VueRouter)
           meta: {
               breadcrumb: [
                   { name: 'Каталог' },
-                  { name: 'Применяемость' },
+                  { name: 'Применяемости', link: '/catalog/applicabilities/'  },
                   { name: 'Создание' },
               ]
           }
       },
-
 
 ]
 

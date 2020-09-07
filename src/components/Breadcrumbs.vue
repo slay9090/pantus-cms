@@ -69,6 +69,7 @@ ul > li:not(:last-child)::after {
   cursor: pointer;
   font-size: 1em;
   font-weight: normal;
+  color: #047cff;
 }
 
 </style>
