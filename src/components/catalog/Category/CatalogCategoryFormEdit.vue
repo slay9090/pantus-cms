@@ -49,7 +49,7 @@
       <div class="card col-4 p-0 ml-5 " id="treechild" >
         <h4 class="card-header"> <small class="text-muted">Дочерние категории</small></h4>
           <div class="card-body">
-            <tree :tree-data="treeById[0]"></tree>
+            <tree :url="url" :tree-data="treeById[0]"></tree>
           </div>
       </div>
 
@@ -83,6 +83,7 @@ export default {
       tree: [],
       // показ кнопки резет
       show: true,
+      url: '/catalog/category/edit?id=',
     }
 
   },
