@@ -39,12 +39,19 @@
 
     <div class="card col-4 p-0 ml-5 " id="treechild" >
       <h4 class="card-header"> <small class="text-muted">Выбор директории </small></h4>
-      <div class="card-body" v-on:click.prevent="select($event)">
+      <div class="card-body" v-on:click.prevent="select($event)" >
 
-         <tree :tree-data="tree"></tree>
-
+        <a :href="'/catalog/category/edit?id=null'" class="label font-weight-bold" :myid="'null'" :myname="'root'">Корневая</a>
+        <hr>
+          <tree :tree-data="tree "></tree>
       </div>
+
+
+
     </div>
+
+
+
 
   </div>
 
@@ -68,12 +75,14 @@ name: "CatalogCategoryFormAdd",
       parent_id: '',
       parent_name: '',
     },
+    activeLink: null,
     // массив потомков
     treeById: [],
     // всё дерево
     tree: [],
     // показ кнопки резет
     show: true,
+    target: null,
 
 
   }),
@@ -86,6 +95,7 @@ name: "CatalogCategoryFormAdd",
     await this.$store.dispatch("Category/Item" );
     let data = await this.$store.getters["Category/GetItem"];
     this.tree = data;
+
 
   },
 
@@ -106,13 +116,20 @@ name: "CatalogCategoryFormAdd",
       })
     },
     select: function(event) {
-     // targetId = event.currentTarget.id;
-      console.log('dfsdfdfsffffffff ', event.currentTarget); // returns 'foo'
-    }
 
+      if (this.target===null) {
+        this.target = event.target ;
+      }
+      this.target.style.color = '#047cff';
+      this.target = event.target ;
+      this.target.style.color = 'red';
+      //console.log(event.target.getAttribute('myid'));
+      //console.log(event.target.getAttribute('myname'));
 
+      this.form.parent_id=event.target.getAttribute('myid')
+      this.form.parent_name=event.target.getAttribute('myname')
 
-
+    },
 
   },
 
@@ -124,5 +141,7 @@ name: "CatalogCategoryFormAdd",
 </script>
 
 <style scoped>
-
+.red {
+  color: green;
+}
 </style>

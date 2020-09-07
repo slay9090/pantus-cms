@@ -104,6 +104,48 @@ Vue.use(VueRouter)
           },
 
 
+
+      {
+
+          path: '/catalog/applicabilities',
+          name: 'CatalogApplicabilities',
+          component: () => import('../views/CatalogApplicabilities'),
+          meta: {
+              breadcrumb: [
+                  { name: 'Catalog' },
+                  { name: 'Applicabilities' }
+              ]
+          }
+
+      },
+
+
+
+      { path: '/catalog/applicabilities/edit',
+          component: () => import('../components/catalog/Applicabilities/CatalogApplicabilitiesFormEdit'),
+          props: route => ({ query: route.query.id }),
+          meta: {
+              breadcrumb: [
+                  { name: 'Каталог' },
+                  { name: 'Применяемость' },
+                  { name: 'Изменение' },
+              ]
+          }
+      },
+
+      { path: '/catalog/applicabilities/add',
+          component: () => import('../components/catalog/Applicabilities/CatalogApplicabilitiesFormAdd'),
+          name: 'applicabilitiesAdd',
+          meta: {
+              breadcrumb: [
+                  { name: 'Каталог' },
+                  { name: 'Применяемость' },
+                  { name: 'Создание' },
+              ]
+          }
+      },
+
+
 ]
 
 const router = new VueRouter({

@@ -1,7 +1,7 @@
 <template>
   <div class="tree">
     <p class="tree-list">
-      <node-tree   v-for="item in treeData" :node="item" :key="item.id" ></node-tree>
+      <node-tree  :url="url" v-for="item in treeData" :node="item" :key="item.id"  ></node-tree>
    </p>
   </div>
 </template>
@@ -12,7 +12,8 @@ import NodeTree from "./NodeTree";
 
 export default {
   props: {
-    treeData: Array
+    treeData: Array,
+    url: String,
 
   },
   components: {
@@ -22,8 +23,10 @@ export default {
   },
 
   mounted() {
-    //console.log('OBJECT: ',this.treeData)
-  }
+   // console.log(this.url)
+  },
+
+
 
 
 };

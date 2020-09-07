@@ -5,7 +5,7 @@
       <h4 class="card-header ">
         <b-container fluid  class="bv-example-row px-0">
           <b-row align-h="between" >
-            <b-col><small class="text-muted">Дерево категорий</small></b-col>
+            <b-col><small class="text-muted">Дерево применимостей</small></b-col>
             <b-col cols="4" class="text-right ">
 
               <b-icon-arrow-clockwise
@@ -26,7 +26,7 @@
         </b-container>
       </h4>
       <div class="card-body">
-        <tree :url="url" :tree-data="tree"></tree>
+        <tree :url="url" :tree-data="tree" ></tree>
       </div>
     </div>
 
@@ -42,7 +42,7 @@ export default {
   data: () => ({
     tree: [],
     show: true,
-    url: '/catalog/category/edit?id=',
+    url: '/catalog/applicabilities/edit?id=',
   }),
 
   components: {
@@ -50,9 +50,10 @@ export default {
   },
 
   async mounted() {
-    await this.$store.dispatch("Category/Item" );
-    let data = await this.$store.getters["Category/GetItem"];
+    await this.$store.dispatch("Applicabilities/Item" );
+    let data = await this.$store.getters["Applicabilities/GetItem"];
     this.tree = data;
+
 
   },
 
@@ -63,7 +64,7 @@ export default {
   methods: {
     //открываем форму добавления
     addForm(){
-      this.$router.push({ name: 'categoryAdd' })
+     this.$router.push({ name: 'applicabilitiesAdd' })
     },
 
     Upadate(){},

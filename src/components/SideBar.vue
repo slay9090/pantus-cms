@@ -51,9 +51,9 @@
         <router-link :to="{ name: 'CatalogCategory'}" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Категории</span>
         </router-link>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'CatalogApplicabilities'}" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Применимости</span>
-        </a>
+        </router-link>
       </b-collapse>
 
       <!-- Menu with submenu -->
