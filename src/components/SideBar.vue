@@ -107,15 +107,13 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-4-inner" class="">
+        <router-link :to="{ name: 'NewsArticle'}" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">Статьи</span>
+        </router-link>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Категории</span>
         </a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-          <span class="menu-collapsed">Категории2</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-          <span class="menu-collapsed">Категории3</span>
-        </a>
+
       </b-collapse>
 
       <a v-b-toggle.collapse-5-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start">

@@ -1,7 +1,7 @@
 <template>
   <div class="tree">
     <p class="tree-list">
-      <node-tree  :url="url" v-for="item in treeData" :node="item" :key="item.id"  ></node-tree>
+      <node-tree  :url="url" v-for="item in treeData" :node="item" :key="item.id"></node-tree>
    </p>
   </div>
 </template>

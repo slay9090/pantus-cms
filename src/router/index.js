@@ -140,6 +140,37 @@ Vue.use(VueRouter)
           }
       },
 
+
+      {
+
+          path: '/news/category',
+          name: 'NewsCategory',
+          component: () => import('../views/NewsCategory'),
+          meta: {
+              breadcrumb: [
+                  { name: 'Новости' },
+                  { name: 'Категории' }
+              ]
+          }
+
+      },
+
+
+      {
+
+          path: '/news/article',
+          name: 'NewsArticle',
+          component: () => import('../views/NewsArticle'),
+          meta: {
+              breadcrumb: [
+                  { name: 'Новости' },
+                  { name: 'Статьи' }
+              ]
+          }
+
+      },
+
+
 ]
 
 const router = new VueRouter({
