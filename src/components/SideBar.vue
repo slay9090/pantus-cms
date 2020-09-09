@@ -110,9 +110,9 @@
         <router-link :to="{ name: 'NewsArticle'}" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Статьи</span>
         </router-link>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'NewsCategory'}" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Категории</span>
-        </a>
+        </router-link>
 
       </b-collapse>
 

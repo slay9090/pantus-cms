@@ -35,7 +35,7 @@
 
 <script>
 
-import Tree from "../components/Tree";
+import Tree from "../../components/Tree";
 
 export default {
 
@@ -50,8 +50,8 @@ export default {
   },
 
   async mounted() {
-    await this.$store.dispatch("Applicabilities/Item" );
-    let data = await this.$store.getters["Applicabilities/GetItem"];
+    await this.$store.dispatch("CatalogApplicabilities/GetData" );
+    let data = await this.$store.getters["CatalogApplicabilities/AllItems"];
     this.tree = data;
 
 

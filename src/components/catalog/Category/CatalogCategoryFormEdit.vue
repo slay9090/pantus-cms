@@ -126,8 +126,8 @@ export default {
   },
 
   async mounted() {
-    await this.$store.dispatch("Category/Item");
-    let data = await this.$store.getters["Category/GetItem"];
+    await this.$store.dispatch("CatalogCategory/GetData");
+    let data = await this.$store.getters["CatalogCategory/AllItems"];
     this.GetChildrenById(data ,Number(this.query))
   },
 

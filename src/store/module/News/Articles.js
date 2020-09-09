@@ -5,33 +5,31 @@ const state = () => ({
     state_data: [],
 
 })
+
 const mutations = {
-    SetItem(state ,data){
+    SetData(state ,data){
         state.state_data = data;
     },
-
-
 }
+
 const actions = {
 
-    // действие получение апи категории (дерево)
-    async Item({commit}){
+    // действие получение данных по апи
+    async GetData({commit}){
         return  await Axios.get('https://www.pantus.ru/api/rest/2.0/news').then( res =>{
-            commit("SetItem",res.data.data);
-           // console.log('мы в действиях получили ', res.data.data);
+            commit("SetData",res.data.data);
+            // console.log('мы в действиях получили ', res.data);
         })
     },
-
 }
+
 const getters = {
-
     //получить весь массив
-    GetItem: s => s.state_data,
-
+    AllItems: arr => arr.state_data,
     //получить одну запись по ид
-    getTodoById: state => id => {
+    ItemById: arr => id => {
         //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
-        return state.state_data.find(todo => todo.id === id);
+        return arr.state_data.find(todo => todo.id === id);
     }
 
 }

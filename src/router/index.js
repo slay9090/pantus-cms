@@ -43,7 +43,7 @@ Vue.use(VueRouter)
 
           path: '/catalog/brands',
           name: 'Brands',
-          component: () => import('../views/CatalogBrands.vue'),
+          component: () => import('../views/Catalog/CatalogBrands.vue'),
           meta: {
             breadcrumb: [
               { name: 'Catalog' },
@@ -62,7 +62,7 @@ Vue.use(VueRouter)
 
           path: '/catalog/category',
           name: 'CatalogCategory',
-          component: () => import('../views/CatalogCategory'),
+          component: () => import('../views/Catalog/CatalogCategory'),
           meta: {
             breadcrumb: [
               { name: 'Catalog' },
@@ -104,7 +104,7 @@ Vue.use(VueRouter)
 
           path: '/catalog/applicabilities',
           name: 'CatalogApplicabilities',
-          component: () => import('../views/CatalogApplicabilities'),
+          component: () => import('../views/Catalog/CatalogApplicabilities'),
           meta: {
               breadcrumb: [
                   { name: 'Catalog' },
@@ -145,7 +145,7 @@ Vue.use(VueRouter)
 
           path: '/news/category',
           name: 'NewsCategory',
-          component: () => import('../views/NewsCategory'),
+          component: () => import('../views/News/NewsCategory'),
           meta: {
               breadcrumb: [
                   { name: 'Новости' },
@@ -160,7 +160,7 @@ Vue.use(VueRouter)
 
           path: '/news/article',
           name: 'NewsArticle',
-          component: () => import('../views/NewsArticle'),
+          component: () => import('../views/News/NewsArticle'),
           meta: {
               breadcrumb: [
                   { name: 'Новости' },

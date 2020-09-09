@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Brands from "@/store/module/Catalog/Brands";
-import Category from "@/store/module/Catalog/Category";
-import Applicabilities from "@/store/module/Catalog/Applicabilities";
-import News from "@/store/module/News/Articles"
+import CatalogBrands from "@/store/module/Catalog/Brands";
+import CatalogCategory from "@/store/module/Catalog/Category";
+import CatalogApplicabilities from "@/store/module/Catalog/Applicabilities";
+import NewsArticles from "@/store/module/News/Articles"
+import NewsCategory from "@/store/module/News/Category"
 
 
 Vue.use(Vuex)
@@ -11,10 +12,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   modules: {
-      Brands,
-      Category,
-      Applicabilities,
-      News,
+      CatalogBrands,
+      CatalogCategory,
+      CatalogApplicabilities,
+      NewsArticles,
+      NewsCategory,
 
   },
 })

@@ -159,8 +159,8 @@ name: "NewsArticle",
 
   },
   async mounted() {
-    await this.$store.dispatch("News/Item");
-    let data = await this.$store.getters["News/GetItem"];
+    await this.$store.dispatch("NewsArticles/GetData");
+    let data = await this.$store.getters["NewsArticles/AllItems"];
     //console.log(data)
     this.itemDataTab = data;
   }
@@ -171,8 +171,5 @@ name: "NewsArticle",
 </script>
 
 <style scoped>
-/*table.b-table > thead > tr > th[aria-sort="ascending"]::after,*/
-/*table.b-table > tfoot > tr > th[aria-sort="ascending"]::after {*/
-/*  content: "\2191" !important;*/
-/*}*/
+
 </style>

@@ -152,8 +152,8 @@ export default {
 
   },
   async mounted() {
-    await this.$store.dispatch("Brands/Item");
-    let data = await this.$store.getters["Brands/GetItem"];
+    await this.$store.dispatch("CatalogBrands/GetData");
+    let data = await this.$store.getters["CatalogBrands/AllItems"];
     //console.log(data)
     this.itemDataTab = data;
   }

@@ -5,33 +5,31 @@ const state = () => ({
     state_data: [],
 
 })
+
 const mutations = {
-    SetItem(state ,data){
+    SetData(state ,data){
         state.state_data = data;
     },
-
-
 }
+
 const actions = {
 
-    // действие получение апи категории (дерево)
-    async Item({commit}){
+    // действие получение данных по апи
+    async GetData({commit}){
         return  await Axios.get('http://194.67.113.201:8080/categories?view=tree').then( res =>{
-            commit("SetItem",res.data);
-          //  console.log('мы в действиях получили ', res.data);
+            commit("SetData",res.data);
+            // console.log('мы в действиях получили ', res.data);
         })
     },
-
 }
+
 const getters = {
-
-    //получить весь массив категорий
-    GetItem: s => s.state_data,
-
+    //получить весь массив
+    AllItems: arr => arr.state_data,
     //получить одну запись по ид
-    getTodoById: state => id => {
-      //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
-        return state.state_data.find(todo => todo.id === id);
+    ItemById: arr => id => {
+        //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
+        return arr.state_data.find(todo => todo.id === id);
     }
 
 }
