@@ -158,8 +158,8 @@ Vue.use(VueRouter)
 
       {
 
-          path: '/news/article',
-          name: 'NewsArticle',
+          path: '/news/articles',
+          name: 'NewsArticles',
           component: () => import('../views/News/NewsArticle'),
           meta: {
               breadcrumb: [
@@ -168,6 +168,29 @@ Vue.use(VueRouter)
               ]
           }
 
+      },
+      { path: '/news/articles/edit',
+          component: () => import('../components/News/Articles/FormEdit'),
+          props: route => ({ query: route.query.id }),
+          name: 'ArticlesFormEdit',
+          meta: {
+              breadcrumb: [
+                  { name: 'Новости' },
+                  { name: 'Статьи', link: '/news/articles/'  },
+                  { name: 'Изменение' },
+              ]
+          }
+      },
+      { path: '/news/articles/add',
+          component: () => import('../components/News/Articles/FormAdd'),
+          name: 'ArticlesFormAdd',
+          meta: {
+              breadcrumb: [
+                  { name: 'Новости' },
+                  { name: 'Статьи', link: '/news/articles/'  },
+                  { name: 'Добавление' },
+              ]
+          }
       },
 
 

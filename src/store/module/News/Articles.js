@@ -18,7 +18,14 @@ const actions = {
     async GetData({commit}){
         return  await Axios.get('https://www.pantus.ru/api/rest/2.0/news').then( res =>{
             commit("SetData",res.data.data);
-            // console.log('мы в действиях получили ', res.data);
+            //console.log('мы в действиях получили ', res.data.data);
+        })
+    },
+    async GetDetalail({commit}, id){
+        //https://www.pantus.ru/api/rest/2.0/news/2333
+        return  await Axios.get('https://www.pantus.ru/api/rest/2.0/news/'+id).then( res =>{
+            commit("SetData",res.data.data);
+           // console.log('мы в действиях получили ', res.data.data);
         })
     },
 }
@@ -28,7 +35,7 @@ const getters = {
     AllItems: arr => arr.state_data,
     //получить одну запись по ид
     ItemById: arr => id => {
-        //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
+        // console.log('In store = ',arr.state_data.find(todo => todo.id === id))
         return arr.state_data.find(todo => todo.id === id);
     }
 

@@ -11,10 +11,21 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-//import  'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
+
+import 'codemirror/lib/codemirror.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
+import { Editor } from '@toast-ui/vue-editor';
+
+Vue.use(Editor);
+
+
 Vue.config.productionTip = false
 Vue.use(BootstrapVueIcons);
 Vue.use(BootstrapVue);
+
+
+
 new Vue({
   VueRouter,
   Vuex,

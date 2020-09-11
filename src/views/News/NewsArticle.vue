@@ -39,8 +39,8 @@
                 id="my-table"
                 :items="itemDataTab"
                 :fields="fields"
-                :sort-by.sync="sortBy"
-                :sort-desc.sync="sortDesc"
+                :sort-compare="myCompare"
+
                 sort-icon-left
                 responsive="sm"
                 :per-page="perPage"
@@ -64,7 +64,7 @@
 
               <template v-slot:cell(name)="data">
                 <!-- `data.value` is the value after formatted by the Formatter -->
-                <a v-on:click="openFormEdit(data.item)"  class="mb-0" >{{ data.value }} </a>
+                <a :href="'/news/articles/edit?id='+data.item.id"  class="mb-0" >{{ data.value }} </a>
               </template>
 
 
@@ -76,12 +76,21 @@
 
             </b-table>
 
-            <b-pagination
+            <b-pagination-nav
+                :link-gen="linkGen"
+                :number-of-pages="rows/perPage"
+                use-router
                 v-model="currentPage"
-                :total-rows="rows"
-                :per-page="perPage"
-                aria-controls="my-table"
-            ></b-pagination>
+
+            ></b-pagination-nav>
+
+<!--            <b-pagination-->
+<!--                v-model="currentPage"-->
+<!--                :total-rows="rows"-->
+<!--                :per-page="perPage"-->
+<!--                aria-controls="my-table"-->
+
+<!--            ></b-pagination>-->
 
             <p class="mt-3">Current Page: {{ currentPage }}</p>
 
@@ -109,19 +118,12 @@ name: "NewsArticle",
   data() {
     return {
       perPage: 20, // кол-во строк на 1й стр
-      currentPage: 1,
-
+      //currentPage: 0,
       sortBy: 'age',
       sortDesc: false,
-
       filter: null,
-
       selected: [],
-
       itemDataTab: [],
-
-
-
       fields: [
         { key: 'selected', label:  '✓',  thStyle: {  width: '30px' }},
         { key: 'id',  sortable: true ,  thStyle: {  width: '80px' } },
@@ -129,11 +131,9 @@ name: "NewsArticle",
         { key: 'preview.text', label: 'Текст'  ,  thStyle: {  width: '100px' }},
         { key: 'category.name', label: 'Категория'  ,  thStyle: {  width: '100px' }},
         { key: 'preview.image', label: 'Изображение'  ,  thStyle: {  width: '100px' }},
-        { key: 'dates.updated', sortable: true , label: 'Дата'  ,  thStyle: {  width: '100px' }},
+        { key: 'dates.updated', sortable: true , label: 'Дата' , thStyle: {  width: '100px' }},
       ],
-
       show: true,
-
     }
   },
 
@@ -141,14 +141,46 @@ name: "NewsArticle",
     onRowSelected(items) {
       this.selected = items
     },
-    openFormEdit: function (datarow) {
 
-      this.$router.push({ path: '/catalog/brands/edit', query: { id: datarow.id } })
 
+    linkGen(pageNum){
+      return pageNum === 1 ? '?' : `?page=${pageNum}`
     },
+
+    myCompare(itemA, itemB, key) {
+      if (key !== 'dates.updated') {
+        // If field is not `date` we let b-table handle the sorting
+        return false
+      } else {
+        // Convert the string formatted date to a number that can be compared
+        // Get the values being compared from the items
+        let a = itemA['dates']['updated']
+        let b = itemB['dates']['updated']
+        // Split them into an array of parts (dd, mm, and yyyy)
+       // console.log(itemA['dates']['updated'])
+       // console.log(a, " ", b)
+        a = a.split(' ')
+        b = b.split(' ')
+
+        console.log(a[0], " ", b[0])
+        a = a[0].split('.')
+        b = b[0].split('.')
+        console.log(a, " ", b)
+        //
+        // // convert string parts to numbers
+        a = (parseInt(a[2], 10) * 10000) + (parseInt(a[1], 10) * 100) + parseInt(a[0])
+        b = (parseInt(b[2], 10) * 10000) + (parseInt(b[1], 10) * 100) + parseInt(b[0])
+        // Return the comparison result
+        return a - b
+      }
+
+  }
+
+
   },
 
   components: {
+
   },
   computed: {
 
@@ -163,7 +195,14 @@ name: "NewsArticle",
     let data = await this.$store.getters["NewsArticles/AllItems"];
     //console.log(data)
     this.itemDataTab = data;
+  },
+
+  watch: {
+  $route() {
+    //this.Add()
+    window.scrollTo(0,0)
   }
+  },
 
 
 

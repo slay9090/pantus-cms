@@ -107,7 +107,7 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-4-inner" class="">
-        <router-link :to="{ name: 'NewsArticle'}" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'NewsArticles'}" class="list-group-item list-group-item-action bg-dark text-white">
           <span class="menu-collapsed">Статьи</span>
         </router-link>
         <router-link :to="{ name: 'NewsCategory'}" class="list-group-item list-group-item-action bg-dark text-white">

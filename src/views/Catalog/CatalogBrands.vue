@@ -137,7 +137,6 @@ export default {
     openFormEdit: function (datarow) {
 
       this.$router.push({ path: '/catalog/brands/edit', query: { id: datarow.id } })
-
     },
   },
 

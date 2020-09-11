@@ -67,22 +67,10 @@
 
             </b-table>
 
-            <b-pagination
-                v-model="currentPage"
-                :total-rows="rows"
-                :per-page="perPage"
-                aria-controls="my-table"
-            ></b-pagination>
 
-            <p class="mt-3">Current Page: {{ currentPage }}</p>
 
           </div>
-          <div>
-            <p>
-              Selected Rows:<br>
-              {{ selected }}
-            </p>
-          </div>
+
         </ul>
       </div>
     </div>
@@ -116,6 +104,7 @@ name: "NewsCategory",
         { key: 'selected', label: '',  thStyle: {  width: '50px' }},
         { key: 'id',  sortable: true ,   },
         { key: 'name', sortable: true , },
+        { key: 'code', },
       ],
 
       show: true,
