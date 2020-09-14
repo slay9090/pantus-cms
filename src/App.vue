@@ -6,7 +6,7 @@
       </div>
       </header>
 
-      <div class="row" id="body-row">
+      <div class="d-flex" id="body-row">
           <SideBar />
             <div class="col py-3">
               <div class="text-muted">
