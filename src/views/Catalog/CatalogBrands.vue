@@ -69,12 +69,12 @@
 
             </b-table>
 
-            <b-pagination
+            <b-pagination-nav
+                :link-gen="linkGen"
+                :number-of-pages="(rows/perPage)+1"
+                use-router
                 v-model="currentPage"
-                :total-rows="rows"
-                :per-page="perPage"
-                aria-controls="my-table"
-            ></b-pagination>
+            ></b-pagination-nav>
 
             <p class="mt-3">Current Page: {{ currentPage }}</p>
 
@@ -102,11 +102,12 @@
 
 export default {
   name: 'Home',
+  props: ["query"],
 
   data() {
     return {
       perPage: 20, // кол-во строк на 1й стр
-      currentPage: 1,
+      currentPage: this.query,
 
       sortBy: 'age',
       sortDesc: false,
@@ -137,6 +138,10 @@ export default {
     openFormEdit: function (datarow) {
 
       this.$router.push({ path: '/catalog/brands/edit', query: { id: datarow.id } })
+    },
+    //генерация урл для пагинации
+    linkGen(pageNum){
+      return pageNum === 1 ? '?' : `?page=${pageNum}`
     },
   },
 

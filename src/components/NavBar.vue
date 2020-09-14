@@ -1,6 +1,11 @@
 <template>
   <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark shadow" style="background-color: #567AD5" >
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">
+      <img src="https://www.pantus.ru/images_uploader/images/logo_hidden_background2.png"
+           alt=""
+           width="147"
+           height="50" />
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

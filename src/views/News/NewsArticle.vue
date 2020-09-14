@@ -32,15 +32,11 @@
                 selectable
                 select-mode="single"
                 selected-variant="warning"
-
-
-
                 @row-selected="onRowSelected"
                 id="my-table"
                 :items="itemDataTab"
                 :fields="fields"
                 :sort-compare="myCompare"
-
                 sort-icon-left
                 responsive="sm"
                 :per-page="perPage"
@@ -78,19 +74,11 @@
 
             <b-pagination-nav
                 :link-gen="linkGen"
-                :number-of-pages="rows/perPage"
+                :number-of-pages="(rows/perPage)+1"
                 use-router
                 v-model="currentPage"
-
             ></b-pagination-nav>
 
-<!--            <b-pagination-->
-<!--                v-model="currentPage"-->
-<!--                :total-rows="rows"-->
-<!--                :per-page="perPage"-->
-<!--                aria-controls="my-table"-->
-
-<!--            ></b-pagination>-->
 
             <p class="mt-3">Current Page: {{ currentPage }}</p>
 
@@ -114,12 +102,13 @@
 <script>
 export default {
 name: "NewsArticle",
+  props: ["query"],
 
   data() {
     return {
-      perPage: 20, // кол-во строк на 1й стр
-      //currentPage: 0,
-      sortBy: 'age',
+      perPage: 20, // кол-во строк в пагинации
+      currentPage: this.query,
+      sortBy: 'id',
       sortDesc: false,
       filter: null,
       selected: [],
@@ -138,15 +127,17 @@ name: "NewsArticle",
   },
 
   methods:{
+
+    //записать данные выбраной строки в таблице
     onRowSelected(items) {
       this.selected = items
     },
 
-
+    //генерация урл для пагинации
     linkGen(pageNum){
       return pageNum === 1 ? '?' : `?page=${pageNum}`
     },
-
+    //сортировка по дате
     myCompare(itemA, itemB, key) {
       if (key !== 'dates.updated') {
         // If field is not `date` we let b-table handle the sorting
@@ -162,10 +153,10 @@ name: "NewsArticle",
         a = a.split(' ')
         b = b.split(' ')
 
-        console.log(a[0], " ", b[0])
+       // console.log(a[0], " ", b[0])
         a = a[0].split('.')
         b = b[0].split('.')
-        console.log(a, " ", b)
+       // console.log(a, " ", b)
         //
         // // convert string parts to numbers
         a = (parseInt(a[2], 10) * 10000) + (parseInt(a[1], 10) * 100) + parseInt(a[0])
@@ -184,7 +175,7 @@ name: "NewsArticle",
   },
   computed: {
 
-
+    //кол-во строк в таблице
     rows() {
       return this.itemDataTab.length
     }
@@ -193,20 +184,18 @@ name: "NewsArticle",
   async mounted() {
     await this.$store.dispatch("NewsArticles/GetData");
     let data = await this.$store.getters["NewsArticles/AllItems"];
-    //console.log(data)
     this.itemDataTab = data;
-  },
 
+  },
+  // исправить
   watch: {
   $route() {
-    //this.Add()
+    //скролл на верх при переходе по пагинации
     window.scrollTo(0,0)
   }
   },
-
-
-
 }
+
 </script>
 
 <style scoped>

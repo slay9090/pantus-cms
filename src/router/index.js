@@ -44,6 +44,7 @@ Vue.use(VueRouter)
           path: '/catalog/brands',
           name: 'Brands',
           component: () => import('../views/Catalog/CatalogBrands.vue'),
+            props: route => ({ query: route.query.page }),
           meta: {
             breadcrumb: [
               { name: 'Catalog' },
@@ -159,6 +160,7 @@ Vue.use(VueRouter)
       {
 
           path: '/news/articles',
+          props: route => ({ query: route.query.page }),
           name: 'NewsArticles',
           component: () => import('../views/News/NewsArticle'),
           meta: {
