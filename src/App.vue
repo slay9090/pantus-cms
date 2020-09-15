@@ -6,7 +6,7 @@
       </div>
       </header>
 
-      <div class="d-flex" id="body-row">
+      <div class="d-flex " id="body-row">
           <SideBar />
             <div class="col py-3">
               <div class="text-muted">
@@ -48,5 +48,16 @@ export default {
     SideBar,
     Breadcrumbs,
   },
+  //Обработка просроченных токенов
+  // created: function () {
+  //   this.$http.interceptors.response.use(undefined, function (err) {
+  //     return new Promise(function () {
+  //       if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+  //         this.$store.dispatch("Authentication/logout")
+  //       }
+  //       throw err;
+  //     });
+  //   });
+  // }
 }
 </script>

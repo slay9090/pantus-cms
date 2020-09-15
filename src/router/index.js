@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from "@/store/"
 
 // import VueBreadcrumbs from 'vue-2-breadcrumbs'
 //
@@ -23,9 +24,14 @@ Vue.use(VueRouter)
     name: 'Home',
     component: Home,
 
-
-
   },
+
+      {
+          path: '/login',
+          name: 'Login',
+          component: () => import('../components/Login'),
+
+      },
 
         {
           path: '/catalog',
@@ -45,7 +51,15 @@ Vue.use(VueRouter)
           name: 'Brands',
           component: () => import('../views/Catalog/CatalogBrands.vue'),
             props: route => ({ query: route.query.page }),
+            //по ролям разграниение
+            // beforeEnter: (to, from, next) => {
+            //    // if (1 === 1) {
+            //      //   next(true)
+            //   //  }
+        //    },
           meta: {
+              requiresAuth: true,
+
             breadcrumb: [
               { name: 'Catalog' },
               { name: 'Brands' }
@@ -203,6 +217,23 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
+router.beforeEach((to, from, next) => {
+    if(to.matched.some(record => record.meta.requiresAuth)) {
+
+        //console.log( 'skot' + store.getters['Authentication/isLoggedIn']);
+        if (store.getters['Authentication/isLoggedIn']) {
+            next()
+            return
+        }
+        next('/login')
+    } else {
+        next()
+    }
+})
+
+
 
 export default router
 

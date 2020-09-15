@@ -59,22 +59,46 @@
           </a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+
+      <ul  class="nav navbar-nav navbar-right">
+          <li class="nav-item">
+                    <a class="nav-link" @click="logout">
+                      <i class="fa fa-sign-in"></i>
+                      {{ isUserName }}
+                    </a>
+          </li>
+      </ul>
+
     </div>
   </nav>
 </template>
 
 <script>
 export default {
-  name: "NavBar"
+  name: "NavBar",
+
+  computed : {
+   // isLoggedIn : function(){ return this.$store.getters['Authentication/isLoggedIn']},
+   // isUserName : function(){   return this.$store.getters['Authentication/isUserName']   },
+
+  },
+  methods: {
+    logout: function () {
+      this.$store.dispatch('Authentication/logout')
+          .then(() => {
+            this.$router.push('/login')
+          })
+    }
+  },
+
 }
 </script>
 
 <style>
 
+ a {
+  cursor: pointer;
+}
 
 .navbar-icon-top .navbar-nav .nav-link > .fa {
   position: relative;
