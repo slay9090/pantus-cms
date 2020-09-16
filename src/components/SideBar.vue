@@ -247,11 +247,6 @@ name: "SideBar"
 
 <style>
 
-/**[tabindex]:focus {*/
-/*  outline: none;*/
-/*}*/
-
-
 #body-row {
   margin-left:0;
   margin-right:0;

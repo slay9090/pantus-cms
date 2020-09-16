@@ -16,17 +16,8 @@ const actions = {
 
     // действие получение данных по апи
     async GetData({commit}){
-        return  await Axios.get('https://www.pantus.ru/api/rest/2.0/news', {
-            headers: {
-
-
-               Authorization: 'sdfsdfsdfsdf', //the token is a variable which holds the token
-
-            }
-        }, ).then( res =>{
-            // Axios.defaults.headers.common['Authorization'] = 'token'
+        return  await Axios.get('https://www.pantus.ru/api/rest/2.0/news').then( res =>{
             commit("SetData",res.data.data);
-
             //console.log('мы в действиях получили ', res.data.data);
         })
     },

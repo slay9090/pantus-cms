@@ -25,12 +25,12 @@ Vue.use(BootstrapVueIcons);
 Vue.use(BootstrapVue);
 
 
-// Vue.prototype.$http = axios;
-// const token = localStorage.getItem('token')
-// if (token) {
-//   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-//   Vue.prototype.$http.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'
-// }
+Vue.prototype.$http = axios;
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+ // Vue.prototype.$http.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+}
 
 
 

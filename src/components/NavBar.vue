@@ -78,8 +78,8 @@ export default {
   name: "NavBar",
 
   computed : {
-   // isLoggedIn : function(){ return this.$store.getters['Authentication/isLoggedIn']},
-   // isUserName : function(){   return this.$store.getters['Authentication/isUserName']   },
+   isLoggedIn : function(){ return this.$store.getters['Authentication/isLoggedIn']},
+   isUserName : function(){   return this.$store.getters['Authentication/isUserName']   },
 
   },
   methods: {

@@ -166,8 +166,6 @@ name: "NewsArticle",
       }
 
   }
-
-
   },
 
   components: {
