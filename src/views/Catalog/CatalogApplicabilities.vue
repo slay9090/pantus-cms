@@ -26,7 +26,9 @@
         </b-container>
       </h4>
       <div class="card-body">
+        <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
         <tree :url="url" :tree-data="tree" ></tree>
+        </b-overlay>
       </div>
     </div>
 
@@ -43,6 +45,7 @@ export default {
     tree: [],
     show: true,
     url: '/catalog/applicabilities/edit?id=',
+    spinerLoaderIsShow: true,
   }),
 
   components: {
@@ -53,6 +56,7 @@ export default {
     await this.$store.dispatch("CatalogApplicabilities/GetData" );
     let data = await this.$store.getters["CatalogApplicabilities/AllItems"];
     this.tree = data;
+    this.spinerLoaderIsShow= false
 
 
   },

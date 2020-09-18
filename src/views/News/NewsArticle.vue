@@ -26,7 +26,7 @@
 
             </div>
 
-
+            <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
             <b-table
                 ref="selectableTable"
                 selectable
@@ -71,7 +71,7 @@
 
 
             </b-table>
-
+            </b-overlay>
             <b-pagination-nav
                 :link-gen="linkGen"
                 :number-of-pages="(rows/perPage)+1"
@@ -93,8 +93,6 @@
       </div>
     </div>
 
-
-    <router-view></router-view>
   </div>
 
 </template>
@@ -123,6 +121,7 @@ name: "NewsArticle",
         { key: 'dates.updated', sortable: true , label: 'Дата' , thStyle: {  width: '100px' }},
       ],
       show: true,
+      spinerLoaderIsShow: true,
     }
   },
 
@@ -183,6 +182,7 @@ name: "NewsArticle",
     await this.$store.dispatch("NewsArticles/GetData");
     let data = await this.$store.getters["NewsArticles/AllItems"];
     this.itemDataTab = data;
+    this.spinerLoaderIsShow= false
 
   },
   // исправить

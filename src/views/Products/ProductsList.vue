@@ -1,0 +1,623 @@
+<template>
+  <div>
+
+
+
+    <div class="card" id="tbl" >
+      <h4 class="card-header"> <small class="text-muted">Список продукции</small></h4>
+      <div class="card-body">
+        <ul>
+          <div>
+            <div class="py-3 d-flex  align-items-center">
+              <div class="flex-grow-1 d-flex">
+                <b-form-input size="sm" class="col-3 py-3"
+                              v-model="filter"
+                              type="search"
+                              id="filterInput"
+                              placeholder="Type to Search"
+                ></b-form-input>
+                <b-button class="ml-3 py-1" :disabled="!filter" @click="filter = ''">Clear</b-button>
+              </div>
+              <div class="p-2 px-1">
+                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length == 0">Удалить</b-button>
+                <b-button variant="outline-success" class="py-1 ">Создать</b-button>
+              </div>
+
+            </div>
+
+            <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
+              <b-table
+                  ref="selectableTable"
+                  selectable
+                  select-mode="single"
+                  selected-variant="warning"
+                  @row-selected="onRowSelected"
+                  id="my-table"
+                  :items="productsJson"
+                  :fields="fields"
+
+                  sort-icon-left
+                  responsive="sm"
+                  :per-page="perPage"
+                  :current-page="currentPage"
+                  :filter="filter"
+                  head-variant="light"
+                  small
+              >
+
+                <template v-slot:cell(selected)="{ rowSelected }">
+                  <template  v-if="rowSelected">
+                    <span  aria-hidden="true">&check;</span>
+
+                  </template>
+                  <template  v-else>
+                    <span  aria-hidden="true">&nbsp;</span>
+
+                  </template>
+                </template>
+
+
+                <template v-slot:cell(productCard.name)="data">
+                  <!-- `data.value` is the value after formatted by the Formatter -->
+                  <a :href="'/products/list/edit?id='+data.item.productCard.id"  class="mb-0" >{{ data.value }} </a>
+                </template>
+
+
+                <template v-slot:cell(productCard.productCardImages.main.url)="data">
+                  <img :src="data.value" width="50" height="30"/>
+                </template>
+
+                <template v-slot:cell(productCard.categories)="data">
+                  <span v-for="item in data.value" :key="item.id">{{item.name}}, </span>
+                </template>
+
+                <template v-slot:cell(productCard.applicabilities)="data">
+                  <span v-for="item in data.value" :key="item.id">{{item.name}}, </span>
+                </template>
+
+
+
+              </b-table>
+            </b-overlay>
+            <b-pagination-nav
+                :link-gen="linkGen"
+                :number-of-pages="(rows/perPage)+1"
+                use-router
+                v-model="currentPage"
+            ></b-pagination-nav>
+
+
+            <p class="mt-3">Current Page: {{ currentPage }}</p>
+
+          </div>
+          <div>
+            <p>
+              Selected Rows:<br>
+              {{ selected }}
+            </p>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+name: "ProductsList",
+  props: ["query"],
+
+  data() {
+    return {
+
+      perPage: 20, // кол-во строк в пагинации
+      currentPage: this.query,
+      sortBy: 'id',
+      sortDesc: false,
+      filter: null,
+      selected: [],
+      fields: [
+        { key: 'selected', label:  '✓',  thStyle: {  width: '30px' }},
+        { key: 'productCard.id',  sortable: true , label: 'id',  },
+        { key: 'productCard.name', sortable: true , label: 'Наименование', },
+        { key: 'productCard.brand.name', label: 'Бренд'  , },
+        { key: 'productCard.categories', label: 'Категория'  , },
+        { key: 'productCard.applicabilities', label: 'Применимости'  ,  },
+        { key: 'productCard.sku.original', label: 'Артикул'  , },
+        { key: 'productCard.productCardImages.main.url', label: 'Изображение'  , },
+        { key: 'productOffer.prices.retail', label: 'Цена'  , },
+        { key: 'productCard.timestampUpdated', sortable: true , label: 'Дата изменения' , thStyle: {  width: '150px' }},
+      ],
+      show: true,
+      spinerLoaderIsShow: true,
+
+
+      productsJson:
+        [
+            {
+              "productCard": {
+                "id": 1,
+                "bitrixId": 1,
+                "active": true,
+                "name": "Шланг-ф45-3",
+                "sku": {
+                  "original": "2170-5206064AD",
+                  "normalized": null
+                },
+                "brand": {
+                  "id": 12,
+                  "bitrixId": 12,
+                  "active": null,
+                  "name": "РЕЗИНОТЕХНИКА",
+                  "code": "REZINOTEHNIKA",
+                  "timestampCreated": null,
+                  "timestampUpdated": null
+                },
+                "categories": [
+                  {
+                    "id": 5096,
+                    "parentId": 5097,
+                    "code": null,
+                    "name": "Прокладки и крышки",
+                    "lft": null,
+                    "rght": null,
+                    "treeId": null,
+                    "level": null,
+                    "children": null
+                  },
+                  {
+                    "id": 50961,
+                    "parentId": 50971,
+                    "code": null,
+                    "name": "Пранк",
+                    "lft": null,
+                    "rght": null,
+                    "treeId": null,
+                    "level": null,
+                    "children": null
+                  }
+                ],
+                "applicabilities": [
+                  {
+                    "id": 4820,
+                    "parentId": 4819,
+                    "code": null,
+                    "name": "Almera",
+                    "description": null,
+                    "lft": null,
+                    "rght": null,
+                    "treeId": null,
+                    "level": null,
+                    "children": null
+                  },
+                  {
+                    "id": 48201,
+                    "parentId": 48191,
+                    "code": null,
+                    "name": "BMW",
+                    "description": null,
+                    "lft": null,
+                    "rght": null,
+                    "treeId": null,
+                    "level": null,
+                    "children": null
+                  },
+                ],
+                "productCardImages": {
+                  "main": {
+                    "id": 482,
+                    "active": null,
+                    "name": "img",
+                    "slug": null,
+                    "hash": null,
+                    "url": "http://www.pantus.ru/upload/iblock/042/10034697ASP%20-%20Прокладка%20бензонасоса%20ВАЗ%2021082%20силикон%20синий%20-%20A-Sport.jpg",
+                    "timestampCreated": null,
+                    "productCardId": null,
+                    "main": null
+                  },
+                  "album": [
+                    {
+                      "id": 344,
+                      "active": null,
+                      "name": "kinnn",
+                      "slug": null,
+                      "hash": null,
+                      "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                      "timestampCreated": null,
+                      "productCardId": null,
+                      "main": null
+                    },
+                    {
+                      "id": 344,
+                      "active": null,
+                      "name": "kinnn",
+                      "slug": null,
+                      "hash": null,
+                      "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                      "timestampCreated": null,
+                      "productCardId": null,
+                      "main": null
+                    }
+                  ]
+                },
+                "productCardMeasures": {
+                  "length": null,
+                  "width": null,
+                  "height": null,
+                  "weight": null
+                },
+                "productCardOems": [
+                  {
+                    "manufacturerOems": [
+                      ""
+                    ],
+                    "foreignOems": [
+                      ""
+                    ]
+                  }
+                ],
+                "timestampCreated": null,
+                "timestampUpdated": "09.12.2015 14:50:25"
+              },
+              "productOffer": {
+                "id": null,
+                "bitrixId": null,
+                "active": null,
+                "productCardId": null,
+                "bitrixProductCardId": null,
+                "guid": null,
+                "nomenclatureCode": null,
+                "quantity": null,
+                "multiplicity": null,
+                "pantusDepartment": {
+                  "id": null,
+                  "name": null
+                },
+                "supplier": {
+                  "id": null,
+                  "nomenclatureCode": null,
+                  "code": null,
+                  "name": null,
+                  "deliveryDelay": null
+                },
+                "prices": {
+                  "wholesale": null,
+                  "retail": 99.99,
+                  "brt1": null,
+                  "brt2": null,
+                  "brt3": null,
+                  "brt4": null,
+                  "brt5": null,
+                  "brt6": null,
+                  "brt75": null,
+                  "brt10": null
+                },
+                "timestampCreated": null,
+                "timestampUpdated": null
+              }
+            },
+            {
+            "productCard": {
+              "id": 2,
+              "bitrixId": 1,
+              "active": true,
+              "name": "Шланг-ф45-3",
+              "sku": {
+                "original": null,
+                "normalized": null
+              },
+              "brand": {
+                "id": 12,
+                "bitrixId": 12,
+                "active": null,
+                "name": "РЕЗИНОТЕХНИКА",
+                "code": "REZINOTEHNIKA",
+                "timestampCreated": null,
+                "timestampUpdated": null
+              },
+              "categories": [
+                {
+                  "id": 5096,
+                  "parentId": 5097,
+                  "code": null,
+                  "name": "Прокладки и крышки",
+                  "lft": null,
+                  "rght": null,
+                  "treeId": null,
+                  "level": null,
+                  "children": null
+                }
+              ],
+              "applicabilities": [
+                {
+                  "id": 4820,
+                  "parentId": 4819,
+                  "code": null,
+                  "name": "Almera",
+                  "description": null,
+                  "lft": null,
+                  "rght": null,
+                  "treeId": null,
+                  "level": null,
+                  "children": null
+                }
+              ],
+              "productCardImages": {
+                "main": {
+                  "id": 482,
+                  "active": null,
+                  "name": "img",
+                  "slug": null,
+                  "hash": null,
+                  "url": "http://www.pantus.ru/upload/iblock/042/10034697ASP%20-%20Прокладка%20бензонасоса%20ВАЗ%2021082%20силикон%20синий%20-%20A-Sport.jpg",
+                  "timestampCreated": null,
+                  "productCardId": null,
+                  "main": null
+                },
+                "album": [
+                  {
+                    "id": 344,
+                    "active": null,
+                    "name": "kinnn",
+                    "slug": null,
+                    "hash": null,
+                    "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                    "timestampCreated": null,
+                    "productCardId": null,
+                    "main": null
+                  },
+                  {
+                    "id": 344,
+                    "active": null,
+                    "name": "kinnn",
+                    "slug": null,
+                    "hash": null,
+                    "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                    "timestampCreated": null,
+                    "productCardId": null,
+                    "main": null
+                  }
+                ]
+              },
+              "productCardMeasures": {
+                "length": null,
+                "width": null,
+                "height": null,
+                "weight": null
+              },
+              "productCardOems": [
+                {
+                  "manufacturerOems": [
+                    ""
+                  ],
+                  "foreignOems": [
+                    ""
+                  ]
+                }
+              ],
+              "timestampCreated": null,
+              "timestampUpdated": null
+            },
+            "productOffer": {
+              "id": null,
+              "bitrixId": null,
+              "active": null,
+              "productCardId": null,
+              "bitrixProductCardId": null,
+              "guid": null,
+              "nomenclatureCode": null,
+              "quantity": null,
+              "multiplicity": null,
+              "pantusDepartment": {
+                "id": null,
+                "name": null
+              },
+              "supplier": {
+                "id": null,
+                "nomenclatureCode": null,
+                "code": null,
+                "name": null,
+                "deliveryDelay": null
+              },
+              "prices": {
+                "wholesale": null,
+                "retail": null,
+                "brt1": null,
+                "brt2": null,
+                "brt3": null,
+                "brt4": null,
+                "brt5": null,
+                "brt6": null,
+                "brt75": null,
+                "brt10": null
+              },
+              "timestampCreated": null,
+              "timestampUpdated": null
+            }
+          },
+            {
+            "productCard": {
+              "id": 3,
+              "bitrixId": 1,
+              "active": true,
+              "name": "Шланг-ф45-3",
+              "sku": {
+                "original": null,
+                "normalized": null
+              },
+              "brand": {
+                "id": 12,
+                "bitrixId": 12,
+                "active": null,
+                "name": "РЕЗИНОТЕХНИКА",
+                "code": "REZINOTEHNIKA",
+                "timestampCreated": null,
+                "timestampUpdated": null
+              },
+              "categories": [
+                {
+                  "id": 5096,
+                  "parentId": 5097,
+                  "code": null,
+                  "name": "Прокладки и крышки",
+                  "lft": null,
+                  "rght": null,
+                  "treeId": null,
+                  "level": null,
+                  "children": null
+                }
+              ],
+              "applicabilities": [
+                {
+                  "id": 4820,
+                  "parentId": 4819,
+                  "code": null,
+                  "name": "Almera",
+                  "description": null,
+                  "lft": null,
+                  "rght": null,
+                  "treeId": null,
+                  "level": null,
+                  "children": null
+                }
+              ],
+              "productCardImages": {
+                "main": {
+                  "id": 482,
+                  "active": null,
+                  "name": "img",
+                  "slug": null,
+                  "hash": null,
+                  "url": "http://www.pantus.ru/upload/iblock/042/10034697ASP%20-%20Прокладка%20бензонасоса%20ВАЗ%2021082%20силикон%20синий%20-%20A-Sport.jpg",
+                  "timestampCreated": null,
+                  "productCardId": null,
+                  "main": null
+                },
+                "album": [
+                  {
+                    "id": 344,
+                    "active": null,
+                    "name": "kinnn",
+                    "slug": null,
+                    "hash": null,
+                    "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                    "timestampCreated": null,
+                    "productCardId": null,
+                    "main": null
+                  },
+                  {
+                    "id": 344,
+                    "active": null,
+                    "name": "kinnn",
+                    "slug": null,
+                    "hash": null,
+                    "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                    "timestampCreated": null,
+                    "productCardId": null,
+                    "main": null
+                  }
+                ]
+              },
+              "productCardMeasures": {
+                "length": null,
+                "width": null,
+                "height": null,
+                "weight": null
+              },
+              "productCardOems": [
+                {
+                  "manufacturerOems": [
+                    ""
+                  ],
+                  "foreignOems": [
+                    ""
+                  ]
+                }
+              ],
+              "timestampCreated": null,
+              "timestampUpdated": null
+            },
+            "productOffer": {
+              "id": null,
+              "bitrixId": null,
+              "active": null,
+              "productCardId": null,
+              "bitrixProductCardId": null,
+              "guid": null,
+              "nomenclatureCode": null,
+              "quantity": null,
+              "multiplicity": null,
+              "pantusDepartment": {
+                "id": null,
+                "name": null
+              },
+              "supplier": {
+                "id": null,
+                "nomenclatureCode": null,
+                "code": null,
+                "name": null,
+                "deliveryDelay": null
+              },
+              "prices": {
+                "wholesale": null,
+                "retail": null,
+                "brt1": null,
+                "brt2": null,
+                "brt3": null,
+                "brt4": null,
+                "brt5": null,
+                "brt6": null,
+                "brt75": null,
+                "brt10": null
+              },
+              "timestampCreated": null,
+              "timestampUpdated": null
+            }
+          },
+        ],
+
+
+    }
+  },
+  methods:{
+
+    //записать данные выбраной строки в таблице
+    onRowSelected(items) {
+      this.selected = items
+    },
+
+    //генерация урл для пагинации
+    linkGen(pageNum){
+      return pageNum === 1 ? '?' : `?page=${pageNum}`
+    },
+    //сортировка по дате
+
+  },
+  computed: {
+
+    //кол-во строк в таблице
+    rows() {
+      return this.productsJson.length
+    }
+
+  },
+  async mounted() {
+
+    this.spinerLoaderIsShow= false
+
+  },
+  // исправить
+  watch: {
+    $route() {
+      //скролл на верх при переходе по пагинации
+      window.scrollTo(0,0)
+    }
+  },
+
+
+}
+</script>
+
+<style scoped>
+
+</style>

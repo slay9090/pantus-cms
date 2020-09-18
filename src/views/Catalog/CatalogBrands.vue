@@ -25,7 +25,7 @@
 
             </div>
 
-
+            <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
             <b-table
                 ref="selectableTable"
                 selectable
@@ -68,6 +68,7 @@
 
 
             </b-table>
+            </b-overlay>
 
             <b-pagination-nav
                 :link-gen="linkGen"
@@ -117,6 +118,7 @@ export default {
       selected: [],
 
       itemDataTab: [],
+      spinerLoaderIsShow: true,
 
 
 
@@ -160,6 +162,7 @@ export default {
     let data = await this.$store.getters["CatalogBrands/AllItems"];
     //console.log(data)
     this.itemDataTab = data;
+    this.spinerLoaderIsShow= false
   }
 
 }

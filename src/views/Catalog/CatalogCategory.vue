@@ -25,9 +25,13 @@
           </b-row>
         </b-container>
       </h4>
+      <b-overlay :show="spinerLoaderIsShow"  no-fade rounded="sm">
       <div class="card-body">
+
         <tree :url="url" :tree-data="tree"></tree>
+
       </div>
+      </b-overlay>
     </div>
 
   </div>
@@ -43,6 +47,7 @@ export default {
     tree: [],
     show: true,
     url: '/catalog/category/edit?id=',
+    spinerLoaderIsShow: true,
   }),
 
   components: {
@@ -53,8 +58,11 @@ export default {
     await this.$store.dispatch("CatalogCategory/GetData" );
     let data = await this.$store.getters["CatalogCategory/AllItems"];
     this.tree = data;
+    this.spinerLoaderIsShow=false;
 
   },
+
+
 
   computed: {
 

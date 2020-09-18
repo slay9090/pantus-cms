@@ -24,13 +24,13 @@
       <!-- Submenu content -->
       <b-collapse id="collapse-1-inner" class="">
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-          <span class="menu-collapsed">Категории</span>
+          <span class="menu-collapsed">Item</span>
         </a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-          <span class="menu-collapsed">Категории2</span>
+          <span class="menu-collapsed">Item</span>
         </a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-          <span class="menu-collapsed">Категории3</span>
+          <span class="menu-collapsed">Item</span>
         </a>
       </b-collapse>
 
@@ -67,21 +67,21 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-3-inner" class="">
-        <router-link to="/about1" class="list-group-item list-group-item-action bg-dark text-white">
-          <span class="menu-collapsed">Категории</span>
+        <router-link :to="{ name: 'ProductsList'}" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">Список</span>
         </router-link>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-          <span class="menu-collapsed">Категории2</span>
+          <span class="menu-collapsed">Item</span>
         </a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-          <span class="menu-collapsed">Категории3</span>
+          <span class="menu-collapsed">Item</span>
         </a>
       </b-collapse>
 
       <a class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-usd fa-fw mr-3"></span>
-          <span class="menu-collapsed">Платежи</span>
+          <span class="menu-collapsed">Заказы</span>
           <span class="submenu-icon ml-auto"></span>
         </div>
       </a>
@@ -214,12 +214,12 @@
       <!-- /END Separator -->
 
 
-      <a href="#" class="bg-dark list-group-item list-group-item-action">
+      <router-link :to="{ name: 'Test'}" class="bg-dark list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-question fa-fw mr-3"></span>
           <span class="menu-collapsed">Help</span>
         </div>
-      </a>
+      </router-link>
       <a href="#" data-toggle="sidebar-colapse" class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span id="collapse-icon" class="fa fa-2x mr-3"></span>

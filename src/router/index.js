@@ -32,6 +32,12 @@ Vue.use(VueRouter)
           component: () => import('../components/Login'),
 
       },
+      {
+          path: '/test',
+          name: 'Test',
+          component: () => import('../components/Test'),
+
+      },
 
         {
           path: '/catalog',
@@ -205,6 +211,32 @@ Vue.use(VueRouter)
                   { name: 'Новости' },
                   { name: 'Статьи', link: '/news/articles/'  },
                   { name: 'Добавление' },
+              ]
+          }
+      },
+
+      {
+          path: '/products/list',
+          props: route => ({ query: route.query.page }),
+          name: 'ProductsList',
+          component: () => import('../views/Products/ProductsList'),
+          meta: {
+              breadcrumb: [
+                  { name: 'Продукты' },
+                  { name: 'Список' }
+              ]
+          }
+      },
+
+      { path: '/products/list/edit',
+          component: () => import('../components/Products/List/ProductsListFormEdit'),
+          props: route => ({ query: route.query.id }),
+          name: 'ArticlesFormEdit',
+          meta: {
+              breadcrumb: [
+                  { name: 'Продукты' },
+                  { name: 'Список', link: '/products/list/'  },
+                  { name: 'Изменение' },
               ]
           }
       },

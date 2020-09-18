@@ -73,6 +73,7 @@ const actions = {
         return new Promise((resolve) => {
             commit('logout')
             localStorage.removeItem('token')
+            localStorage.removeItem('username')
             delete Axios.defaults.headers.common['Authorization']
             resolve()
 

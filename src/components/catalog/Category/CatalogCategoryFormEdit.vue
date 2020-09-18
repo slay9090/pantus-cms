@@ -84,6 +84,7 @@ export default {
       // показ кнопки резет
       show: true,
       url: '/catalog/category/edit?id=',
+
     }
 
   },

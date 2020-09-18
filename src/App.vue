@@ -8,16 +8,15 @@
 
       <div class="d-flex " id="body-row">
           <SideBar />
-            <div class="col py-3">
+            <div class="col-10 py-3">
               <div class="text-muted">
               <breadcrumbs />
+
               </div>
-
               <!-- DYNAMIC PAGES -->
+                <router-view/>
 
-              <router-view/>
-
-            </div>
+              </div>
             <!-- Main Col END -->
 
           </div>
@@ -48,6 +47,18 @@ export default {
     SideBar,
     Breadcrumbs,
   },
+
+  // data() {
+  //
+  // },
+  // mounted() {
+  //
+  // },
+  //
+  // updated(){// при обновление страницы
+  //
+  // },
+
   //Обработка просроченных токенов
   created: function () {
     this.$http.interceptors.response.use(undefined, function (err) {
