@@ -6,6 +6,7 @@ import CatalogApplicabilities from "@/store/module/Catalog/Applicabilities";
 import NewsArticles from "@/store/module/News/Articles"
 import NewsCategory from "@/store/module/News/Category"
 import Authentication from "@/store/module/Service/Authentication"
+import List from "@/store/module/Products/List";
 
 
 Vue.use(Vuex)
@@ -19,6 +20,7 @@ export default new Vuex.Store({
       NewsArticles,
       NewsCategory,
       Authentication,
+      List,
 
   },
 })
