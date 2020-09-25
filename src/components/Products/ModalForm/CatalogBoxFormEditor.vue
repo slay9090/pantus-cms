@@ -43,10 +43,10 @@
 
 
 
-
+            <div class="scrollblock" >
                 <checkboxtree   v-for="item in items" :node="item" :key="item.id"></checkboxtree>
 
-
+            </div>
 
 
 
@@ -57,11 +57,13 @@
     <template v-slot:modal-footer="{ ok, cancel,  }">
       <div class="w-100">
         <div v-if="typeMultiSelect===false">
-          <p class="float-left" ><b>Текущее значение: </b>{{currentSelectItems.name}}</p>
+          <p class="float-left"><b>Текущее значение: </b>
+            <span  v-for= "item in itemSelectProductBrand" :key="item.id">{{item.name}}, </span>
+          </p>
         </div>
         <div v-if="typeMultiSelect===true">
           <p class="float-left"><b>Текущее значение: </b>
-          <span  v-for= "item in ItemSelectProductCategories" :key="item.id">{{item.name}}, </span>
+          <span  v-for= "item in itemSelectProductCategories" :key="item.id">{{item.name}}, </span>
           </p>
         </div>
 
@@ -115,7 +117,13 @@ export default {
   },
 
   computed:{
-    ItemSelectProductCategories(){
+
+    itemSelectProductBrand(){
+      //console.log(this.$store.getters["List/selectProductBrand"])
+      return this.$store.getters["List/selectProductBrand"]
+    },
+
+    itemSelectProductCategories(){
       return this.$store.getters["List/selectProductCategories"]
     }
   },
@@ -135,9 +143,12 @@ export default {
       // Trigger submit handler
 
 
-      if (this.selectItems) {
-        this.$emit('changeitem', this.selectItems);
-      }
+      // if (this.selectItems) {
+      //   this.$emit('changeitem', this.selectItems);
+      // }
+      this.$store.commit("List/deleteItemSelectProductBrands")
+
+      this.$store.commit('List/addItemSelectProductBrands', this.selectItems)
 
       this.$nextTick(() => {
         this.$bvModal.hide('modal-catalog-edit')
@@ -182,7 +193,7 @@ export default {
 .scrollblock {
 
 
-  height: 470px;
+  height: 500px;
   width: 100%;
   overflow-y: auto;
 

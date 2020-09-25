@@ -144,23 +144,30 @@ name: "ProductsListFormEdit",
       productsJson: {},
       show: true,
       dataSet: [],
-      currentSelectItems: [],
-      typeMultiSelect: false,
+      currentSelectItems: [], //удалить
+      typeMultiSelect: false, //
+
+      // currentSelectBrand: [],
+      // currentSelectCategories: [],
+      // currentSelectApplicabilities: [],
+
     }
 
   },
   methods:{
 
 
-    editItems(item){
-      this.form.brand_arr = item
-      console.log(item)
-    },
+    // editItems(item){
+    //   this.form.brand_arr = item
+    //   console.log(item.name)
+    // },
 
     onSubmit(evt) {
       evt.preventDefault()
       alert(JSON.stringify(this.form))
     },
+
+
 
     onReset(evt) {
       evt.preventDefault()
@@ -175,16 +182,19 @@ name: "ProductsListFormEdit",
       // Собираем данные
       await this.$store.dispatch("List/GetDataProductBrands");
       this.dataSet = await this.$store.getters["List/ProductBrands"];
+
       await this.$store.dispatch("List/GetDataProducts");
       let currentdata = await this.$store.getters["List/ProductItemById"](Number(this.query)) // лучше обновить так
 
-      if (this.form.brand_arr.id !== currentdata.productCard.brand.id) {
-        console.log('IF '+ this.form.brand_arr.id + ' !== '+currentdata.productCard.brand.id)
-       this.currentSelectItems = this.form.brand_arr
-      }
-      else {
-        this.currentSelectItems = currentdata.productCard.brand
-      }
+      // if (this.form.brand_arr.id !== currentdata.productCard.brand.id) {
+      //   console.log('IF '+ this.form.brand_arr.id + ' !== '+currentdata.productCard.brand.id)
+      //  this.currentSelectItems = this.form.brand_arr
+      // }
+      // else {
+      //   this.currentSelectItems = currentdata.productCard.brand
+      // }
+
+      this.$store.commit("List/addItemSelectProductBrands", currentdata.productCard.brand);
 
       //Открываем модалку
       this.typeMultiSelect = false
@@ -221,6 +231,7 @@ name: "ProductsListFormEdit",
  async mounted() {
     await this.$store.dispatch("List/GetDataProducts");
     this.productsJson = await this.$store.getters["List/ProductItemById"](Number(this.query))
+
     this.form.product_id = this.productsJson.productCard.id
     this.form.product_name= this.productsJson.productCard.name
     this.form.brand_arr= this.productsJson.productCard.brand
@@ -235,6 +246,17 @@ name: "ProductsListFormEdit",
 
   computed:{
 
+
+
+    ItemSelectProductBrand(){
+      return this.$store.getters["List/ProductBrands"]
+    },
+    ItemSelectProductApplicabilities(){
+      return this.$store.getters["List/ProductApplicabilities"]
+    },
+    ItemSelectProductCategories(){
+      return this.$store.getters["List/selectProductCategories"]
+    }
   },
 
 }

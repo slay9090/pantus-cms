@@ -2,41 +2,119 @@ import Axios from 'axios'
 
 
 const state = () => ({
-        state_products: [ ],
+
+    ///### Все продукты
+    state_products: [ ],
+    ///### Все бренды
     state_product_brands: [],
+    ///### Все категории
     state_product_categories: [],
+    ///### Все применимости
     state_product_applicabilities: [],
+    ///### Выбранные бренды
+    select_product_brands: [],
+    ///### Выбранные категории
     select_product_categories: [],
 
 })
 
 const mutations = {
+
+
+    /**
+     * ЗАПИСАТЬ ВСЕ ПРОДУКТЫ В ХРАНИЛИЩЕ
+     * @param state
+     * @param data
+     * @constructor
+     */
     SetDataProducts(state ,data){
         state.state_products = data;
     },
+
+
+    /**
+     * ЗАПИСАТЬ ВСЕ БРЕНДЫ В ХРАНИЛИЩЕ
+     * @param state
+     * @param data
+     * @constructor
+     */
     SetDataProductBrands(state ,data){
         state.state_product_brands = data;
     },
+
+    /**
+     * ЗАПИСАТЬ ВСЕ КАТЕГОРИИ В ХРАНИЛИЩЕ
+     * @param state
+     * @param data
+     * @constructor
+     */
     SetDataProductCategories(state ,data){
         state.state_product_categories = data;
     },
+
+
+    /**
+     * ЗАПИСАТЬ ВСЕ ПРИМЕНИМОСТИ В ХРАНИЛИЩЕ
+     * @param state
+     * @param data
+     * @constructor
+     */
     SetDataProductApplicabilities(state ,data){
         state.state_product_applicabilities = data;
     },
+
+
+    /**
+     * ДОБАВИТЬ ВЫБРАННЫЙ БРЕНД
+     * @param state
+     * @param data
+     */
+    addItemSelectProductBrands(state, data){
+        state.select_product_brands.push(data);
+    },
+
+
+    /**
+     * УДАЛИТЬ ВЫБРАННЫЙ БРЕНД
+     * @param state
+     * @param index
+     */
+    deleteItemSelectProductBrands(state, ){
+        state.select_product_brands.splice();
+    },
+
+
+
+
+    /**
+     * ДОБАВИТЬ ВЫБРАНую КАТЕГОРИю
+     * @param state
+     * @param data
+     */
     addItemSelectProductCategories(state, data){
         state.select_product_categories.push(data);
     },
-    deleteItemSelectProductCategories(state, index){
 
+    /**
+     * ###УДАЛИТЬ ВЫБРАННУЮ КАТЕГОРИЮ
+     * @param state
+     * @param index
+     */
+    deleteItemSelectProductCategories(state, index){
         state.select_product_categories.splice(index, 1);
-    }
+    },
 
 }
 
 const actions = {
 
+    /**
+     * ###ПОЛУЧИТЬ ВСЕ ПРОДУКТЫ С БД
+     * @param commit
+     * @returns {Promise<AxiosResponse<any>>}
+     * @constructor
+     */
     async GetDataProducts({commit}){
-
         let fakedata=  [
             {
                 "productCard": {
@@ -479,29 +557,46 @@ const actions = {
                 }
             },
         ]
-
-
         return  await Axios.get('http://194.67.113.201:8080/brands').then( res =>{
             commit("SetDataProducts",fakedata);
             console.log('мы в действиях получили ', res.data);
         })
     },
 
-    // действие получение Брэндов
+
+    /**
+     * ###ПОЛУЧИТЬ ВСЕ БРЕНДЫ С БД
+     * @param commit
+     * @returns {Promise<AxiosResponse<any>>}
+     * @constructor
+     */
     async GetDataProductBrands({commit}){
         return  await Axios.get('http://194.67.113.201:8080/brands').then( res =>{
             commit("SetDataProductBrands",res.data);
            // console.log('мы в действиях получили ', res.data);
         })
     },
-    // получить категории
+
+
+    /**
+     * ###ПОЛУЧИТЬ ВСЕ КАТЕГОРИИ С БД
+     * @param commit
+     * @returns {Promise<AxiosResponse<any>>}
+     * @constructor
+     */
     async GetDataProductCategories({commit}){
         return  await Axios.get('http://194.67.113.201:8080/categories?view=tree').then( res =>{
             commit("SetDataProductCategories",res.data);
             // console.log('мы в действиях получили ', res.data);
         })
     },
-    // получить применимости
+
+    /**
+     * ###ПОЛУЧИТЬ ВСЕ ПРИМЕНИМОСТИ С БД
+     * @param commit
+     * @returns {Promise<AxiosResponse<any>>}
+     * @constructor
+     */
     async GetDataProductApplicabilities({commit}){
         return  await Axios.get('http://194.67.113.201:8080/applicabilities?view=tree').then( res =>{
             commit("SetDataProductApplicabilities",res.data);
@@ -513,28 +608,69 @@ const actions = {
 }
 
 const getters = {
-    //получить весь массив
-   // AllItems: arr => arr.state_data,
 
+    /**
+     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЕ ПРОДУКТЫ
+     * @param arr
+     * @returns {[]}
+     * @constructor
+     */
     ProductsItems: arr => arr.state_products,
 
+    /**
+     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЕ БРЕНДЫ
+     * @param arr
+     * @returns {[]}
+     * @constructor
+     */
     ProductBrands: arr => arr.state_product_brands,
 
+    /**
+     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЕ КАТЕГОРИИ
+     * @param arr
+     * @returns {[]}
+     * @constructor
+     */
     ProductCategories: arr => arr.state_product_categories,
 
+    /**
+     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЕ ПРИМЕНИМОСТИ
+     * @param arr
+     * @returns {[]}
+     * @constructor
+     */
     ProductApplicabilities: arr => arr.state_product_applicabilities,
 
-
-
-    //получить продукт по ид (оменять когда добавит в апи /details?=123)
+    /**
+     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЮ ИНФОРМАЦИЮ ОБ ЭТОМ ПРОДУКТЕ ПО ИД
+     * @param {Array} arr  - ваы
+     * @return {Array} Вернёт всю инфу по конкретному продукту
+     * @constructor
+     * @enum {number}
+     * @summary A concise summary.
+     * @description `await this.$store.getters["имяМодуля/имяГетера"](Аргументы)`
+     */
     ProductItemById: arr => id => {
         //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
         return arr.state_products.find(todo => todo.productCard.id === id);
     },
 
+    /**
+     * ###Получить из хранилища выбранные бренды
+     * @param arr
+     * @returns {[]}
+     */
+    selectProductBrand: arr => arr.select_product_brands,
+
+    /**
+     * ###Получить из хранилища выбранные категории
+     * @param arr
+     * @returns {[]}
+     */
     selectProductCategories: arr => arr.select_product_categories,
 
 }
+
 export  default {
     getters,
     actions,
