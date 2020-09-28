@@ -80,7 +80,8 @@ const mutations = {
      * @param index
      */
     deleteItemSelectProductBrands(state, ){
-        state.select_product_brands.splice();
+        state.select_product_brands.splice(0);
+
     },
 
 
@@ -93,6 +94,7 @@ const mutations = {
      */
     addItemSelectProductCategories(state, data){
         state.select_product_categories.push(data);
+       // console.log(state.select_product_categories)
     },
 
     /**
@@ -102,6 +104,14 @@ const mutations = {
      */
     deleteItemSelectProductCategories(state, index){
         state.select_product_categories.splice(index, 1);
+    },
+
+    /**
+     * ###Очистить хранилище выбранные категории
+     * @param state
+     */
+    clearItemSelectProductCategories(state){
+        state.select_product_categories.splice(0);
     },
 
 }

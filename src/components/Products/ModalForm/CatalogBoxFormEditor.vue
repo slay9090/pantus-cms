@@ -9,7 +9,7 @@
       centered no-fade no-close-on-backdrop no-close-on-esc
       ok-title="Сохранить">
 
-          <div v-if="typeMultiSelect===false" class="">
+          <div v-if="typeContent==='Brand'" class="">
             <div class="mt-0">
               <div class="wrap">
                 <div class="search">
@@ -23,15 +23,34 @@
 
             <hr>
 
-            <div class="mt-3 scrollblock" >
-              <b-form-radio-group v-model="currentSelectItems.id"  id="radio-group-1" stacked >
-                <b-form-radio v-for="item in filteredList()" :key="item.id"  :value="item.id" @change="setSelectItems(item)">{{ item.name }}</b-form-radio>
-              </b-form-radio-group>
+
+              <div class="mt-3 " >
+
+            <RecycleScroller
+                class="scrollblock"
+                :items="filteredList()"
+                :item-size="30"
+                key-field="id"
+                v-slot="{ item }"
+                content-tag="b-form-radio-group"
+            >
+              <div class="ml-2">
+                  <b-form-radio v-model.lazy="itemSelectProductBrand[0].id"   :value="item.id" @change="setSelectItems(item)">{{ item.name }}</b-form-radio>
+              </div>
+            </RecycleScroller>
+
             </div>
+
+
+<!--            <div class="mt-3 scrollblock" >-->
+<!--              <b-form-radio-group v-model.lazy="currentSelectItems.id"   id="radio-group-1" stacked  >-->
+<!--                <b-form-radio v-for="(item, index) in filteredList()" :key="index"  :value="item.id" @change="setSelectItems(item)">{{ item.name }}</b-form-radio>-->
+<!--              </b-form-radio-group>-->
+<!--            </div>-->
           </div>
 
 
-          <div v-if="typeMultiSelect===true">
+          <div v-if="typeContent==='Categories'">
 <!--            <b-form-group >-->
 <!--              <b-form-checkbox-group id="categories-checkbox-group" v-model="currentSelectItems.id" name="categories-group" stacked>-->
 <!--                <b-form-checkbox v-for="(item, index) in items" :key="index" :value=item.id> {{item.name}} </b-form-checkbox>-->
@@ -41,29 +60,24 @@
 
 <!--{{items}}-->
 
-
-
             <div class="scrollblock" >
-                <checkboxtree   v-for="item in items" :node="item" :key="item.id"></checkboxtree>
-
+                <checkboxtree   v-for="item in items" :node="item" :key="item.id"
+                ></checkboxtree>
             </div>
-
-
-
           </div>
 
 
 
-    <template v-slot:modal-footer="{ ok, cancel,  }">
+    <template v-slot:modal-footer>
       <div class="w-100">
-        <div v-if="typeMultiSelect===false">
+        <div v-if="typeContent==='Brand'">
           <p class="float-left"><b>Текущее значение: </b>
-            <span  v-for= "item in itemSelectProductBrand" :key="item.id">{{item.name}}, </span>
+            <span  v-for= "(item, index) in itemSelectProductBrand" :key="index">{{item.name}}, </span>
           </p>
         </div>
-        <div v-if="typeMultiSelect===true">
+        <div v-if="typeContent==='Categories'">
           <p class="float-left"><b>Текущее значение: </b>
-          <span  v-for= "item in itemSelectProductCategories" :key="item.id">{{item.name}}, </span>
+          <span  v-for= "(item, index) in itemSelectProductCategories" :key="index">{{item.name}},  </span>
           </p>
         </div>
 
@@ -78,7 +92,7 @@
         <b-button
             variant=""
             class="float-right mx-3"
-            @click="cancel()"
+            @click="handleCancel"
         >
           Отмена
         </b-button>
@@ -102,24 +116,18 @@ export default {
   },
   props: {
     items: Array,
-    currentSelectItems: [Object, Array],
-    typeMultiSelect: Boolean,
+    typeContent: String,
   },
 
   data() {
     return {
       inputSearchText: '',
       selectItems: '',
-
-
-
     }
   },
 
   computed:{
-
     itemSelectProductBrand(){
-      //console.log(this.$store.getters["List/selectProductBrand"])
       return this.$store.getters["List/selectProductBrand"]
     },
 
@@ -135,60 +143,74 @@ export default {
     },
     setSelectItems(item){
       this.selectItems = item
+      console.log ('this.selectItems ',this.selectItems)
     },
 
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault()
-      // Trigger submit handler
+
+      switch (this.typeContent) {
+        case 'Brand':
+            this.$store.commit("List/deleteItemSelectProductBrands")
+            this.$store.commit('List/addItemSelectProductBrands', this.selectItems)
+          break;
+
+        case 'Categories':
+
+          break;
+
+        case 'Applicabilities':
 
 
-      // if (this.selectItems) {
-      //   this.$emit('changeitem', this.selectItems);
-      // }
-      this.$store.commit("List/deleteItemSelectProductBrands")
-
-      this.$store.commit('List/addItemSelectProductBrands', this.selectItems)
+          break;
+        default:
+          console.log('Такого типа модального окна не существует')
+      }
 
       this.$nextTick(() => {
         this.$bvModal.hide('modal-catalog-edit')
       })
     },
-    // toggleAll(checked) {
-    // console.log(checked)
-    // //  this.selected = checked ? this.items.slice() : []
-    // },
+
+    handleCancel(bvModalEvt){
+      bvModalEvt.preventDefault()
+
+      console.log('CLOSE')
+
+      this.$store.commit("List/clearItemSelectProductCategories")
+
+      this.$nextTick(() => {
+        this.$bvModal.hide('modal-catalog-edit')
+      })
+
+    },
 
   },
 
-  //
-  // watch: {
-  //   selected(newVal, ) {
-  //     // Handle changes in individual flavour checkboxes
-  //     if (newVal.length === 0) {
-  //       this.indeterminate = false
-  //       this.allSelected = false
-  //     } else if (newVal.length === this.flavours.length) {
-  //       this.indeterminate = false
-  //       this.allSelected = true
-  //     } else {
-  //       this.indeterminate = true
-  //       this.allSelected = false
-  //     }
-  //   }
-  // },
+
 
 
 
  async mounted() {
-// console.log('typeMultiSelect '+this.typeMultiSelect)
-//    console.log('currentSelectItems '+this.currentSelectItems[0])
+
   }
 
 }
 </script>
 
 <style scoped>
+
+
+
+.scroller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+}
+
+
 
 .scrollblock {
 

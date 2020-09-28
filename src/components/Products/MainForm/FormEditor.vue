@@ -22,7 +22,7 @@
               <b-form-group id="input-group-brand" label="Брэнд:" label-for="brand">
                 <div class="input-catalog form-control d-flex justify-content-between" id="brand">
                   <div>
-                  <a :href="'/catalog/brands/edit?id='+form.brand_arr.id">{{form.brand_arr.name}}</a>
+                    <a v-for="(item, index) in itemSelectedProductBrand" :key="index" :href="'/catalog/brand/edit?id='+item.id">{{item.name}} </a>
                   </div>
                   <div>
                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="editProductBrands" ></i>
@@ -83,9 +83,8 @@
               <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
 
               <catalogboxformeditor
-                  :current-select-items=currentSelectItems
                   :items=dataSet
-                  :type-multi-select=typeMultiSelect
+                  :type-content= typeContent
                   v-on:changeitem="editItems($event)"
               />
 
@@ -144,8 +143,8 @@ name: "ProductsListFormEdit",
       productsJson: {},
       show: true,
       dataSet: [],
-      currentSelectItems: [], //удалить
-      typeMultiSelect: false, //
+
+      typeContent: '', //
 
       // currentSelectBrand: [],
       // currentSelectCategories: [],
@@ -183,21 +182,25 @@ name: "ProductsListFormEdit",
       await this.$store.dispatch("List/GetDataProductBrands");
       this.dataSet = await this.$store.getters["List/ProductBrands"];
 
-      await this.$store.dispatch("List/GetDataProducts");
-      let currentdata = await this.$store.getters["List/ProductItemById"](Number(this.query)) // лучше обновить так
+    //  await this.$store.dispatch("List/GetDataProducts");
+    //  let currentdata = await this.$store.getters["List/ProductItemById"](Number(this.query)) // лучше обновить так
 
-      // if (this.form.brand_arr.id !== currentdata.productCard.brand.id) {
-      //   console.log('IF '+ this.form.brand_arr.id + ' !== '+currentdata.productCard.brand.id)
-      //  this.currentSelectItems = this.form.brand_arr
-      // }
-      // else {
-      //   this.currentSelectItems = currentdata.productCard.brand
-      // }
+     // console.log('IF '+ this.form.brand_arr.id + ' !== '+this.$store.getters["List/selectProductBrand"][0].id)
+     //
+     //  if (this.form.brand_arr.id !== this.$store.getters["List/selectProductBrand"][0].id) {
+     //   // console.log('IF '+ this.form.brand_arr.id + ' !== '+this.$store.getters["List/selectProductBrand"][0].id)
+     //  // this.currentSelectItems = this.form.brand_arr
+     //    this.$store.commit("List/deleteItemSelectProductBrands")
+     //    this.$store.commit("List/addItemSelectProductBrands", currentdata.productCard.brand);
+     //  }
+     //  else {
+     //   // this.currentSelectItems = currentdata.productCard.brand
+     //  }
 
-      this.$store.commit("List/addItemSelectProductBrands", currentdata.productCard.brand);
+      //this.$store.commit("List/addItemSelectProductBrands", currentdata.productCard.brand);
 
       //Открываем модалку
-      this.typeMultiSelect = false
+      this.typeContent = 'Brand'
       await this.$bvModal.show('modal-catalog-edit')
 
     },
@@ -207,19 +210,19 @@ name: "ProductsListFormEdit",
       // Собираем данные
       await this.$store.dispatch("List/GetDataProductCategories");
       this.dataSet = await this.$store.getters["List/ProductCategories"];
-      await this.$store.dispatch("List/GetDataProducts");
-      let currentdata = await this.$store.getters["List/ProductItemById"](Number(this.query)) // лучше обновить так
-
-      if (this.form.categories_arr.id !== currentdata.productCard.categories.id) {
-      //  console.log('IF '+ this.form.brand_arr.id + ' !== '+currentdata.productCard.brand.id)
-        this.currentSelectItems = this.form.categories_arr
-      }
-      else {
-        this.currentSelectItems = currentdata.productCard.categories
-      }
+      // await this.$store.dispatch("List/GetDataProducts");
+      // let currentdata = await this.$store.getters["List/ProductItemById"](Number(this.query)) // лучше обновить так
+      //
+      // if (this.form.categories_arr.id !== currentdata.productCard.categories.id) {
+      // //  console.log('IF '+ this.form.brand_arr.id + ' !== '+currentdata.productCard.brand.id)
+      //   this.currentSelectItems = this.form.categories_arr
+      // }
+      // else {
+      //   this.currentSelectItems = currentdata.productCard.categories
+      // }
 
       //Открываем модалку
-      this.typeMultiSelect = true
+      this.typeContent = 'Categories'
       await this.$bvModal.show('modal-catalog-edit')
 
 
@@ -228,9 +231,18 @@ name: "ProductsListFormEdit",
 
   },
 
- async mounted() {
+
+
+  async mounted() {
     await this.$store.dispatch("List/GetDataProducts");
     this.productsJson = await this.$store.getters["List/ProductItemById"](Number(this.query))
+
+    this.$store.commit("List/deleteItemSelectProductBrands")
+    this.$store.commit("List/addItemSelectProductBrands", this.productsJson.productCard.brand);
+
+    this.$store.commit("List/clearItemSelectProductCategories")
+    this.productsJson.productCard.categories.forEach(element => this.$store.commit("List/addItemSelectProductCategories", element));
+
 
     this.form.product_id = this.productsJson.productCard.id
     this.form.product_name= this.productsJson.productCard.name
@@ -254,8 +266,16 @@ name: "ProductsListFormEdit",
     ItemSelectProductApplicabilities(){
       return this.$store.getters["List/ProductApplicabilities"]
     },
+
+    itemSelectedProductBrand(){
+
+      return this.$store.getters["List/selectProductBrand"]
+      //this.form.brand_arr = this.$store.getters["List/selectProductCategories"]
+    },
+
     ItemSelectProductCategories(){
       return this.$store.getters["List/selectProductCategories"]
+
     }
   },
 

@@ -10,20 +10,12 @@
 
         :state="lastNode"
         @change="validations(node)"
-
-
-
     >
+
      <span v-if="node.children&& node.children.length" class="font-weight-bold" > {{ node.name }} </span>
       <span v-else class="font-italic" > {{ node.name }} </span>
     </b-form-checkbox>
 
-
-<!--    <input type="checkbox"  :id=node.name v-if="node.children " v-b-toggle="node.id.toString()" /> {{ node.name }}-->
-
-
-
-<!--    <a  v-if="node.children " v-b-toggle="node.id.toString()"  class="dropicn m-1 font-weight-bold"> > </a>-->
     <!-- Element to collapse -->
     <b-collapse v-if="node.children&& node.children.length&&collapse===true"  :visible="collapse">
       <ul> <check-box-tree v-for="child in node.children" :node="child" :key="child.id" ></check-box-tree> </ul>
@@ -44,15 +36,19 @@ name: "CheckBoxTree",
       collapse: false,
       lastNode: false,
       select: false,
-      selectData: [],
+
+
 
     }
+
   },
 
   computed: {
     ItemSelectProductCategories(){
       return this.$store.getters["List/selectProductCategories"]
-    }
+    },
+
+
   },
 
   methods: {
@@ -67,16 +63,9 @@ name: "CheckBoxTree",
         {
           //иначе последний узел дерева
           this.lastNode=true
-          //console.log('=== '+this.select)
+
           if (this.select===true){
-            //какой-то последний узел дерева отменён
 
-
-           // this.selectData = this.selectData.filter(item => item.id !== node.id)
-
-          //  console.log(this.selectData)
-
-           // console.log('=== '+this.select)
             let index = this.ItemSelectProductCategories.findIndex(s => s.id === node.id);
             console.log(index)
 
@@ -88,12 +77,15 @@ name: "CheckBoxTree",
           else {
             //какой-то последний узел дерева выбран
             //
+
             this.$store.commit("List/addItemSelectProductCategories", node);
 
            // console.log('какой-то последний узел дерева выбран ', this.selectData)
           }
         }
     },
+
+
   },
   watch: {
 
