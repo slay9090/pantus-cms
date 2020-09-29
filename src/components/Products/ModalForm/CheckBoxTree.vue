@@ -37,15 +37,13 @@ name: "CheckBoxTree",
       lastNode: false,
       select: false,
 
-
-
     }
 
   },
 
   computed: {
-    ItemSelectProductCategories(){
-      return this.$store.getters["List/selectProductCategories"]
+    itemSelectProductCategories(){
+      return this.$store.getters["ProductParts/selectedCategories"]
     },
 
 
@@ -66,10 +64,10 @@ name: "CheckBoxTree",
 
           if (this.select===true){
 
-            let index = this.ItemSelectProductCategories.findIndex(s => s.id === node.id);
+            let index = this.itemSelectProductCategories.findIndex(s => s.id === node.id);
             console.log(index)
 
-            this.$store.commit("List/deleteItemSelectProductCategories", index)
+            this.$store.commit("ProductParts/deleteItemSelectedCategories", index)
 
             this.lastNode=false
 
@@ -78,7 +76,7 @@ name: "CheckBoxTree",
             //какой-то последний узел дерева выбран
             //
 
-            this.$store.commit("List/addItemSelectProductCategories", node);
+            this.$store.commit("ProductParts/addItemSelectedCategories", node);
 
            // console.log('какой-то последний узел дерева выбран ', this.selectData)
           }

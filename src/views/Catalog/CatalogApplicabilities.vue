@@ -53,8 +53,8 @@ export default {
   },
 
   async mounted() {
-    await this.$store.dispatch("CatalogApplicabilities/GetData" );
-    let data = await this.$store.getters["CatalogApplicabilities/AllItems"];
+    await this.$store.dispatch("CatalogApplicabilities/getDataAllItems" );
+    let data = await this.$store.getters["CatalogApplicabilities/allItems"];
     this.tree = data;
     this.spinerLoaderIsShow= false
 

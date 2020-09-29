@@ -76,8 +76,8 @@ export default {
   },
 
   async mounted() {
-      await this.$store.dispatch("CatalogBrands/GetData");
-      let data =  await this.$store.getters["CatalogBrands/ItemById"](Number(this.query)); // getTodoById(Number(this.query))
+      await this.$store.dispatch("CatalogBrands/getDataAllItems");
+      let data =  await this.$store.getters["CatalogBrands/itemById"](Number(this.query)); // getTodoById(Number(this.query))
       this.form.name = data.name;
       this.form.id = data.id;
   }

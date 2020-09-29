@@ -140,12 +140,16 @@ name: "ProductsList",
   },
   methods:{
 
-    //записать данные выбраной строки в таблице
+    ///записать данные выбраной строки в таблице
     onRowSelected(items) {
       this.selected = items
     },
 
-    //генерация урл для пагинации
+    /**
+     * xxxxx
+     * @param pageNum sdfgsfdgdfg
+     * @returns {string|string}
+     */
     linkGen(pageNum){
       return pageNum === 1 ? '?' : `?page=${pageNum}`
     },
@@ -165,9 +169,9 @@ name: "ProductsList",
   async mounted() {
 
     this.spinerLoaderIsShow= false
-    await this.$store.dispatch("List/GetDataProducts");
-    this.productsJson = await this.$store.getters["List/ProductsItems"]
-   // console.log('asdasd '+this.productsJson.length)
+    await this.$store.dispatch("ProductParts/getDataAllParts");
+    this.productsJson = await this.$store.getters["ProductParts/partsAllItems"]
+
 
   },
   // исправить

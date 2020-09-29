@@ -158,8 +158,8 @@ export default {
 
   },
   async mounted() {
-    await this.$store.dispatch("CatalogBrands/GetData");
-    let data = await this.$store.getters["CatalogBrands/AllItems"];
+    await this.$store.dispatch("CatalogBrands/getDataAllItems");
+    let data = await this.$store.getters["CatalogBrands/allItems"];
     //console.log(data)
     this.itemDataTab = data;
     this.spinerLoaderIsShow= false

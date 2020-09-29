@@ -4,22 +4,23 @@ import Axios from 'axios'
 const state = () => ({
 
     ///### Все продукты
-    state_products: [ ],
-    ///### Все бренды
-    state_product_brands: [],
-    ///### Все категории
-    state_product_categories: [],
-    ///### Все применимости
-    state_product_applicabilities: [],
+    all_parts: [ ],
+    ///### Текущие бренды для конкретной запчасти
+    current_brands_by_parts_id: [],
+    ///### Текущие категории для конкретной запчасти
+    current_categories_by_parts_id: [],
+    ///### Текущие применимости для конкретной запчасти
+    current_applicabilities_by_parts_id: [],
     ///### Выбранные бренды
-    select_product_brands: [],
+    selected_brands: [],
     ///### Выбранные категории
-    select_product_categories: [],
+    selected_categories: [],
+    ///###Выбранные применимости
+    selected_applicabilities: [],
 
 })
 
 const mutations = {
-
 
     /**
      * ЗАПИСАТЬ ВСЕ ПРОДУКТЫ В ХРАНИЛИЩЕ
@@ -27,74 +28,38 @@ const mutations = {
      * @param data
      * @constructor
      */
-    SetDataProducts(state ,data){
-        state.state_products = data;
+    setDataAllParts(state ,data){
+        state.all_parts = data;
     },
-
-
-    /**
-     * ЗАПИСАТЬ ВСЕ БРЕНДЫ В ХРАНИЛИЩЕ
-     * @param state
-     * @param data
-     * @constructor
-     */
-    SetDataProductBrands(state ,data){
-        state.state_product_brands = data;
-    },
-
-    /**
-     * ЗАПИСАТЬ ВСЕ КАТЕГОРИИ В ХРАНИЛИЩЕ
-     * @param state
-     * @param data
-     * @constructor
-     */
-    SetDataProductCategories(state ,data){
-        state.state_product_categories = data;
-    },
-
-
-    /**
-     * ЗАПИСАТЬ ВСЕ ПРИМЕНИМОСТИ В ХРАНИЛИЩЕ
-     * @param state
-     * @param data
-     * @constructor
-     */
-    SetDataProductApplicabilities(state ,data){
-        state.state_product_applicabilities = data;
-    },
-
 
     /**
      * ДОБАВИТЬ ВЫБРАННЫЙ БРЕНД
      * @param state
      * @param data
      */
-    addItemSelectProductBrands(state, data){
-        state.select_product_brands.push(data);
+    addItemSelectedBrands(state, data){
+        state.selected_brands.push(data);
     },
 
 
     /**
-     * УДАЛИТЬ ВЫБРАННЫЙ БРЕНД
+     * УДАЛИТЬ ВЫБРАННЫе БРЕНДы
      * @param state
      * @param index
      */
-    deleteItemSelectProductBrands(state, ){
-        state.select_product_brands.splice(0);
+    clearItemSelectedBrands(state, ){
+        state.selected_brands.splice(0);
 
     },
-
-
-
 
     /**
      * ДОБАВИТЬ ВЫБРАНую КАТЕГОРИю
      * @param state
      * @param data
      */
-    addItemSelectProductCategories(state, data){
-        state.select_product_categories.push(data);
-       // console.log(state.select_product_categories)
+    addItemSelectedCategories(state, data){
+        state.selected_categories.push(data);
+       // console.log(state.Selected_parts_categories)
     },
 
     /**
@@ -102,16 +67,16 @@ const mutations = {
      * @param state
      * @param index
      */
-    deleteItemSelectProductCategories(state, index){
-        state.select_product_categories.splice(index, 1);
+    deleteItemSelectedCategories(state, index){
+        state.selected_categories.splice(index, 1);
     },
 
     /**
      * ###Очистить хранилище выбранные категории
      * @param state
      */
-    clearItemSelectProductCategories(state){
-        state.select_product_categories.splice(0);
+    clearItemSelectedCategories(state){
+        state.selected_categories.splice(0);
     },
 
 }
@@ -119,12 +84,12 @@ const mutations = {
 const actions = {
 
     /**
-     * ###ПОЛУЧИТЬ ВСЕ ПРОДУКТЫ С БД
+     * ###ПОЛУЧИТЬ ВСЕ ПРОДУКТЫ ИЗ БД
      * @param commit
      * @returns {Promise<AxiosResponse<any>>}
      * @constructor
      */
-    async GetDataProducts({commit}){
+    async getDataAllParts({commit}){
         let fakedata=  [
             {
                 "productCard": {
@@ -147,10 +112,10 @@ const actions = {
                     },
                     "categories": [
                         {
-                            "id": 5096,
-                            "parentId": 5097,
+                            "id": 2950,
+                            "parentId": 2966,
                             "code": null,
-                            "name": "Прокладки и крышки",
+                            "name": "Катушка зажигания",
                             "lft": null,
                             "rght": null,
                             "treeId": null,
@@ -158,10 +123,10 @@ const actions = {
                             "children": null
                         },
                         {
-                            "id": 50961,
-                            "parentId": 50971,
+                            "id": 483,
+                            "parentId": 315,
                             "code": null,
-                            "name": "Пранк",
+                            "name": "Кожухи опор амортизаторов",
                             "lft": null,
                             "rght": null,
                             "treeId": null,
@@ -256,7 +221,7 @@ const actions = {
                     "bitrixId": null,
                     "active": null,
                     "productCardId": null,
-                    "bitrixProductCardId": null,
+                    "bitrixproductCardId": null,
                     "guid": null,
                     "nomenclatureCode": null,
                     "quantity": null,
@@ -395,7 +360,7 @@ const actions = {
                     "bitrixId": null,
                     "active": null,
                     "productCardId": null,
-                    "bitrixProductCardId": null,
+                    "bitrixproductCardId": null,
                     "guid": null,
                     "nomenclatureCode": null,
                     "quantity": null,
@@ -534,7 +499,7 @@ const actions = {
                     "bitrixId": null,
                     "active": null,
                     "productCardId": null,
-                    "bitrixProductCardId": null,
+                    "bitrixproductCardId": null,
                     "guid": null,
                     "nomenclatureCode": null,
                     "quantity": null,
@@ -568,52 +533,10 @@ const actions = {
             },
         ]
         return  await Axios.get('http://194.67.113.201:8080/brands').then( res =>{
-            commit("SetDataProducts",fakedata);
-            console.log('мы в действиях получили ', res.data);
+            commit("setDataAllParts",fakedata);
+           console.log('мы в действиях получили ', res.data);
         })
     },
-
-
-    /**
-     * ###ПОЛУЧИТЬ ВСЕ БРЕНДЫ С БД
-     * @param commit
-     * @returns {Promise<AxiosResponse<any>>}
-     * @constructor
-     */
-    async GetDataProductBrands({commit}){
-        return  await Axios.get('http://194.67.113.201:8080/brands').then( res =>{
-            commit("SetDataProductBrands",res.data);
-           // console.log('мы в действиях получили ', res.data);
-        })
-    },
-
-
-    /**
-     * ###ПОЛУЧИТЬ ВСЕ КАТЕГОРИИ С БД
-     * @param commit
-     * @returns {Promise<AxiosResponse<any>>}
-     * @constructor
-     */
-    async GetDataProductCategories({commit}){
-        return  await Axios.get('http://194.67.113.201:8080/categories?view=tree').then( res =>{
-            commit("SetDataProductCategories",res.data);
-            // console.log('мы в действиях получили ', res.data);
-        })
-    },
-
-    /**
-     * ###ПОЛУЧИТЬ ВСЕ ПРИМЕНИМОСТИ С БД
-     * @param commit
-     * @returns {Promise<AxiosResponse<any>>}
-     * @constructor
-     */
-    async GetDataProductApplicabilities({commit}){
-        return  await Axios.get('http://194.67.113.201:8080/applicabilities?view=tree').then( res =>{
-            commit("SetDataProductApplicabilities",res.data);
-            // console.log('мы в действиях получили ', res.data);
-        })
-    },
-
 
 }
 
@@ -625,31 +548,7 @@ const getters = {
      * @returns {[]}
      * @constructor
      */
-    ProductsItems: arr => arr.state_products,
-
-    /**
-     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЕ БРЕНДЫ
-     * @param arr
-     * @returns {[]}
-     * @constructor
-     */
-    ProductBrands: arr => arr.state_product_brands,
-
-    /**
-     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЕ КАТЕГОРИИ
-     * @param arr
-     * @returns {[]}
-     * @constructor
-     */
-    ProductCategories: arr => arr.state_product_categories,
-
-    /**
-     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЕ ПРИМЕНИМОСТИ
-     * @param arr
-     * @returns {[]}
-     * @constructor
-     */
-    ProductApplicabilities: arr => arr.state_product_applicabilities,
+    partsAllItems: arr => arr.all_parts,
 
     /**
      * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЮ ИНФОРМАЦИЮ ОБ ЭТОМ ПРОДУКТЕ ПО ИД
@@ -657,12 +556,18 @@ const getters = {
      * @return {Array} Вернёт всю инфу по конкретному продукту
      * @constructor
      * @enum {number}
-     * @summary A concise summary.
+     * @summary `await this.$store.getters["имяМодуля/имяГетера"](Аргументы)`
      * @description `await this.$store.getters["имяМодуля/имяГетера"](Аргументы)`
      */
-    ProductItemById: arr => id => {
+    partsItemById: arr => id => {
         //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
-        return arr.state_products.find(todo => todo.productCard.id === id);
+        return arr.all_parts.find(todo => todo.productCard.id === id);
+    },
+
+    currentBrandByPartId: arr => id => {
+
+         console.log('In store = ', (state.state_data.find(todo => todo.productCard.id === id)).productCard.brand)
+        return arr.all_parts.find(todo => todo.productCard.id === id);
     },
 
     /**
@@ -670,14 +575,21 @@ const getters = {
      * @param arr
      * @returns {[]}
      */
-    selectProductBrand: arr => arr.select_product_brands,
+    selectedBrands: arr => arr.selected_brands,
 
     /**
      * ###Получить из хранилища выбранные категории
      * @param arr
      * @returns {[]}
      */
-    selectProductCategories: arr => arr.select_product_categories,
+    selectedCategories: arr => arr.selected_categories,
+
+    /**
+     * ###Получить из хранилища выбранные применимости
+     * @param arr
+     * @returns {[]}
+     */
+    selectedApplicabilities: arr => arr.selected_applicabilities,
 
 }
 

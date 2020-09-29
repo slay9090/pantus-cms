@@ -123,16 +123,17 @@ export default {
     return {
       inputSearchText: '',
       selectItems: '',
+      cancelStateItems: [],
     }
   },
 
   computed:{
     itemSelectProductBrand(){
-      return this.$store.getters["List/selectProductBrand"]
+      return this.$store.getters["ProductParts/selectedBrands"]
     },
 
     itemSelectProductCategories(){
-      return this.$store.getters["List/selectProductCategories"]
+      return this.$store.getters["ProductParts/selectedCategories"]
     }
   },
   methods:{
@@ -152,8 +153,8 @@ export default {
 
       switch (this.typeContent) {
         case 'Brand':
-            this.$store.commit("List/deleteItemSelectProductBrands")
-            this.$store.commit('List/addItemSelectProductBrands', this.selectItems)
+            this.$store.commit("ProductParts/clearItemSelectedBrands")
+            this.$store.commit('ProductParts/addItemSelectedBrands', this.selectItems)
           break;
 
         case 'Categories':
@@ -178,7 +179,7 @@ export default {
 
       console.log('CLOSE')
 
-      this.$store.commit("List/clearItemSelectProductCategories")
+      this.$store.commit("ProductParts/clearItemSelectedCategories")
 
       this.$nextTick(() => {
         this.$bvModal.hide('modal-catalog-edit')
@@ -193,7 +194,10 @@ export default {
 
 
  async mounted() {
-
+    // if (this.cancelStateItems) {
+    //   this.cancelStateItems = this.$store.getters["List/selectProductCategories"]
+    //   console.log('this.cancelStateItems ', this.cancelStateItems)
+    // }
   }
 
 }

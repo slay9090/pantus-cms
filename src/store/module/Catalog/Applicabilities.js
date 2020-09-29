@@ -2,34 +2,55 @@ import Axios from 'axios'
 
 
 const state = () => ({
-    state_data: [],
+    all_items_applicabilities: [],
 
 })
 
 const mutations = {
-    SetData(state ,data){
-        state.state_data = data;
+    /**
+     * ###ЗАПИСАТЬ ВСЕ ПРИМЕНИМОСТИ В ХРАНИЛИЩЕ
+     * @param state
+     * @param data
+     */
+    setDataAllApplicabilities(state ,data){
+        state.all_items_applicabilities = data;
     },
 }
 
 const actions = {
 
-    // действие получение данных по апи
-    async GetData({commit}){
+    /**
+     * ###ПОЛУЧИТЬ ВСЕ ПРИМЕНИМОСТИ С БД
+     * @param commit
+     * @returns {Promise<AxiosResponse<any>>}
+     */
+    async getDataAllItems({commit}){
         return  await Axios.get('http://194.67.113.201:8080/applicabilities?view=tree').then( res =>{
-            commit("SetData",res.data);
+            commit("setDataAllApplicabilities",res.data);
             // console.log('мы в действиях получили ', res.data);
         })
     },
 }
 
 const getters = {
-    //получить весь массив
-    AllItems: arr => arr.state_data,
-    //получить одну запись по ид
-    ItemById: arr => id => {
+    /**
+     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЕ ПРИМЕНИМОСТИ
+     * @param arr
+     * @returns {[]}
+     * @constructor
+     */
+    allItems: arr => arr.all_items_applicabilities,
+
+    /**
+     * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЮ ИНФОРМАЦИЮ ОБ ЭТОЙ ПРИМЕНИМОСТИ ПО ИД
+     * @param arr
+     * @returns {function(*): *}
+     * @summary `await this.$store.getters["имяМодуля/имяГетера"](Аргументы)`
+     * @constructor
+     */
+    itemById: arr => id => {
         //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
-        return arr.state_data.find(todo => todo.id === id);
+        return arr.all_items_applicabilities.find(todo => todo.id === id);
     }
 
 }

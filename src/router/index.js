@@ -83,7 +83,7 @@ Vue.use(VueRouter)
 
           path: '/catalog/category',
           name: 'CatalogCategory',
-          component: () => import('../views/Catalog/CatalogCategory'),
+          component: () => import('../views/Catalog/CatalogCategories'),
           meta: {
             breadcrumb: [
               { name: 'Catalog' },
@@ -219,7 +219,7 @@ Vue.use(VueRouter)
           path: '/products/list',
           props: route => ({ query: route.query.page }),
           name: 'ProductsList',
-          component: () => import('../views/Products/ProductsList'),
+          component: () => import('../views/Products/ProductsParts'),
           meta: {
               breadcrumb: [
                   { name: 'Продукты' },

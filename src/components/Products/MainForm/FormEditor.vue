@@ -179,8 +179,8 @@ name: "ProductsListFormEdit",
     },
     async editProductBrands(){
       // Собираем данные
-      await this.$store.dispatch("List/GetDataProductBrands");
-      this.dataSet = await this.$store.getters["List/ProductBrands"];
+      await this.$store.dispatch("CatalogBrands/getDataAllItems");
+      this.dataSet = await this.$store.getters["CatalogBrands/allItems"];
 
     //  await this.$store.dispatch("List/GetDataProducts");
     //  let currentdata = await this.$store.getters["List/ProductItemById"](Number(this.query)) // лучше обновить так
@@ -208,8 +208,8 @@ name: "ProductsListFormEdit",
     async editProductCategories(){
 
       // Собираем данные
-      await this.$store.dispatch("List/GetDataProductCategories");
-      this.dataSet = await this.$store.getters["List/ProductCategories"];
+      await this.$store.dispatch("CatalogCategories/getDataAllItems");
+      this.dataSet = await this.$store.getters["CatalogCategories/allItems"];
       // await this.$store.dispatch("List/GetDataProducts");
       // let currentdata = await this.$store.getters["List/ProductItemById"](Number(this.query)) // лучше обновить так
       //
@@ -234,14 +234,14 @@ name: "ProductsListFormEdit",
 
 
   async mounted() {
-    await this.$store.dispatch("List/GetDataProducts");
-    this.productsJson = await this.$store.getters["List/ProductItemById"](Number(this.query))
+    await this.$store.dispatch("ProductParts/getDataAllParts");
+    this.productsJson = await this.$store.getters["ProductParts/partsItemById"](Number(this.query))
 
-    this.$store.commit("List/deleteItemSelectProductBrands")
-    this.$store.commit("List/addItemSelectProductBrands", this.productsJson.productCard.brand);
+    this.$store.commit("ProductParts/clearItemSelectedBrands")
+    this.$store.commit("ProductParts/addItemSelectedBrands", this.productsJson.productCard.brand);
 
-    this.$store.commit("List/clearItemSelectProductCategories")
-    this.productsJson.productCard.categories.forEach(element => this.$store.commit("List/addItemSelectProductCategories", element));
+    this.$store.commit("ProductParts/clearItemSelectedCategories")
+    this.productsJson.productCard.categories.forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element));
 
 
     this.form.product_id = this.productsJson.productCard.id
@@ -260,21 +260,21 @@ name: "ProductsListFormEdit",
 
 
 
-    ItemSelectProductBrand(){
-      return this.$store.getters["List/ProductBrands"]
-    },
-    ItemSelectProductApplicabilities(){
-      return this.$store.getters["List/ProductApplicabilities"]
-    },
+    // ItemSelectProductBrand(){
+    //   return this.$store.getters["List/ProductBrands"]
+    // },
+    // ItemSelectProductApplicabilities(){
+    //   return this.$store.getters["List/ProductApplicabilities"]
+    // },
 
     itemSelectedProductBrand(){
 
-      return this.$store.getters["List/selectProductBrand"]
+      return this.$store.getters["ProductParts/selectedBrands"]
       //this.form.brand_arr = this.$store.getters["List/selectProductCategories"]
     },
 
     ItemSelectProductCategories(){
-      return this.$store.getters["List/selectProductCategories"]
+      return this.$store.getters["ProductParts/selectedCategories"]
 
     }
   },
