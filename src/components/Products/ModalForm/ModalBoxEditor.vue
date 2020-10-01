@@ -66,7 +66,7 @@
             </div>
           </div>
 
-
+    {{test}}
 
     <template v-slot:modal-footer>
       <div class="w-100">
@@ -123,7 +123,10 @@ export default {
     return {
       inputSearchText: '',
       selectItems: '',
-      cancelStateItems: [],
+     // cancelStateItems: [],
+
+     // parentSelectedNode:
+
     }
   },
 
@@ -134,7 +137,14 @@ export default {
 
     itemSelectProductCategories(){
       return this.$store.getters["ProductParts/selectedCategories"]
+    },
+
+    test(){
+      return this.$store.getters["ProductParts/parentsSelectedNodes"]
     }
+
+
+
   },
   methods:{
     filteredList() {
@@ -158,6 +168,10 @@ export default {
           break;
 
         case 'Categories':
+          console.log(this.itemSelectProductCategories)
+          this.$store.commit("ProductParts/setDataCurrentCategoriesByPart", this.itemSelectProductCategories) // подгружаем в текущие // variable *//push
+           // console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
+         // this.itemSelectProductCategories.forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element)); //запись селектов
 
           break;
 
@@ -179,7 +193,17 @@ export default {
 
       console.log('CLOSE')
 
-      this.$store.commit("ProductParts/clearItemSelectedCategories")
+
+     // console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
+
+      this.$store.commit("ProductParts/clearItemSelectedCategories") //
+
+    //  console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
+
+      this.$store.getters["ProductParts/currentCategoriesByPart"]
+          .forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element)); //запись селектов на текущие
+
+    //  console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
 
       this.$nextTick(() => {
         this.$bvModal.hide('modal-catalog-edit')
@@ -187,17 +211,24 @@ export default {
 
     },
 
-  },
+    /**
+     * Вернуть всех родителей конкретного узла
+     * @param dataset - набор данных
+     * @param nodeId - ид узла
+     * @returns {[]} - родители
+     */
+
+
+    },
 
 
 
 
 
  async mounted() {
-    // if (this.cancelStateItems) {
-    //   this.cancelStateItems = this.$store.getters["List/selectProductCategories"]
-    //   console.log('this.cancelStateItems ', this.cancelStateItems)
-    // }
+
+  // console.log('parent node ',this.getAllParentThisNode(this.items, 442))
+
   }
 
 }

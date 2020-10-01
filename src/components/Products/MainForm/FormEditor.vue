@@ -22,7 +22,7 @@
               <b-form-group id="input-group-brand" label="Брэнд:" label-for="brand">
                 <div class="input-catalog form-control d-flex justify-content-between" id="brand">
                   <div>
-                    <a v-for="(item, index) in itemSelectedProductBrand" :key="index" :href="'/catalog/brand/edit?id='+item.id">{{item.name}} </a>
+                    <a v-for="(item, index) in selectedBrand" :key="index" :href="'/catalog/brand/edit?id='+item.id">{{item.name}} </a>
                   </div>
                   <div>
                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="editProductBrands" ></i>
@@ -34,7 +34,7 @@
 
                 <div class="input-catalog form-control d-flex justify-content-between" id="categories">
                   <div>
-                    <a v-for="item in form.categories_arr" :key="item.id" :href="'/catalog/category/edit?id='+item.id">{{item.name}}, </a>
+                    <a v-for="item in selectedCategories" :key="item.id" :href="'/catalog/category/edit?id='+item.id">{{item.name}}, </a>
                   </div>
                   <div>
                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="editProductCategories"></i>
@@ -114,7 +114,7 @@
 
 <script>
 
-import catalogboxformeditor from '@/components/Products/ModalForm/CatalogBoxFormEditor'
+import catalogboxformeditor from '@/components/Products/ModalForm/ModalBoxEditor'
 
 export default {
 name: "ProductsListFormEdit",
@@ -222,20 +222,61 @@ name: "ProductsListFormEdit",
       // }
 
       //Открываем модалку
+
+
+
+
       this.typeContent = 'Categories'
+      this.$store.commit('ProductParts/clearDataParentsSelectedNodes')
+      this.$store.commit('ProductParts/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes())
       await this.$bvModal.show('modal-catalog-edit')
 
 
     },
 
+    ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
+    getAllParentsForAllSelectedNodes(){
+      let parent= []
+        this.selectedCategories.forEach(element => {
+          parent.push(this.getAllParentForOneNode(this.dataSet, element.id))
+        })
+
+      return parent
+    },
+    getAllParentForOneNode(dataset, nodeId)
+    {
+      let parents = []
+      var TreeModel = require('tree-model'),
+          tree = new TreeModel();
+      dataset.forEach(element => {
+        let rootMain = tree.parse(element);
+        rootMain.walk(function (node) {
+          if (node.model.id === nodeId) {
+            let x = node.getPath()
+            x.forEach(element => {
+              parents.push(element.model.id)
+
+            })}})})
+
+      return parents
+    },
+    ///КОНЕЦ ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
 
   },
 
 
 
   async mounted() {
+
+
+
+
     await this.$store.dispatch("ProductParts/getDataAllParts");
     this.productsJson = await this.$store.getters["ProductParts/partsItemById"](Number(this.query))
+
+    this.$store.commit("ProductParts/setDataCurrentCategoriesByPart", this.productsJson.productCard.categories) // подгружаем текущие категории товара
+    this.$store.commit("ProductParts/setDataCurrentBrandsByPart", this.productsJson.productCard.brand) // подгружаем текущие Бренды товара
+    this.$store.commit("ProductParts/setDataCurrentApplicabilitiesByPart", this.productsJson.productCard.applicabilities) // подгружаем текущие Применимости товара
 
     this.$store.commit("ProductParts/clearItemSelectedBrands")
     this.$store.commit("ProductParts/addItemSelectedBrands", this.productsJson.productCard.brand);
@@ -267,16 +308,16 @@ name: "ProductsListFormEdit",
     //   return this.$store.getters["List/ProductApplicabilities"]
     // },
 
-    itemSelectedProductBrand(){
+    selectedBrand(){
 
       return this.$store.getters["ProductParts/selectedBrands"]
       //this.form.brand_arr = this.$store.getters["List/selectProductCategories"]
     },
 
-    ItemSelectProductCategories(){
-      return this.$store.getters["ProductParts/selectedCategories"]
+    selectedCategories(){
+      return  this.$store.getters["ProductParts/selectedCategories"]
 
-    }
+    },
   },
 
 }

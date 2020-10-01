@@ -3,13 +3,14 @@
 
 
     <b-form-checkbox
+        @change="validations(node)"
         @input="collapse=!collapse"
         :id=node.id.toString()
         v-model="select"
         name="checkbox"
 
         :state="lastNode"
-        @change="validations(node)"
+
     >
 
      <span v-if="node.children&& node.children.length" class="font-weight-bold" > {{ node.name }} </span>
@@ -34,6 +35,7 @@ name: "CheckBoxTree",
     return {
 
       collapse: false,
+
       lastNode: false,
       select: false,
 
@@ -47,10 +49,39 @@ name: "CheckBoxTree",
     },
 
 
+
+
+  },
+
+  mounted() {
+    this.$store.getters["ProductParts/parentsSelectedNodes"].forEach(element => {
+      let lastElement=element[element.length - 1]
+      element.forEach(element => {
+        if(this.node.id === element)
+        {
+          this.select = true
+          this.collapse = false // это рофл конечно, но @input="collapse=!collapse"
+
+          if (element === lastElement){
+            this.lastNode = true
+          }
+
+        }
+      })
+    })
   },
 
   methods: {
+
+    isOpenNodeTree(){
+
+
+    },
+
     validations(node){
+
+
+
 
       if (node.children&& node.children.length){
         //если есть чилдрен, то не последний узел дерева
@@ -82,6 +113,9 @@ name: "CheckBoxTree",
           }
         }
     },
+
+
+
 
 
   },

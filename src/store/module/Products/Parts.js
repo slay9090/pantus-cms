@@ -1,3 +1,6 @@
+/**
+ * @file xaxaxa
+ */
 import Axios from 'axios'
 
 
@@ -6,17 +9,19 @@ const state = () => ({
     ///### Все продукты
     all_parts: [ ],
     ///### Текущие бренды для конкретной запчасти
-    current_brands_by_parts_id: [],
+    current_brands_by_parts: [],
     ///### Текущие категории для конкретной запчасти
-    current_categories_by_parts_id: [],
+    current_categories_by_parts: [],
     ///### Текущие применимости для конкретной запчасти
-    current_applicabilities_by_parts_id: [],
+    current_applicabilities_by_parts: [],
     ///### Выбранные бренды
     selected_brands: [],
     ///### Выбранные категории
     selected_categories: [],
     ///###Выбранные применимости
     selected_applicabilities: [],
+    ///### Узлы выбранных итемов
+    parents_selected_items: [],
 
 })
 
@@ -31,6 +36,34 @@ const mutations = {
     setDataAllParts(state ,data){
         state.all_parts = data;
     },
+    /**
+     * Записать в текущие Бренды товара
+     * @param state
+     * @param data {Array} - массив брендов
+     */
+    setDataCurrentBrandsByPart(state, data){
+        state.current_brands_by_parts =  data;
+    },
+    /**
+     * Записать в текущие Категории товара
+     * @param state
+     * @param data {Array} - массив категор
+     */
+    setDataCurrentCategoriesByPart(state, data){
+
+        state.current_categories_by_parts =  data.slice();
+
+       // console.log('state.current_categories_by_parts ',state.current_categories_by_parts)
+    },
+    /**
+     * Записать в текущие Применимости товара
+     * @param state
+     * @param data {Array} - массив применимости
+     */
+    setDataCurrentApplicabilitiesByPart(state, data){
+        state.current_applicabilities_by_parts =  data.slice();
+    },
+
 
     /**
      * ДОБАВИТЬ ВЫБРАННЫЙ БРЕНД
@@ -78,6 +111,15 @@ const mutations = {
     clearItemSelectedCategories(state){
         state.selected_categories.splice(0);
     },
+
+    setDataParentsSelectedNodes(state, data){
+        state.parents_selected_items = data.slice();
+
+    },
+
+    clearDataParentsSelectedNodes(state){
+        state.parents_selected_items.splice(0);
+    }
 
 }
 
@@ -560,15 +602,16 @@ const getters = {
      * @description `await this.$store.getters["имяМодуля/имяГетера"](Аргументы)`
      */
     partsItemById: arr => id => {
-        //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
         return arr.all_parts.find(todo => todo.productCard.id === id);
     },
 
-    currentBrandByPartId: arr => id => {
+    /// ### Текущие бренды этой запчасти
+    currentBrandByPart: arr => arr.current_brands_by_parts,
+    /// ### Текущие категории этой запчасти
+    currentCategoriesByPart: arr => arr.current_categories_by_parts,
+    /// ### Текущие применимости этой запчасти
+    currentApplicabilitiesByPart: arr => arr.current_applicabilities_by_parts,
 
-         console.log('In store = ', (state.state_data.find(todo => todo.productCard.id === id)).productCard.brand)
-        return arr.all_parts.find(todo => todo.productCard.id === id);
-    },
 
     /**
      * ###Получить из хранилища выбранные бренды
@@ -590,6 +633,9 @@ const getters = {
      * @returns {[]}
      */
     selectedApplicabilities: arr => arr.selected_applicabilities,
+
+    ///все Родительские узлы до текущих узлов
+    parentsSelectedNodes: arr => arr.parents_selected_items,
 
 }
 
