@@ -66,7 +66,7 @@
             </div>
           </div>
 
-    {{test}}
+
 
     <template v-slot:modal-footer>
       <div class="w-100">
@@ -138,12 +138,6 @@ export default {
     itemSelectProductCategories(){
       return this.$store.getters["ProductParts/selectedCategories"]
     },
-
-    test(){
-      return this.$store.getters["ProductParts/parentsSelectedNodes"]
-    }
-
-
 
   },
   methods:{

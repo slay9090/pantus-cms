@@ -117,7 +117,7 @@ name: "FormEdit",
       xhr.onload = function() {
         var json;
 
-        if (xhr.status != 200) {
+        if (xhr.status !== 200) {
           failure('HTTP Error: ' + xhr.status);
           return;
         }

@@ -66,7 +66,7 @@
                     <b-img fluid :src="form.productCardImages_main_url" />
                   </div>
                   <div>
-                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i>
+                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="imageUpload" ></i>
                   </div>
                 </div>
               </b-form-group>
@@ -87,6 +87,8 @@
                   :type-content= typeContent
                   v-on:changeitem="editItems($event)"
               />
+
+              <imageuploader />
 
             </b-form>
           </div>
@@ -115,6 +117,7 @@
 <script>
 
 import catalogboxformeditor from '@/components/Products/ModalForm/ModalBoxEditor'
+import imageuploader from '@/components/FileLoader/ModalWindowUpLoader'
 
 export default {
 name: "ProductsListFormEdit",
@@ -122,6 +125,7 @@ name: "ProductsListFormEdit",
 
   components: {
     catalogboxformeditor,
+    imageuploader,
   },
 
   data() {
@@ -181,28 +185,9 @@ name: "ProductsListFormEdit",
       // Собираем данные
       await this.$store.dispatch("CatalogBrands/getDataAllItems");
       this.dataSet = await this.$store.getters["CatalogBrands/allItems"];
-
-    //  await this.$store.dispatch("List/GetDataProducts");
-    //  let currentdata = await this.$store.getters["List/ProductItemById"](Number(this.query)) // лучше обновить так
-
-     // console.log('IF '+ this.form.brand_arr.id + ' !== '+this.$store.getters["List/selectProductBrand"][0].id)
-     //
-     //  if (this.form.brand_arr.id !== this.$store.getters["List/selectProductBrand"][0].id) {
-     //   // console.log('IF '+ this.form.brand_arr.id + ' !== '+this.$store.getters["List/selectProductBrand"][0].id)
-     //  // this.currentSelectItems = this.form.brand_arr
-     //    this.$store.commit("List/deleteItemSelectProductBrands")
-     //    this.$store.commit("List/addItemSelectProductBrands", currentdata.productCard.brand);
-     //  }
-     //  else {
-     //   // this.currentSelectItems = currentdata.productCard.brand
-     //  }
-
-      //this.$store.commit("List/addItemSelectProductBrands", currentdata.productCard.brand);
-
       //Открываем модалку
       this.typeContent = 'Brand'
       await this.$bvModal.show('modal-catalog-edit')
-
     },
 
     async editProductCategories(){
@@ -210,28 +195,17 @@ name: "ProductsListFormEdit",
       // Собираем данные
       await this.$store.dispatch("CatalogCategories/getDataAllItems");
       this.dataSet = await this.$store.getters["CatalogCategories/allItems"];
-      // await this.$store.dispatch("List/GetDataProducts");
-      // let currentdata = await this.$store.getters["List/ProductItemById"](Number(this.query)) // лучше обновить так
-      //
-      // if (this.form.categories_arr.id !== currentdata.productCard.categories.id) {
-      // //  console.log('IF '+ this.form.brand_arr.id + ' !== '+currentdata.productCard.brand.id)
-      //   this.currentSelectItems = this.form.categories_arr
-      // }
-      // else {
-      //   this.currentSelectItems = currentdata.productCard.categories
-      // }
-
       //Открываем модалку
-
-
-
-
       this.typeContent = 'Categories'
       this.$store.commit('ProductParts/clearDataParentsSelectedNodes')
       this.$store.commit('ProductParts/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes())
       await this.$bvModal.show('modal-catalog-edit')
 
+    },
 
+
+    imageUpload(){
+      this.$bvModal.show('modal-file-uploader')
     },
 
     ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
