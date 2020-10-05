@@ -231,7 +231,7 @@ Vue.use(VueRouter)
       { path: '/products/list/edit',
           component: () => import('../components/Products/MainForm/FormEditor'),
           props: route => ({ query: route.query.id }),
-          name: 'ArticlesFormEdit',
+          name: 'ProductFormEdit',
           meta: {
               breadcrumb: [
                   { name: 'Продукты' },

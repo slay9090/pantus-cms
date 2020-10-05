@@ -3,7 +3,7 @@
     <b-modal
 
         id="modal-file-uploader"
-        title="BootstrapVue"
+        title="Загрузка файлов"
         size="lg"
         centered no-fade no-close-on-backdrop no-close-on-esc
         ok-title="Сохранить">
