@@ -167,7 +167,7 @@ img {
 .scrollblock {
 
 
-  height: 500px;
+  height: 235px;
   width: 100%;
   overflow-y: auto;
 
@@ -217,8 +217,8 @@ img {
 .boxes .box {
   width: var(--size);
   height: var(--size);
-  top: 200%;
-  left: 600%;
+  top: -100%;
+  left: 400%;
   position: absolute;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
