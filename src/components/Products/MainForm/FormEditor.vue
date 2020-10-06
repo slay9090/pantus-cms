@@ -62,8 +62,35 @@
 
               <b-form-group id="input-group-productCardImages_main" label="Основное изображение:" label-for="productCardImages_main">
                 <div class="input-catalog form-control d-flex justify-content-between" id="productCardImages_main">
-                  <div>
-                    <b-img fluid :src="form.productCardImages_main_url" />
+                  <div class="mr-3">
+<!--                    <b-carousel-->
+<!--                        id="carousel-1"-->
+<!--                        v-model="slide"-->
+<!--                        :interval="4000"-->
+<!--                        controls-->
+<!--                        indicators-->
+<!--                        background="#ababab"-->
+<!--                        img-width="1024"-->
+<!--                        img-height="480"-->
+<!--                        style="text-shadow: 1px 1px 2px #333;"-->
+<!--                        @sliding-start="onSlideStart"-->
+<!--                        @sliding-end="onSlideEnd"-->
+<!--                    >-->
+<!--                      &lt;!&ndash; Text slides with image &ndash;&gt;-->
+<!--                      <b-carousel-slide>-->
+<!--                        <template v-slot:img>-->
+<!--                          <img-->
+<!--                              class="d-block img-fluid w-100"-->
+<!--                              width="1024"-->
+<!--                              height="480"-->
+<!--                              src="https://picsum.photos/1024/480/?image=55"-->
+<!--                              alt="image slot"-->
+<!--                          >-->
+<!--                        </template>-->
+<!--                      </b-carousel-slide>-->
+
+<!--                    </b-carousel>-->
+
                   </div>
                   <div>
                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="imageUpload" ></i>

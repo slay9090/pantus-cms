@@ -12,7 +12,7 @@
       <span >Выбрать</span>
     </div>
     <!-- Now, the file input that we hide. -->
-    <input type="file" multiple="multiple" @change="handleFileChange($event); onFileChange($event) " />
+    <input type="file" name="xxx" multiple="multiple" @change="handleFileChange($event); onFileChange($event) " />
   </label>
   <hr>
 
@@ -20,7 +20,8 @@
 
   <div class="scrollblock">
 
-    <div class="boxes" v-if="images.length<1">
+    <div v-if="images.length<1" class="d-flex justify-content-center align-items-center h-100">
+    <div class="boxes" >
       <div class="box">
         <div></div>
         <div></div>
@@ -45,6 +46,7 @@
         <div></div>
         <div></div>
       </div>
+    </div>
     </div>
 
 
@@ -89,7 +91,9 @@ name: "ImageLoader",
   methods: {
     handleFileChange(e) {
       // Whenever the file changes, emit the 'input' event with the file data.
-      this.$emit('input', e.target.files)
+      console.log(e.target.files)
+     this.$emit('input', e.target.files)
+     // this.$store.commit('ProductParts/setDataSelectedImages', this.images) /// СНАЧАЛА НА СЕРВЕР ЗАПИСАТЬ
     },
 
 
@@ -194,10 +198,7 @@ img {
 
 /*АНИМАЦИЯ КУБИИКИ-РУБИКИ ЛЯТЬ*/
 
-:root {
-  --size: 32px;
-  --duration: 800ms;
-}
+
 
 
 .boxes {
@@ -205,7 +206,7 @@ img {
   --duration: 800ms;
   height: calc(var(--size) * 2);
   width: calc(var(--size) * 3);
-  position: relative;
+  position: center;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   -webkit-transform-origin: 50% 50%;
@@ -217,8 +218,7 @@ img {
 .boxes .box {
   width: var(--size);
   height: var(--size);
-  top: -100%;
-  left: 400%;
+
   position: absolute;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;

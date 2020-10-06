@@ -22,6 +22,8 @@ const state = () => ({
     selected_applicabilities: [],
     ///### Узлы выбранных итемов
     parents_selected_items: [],
+    ///### Выбранные Изображения
+    selected_images: [],
 
 })
 
@@ -119,7 +121,25 @@ const mutations = {
 
     clearDataParentsSelectedNodes(state){
         state.parents_selected_items.splice(0);
+    },
+
+    /**
+     * ЗАписать выбанные изображения в хранилище
+     * @param state
+     * @param data
+     */
+    setDataSelectedImages(state, data){
+        state.selected_images = data.slice();
+    },
+    /**
+     * очистить хранилище выбранных изобрпажений
+     * @param state
+     */
+    clearDataSelectedImages(state){
+        state.selected_images.splice(0);
     }
+
+
 
 }
 
@@ -636,6 +656,8 @@ const getters = {
 
     ///все Родительские узлы до текущих узлов
     parentsSelectedNodes: arr => arr.parents_selected_items,
+    ///Получить из хранилища выбранные изображения
+    selectedImages: arr => arr.selected_images,
 
 }
 

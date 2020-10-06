@@ -109,7 +109,7 @@ name: "FormEdit",
 
     images_upload_credentials: true,
 
-    images_upload_handler: function (blobInfo, success, failure) {
+    images_upload_handler: async function (blobInfo, success, failure) {
       var xhr, formData;
       xhr = new XMLHttpRequest();
       xhr.withCredentials = false;
@@ -130,10 +130,10 @@ name: "FormEdit",
         success(json.location);
       };
       console.log(blobInfo.filename())
-      formData = new FormData();
+      formData =  new FormData();
       formData.append('file', blobInfo.blob(), blobInfo.filename());
-      xhr.send(formData);
-      success('https://www.pantus.ru/images_uploader/images/'+blobInfo.filename())
+       xhr.send(formData);
+      await success('https://www.pantus.ru/images_uploader/images/'+blobInfo.filename())
     }
   },
     }
