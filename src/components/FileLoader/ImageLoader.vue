@@ -163,7 +163,6 @@ img {
 .imagecontain {
 
   height: 200px;
-
   text-align: left;
 
 }

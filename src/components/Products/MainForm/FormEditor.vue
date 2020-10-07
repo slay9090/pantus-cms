@@ -62,40 +62,85 @@
 
               <b-form-group id="input-group-productCardImages_main" label="Основное изображение:" label-for="productCardImages_main">
                 <div class="input-catalog form-control d-flex justify-content-between" id="productCardImages_main">
-                  <div class="mr-3">
-<!--                    <b-carousel-->
-<!--                        id="carousel-1"-->
-<!--                        v-model="slide"-->
-<!--                        :interval="4000"-->
-<!--                        controls-->
-<!--                        indicators-->
-<!--                        background="#ababab"-->
-<!--                        img-width="1024"-->
-<!--                        img-height="480"-->
-<!--                        style="text-shadow: 1px 1px 2px #333;"-->
-<!--                        @sliding-start="onSlideStart"-->
-<!--                        @sliding-end="onSlideEnd"-->
-<!--                    >-->
-<!--                      &lt;!&ndash; Text slides with image &ndash;&gt;-->
-<!--                      <b-carousel-slide>-->
+
+
+
+
+
+                  <div class="d-flex flex-column justify-content-center " >
+                    <div class=""> <i class="fa fa-chevron-left fa-2x" aria-hidden="true" @click="imageUpload" ></i> </div>
+                  </div>
+
+
+
+                  <div class="mx-3 " style="  width: 75%">
+
+                    <b-carousel
+
+                        id="carousel-1"
+                        v-model="slide"
+                        indicators
+
+
+                        style="text-shadow: 1px 1px 2px #333;  text-align: center;"
+                        @sliding-start="onSlideStart"
+                        @sliding-end="onSlideEnd"
+                        ref="myCarousel"
+                    >
+
+                      <!-- Text slides with image -->
+<!--                      d-block img-fluid w-100-->
+
+                      <b-carousel-slide v-for="(item, index) in selectedImages" :key="index" >
+                        <template v-slot:img>
+                          <img
+                              style="  height: 300px"
+                              class="img-fluid w-100"
+
+                              :src="'https://www.pantus.ru/images_uploader/'+item"
+                              alt="image slot"
+                          >
+                        </template>
+                      </b-carousel-slide>
+
+
+
+
+
+
+<!--                      <b-carousel-slide v-for="(item, index) in selectedImages" :key="index">-->
 <!--                        <template v-slot:img>-->
 <!--                          <img-->
-<!--                              class="d-block img-fluid w-100"-->
+<!--                              class="d-block  "-->
 <!--                              width="1024"-->
 <!--                              height="480"-->
-<!--                              src="https://picsum.photos/1024/480/?image=55"-->
+<!--                              :src="'https://www.pantus.ru/images_uploader/'+item"-->
 <!--                              alt="image slot"-->
 <!--                          >-->
 <!--                        </template>-->
 <!--                      </b-carousel-slide>-->
 
-<!--                    </b-carousel>-->
+
+                    </b-carousel>
+
 
                   </div>
-                  <div>
-                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="imageUpload" ></i>
+
+                  <div class="d-flex flex-column justify-content-center ">
+
+                   <div class=""> <i class="fa fa-chevron-right fa-2x" aria-hidden="true" @click="imageUpload" ></i> </div>
+
                   </div>
-                </div>
+                  <div class="d-flex flex-column ">
+
+                    <div class=""> <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="imageUpload" ></i> </div>
+
+                  </div>
+                  </div>
+
+
+
+
               </b-form-group>
 
               <b-form-group id="input-group-prices" label="Цена:" label-for="prices">
@@ -158,7 +203,6 @@ name: "ProductsListFormEdit",
   data() {
     return {
 
-
       form: {
         product_id: '',
         product_name: '',
@@ -174,23 +218,28 @@ name: "ProductsListFormEdit",
       productsJson: {},
       show: true,
       dataSet: [],
-
-      typeContent: '', //
-
-      // currentSelectBrand: [],
-      // currentSelectCategories: [],
-      // currentSelectApplicabilities: [],
+      typeContent: '',
+      slide: 0,
+      sliding: null,
 
     }
 
   },
   methods:{
 
+    nextSlide() {
+      this.$refs.myCarousel.next()
+    },
 
-    // editItems(item){
-    //   this.form.brand_arr = item
-    //   console.log(item.name)
-    // },
+    // eslint-disable-next-line no-unused-vars
+    onSlideStart(slide) {
+      this.sliding = true
+    },
+    // eslint-disable-next-line no-unused-vars
+    onSlideEnd(slide) {
+      this.sliding = false
+    },
+
 
     onSubmit(evt) {
       evt.preventDefault()
@@ -269,9 +318,6 @@ name: "ProductsListFormEdit",
 
   async mounted() {
 
-
-
-
     await this.$store.dispatch("ProductParts/getDataAllParts");
     this.productsJson = await this.$store.getters["ProductParts/partsItemById"](Number(this.query))
 
@@ -300,31 +346,45 @@ name: "ProductsListFormEdit",
 
   computed:{
 
+    selectedImages(){
+      return this.$store.getters["ProductParts/selectedImages"]
+    },
 
-
-    // ItemSelectProductBrand(){
-    //   return this.$store.getters["List/ProductBrands"]
-    // },
-    // ItemSelectProductApplicabilities(){
-    //   return this.$store.getters["List/ProductApplicabilities"]
-    // },
 
     selectedBrand(){
-
       return this.$store.getters["ProductParts/selectedBrands"]
-      //this.form.brand_arr = this.$store.getters["List/selectProductCategories"]
     },
 
     selectedCategories(){
       return  this.$store.getters["ProductParts/selectedCategories"]
-
     },
+
   },
 
 }
 </script>
 
 <style scoped>
+
+
+/*.img {*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  object-fit: contain*/
+/*}*/
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain
+}
+
+.imagecontain {
+
+  height: 200px;
+  text-align: left;
+
+}
 
 
 .input-catalog.form-control{

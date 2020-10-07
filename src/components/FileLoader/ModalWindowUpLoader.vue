@@ -62,11 +62,6 @@ name: "UpLoader",
 
     async sendImgToServer(){
 
-      //https://www.pantus.ru/images_uploader/images/857335.jpg
-
-     // console.log('vvvvvv ',this.files[0], this.files[0].name)
-
-
       let rawData = {
         name: 'this.name',
       }
@@ -76,10 +71,6 @@ name: "UpLoader",
 
         formData.append('images'+i, this.files[i], this.files[i].name)
       }
-
-
-      //formData.append('images', this.files, this.files[i].name)
-      //formData.append('images', this.files[0], this.files[0].name)
       formData.append('data', rawData)
       try {
         let response = await Axios.post('https://www.pantus.ru/images_uploader/script.php', formData, {
@@ -87,8 +78,9 @@ name: "UpLoader",
             'Content-Type': 'multipart/form-data'
           }
         })
-       console.log('https://www.pantus.ru/images_uploader/'+response.data.location)
-       console.log(response.data)
+
+        this.$store.commit('ProductParts/setDataSelectedImages', Object.values(response.data))
+        //console.log(this.$store.getters["ProductParts/selectedImages"])
 
         }
         catch {console.log('FAILED SEND POST REQ')}
