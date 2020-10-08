@@ -229,7 +229,7 @@ const actions = {
                             "name": "img",
                             "slug": null,
                             "hash": null,
-                            "url": "http://www.pantus.ru/upload/iblock/042/10034697ASP%20-%20Прокладка%20бензонасоса%20ВАЗ%2021082%20силикон%20синий%20-%20A-Sport.jpg",
+                            "url": "https://www.pantus.ru/images_uploader/images/857335.jpg",
                             "timestampCreated": null,
                             "productCardId": null,
                             "main": null
@@ -238,21 +238,21 @@ const actions = {
                             {
                                 "id": 344,
                                 "active": null,
-                                "name": "kinnn",
+                                "name": "kinnn1",
                                 "slug": null,
                                 "hash": null,
-                                "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                                "url": "https://www.pantus.ru/images_uploader/images/Screenshot_1.jpg",
                                 "timestampCreated": null,
                                 "productCardId": null,
                                 "main": null
                             },
                             {
-                                "id": 344,
+                                "id": 345,
                                 "active": null,
-                                "name": "kinnn",
+                                "name": "kinnn2",
                                 "slug": null,
                                 "hash": null,
-                                "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                                "url": "https://www.pantus.ru/images_uploader/images/объект.png",
                                 "timestampCreated": null,
                                 "productCardId": null,
                                 "main": null

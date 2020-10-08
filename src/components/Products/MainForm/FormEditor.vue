@@ -68,59 +68,55 @@
 
 
                   <div class="d-flex flex-column justify-content-center " >
-                    <div class=""> <i class="fa fa-chevron-left fa-2x" aria-hidden="true" @click="imageUpload" ></i> </div>
+                    <div class=""> <i class="fa fa-chevron-left fa-2x" aria-hidden="true" @click="prevSlide" ></i> </div>
                   </div>
 
 
 
-                  <div class="mx-3 " style="  width: 75%">
+                  <div class="mx-3 " style="  width: 100%; ">
 
                     <b-carousel
-
                         id="carousel-1"
                         v-model="slide"
+                        :interval=0
                         indicators
-
-
-                        style="text-shadow: 1px 1px 2px #333;  text-align: center;"
-                        @sliding-start="onSlideStart"
-                        @sliding-end="onSlideEnd"
+                        style="text-shadow: 1px 1px 2px #333;
+                        text-align: center;
+                        height: 400px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;"
+                        no-animation
                         ref="myCarousel"
                     >
 
-                      <!-- Text slides with image -->
-<!--                      d-block img-fluid w-100-->
+<!--                      если нет имг https://www.pantus.ru/images_uploader/images/no-image2.png -->
+
+<!--                      <div id="watermark"></div>-->
+<!---->
 
                       <b-carousel-slide v-for="(item, index) in selectedImages" :key="index" >
+
                         <template v-slot:img>
-                          <img
-                              style="  height: 300px"
-                              class="img-fluid w-100"
+                          <div v-if="index===0" class="overlay"></div>
+                          <img v-if="index===0"
+                              style="max-height: 400px "
+                              class="w-100"
+                              :src=item
+                              alt="main image"
 
-                              :src="'https://www.pantus.ru/images_uploader/'+item"
-                              alt="image slot"
                           >
+
+                          <img v-else
+                               style="max-height: 400px "
+                               class="w-100"
+                               :src=item
+                               alt="album image"
+                          >
+
                         </template>
+
                       </b-carousel-slide>
-
-
-
-
-
-
-<!--                      <b-carousel-slide v-for="(item, index) in selectedImages" :key="index">-->
-<!--                        <template v-slot:img>-->
-<!--                          <img-->
-<!--                              class="d-block  "-->
-<!--                              width="1024"-->
-<!--                              height="480"-->
-<!--                              :src="'https://www.pantus.ru/images_uploader/'+item"-->
-<!--                              alt="image slot"-->
-<!--                          >-->
-<!--                        </template>-->
-<!--                      </b-carousel-slide>-->
-
-
                     </b-carousel>
 
 
@@ -128,7 +124,7 @@
 
                   <div class="d-flex flex-column justify-content-center ">
 
-                   <div class=""> <i class="fa fa-chevron-right fa-2x" aria-hidden="true" @click="imageUpload" ></i> </div>
+                   <div class=""> <i class="fa fa-chevron-right fa-2x" aria-hidden="true" @click="nextSlide" ></i> </div>
 
                   </div>
                   <div class="d-flex flex-column ">
@@ -210,7 +206,7 @@ name: "ProductsListFormEdit",
         categories_arr: [],
         applicabilities_arr: [],
         article_origin: '',
-        productCardImages_main_url: '',
+        productCardImages: [], // indx 0 - main img
         prices_retail: '',
         product_timestampUpdated: '',
       },
@@ -230,15 +226,11 @@ name: "ProductsListFormEdit",
     nextSlide() {
       this.$refs.myCarousel.next()
     },
+    prevSlide(){
+      this.$refs.myCarousel.prev()
+    },
 
-    // eslint-disable-next-line no-unused-vars
-    onSlideStart(slide) {
-      this.sliding = true
-    },
-    // eslint-disable-next-line no-unused-vars
-    onSlideEnd(slide) {
-      this.sliding = false
-    },
+
 
 
     onSubmit(evt) {
@@ -312,6 +304,23 @@ name: "ProductsListFormEdit",
     },
     ///КОНЕЦ ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
 
+    /// Получаем изображения товара при загрузке формы
+    getImagesProduct(){
+      /// если нет мейн имг, то не читаем альбум имг
+      if (this.productsJson.productCard.productCardImages.main.url!== undefined && this.productsJson.productCard.productCardImages.main.url!==null){
+        this.form.productCardImages.push(this.productsJson.productCard.productCardImages.main.url)
+
+        this.productsJson.productCard.productCardImages.album.forEach(element => {
+          if (element.url!== undefined && element.url!== null) {
+            this.form.productCardImages.push(element.url)
+          }
+        });
+
+      }
+
+
+    },
+
   },
 
 
@@ -330,7 +339,7 @@ name: "ProductsListFormEdit",
 
     this.$store.commit("ProductParts/clearItemSelectedCategories")
     this.productsJson.productCard.categories.forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element));
-
+    this.getImagesProduct();
 
     this.form.product_id = this.productsJson.productCard.id
     this.form.product_name= this.productsJson.productCard.name
@@ -338,16 +347,30 @@ name: "ProductsListFormEdit",
     this.form.categories_arr= this.productsJson.productCard.categories
     this.form.applicabilities_arr= this.productsJson.productCard.applicabilities
     this.form.article_origin= this.productsJson.productCard.sku.original
-    this.form.productCardImages_main_url= this.productsJson.productCard.productCardImages.main.url
+
+
+    this.$store.commit('ProductParts/setDataSelectedImages', this.form.productCardImages)
+
+    console.log(this.$store.getters['ProductParts/selectedImages'])
+
+
     this.form.prices_retail= this.productsJson.productOffer.prices.retail
     this.form.product_timestampUpdated= this.productsJson.productCard.timestampUpdated
+
 
   },
 
   computed:{
 
+
     selectedImages(){
-      return this.$store.getters["ProductParts/selectedImages"]
+      //let arr = []
+      if (this.$store.getters["ProductParts/selectedImages"][0]) {
+        return this.$store.getters["ProductParts/selectedImages"]
+      }
+      else {
+        return new Array('https://www.pantus.ru/images_uploader/images/no-image2.png')
+      }
     },
 
 
@@ -366,12 +389,23 @@ name: "ProductsListFormEdit",
 
 <style scoped>
 
+/* 'https://www.pantus.ru/images_uploader/images/main16.png' */
 
-/*.img {*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  object-fit: contain*/
-/*}*/
+/* 'https://www.pantus.ru/images_uploader/images/main32.png' */
+
+.overlay {
+  position: absolute;
+  /*background:url(https://www.pantus.ru/images_uploader/images/kisspng-check-mark-cheque-clip-art-check-5abb46ab8338c7.0866514015222227635375.jpg) no-repeat;*/
+  content: url("https://www.pantus.ru/images_uploader/images/kisspng-check-mark-cheque-clip-art-check-5abb46ab8338c7.0866514015222227635375.jpg");
+  top: 1%;
+  left: 1%;
+  width: 5%;
+  height: auto;
+  /*width: 100%;*/
+  /*height: 100%;*/
+  /*opacity: 0.6;*/
+}
+
 
 .img {
   width: 100%;
