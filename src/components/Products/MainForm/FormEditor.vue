@@ -98,7 +98,7 @@
                       <b-carousel-slide v-for="(item, index) in selectedImages" :key="index" >
 
                         <template v-slot:img>
-                          <div v-if="index===0" class="overlay"></div>
+                          <div v-if="index===0" class="overlay"> <i class="fa fa-check-square icon-bookmark"  ></i> </div>
                           <img v-if="index===0"
                               style="max-height: 400px "
                               class="w-100"
@@ -396,11 +396,19 @@ name: "ProductsListFormEdit",
 .overlay {
   position: absolute;
   /*background:url(https://www.pantus.ru/images_uploader/images/kisspng-check-mark-cheque-clip-art-check-5abb46ab8338c7.0866514015222227635375.jpg) no-repeat;*/
-  content: url("https://www.pantus.ru/images_uploader/images/kisspng-check-mark-cheque-clip-art-check-5abb46ab8338c7.0866514015222227635375.jpg");
+  /*content: url("https://www.pantus.ru/images_uploader/images/kisspng-check-mark-cheque-clip-art-check-5abb46ab8338c7.0866514015222227635375.jpg");*/
+
+  /*background: rgb(0, 0, 0); !* Fallback color *!*/
+  /*background: rgba(0, 0, 0, 0.2); !* Black background with 0.5 opacity *!*/
+  /*color: #f1f1f1; !* Grey text *!*/
+
   top: 1%;
   left: 1%;
-  width: 5%;
+  width: 10%;
+  /*padding-left: 0;*/
+  /*margin-left: 0;*/
   height: auto;
+  text-align: left;
   /*width: 100%;*/
   /*height: 100%;*/
   /*opacity: 0.6;*/
@@ -425,6 +433,15 @@ name: "ProductsListFormEdit",
   height: auto !important;
   /*background-color: #e9ecef;*/
 }
+
+.icon-bookmark {
+  cursor: default;
+  color: lightgray;
+  opacity: 0.5;
+  font-size: 2em;
+
+}
+
 i {
   cursor: pointer;
   color: #047cff;
