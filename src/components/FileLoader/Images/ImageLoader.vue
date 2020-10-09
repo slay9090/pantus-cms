@@ -143,12 +143,9 @@ name: "ImageLoader",
 
 
   },
-  // computed: {
-  //
-  // }
+
   mounted() {
-  this.images = this.$store.getters["ProductParts/selectedImages"]
-    console.log(this.images)
+
   }
 
 }

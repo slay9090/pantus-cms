@@ -6,10 +6,35 @@
         title="Загрузка файлов"
         size="lg"
         centered no-fade no-close-on-backdrop no-close-on-esc
-        ok-title="Сохранить">
+        ok-title="Сохранить"
+    >
 
 
-      <p><imagefileselect v-model="files" ></imagefileselect></p>
+      <div class="border d-flex h-100" >
+
+        <div class=" border h-100 " style="width: 200px">
+          <div class="my-3 text-center ">
+            <div style="height: 70px">
+          <i :style="{ opacity: currentComponent==='imagefileview' ? 1 : 0.6 }" class="fa fa-file-image-o fa-3x mb-3 ico" aria-hidden="true" @click="currentComponent='imagefileview'" ></i>
+            </div>
+            <div >
+          <i :style="{ opacity: currentComponent==='imagefileselect' ? 1 : 0.6 }" class="fa fa-cloud-upload fa-3x ico" aria-hidden="true" @click="currentComponent='imagefileselect'" ></i>
+            </div>
+            </div>
+        </div>
+        <div class="col-11 border h-100">
+
+
+          <component :is="currentComponent"></component>
+
+<!--          <p><imagefileselect v-model="files"  ></imagefileselect></p>-->
+<!--          <imagefileview > </imagefileview>-->
+
+        </div>
+      </div>
+
+
+
 
       <template v-slot:modal-footer>
         <div class="w-100">
@@ -39,8 +64,8 @@
 </template>
 
 <script>
-
-import imagefileselect from '@/components/FileLoader/ImageLoader';
+import imagefileview from '@/components/FileLoader/Images/ImageEditor'
+import imagefileselect from '@/components/FileLoader/Images/ImageLoader';
 import Axios from "axios";
 
 
@@ -48,11 +73,13 @@ export default {
 name: "UpLoader",
 
   components:{
-    imagefileselect,
+    'imagefileselect':imagefileselect,
+    'imagefileview':imagefileview,
   },
   data() {
     return {
       files: null,
+      currentComponent: 'imagefileview',
 
     }
   },
@@ -119,6 +146,25 @@ name: "UpLoader",
 }
 </script>
 
-<style scoped>
+<style >
+
+
+
+#modal-file-uploader___BV_modal_body_ {
+  height: 400px !important;
+}
+
+
+.ico {
+  cursor: pointer;
+  color: #007bff;
+  opacity: 0.6;
+
+}
+
+.ico:hover{
+  zoom: 1.1;
+
+}
 
 </style>

@@ -416,8 +416,15 @@ name: "ProductsListFormEdit",
 
 i {
   cursor: pointer;
-  color: #047cff;
+  color: #007bff;
+  opacity: 0.6;
+
 }
+
+i:hover{
+  opacity: 1;
+}
+
 .heigh-json{
   height: 50em;
 }
