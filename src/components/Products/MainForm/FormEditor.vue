@@ -74,7 +74,6 @@
 
 
                   <div class="mx-3 " style="  width: 100%; ">
-
                     <b-carousel
                         id="carousel-1"
                         v-model="slide"
@@ -90,21 +89,20 @@
                         ref="myCarousel"
                     >
 
-<!--                      если нет имг https://www.pantus.ru/images_uploader/images/no-image2.png -->
 
-<!--                      <div id="watermark"></div>-->
-<!---->
 
                       <b-carousel-slide v-for="(item, index) in selectedImages" :key="index" >
 
                         <template v-slot:img>
-                          <div v-if="index===0" class="overlay"> <i class="fa fa-check-square icon-bookmark"  ></i> </div>
+
+                          <div v-if="!imgIsNotExist" class="overlay"> <i class="fa fa-check-square icon-bookmark"  ></i> </div>
+
                           <img v-if="index===0"
                               style="max-height: 400px "
                               class="w-100"
                               :src=item
                               alt="main image"
-
+                              @error="hasImgError()"
                           >
 
                           <img v-else
@@ -217,11 +215,17 @@ name: "ProductsListFormEdit",
       typeContent: '',
       slide: 0,
       sliding: null,
+      imgIsNotExist: false,
 
     }
 
   },
   methods:{
+
+    hasImgError(){
+
+      this.imgIsNotExist = true
+    },
 
     nextSlide() {
       this.$refs.myCarousel.next()
@@ -389,45 +393,14 @@ name: "ProductsListFormEdit",
 
 <style scoped>
 
-/* 'https://www.pantus.ru/images_uploader/images/main16.png' */
-
-/* 'https://www.pantus.ru/images_uploader/images/main32.png' */
-
 .overlay {
   position: absolute;
-  /*background:url(https://www.pantus.ru/images_uploader/images/kisspng-check-mark-cheque-clip-art-check-5abb46ab8338c7.0866514015222227635375.jpg) no-repeat;*/
-  /*content: url("https://www.pantus.ru/images_uploader/images/kisspng-check-mark-cheque-clip-art-check-5abb46ab8338c7.0866514015222227635375.jpg");*/
-
-  /*background: rgb(0, 0, 0); !* Fallback color *!*/
-  /*background: rgba(0, 0, 0, 0.2); !* Black background with 0.5 opacity *!*/
-  /*color: #f1f1f1; !* Grey text *!*/
-
   top: 1%;
   left: 1%;
   width: 10%;
-  /*padding-left: 0;*/
-  /*margin-left: 0;*/
   height: auto;
   text-align: left;
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*opacity: 0.6;*/
 }
-
-
-.img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain
-}
-
-.imagecontain {
-
-  height: 200px;
-  text-align: left;
-
-}
-
 
 .input-catalog.form-control{
   height: auto !important;
@@ -439,7 +412,6 @@ name: "ProductsListFormEdit",
   color: lightgray;
   opacity: 0.5;
   font-size: 2em;
-
 }
 
 i {

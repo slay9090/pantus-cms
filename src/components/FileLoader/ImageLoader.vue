@@ -108,6 +108,7 @@ name: "ImageLoader",
       for (let i = 0; i < selectedFiles.length; i++) {
         this.images.push(selectedFiles[i]);
       }
+      console.log('this.images', this.images)
       for (let i = 0; i < this.images.length; i++) {
         let reader = new FileReader();
         reader.onload = () => {
@@ -141,6 +142,13 @@ name: "ImageLoader",
 
 
 
+  },
+  // computed: {
+  //
+  // }
+  mounted() {
+  this.images = this.$store.getters["ProductParts/selectedImages"]
+    console.log(this.images)
   }
 
 }
