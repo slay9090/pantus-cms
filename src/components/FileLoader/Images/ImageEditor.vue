@@ -17,8 +17,22 @@
         </div>
         <div class="col-4 ">
           <div class="row  text-break border-bottom">  {{getNameImg(image)}}    </div>
-          <div class="row border-bottom"> {{ xxx(image) }}    </div>
+          <div class="row border-bottom"> {{  }}  sdfsdf  </div>
           <div class="row border-bottom">  123123 кб. </div>
+
+          <div class="row  align-center justify-content-end  h-25 text-center mt-1 position-absolute w-100">
+
+            <div class=" align-center ">
+            <i v-if="key===0" class="fa fa-check-square fa-2x zoomed select" style=" color: #2ecc71 "></i>
+            <i v-else class="fa fa-check-square fa-2x zoomed select" style="opacity: 0.5;  color: lightgray;" @click="setMainImg(key)"></i>
+            </div>
+            <div class=" align-center w-25 ">
+            <i class="fa fa-times fa-2x zoomed" style="color: red;"></i>
+            </div>
+
+          </div>
+
+
         </div>
 
       </div>
@@ -32,6 +46,8 @@
 </template>
 
 <script>
+import Axios from "axios";
+
 export default {
 name: "ImageEditor",
 
@@ -47,61 +63,63 @@ name: "ImageEditor",
     },
 
     xxx(url) {
-
-    //var curl=url
    var imgMetaInfo = {};
      function getMeta(url)
       {
         return new Promise((resolve, reject) => {
           let img = new Image();
-          img.onload = () => resolve(img);
+          img.onload = () => {
+
+            // var request = require("request");
+            // request({
+            //   url: url,
+            //   method: "HEAD"
+            // }, function(err, response, ) {
+            //   console.log(response.headers);
+            //   process.exit(0);
+            //   imgMetaInfo["content"] = response.headers;
+            // });
+
+
+            resolve(img)
+
+          };
           img.onerror = () => reject();
           img.src = url;
         });
       }
-
-
       async function run() {
         let img = await getMeta(url);
+       let response = await Axios.post(url);
+       console.log(response.headers);
+        console.log(url);
         imgMetaInfo["resize"] = (img.width+'x'+img.height);
-       // imgMetaInfo["name"] = img.size;
+        imgMetaInfo["name"] = img;
+
+
+        //imgMetaInfo["siz"] = img.size;
 
 
       }
       run();
+
     console.log("imgMetaInfo", imgMetaInfo)
     return imgMetaInfo.resize;
 
-    }
+    },
 
-    // xxx(url){
-    //
-    //   async function getMeta(url) {
-    //     var img = new Image();
-    //     img.onload = function(){
-    //       //alert( this.width+' '+ this.height );
-    //       if (img.width!==0) {
-    //         return  img;
-    //       } else {
-    //         console.log(img.width)
-    //         return "promise failed";
-    //       }
-    //
-    //     };
-    //     img.src = await url;
-    //   }
-    //
-    //   getMeta(url)
-    //       .then(res => {
-    //         let metaImg = res;
-    //        // this.resizeInfo.splice(i, 0, (test.width+'x'+test.height));
-    //         console.log(metaImg.width)
-    //
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       });
-    // }
+    setMainImg(index){
+      var arr = this.$store.getters["ProductParts/selectedImages"];
+      var value = index;
+      arr.sort(function(x,y){
+        return x === arr[value] ? -1 : y === arr[value] ? 1 : 0;
+      });
+     this.$store.commit('ProductParts/setDataSelectedImages', arr)
+
+    },
+
+
+
   },
 
   computed: {
@@ -132,6 +150,16 @@ img {
   height: 200px;
   text-align: left;
 
+}
+
+.zoomed:hover {
+  zoom: 1.1;
+  cursor: pointer;
+
+}
+.select:hover {
+  opacity: 0.5;
+  color: #2ecc71  !important;
 }
 
 </style>
