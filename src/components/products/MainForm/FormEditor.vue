@@ -182,8 +182,8 @@
 
 <script>
 
-import catalogboxformeditor from '@/components/Products/ModalForm/ModalBoxEditor'
-import imageuploader from '@/components/FileLoader/ModalWindowUpLoader'
+import catalogboxformeditor from '@/components/products/ModalForm/ModalBoxEditor'
+import imageuploader from '@/components/file-manager/ModalWindowManager'
 
 export default {
 name: "ProductsListFormEdit",

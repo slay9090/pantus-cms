@@ -192,7 +192,7 @@ Vue.use(VueRouter)
 
       },
       { path: '/news/articles/edit',
-          component: () => import('../components/News/Articles/FormEdit'),
+          component: () => import('../components/news/Articles/FormEdit'),
           props: route => ({ query: route.query.id }),
           name: 'ArticlesFormEdit',
           meta: {
@@ -204,7 +204,7 @@ Vue.use(VueRouter)
           }
       },
       { path: '/news/articles/add',
-          component: () => import('../components/News/Articles/FormAdd'),
+          component: () => import('../components/news/Articles/FormAdd'),
           name: 'ArticlesFormAdd',
           meta: {
               breadcrumb: [
@@ -229,7 +229,7 @@ Vue.use(VueRouter)
       },
 
       { path: '/products/list/edit',
-          component: () => import('../components/Products/MainForm/FormEditor'),
+          component: () => import('../components/products/MainForm/FormEditor'),
           props: route => ({ query: route.query.id }),
           name: 'ProductFormEdit',
           meta: {
