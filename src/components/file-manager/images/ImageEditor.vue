@@ -97,7 +97,8 @@ name: "ImageEditor",
     /// Запускаем в хуке, кидаем урлы из хранилища -> через вычисляемое свойство , ждем выполнения очереди промисов
    getPropertyImg(curentUrl){
       console.log('dddddddddddd '+ curentUrl)
-      this.metaDataImg = []
+      //this.metaDataImg = []
+     console.log(this.metaDataInfoImg.length)
 
       curentUrl.forEach(async (url, idx, array) => {
        Promise.all([await this.getFileSize(url), await  this.getMetaInfo(url),]).then(values => {

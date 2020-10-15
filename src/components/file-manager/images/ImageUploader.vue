@@ -73,7 +73,7 @@ name: "ImageLoader",
       // Whenever the file changes, emit the 'input' event with the file data.
       console.log(e.target.files)
      this.$emit('input', e.target.files)
-     // this.$store.commit('ProductParts/setDataSelectedImages', this.images) /// СНАЧАЛА НА СЕРВЕР ЗАПИСАТЬ
+     //this.$store.commit('ProductParts/setDataSelectedImages', this.images) /// СНАЧАЛА НА СЕРВЕР ЗАПИСАТЬ
     },
 
 

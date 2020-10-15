@@ -12,29 +12,25 @@
 
       <div class="border d-flex h-100" >
 
-        <div class=" border h-100 " style="width: 200px">
+        <div class=" border h-100 " >
           <div class="my-3 text-center ">
             <div style="height: 60px">
           <i :style="{ opacity: currentComponent==='imagefileview' ? 1 : 0.6 }" class="fa fa-file-image-o fa-3x mb-3 ico" aria-hidden="true" @click="currentComponent='imagefileview'" ></i>
             </div>
-            <div class="" style="height: 60px">
+            <div class="" style="height: 60px; width: 60px" >
           <i :style="{ opacity: currentComponent==='imagefileselect' ? 1 : 0.6 }" class="fa fa-cloud-upload fa-3x ico" aria-hidden="true" @click="currentComponent='imagefileselect'" ></i>
             </div>
 
-            <div >
+            <div>
               <i :style="{ opacity: currentComponent==='imagefileserver' ? 1 : 0.6 }" class="fa fa-search fa-3x ico" aria-hidden="true" @click="currentComponent='imagefileserver'" ></i>
             </div>
 
 
             </div>
         </div>
-        <div class="col-11 border h-100">
+        <div class="w-100 border h-100 px-3">
 
-
-          <component :is="currentComponent"></component>
-
-<!--          <p><imagefileselect v-model="files"  ></imagefileselect></p>-->
-<!--          <imagefileview > </imagefileview>-->
+          <component v-model="files" :is="currentComponent"></component>
 
         </div>
       </div>
@@ -72,6 +68,7 @@
 <script>
 import imagefileview from '@/components/file-manager/images/ImageEditor'
 import imagefileselect from '@/components/file-manager/images/ImageUploader';
+import imagefileserver from '@/components/file-manager/images/ImageLoader'
 import Axios from "axios";
 
 
@@ -81,6 +78,7 @@ name: "UpLoader",
   components:{
     'imagefileselect':imagefileselect,
     'imagefileview':imagefileview,
+    'imagefileserver': imagefileserver,
   },
   data() {
     return {
