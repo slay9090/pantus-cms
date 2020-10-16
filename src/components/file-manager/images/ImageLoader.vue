@@ -1,10 +1,24 @@
 <template>
   <div  class="h-100 w-100 d-flex flex-column " >
 
-    <div>
-      <b-button class="mt-3" variant="info">sdfsdfsdf</b-button>
-      <hr>
-    </div>
+<!--    <div class="d-flex ">-->
+<!--     -->
+<!--      <div></div>-->
+<!--    -->
+<!--    </div>-->
+
+    <b-container class="block-header-load-buttons">
+      <b-row  align-v="center" class=" py-2">
+        <b-col class="  d-flex justify-content-start text-left" cols="10" > Выбрано: {{selectImgCount}} шт. </b-col>
+        <b-col class=" d-flex justify-content-end  text-right my-2"  cols="2" >
+          <i class="block-header-load-buttons__icon fa fa-ban fa-2x text-danger mr-3" aria-hidden="true"></i>
+          <i class="block-header-load-buttons__icon fa fa-plus-circle fa-2x text-success" aria-hidden="true"></i>
+        </b-col>
+
+      </b-row>
+      <hr class="mt-1 mb-2">
+    </b-container>
+
 
     <div class="scrollblock bg-color">
 
@@ -19,8 +33,10 @@
                     <div class=" align-items-center text-center w-50 pt-1 block-on-button-zoom" v-b-modal.modal-multi-2 @click="openImagePopup(item);">
                       <i class="fa fa-search-plus ico-on-button" aria-hidden="true"></i>
                     </div>
-                    <div class="align-items-center text-center w-50 pt-1 block-on-button-select">
-                      <i class="fa fa-check-circle-o ico-on-button" aria-hidden="true"></i>
+                    <div class="align-items-center text-center w-50 pt-1 block-on-button-select" @click="addItemInSelectedImages(item)">
+
+                      <i v-if="isSelect(item.url)" class="fa fa-check-circle-o ico-on-button" aria-hidden="true"></i>
+                      <i v-else class="fa fa-check-circle-o " aria-hidden="true"></i>
                     </div>
 
 
@@ -77,6 +93,7 @@ export default {
       currentPage: 1,
       urlImgPopup: null,
       currentImgItem: null,
+      selectImgCount: 0,
     }
   },
 
@@ -88,6 +105,10 @@ export default {
       }
       else {  return 0;  }
     },
+
+    selectedImages(){
+      return this.$store.getters["FileManager/selectedImageFromFIleManager"]
+    }
 
   },
 
@@ -110,6 +131,32 @@ export default {
 
    openImagePopup(img){
       this.currentImgItem = img
+    },
+
+    addItemInSelectedImages(img){
+
+
+
+        if (this.isSelect(img.url)) {
+          console.log(this.selectedImages.indexOf(img.url))
+          this.$store.commit('FileManager/delItemSelectedImageFromFIleManager', this.selectedImages.indexOf(img.url))
+        }
+        else {
+          this.$store.commit('FileManager/addItemSelectedImageFromFIleManager', img.url)
+        }
+    },
+
+    ///  чекаем
+    isSelect(currentUrl){
+      let result = false;
+      for (var url in this.selectedImages) {
+        //console.log(this.selectedImages[url], currentUrl);
+        if (currentUrl === this.selectedImages[url]) {
+          result = true
+          break;
+        }
+      }
+      return result;
     },
 
   },
@@ -139,7 +186,7 @@ export default {
 /*}*/
 
 .scrollblock {
-  height: 240px;
+  height: 250px;
   width: 100%;
   overflow-y: hidden;
 }
@@ -252,6 +299,15 @@ export default {
   z-index: 2;
 }
 
+.block-header-load-buttons__icon {
+  cursor: pointer;
+  opacity: 0.8;
 
+}
+.block-header-load-buttons__icon:hover{
+  opacity: 1;
+  text-shadow: 1px 1px 1px #adb5bd;
+  /*text-shadow: 1px 1px 1px #777777 ; 0 0 0.1em #adb5bd;  Параметры тени */
+}
 
 </style>

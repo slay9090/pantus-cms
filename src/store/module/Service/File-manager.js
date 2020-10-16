@@ -8,6 +8,7 @@ const state = () => ({
 
     ///### Все изображения на сервере
     all_images_on_server: [ ],
+    selected_images_in_file_manager: [],
 
 
 })
@@ -17,6 +18,20 @@ const mutations = {
     setAllImagesOnServer(state ,data){
         state.all_images_on_server = data;
     },
+    /// Добавить в хранилище одно  выбранное изображениЕ  в файл-менеджере
+    addItemSelectedImageFromFIleManager(state ,data){
+        state.selected_images_in_file_manager.push(data)
+    },
+    /// Удалить из хранилища одно  выбранное изображениЕ  в файл-менеджере
+    delItemSelectedImageFromFIleManager(state, index){
+        console.log('del' + index)
+        state.selected_images_in_file_manager.splice(index, 1);
+    },
+
+    /// Стереть из хранилища все выбранные в файл-менеджере изображения
+    clearItemsSelectedImageFromFIleManager(state){
+        state.selected_images_in_file_manager.splice(0);
+    }
 
 }
 
@@ -36,6 +51,9 @@ const getters = {
 
     /// Получить из хранилища все урлы изображений
     imagesAllOnServer: img => img.all_images_on_server,
+    /// Получить из хранилища все урлы серверных изображений выбранных в файлменеджере
+    selectedImageFromFIleManager: slctImg => slctImg.selected_images_in_file_manager,
+
 
 }
 
