@@ -16,12 +16,15 @@
                 <div class="image-box d-flex flex-column">
 <!--                  кнопки-->
                 <div class="image-space-block-button d-flex justify-content-between ">
-                    <div class=" align-items-center text-center w-50 pt-1 block-on-button-zoom" >
+                    <div class=" align-items-center text-center w-50 pt-1 block-on-button-zoom" v-b-modal.modal-multi-2 @click="openImagePopup(item);">
                       <i class="fa fa-search-plus ico-on-button" aria-hidden="true"></i>
                     </div>
                     <div class="align-items-center text-center w-50 pt-1 block-on-button-select">
                       <i class="fa fa-check-circle-o ico-on-button" aria-hidden="true"></i>
                     </div>
+
+
+
                 </div>
 <!--                  изображение-->
                 <div class="d-flex justify-content-center align-items-center image-space-block" style="height: 80px">
@@ -48,7 +51,7 @@
 
       ></b-pagination>
     </div>
-
+    <imagepopup v-if="currentImgItem" :image=currentImgItem />
   </div>
 
 </template>
@@ -57,8 +60,13 @@
 
 
 <script>
+import imagepopup from "@/components/ImagePopup"
 export default {
   name: "ImageLoader",
+
+  components: {
+    imagepopup,
+  },
 
   data() {
     return {
@@ -67,6 +75,8 @@ export default {
       itemsCountOfPage: 8,
       perPage: 1,
       currentPage: 1,
+      urlImgPopup: null,
+      currentImgItem: null,
     }
   },
 
@@ -74,7 +84,7 @@ export default {
     pageLenght(){
      // console.log(this.imgAllItems)
       if (this.imgAllItems!==null) {
-        return this.imgAllItems.length / this.itemsCountOfPage
+        return (this.imgAllItems.length / this.itemsCountOfPage)+1
       }
       else {  return 0;  }
     },
@@ -97,6 +107,11 @@ export default {
         this.imgOfPageItems = urlArr;
 
       },
+
+   openImagePopup(img){
+      this.currentImgItem = img
+    },
+
   },
 
 
@@ -105,6 +120,13 @@ export default {
    this.imgAllItems = this.$store.getters["FileManager/imagesAllOnServer"]
    this.imgOfPageItems = this.imgAllItems.slice(0, this.itemsCountOfPage) // обрезать до itemsCountOfPage
 
+
+
+   //this.$bvModal.show('modal-multi-2')
+
+  // this.$refs['my-modal'].toggle()
+
+  // this.$root.$emit('bv::show::modal', 'modal-multi-2', '#btnShow')
   }
 
 

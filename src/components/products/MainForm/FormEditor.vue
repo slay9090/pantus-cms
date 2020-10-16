@@ -151,7 +151,6 @@
               <catalogboxformeditor
                   :items=dataSet
                   :type-content= typeContent
-                  v-on:changeitem="editItems($event)"
               />
 
               <imageuploader />
