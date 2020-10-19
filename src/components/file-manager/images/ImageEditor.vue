@@ -28,8 +28,8 @@
         </div>
         <div class="col-4 ">
           <div class="row  text-break border-bottom">  {{getNameImg(image)}}    </div>
-          <div class="row border-bottom"> {{ metaDataInfoImg[key]  }}  sdfsdf  </div>
-          <div class="row border-bottom"> {{  }} </div>
+          <div class="row border-bottom"> {{ metaDataInfoImg[key][1]  }}</div>
+          <div class="row border-bottom"> {{ metaDataInfoImg[key][0] + " kb" }} </div>
 
           <div class="row  align-center justify-content-end  h-25 text-center mt-1 position-absolute w-100">
 
@@ -38,7 +38,7 @@
             <i v-else class="fa fa-check-square fa-2x zoomed select" style="opacity: 0.5;  color: lightgray;" @click="setMainImg(key)"></i>
             </div>
             <div class=" align-center w-25 ">
-            <i class="fa fa-times fa-2x zoomed" style="color: #b71c1c ;"></i>
+            <i class="fa fa-times fa-2x zoomed" style="color: #b71c1c ;" @click="deleteImageItem(key)"></i>
             </div>
 
           </div>
@@ -127,6 +127,9 @@ name: "ImageEditor",
 
     },
 
+    deleteImageItem(key){
+      this.$store.commit('ProductParts/delItemSelectedImages', key)
+    },
 
 
   },

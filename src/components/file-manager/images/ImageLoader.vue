@@ -9,10 +9,10 @@
 
     <b-container class="block-header-load-buttons">
       <b-row  align-v="center" class=" py-2">
-        <b-col class="  d-flex justify-content-start text-left" cols="10" > Выбрано: {{selectImgCount}} шт. </b-col>
+        <b-col class="  d-flex justify-content-start text-left" cols="10" > Выбрано: {{selectedImagesLenght}} шт. </b-col>
         <b-col class=" d-flex justify-content-end  text-right my-2"  cols="2" >
-          <i class="block-header-load-buttons__icon fa fa-ban fa-2x text-danger mr-3" aria-hidden="true"></i>
-          <i class="block-header-load-buttons__icon fa fa-plus-circle fa-2x text-success" aria-hidden="true"></i>
+          <i class="block-header-load-buttons__icon fa fa-ban fa-2x text-danger mr-3" aria-hidden="true" @click="clearSelectedImages"></i>
+          <i class="block-header-load-buttons__icon fa fa-plus-circle fa-2x text-success" aria-hidden="true" @click="applySelectedImagesToCurrentImages"></i>
         </b-col>
 
       </b-row>
@@ -35,8 +35,8 @@
                     </div>
                     <div class="align-items-center text-center w-50 pt-1 block-on-button-select" @click="addItemInSelectedImages(item)">
 
-                      <i v-if="isSelect(item.url)" class="fa fa-check-circle-o ico-on-button" aria-hidden="true"></i>
-                      <i v-else class="fa fa-check-circle-o " aria-hidden="true"></i>
+                      <i v-if="isSelect(item.url)" class="fa fa-check-circle-o ico-on-button-selected" aria-hidden="true"></i>
+                      <i v-else class="fa fa-check-circle-o ico-on-button" aria-hidden="true"></i>
                     </div>
 
 
@@ -108,7 +108,12 @@ export default {
 
     selectedImages(){
       return this.$store.getters["FileManager/selectedImageFromFIleManager"]
+    },
+
+    selectedImagesLenght(){
+      return this.selectedImages.length;
     }
+
 
   },
 
@@ -134,9 +139,6 @@ export default {
     },
 
     addItemInSelectedImages(img){
-
-
-
         if (this.isSelect(img.url)) {
           console.log(this.selectedImages.indexOf(img.url))
           this.$store.commit('FileManager/delItemSelectedImageFromFIleManager', this.selectedImages.indexOf(img.url))
@@ -158,6 +160,20 @@ export default {
       }
       return result;
     },
+
+    clearSelectedImages(){
+        this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager')
+    },
+
+    applySelectedImagesToCurrentImages(){
+
+      let currentProductImg =   this.$store.getters["ProductParts/currentImages"];
+      let concatCurrentImg = currentProductImg.concat(this.selectedImages);
+
+    // console.log(this.$store.getters["ProductParts/selectedImages"])
+      this.$store.commit('ProductParts/setDataSelectedImages', concatCurrentImg)
+    },
+
 
   },
 
@@ -255,6 +271,27 @@ export default {
   opacity: 1;
 
 }
+
+
+.ico-on-button-selected {
+  font-size: 1.3em;
+  color: #28a745;
+
+  border-radius: 50%;
+  -webkit-transition: -webkit-transform .8s ease-in-out;
+  transition:         transform .8s ease-in-out;
+
+
+}
+
+.ico-on-button-selected:hover {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+
+
+}
+
+
 
 .block-on-button-zoom {
   /*border: #e4e4e6 solid 1px;*/

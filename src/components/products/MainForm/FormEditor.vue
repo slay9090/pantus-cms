@@ -60,7 +60,7 @@
                 <b-form-input id="article" v-model="form.article_origin" ></b-form-input>
               </b-form-group>
 
-              <b-form-group id="input-group-productCardImages_main" label="Основное изображение:" label-for="productCardImages_main">
+              <b-form-group id="input-group-productCardImages_main" label="Изображения:" label-for="productCardImages_main">
                 <div class="input-catalog form-control d-flex justify-content-between" id="productCardImages_main">
 
 
@@ -95,7 +95,7 @@
 
                         <template v-slot:img>
 
-                          <div v-if="!imgIsNotExist" class="overlay"> <i class="fa fa-check-square icon-bookmark"  ></i> </div>
+                          <div v-if="!imgIsNotExist && index===0" class="overlay"> <i class="fa fa-check-square icon-bookmark"  ></i> </div>
 
                           <img v-if="index===0"
                               style="max-height: 400px "
@@ -342,7 +342,7 @@ name: "ProductsListFormEdit",
 
     this.$store.commit("ProductParts/clearItemSelectedCategories")
     this.productsJson.productCard.categories.forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element));
-    this.getImagesProduct();
+    this.getImagesProduct(); // записываем картинки
 
     this.form.product_id = this.productsJson.productCard.id
     this.form.product_name= this.productsJson.productCard.name
@@ -353,6 +353,7 @@ name: "ProductsListFormEdit",
 
 
     this.$store.commit('ProductParts/setDataSelectedImages', this.form.productCardImages)
+    this.$store.commit('ProductParts/setDataCurrentImages', this.form.productCardImages)
 
     console.log(this.$store.getters['ProductParts/selectedImages'])
 

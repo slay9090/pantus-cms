@@ -39,8 +39,20 @@
 
 
       <template v-slot:modal-footer>
-        <div class="w-100">
+        <div class="w-100 d-flex align-items-center justify-content-between">
+          <div class="">
+          <b-alert
+              class="my-0 py-0"
+              :show="dismissCountDown"
+              variant="success"
+              @dismissed="dismissCountDown=0"
+              @dismiss-count-down="countDownChanged"
 
+          >
+            {{ messageText }}
+          </b-alert>
+          </div>
+          <div class=" ">
           <b-button
               variant="primary"
               class="float-right "
@@ -55,6 +67,7 @@
           >
             Отмена
           </b-button>
+          </div>
 
         </div>
       </template>
@@ -84,6 +97,10 @@ name: "UpLoader",
     return {
       files: null,
       currentComponent: 'imagefileview',
+      dismissSecs: 3,
+      dismissCountDown: 0,
+      messageText: null,
+      previousCountLenghtImg: 0,
 
     }
   },
@@ -141,11 +158,47 @@ name: "UpLoader",
 
     },
 
+
+    /// оповещения в футере
+
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
+    // showAlert() {
+    //   this.dismissCountDown = this.dismissSecs
+    // },
+
+    ///
+
+
   },
 
   computed: {
-
+      changeSelectedImg(){
+        return this.$store.getters["ProductParts/selectedImages"];
+      },
   },
+  watch:{
+    changeSelectedImg(){
+      if (this.previousCountLenghtImg !==  this.changeSelectedImg.length) {
+        if (this.previousCountLenghtImg <  this.changeSelectedImg.length) {
+          this.dismissCountDown = this.dismissSecs // запустить оповещение
+          this.messageText = `Add: ${this.changeSelectedImg.length - this.previousCountLenghtImg} item(s)`
+          this.previousCountLenghtImg = this.changeSelectedImg.length
+        }
+        if (this.previousCountLenghtImg >  this.changeSelectedImg.length){
+          this.dismissCountDown = this.dismissSecs // запустить оповещение
+          this.messageText = `Remove: ${this.changeSelectedImg.length - this.previousCountLenghtImg} item(s)`
+          this.previousCountLenghtImg = this.changeSelectedImg.length
+        }
+      }
+
+
+    }
+  },
+  mounted() {
+  this.previousCountLenghtImg = this.changeSelectedImg.length;
+  }
 
 }
 </script>

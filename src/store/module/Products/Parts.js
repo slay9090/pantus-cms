@@ -24,6 +24,8 @@ const state = () => ({
     parents_selected_items: [],
     ///### Выбранные Изображения
     selected_images: [],
+    ///### Изображения продукта
+    current_images: [],
 
 })
 
@@ -137,7 +139,21 @@ const mutations = {
      */
     clearDataSelectedImages(state){
         state.selected_images.splice(0);
-    }
+    },
+    /**
+     * Удалить айтем из хранилища
+     * @param state
+     * @param index - индекс элемента в массиве, который удалим.
+     */
+    delItemSelectedImages(state, index){
+        state.selected_images.splice(index, 1);
+    },
+
+    setDataCurrentImages(state, data){
+        state.current_images = data.slice();
+    },
+
+
 
 
 
@@ -656,6 +672,9 @@ const getters = {
 
     ///все Родительские узлы до текущих узлов
     parentsSelectedNodes: arr => arr.parents_selected_items,
+
+    currentImages: arr => arr.current_images,
+
     ///Получить из хранилища выбранные изображения
     selectedImages: arr => arr.selected_images,
 
