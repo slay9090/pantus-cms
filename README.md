@@ -1,5 +1,9 @@
 # Система управления интернет-магазином
 
+- Без использования БД
+
+- API 
+
 
 
 ![alt text](https://b.radikal.ru/b37/2010/b7/b3c0acd1f5d2.jpg)
@@ -19,21 +23,6 @@
 ![alt text](https://b.radikal.ru/b01/2010/e5/a5bc13409380.jpg)
 
 ![alt text](https://c.radikal.ru/c33/2010/1c/fa7b9da9fab5.jpg)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ## Project setup
