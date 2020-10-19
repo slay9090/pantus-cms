@@ -6,7 +6,7 @@
 
     <label class="file-select mt-3 mb-0 ">
       <!-- We can't use a normal button element here, as it would become the target of the label. -->
-      <div class="btn btn-outline-danger  ">
+      <div class="btn btn-outline-danger  " @click="resetSelectedImages">
         <!-- Display the filename if a file has been selected. -->
 
         <span >Сбросить</span>
@@ -129,6 +129,10 @@ name: "ImageEditor",
 
     deleteImageItem(key){
       this.$store.commit('ProductParts/delItemSelectedImages', key)
+    },
+
+    resetSelectedImages(){
+      this.$store.commit('ProductParts/resetSelectedImages')
     },
 
 

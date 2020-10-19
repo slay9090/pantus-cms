@@ -152,24 +152,24 @@ name: "UpLoader",
     handleCancel(bvModalEvt){
       bvModalEvt.preventDefault()
 
+     this.resetSelectedImages();
+
       this.$nextTick(() => {
         this.$bvModal.hide('modal-file-uploader')
       })
 
     },
 
-
-    /// оповещения в футере
-
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
-    // showAlert() {
-    //   this.dismissCountDown = this.dismissSecs
-    // },
 
-    ///
+    /// Сбросить все выбранные изобр. РЕВЬЮ нид - вынести всё в один файл
+    resetSelectedImages(){
+      //this.$store.commit('ProductParts/setDataSelectedImages', this.$store.getters["ProductParts/currentImages"])
+      this.$store.commit('ProductParts/resetSelectedImages');
 
+    }
 
   },
 
@@ -179,6 +179,7 @@ name: "UpLoader",
       },
   },
   watch:{
+    /// оповещения в футере
     changeSelectedImg(){
       if (this.previousCountLenghtImg !==  this.changeSelectedImg.length) {
         if (this.previousCountLenghtImg <  this.changeSelectedImg.length) {

@@ -152,6 +152,10 @@ const mutations = {
     setDataCurrentImages(state, data){
         state.current_images = data.slice();
     },
+    ///Откатить все изображения на дефолтные
+    resetSelectedImages(state){
+        state.selected_images =  state.current_images;
+    },
 
 
 

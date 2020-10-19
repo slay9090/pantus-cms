@@ -370,6 +370,7 @@ name: "ProductsListFormEdit",
     selectedImages(){
       //let arr = []
       if (this.$store.getters["ProductParts/selectedImages"][0]) {
+        console.log(this.$store.getters["ProductParts/selectedImages"])
         return this.$store.getters["ProductParts/selectedImages"]
       }
       else {
