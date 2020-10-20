@@ -162,6 +162,8 @@ name: "ImageLoader",
         }
       this.images = [];  this.files = null; // autoreset
 
+
+
       }
       else {
         this.$store.commit('FileManager/setTextNotifications', {type: 'danger', text: 'Нет выбранных файлов!'})
