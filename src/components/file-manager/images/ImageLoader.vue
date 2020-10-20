@@ -60,7 +60,7 @@
           v-model="currentPage"
           :total-rows=pageLenght
           :per-page="perPage"
-          @input="goPageItems($event)"
+          @change="goPageItems($event)"
           first-number
           size="sm"
           class="mb-0"
@@ -118,13 +118,13 @@ export default {
   },
 
   methods: {
+      /// Пагинация
       goPageItems(evt){
         let urlArr = []
         this.imgAllItems.forEach((url,index) => {
-
-          if (index > (evt*this.itemsCountOfPage)-this.itemsCountOfPage && index <= evt*this.itemsCountOfPage){
+          if (index >= (evt*this.itemsCountOfPage)-this.itemsCountOfPage && index < (evt*this.itemsCountOfPage)){
+           // console.log('ИНДЕКС ' +index, 'ПАГИНАЦИЯ НАЧАЛО ' +((evt*this.itemsCountOfPage)-this.itemsCountOfPage), 'ПАГИНАЦИЯ КОНЕЦ ' +(evt*this.itemsCountOfPage), 'ВСЕГО '+this.$store.getters["FileManager/imagesAllOnServer"].length)
             if (this.imgAllItems[index]) {
-             // console.log(index, evt, url)
               urlArr.push(this.imgAllItems[index]);
             }
           }
@@ -166,12 +166,10 @@ export default {
     },
 
     applySelectedImagesToCurrentImages(){
-
-      let currentProductImg =   this.$store.getters["ProductParts/currentImages"];
+      let currentProductImg =   this.$store.getters["ProductParts/selectedImages"];
       let concatCurrentImg = currentProductImg.concat(this.selectedImages);
-
-    // console.log(this.$store.getters["ProductParts/selectedImages"])
-      this.$store.commit('ProductParts/setDataSelectedImages', concatCurrentImg)
+      this.$store.commit('ProductParts/setDataSelectedImages', concatCurrentImg);
+      this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager');
     },
 
 
@@ -184,12 +182,6 @@ export default {
    this.imgOfPageItems = this.imgAllItems.slice(0, this.itemsCountOfPage) // обрезать до itemsCountOfPage
 
 
-
-   //this.$bvModal.show('modal-multi-2')
-
-  // this.$refs['my-modal'].toggle()
-
-  // this.$root.$emit('bv::show::modal', 'modal-multi-2', '#btnShow')
   }
 
 
@@ -197,9 +189,6 @@ export default {
 </script>
 
 <style scoped>
-/**{*/
-/*  border: 1px double  black;*/
-/*}*/
 
 .scrollblock {
   height: 250px;
@@ -221,37 +210,19 @@ export default {
 .image-box {
   border-radius: 5px;
   background-color: white !important;
-
-  /*display: flex;*/
-  /*display: flex;         !* NEW, Spec - Firefox, Chrome, Opera *!*/
-
-  /*justify-content: flex-start;*/
   align-items: center;
-
-  box-shadow: 0.1em 0.1em 5px rgba(122,122,122,0.5); /* Параметры тени */
+  box-shadow: 0.1em 0.1em 5px rgba(122,122,122,0.5);
 
 }
 
 .image-space-block {
   background-color: white !important;
-
   width: 95%;
-
-  /*border-radius: 10px 5% / 20px 25em 30px 35em;*/
-  /*border-bottom-right-radius: 5px;*/
-  /*border-bottom-left-radius:  5px;*/
-  /*box-shadow: 0.1em 0.1em 5px rgba(122,122,122,0.5); !* Параметры тени *!*/
 }
 
 .image-space-block-button {
   background-color: white !important;
   width: 95%;
-
-  /*border-radius: 10px 5% / 20px 25em 30px 35em;*/
-  /*border-top-left-radius:     5px;*/
-  /*border-top-right-radius:    5px;*/
-
-  /*box-shadow: 0.1em 0.1em 5px rgba(122,122,122,0.5); !* Параметры тени *!*/
 }
 
 .ico-on-button {
@@ -261,74 +232,41 @@ export default {
   border-radius: 50%;
   -webkit-transition: -webkit-transform .8s ease-in-out;
   transition:         transform .8s ease-in-out;
-
-
 }
 
 .ico-on-button:hover {
   -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
   opacity: 1;
-
 }
-
 
 .ico-on-button-selected {
   font-size: 1.3em;
   color: #28a745;
-
   border-radius: 50%;
   -webkit-transition: -webkit-transform .8s ease-in-out;
   transition:         transform .8s ease-in-out;
-
-
 }
 
 .ico-on-button-selected:hover {
   -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
-
-
 }
-
-
 
 .block-on-button-zoom {
-  /*border: #e4e4e6 solid 1px;*/
   cursor: pointer;
-  /*box-shadow: 0 0 2px;*/
-  /*border-top-left-radius:     5px;*/
-  /*border-top-right-radius:    5px;*/
-
   border-right: 1px solid #adb5bd;
   border-bottom: 1px solid #adb5bd;
-
 }
 .block-on-button-select {
-  /*border: #e4e4e6 solid 1px;*/
   cursor: pointer;
-  /*box-shadow: 0 0 2px;*/
-  /*border-top-left-radius:     5px;*/
-  /*border-top-right-radius:    5px;*/
-  /*border-right: 1px solid #adb5bd;*/
   border-bottom: 1px solid #adb5bd;
-
 }
 .block-on-button-zoom, .block-on-button-select{
-
-  /*transition: margin 1s, color 0.5s;*/
-
-
-
 }
 .block-on-button-zoom:hover {
-
-  /*border-top-left-radius:     5px;*/
-  /*border-top-right-radius:    5px;*/
   box-shadow: 0.1em 0.1em 5px rgba(122,122,122,0.5); /* Параметры тени */
   z-index: 2;
-
-  /*background-color: #212529;*/
 }
 
 .block-on-button-select:hover {
@@ -344,7 +282,6 @@ export default {
 .block-header-load-buttons__icon:hover{
   opacity: 1;
   text-shadow: 1px 1px 1px #adb5bd;
-  /*text-shadow: 1px 1px 1px #777777 ; 0 0 0.1em #adb5bd;  Параметры тени */
 }
 
 </style>

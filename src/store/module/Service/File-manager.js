@@ -9,6 +9,7 @@ const state = () => ({
     ///### Все изображения на сервере
     all_images_on_server: [ ],
     selected_images_in_file_manager: [],
+    text_notifications: null,
 
 
 })
@@ -31,7 +32,11 @@ const mutations = {
     /// Стереть из хранилища все выбранные в файл-менеджере изображения
     clearItemsSelectedImageFromFIleManager(state){
         state.selected_images_in_file_manager.splice(0);
-    }
+    },
+
+    setTextNotifications(state, obj){
+        state.text_notifications = obj;
+    },
 
 }
 
@@ -53,6 +58,8 @@ const getters = {
     imagesAllOnServer: img => img.all_images_on_server,
     /// Получить из хранилища все урлы серверных изображений выбранных в файлменеджере
     selectedImageFromFIleManager: slctImg => slctImg.selected_images_in_file_manager,
+    /// Получить оповещение
+    textNotifications: text => text.text_notifications,
 
 
 }

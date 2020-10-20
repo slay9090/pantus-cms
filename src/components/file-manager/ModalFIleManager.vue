@@ -30,7 +30,7 @@
         </div>
         <div class="w-100 border h-100 px-3">
 
-          <component v-model="files" :is="currentComponent"></component>
+          <component :is="currentComponent"></component>
 
         </div>
       </div>
@@ -44,12 +44,12 @@
           <b-alert
               class="my-0 py-0"
               :show="dismissCountDown"
-              variant="success"
+              :variant=messageNotifications.type
               @dismissed="dismissCountDown=0"
               @dismiss-count-down="countDownChanged"
 
           >
-            {{ messageText }}
+            {{ messageNotifications.text }}
           </b-alert>
           </div>
           <div class=" ">
@@ -79,10 +79,10 @@
 </template>
 
 <script>
-import imagefileview from '@/components/file-manager/images/ImageEditor'
+import imagefileview from '@/components/file-manager/images/ImageEditor';
 import imagefileselect from '@/components/file-manager/images/ImageUploader';
-import imagefileserver from '@/components/file-manager/images/ImageLoader'
-import Axios from "axios";
+import imagefileserver from '@/components/file-manager/images/ImageLoader';
+
 
 
 export default {
@@ -97,9 +97,9 @@ name: "UpLoader",
     return {
       files: null,
       currentComponent: 'imagefileview',
-      dismissSecs: 3,
+      dismissSecs: 5,
       dismissCountDown: 0,
-      messageText: null,
+      messageNotifications: {},
       previousCountLenghtImg: 0,
 
     }
@@ -108,41 +108,13 @@ name: "UpLoader",
   methods: {
 
 
-    async sendImgToServer(){
 
-      let rawData = {
-        name: 'this.name',
-      }
-      rawData = JSON.stringify(rawData)
-      let formData = new FormData()
-      for (let i = 0; i < this.files.length; i++) {
-
-        formData.append('images'+i, this.files[i], this.files[i].name)
-      }
-      formData.append('data', rawData)
-      try {
-        let response = await Axios.post('https://www.pantus.ru/images_uploader/script.php', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-
-        this.$store.commit('ProductParts/setDataSelectedImages', Object.values(response.data))
-        //console.log(this.$store.getters["ProductParts/selectedImages"])
-
-        }
-        catch {console.log('FAILED SEND POST REQ')}
-    },
 
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault()
 
       console.log('OK')
-
-      this.sendImgToServer();
-
-
 
       this.$nextTick(() => {
         this.$bvModal.hide('modal-file-uploader')
@@ -177,25 +149,36 @@ name: "UpLoader",
       changeSelectedImg(){
         return this.$store.getters["ProductParts/selectedImages"];
       },
+      /// получаем изменения текста оповещения
+      alertText(){
+        return this.$store.getters["FileManager/textNotifications"];
+      },
+
   },
   watch:{
-    /// оповещения в футере
+    /// авто оповещения в футере
     changeSelectedImg(){
       if (this.previousCountLenghtImg !==  this.changeSelectedImg.length) {
         if (this.previousCountLenghtImg <  this.changeSelectedImg.length) {
-          this.dismissCountDown = this.dismissSecs // запустить оповещение
-          this.messageText = `Add: ${this.changeSelectedImg.length - this.previousCountLenghtImg} item(s)`
+          this.$store.commit('FileManager/setTextNotifications', {type: 'success',
+            text: `Add: ${this.changeSelectedImg.length - this.previousCountLenghtImg} item(s)`})
           this.previousCountLenghtImg = this.changeSelectedImg.length
         }
         if (this.previousCountLenghtImg >  this.changeSelectedImg.length){
-          this.dismissCountDown = this.dismissSecs // запустить оповещение
-          this.messageText = `Remove: ${this.changeSelectedImg.length - this.previousCountLenghtImg} item(s)`
+            this.$store.commit('FileManager/setTextNotifications', {type: 'success',
+              text: `Remove: ${this.changeSelectedImg.length - this.previousCountLenghtImg} item(s)`})
           this.previousCountLenghtImg = this.changeSelectedImg.length
         }
       }
+    },
+
+    ///Следим за изменением, и вызываем алерт если вьюкс изменился
+    alertText(){
+      this.dismissCountDown = this.dismissSecs // запустить оповещение
+      this.messageNotifications = this.$store.getters["FileManager/textNotifications"];
+    },
 
 
-    }
   },
   mounted() {
   this.previousCountLenghtImg = this.changeSelectedImg.length;
@@ -222,6 +205,7 @@ name: "UpLoader",
 
 .ico:hover{
   zoom: 1.1;
+  text-shadow: 1px 1px 1px #adb5bd;
 
 }
 
