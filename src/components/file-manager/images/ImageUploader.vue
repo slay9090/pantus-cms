@@ -18,7 +18,8 @@
   </label>
 
     <div class="upload-block text-center ">
-      <i class="fa fa-upload fa-2x upload-block__ico text-primary " aria-hidden="true" @click="sendImgToServer"></i>
+      <i v-if="files" class="fa fa-upload fa-2x upload-block__ico text-primary upload-block__ready" aria-hidden="true" @click="sendImgToServer"></i>
+      <i v-else class="fa fa-upload fa-2x upload-block__ico text-primary" aria-hidden="true" @click="sendImgToServer"></i>
     </div>
 
   </div>
@@ -201,6 +202,11 @@ opacity: 0.6;
   opacity: 1;
   text-shadow: 1px 1px 1px #adb5bd;
 }
+.upload-block__ready {
+  opacity: 1;
+}
+
+
 
 .bg-upload-block__ico {
   font-size: 7rem;

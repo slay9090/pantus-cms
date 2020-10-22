@@ -311,16 +311,19 @@ name: "ProductsListFormEdit",
     getImagesProduct(){
       /// если нет мейн имг, то не читаем альбум имг
       if (this.productsJson.productCard.productCardImages.main.url!== undefined && this.productsJson.productCard.productCardImages.main.url!==null){
-        this.form.productCardImages.push(this.productsJson.productCard.productCardImages.main.url)
+        this.form.productCardImages.push(this.productsJson.productCard.productCardImages.main.url) // записываем первое имг
 
         this.productsJson.productCard.productCardImages.album.forEach(element => {
           if (element.url!== undefined && element.url!== null) {
-            this.form.productCardImages.push(element.url)
+            this.form.productCardImages.push(element.url) // записываем все остальные в альбомах
           }
         });
 
       }
+      console.log('==========='+this.form.productCardImages)
 
+      let img = this.form.productCardImages
+      this.$store.commit('ProductParts/setDataCurrentImages', img)
 
     },
 
@@ -353,9 +356,9 @@ name: "ProductsListFormEdit",
 
 
     this.$store.commit('ProductParts/setDataSelectedImages', this.form.productCardImages)
-    this.$store.commit('ProductParts/setDataCurrentImages', this.form.productCardImages)
 
-    console.log(this.$store.getters['ProductParts/selectedImages'])
+
+    //console.log('FICHA '+this.$store.getters['ProductParts/selectedImages'])
 
 
     this.form.prices_retail= this.productsJson.productOffer.prices.retail

@@ -57,6 +57,7 @@
               variant="primary"
               class="float-right "
               @click="handleOk"
+              :disabled = !buttonSaveIsActive
           >
             Сохранить
           </b-button>
@@ -154,9 +155,13 @@ name: "UpLoader",
         return this.$store.getters["FileManager/textNotifications"];
       },
 
+      buttonSaveIsActive(){
+        return this.currentComponent === 'imagefileview'
+      },
+
   },
   watch:{
-    /// авто оповещения в футере
+    /// авто оповещения в футере при изменении кол-ва элелментов во вьюксе
     changeSelectedImg(){
       if (this.previousCountLenghtImg !==  this.changeSelectedImg.length) {
         if (this.previousCountLenghtImg <  this.changeSelectedImg.length) {

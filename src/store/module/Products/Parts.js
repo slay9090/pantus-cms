@@ -150,11 +150,15 @@ const mutations = {
     },
 
     setDataCurrentImages(state, data){
+        console.log('KAKOGO HU')
         state.current_images = data.slice();
     },
     ///Откатить все изображения на дефолтные
-    resetSelectedImages(state){
-        state.selected_images =  state.current_images;
+    resetSelectedImages(state, ){
+        state.selected_images = [];
+        for (const key in state.current_images) {
+            state.selected_images.push(state.current_images[+key]);
+        }
     },
 
 
@@ -400,7 +404,7 @@ const actions = {
                                 "name": "kinnn",
                                 "slug": null,
                                 "hash": null,
-                                "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                                "url": "https://www.pantus.ru/images_uploader/images/Porsche-911 Turbo Cabriolet-2008-5.jpg",
                                 "timestampCreated": null,
                                 "productCardId": null,
                                 "main": null
@@ -527,7 +531,7 @@ const actions = {
                             "name": "img",
                             "slug": null,
                             "hash": null,
-                            "url": "http://www.pantus.ru/upload/iblock/042/10034697ASP%20-%20Прокладка%20бензонасоса%20ВАЗ%2021082%20силикон%20синий%20-%20A-Sport.jpg",
+                            "url": null,
                             "timestampCreated": null,
                             "productCardId": null,
                             "main": null
@@ -539,7 +543,7 @@ const actions = {
                                 "name": "kinnn",
                                 "slug": null,
                                 "hash": null,
-                                "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                                "url": null,
                                 "timestampCreated": null,
                                 "productCardId": null,
                                 "main": null
@@ -550,7 +554,7 @@ const actions = {
                                 "name": "kinnn",
                                 "slug": null,
                                 "hash": null,
-                                "url": "http://www.pantus.ru/upload/iblock/eca/00034867ALT%20-%20Патрубки%20печки%20ВАЗ%201118%20-%20Ассоциация%20Балаковских%20Производителей%20Автозапчастей.jpg",
+                                "url": null,
                                 "timestampCreated": null,
                                 "productCardId": null,
                                 "main": null
