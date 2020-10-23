@@ -178,7 +178,6 @@ name: "ImageLoader",
       //this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager');
     },
 
-
   },
 
   mounted() {
@@ -194,7 +193,7 @@ name: "ImageLoader",
 <style scoped>
 
 .upload-block__ico{
-opacity: 0.6;
+opacity: 0.5;
   cursor: pointer;
 }
 
@@ -205,8 +204,6 @@ opacity: 0.6;
 .upload-block__ready {
   opacity: 1;
 }
-
-
 
 .bg-upload-block__ico {
   font-size: 7rem;
