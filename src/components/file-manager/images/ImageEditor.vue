@@ -127,8 +127,6 @@ name: "ImageEditor",
 
       });
 
-     console.log('mass ',this.metaDataInfoImg)
-
     },
 
     /// Сортировка, если выбрана новая обложка товара
