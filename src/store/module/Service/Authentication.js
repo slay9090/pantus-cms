@@ -13,10 +13,10 @@ const mutations = {
     auth_request(state){
         state.status = 'loading'
     },
-    auth_success(state, token, user){
+    auth_success(state, data){
         state.status = 'success'
-        state.token = token
-        state.user = user
+        state.token = data.token
+        state.username = data.username
     },
     auth_error(state){
         state.status = 'error'
@@ -36,12 +36,12 @@ const actions = {
             Axios({url: 'https://reqres.in/api/login', data: user, method: 'POST' })
                 .then(resp => {
                     const token = resp.data.token
-                    //const user = resp.data.user
+
                     localStorage.setItem('token', token)
                     localStorage.setItem('username', user.email)
                     Axios.defaults.headers.common['Authorization'] = token
 
-                    commit('auth_success', token, ) //  user тоже передать
+                    commit('auth_success', {token: token, username: user.email}) //  user тоже передать
                     resolve(resp)
                     console.log(token)
                 })

@@ -123,7 +123,6 @@ name: "ImageEditor",
           }
         }
         )
-///tlolsdfsdfsdf
 
       });
 
