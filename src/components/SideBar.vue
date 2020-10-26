@@ -23,15 +23,15 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-1-inner" class="">
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link  id="crm-item-1" to="#1" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Item</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        </router-link>
+        <router-link id="crm-item-2" to="#2" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected" >
           <span class="menu-collapsed">Item</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        </router-link>
+        <router-link to="#3" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected" >
           <span class="menu-collapsed">Item</span>
-        </a>
+        </router-link>
       </b-collapse>
 
       <!-- Menu with submenu -->
@@ -45,13 +45,13 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-2-inner" class="">
-        <router-link :to="{ name: 'Brands'}" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'Brands'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Бренды</span>
        </router-link>
-        <router-link :to="{ name: 'CatalogCategory'}" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'CatalogCategory'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Категории</span>
         </router-link>
-        <router-link :to="{ name: 'CatalogApplicabilities'}" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'CatalogApplicabilities'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Применимости</span>
         </router-link>
       </b-collapse>
@@ -67,24 +67,24 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-3-inner" class="">
-        <router-link :to="{ name: 'ProductsList'}" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'ProductsList'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Список</span>
         </router-link>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link to="#4" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Item</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        </router-link>
+        <router-link to="#5" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Item</span>
-        </a>
+        </router-link>
       </b-collapse>
 
-      <a class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+      <router-link class="bg-dark list-group-item list-group-item-action flex-column align-items-start" active-class="item-selected" to="#6">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-usd fa-fw mr-3"></span>
           <span class="menu-collapsed">Заказы</span>
           <span class="submenu-icon ml-auto"></span>
         </div>
-      </a>
+      </router-link>
 
 
 
@@ -107,10 +107,10 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-4-inner" class="">
-        <router-link :to="{ name: 'NewsArticles'}" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'NewsArticles'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Статьи</span>
         </router-link>
-        <router-link :to="{ name: 'NewsCategory'}" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link :to="{ name: 'NewsCategory'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Категории</span>
         </router-link>
 
@@ -126,15 +126,15 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-5-inner" class="">
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link to="#8" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">О нас</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        </router-link>
+        <router-link to="#9" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">За вас</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        </router-link>
+        <router-link to="#10" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">За тех кто в море</span>
-        </a>
+        </router-link>
       </b-collapse>
 
 
@@ -149,15 +149,15 @@
 
       <!-- Submenu content -->
       <b-collapse id="collapse-6-inner" class="">
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        <router-link to="#11" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Категории</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        </router-link>
+        <router-link to="#12" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Категории2</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+        </router-link>
+        <router-link to="#13" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="menu-collapsed">Категории3</span>
-        </a>
+        </router-link>
       </b-collapse>
 
 
@@ -214,7 +214,7 @@
       <!-- /END Separator -->
 
 
-      <router-link :to="{ name: 'Test'}" class="bg-dark list-group-item list-group-item-action">
+      <router-link :to="{ name: 'Test'}" class="bg-dark list-group-item list-group-item-action" active-class="item-selected">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-question fa-fw mr-3"></span>
           <span class="menu-collapsed">Help</span>
@@ -239,7 +239,19 @@
 
 <script>
 export default {
-name: "SideBar"
+name: "SideBar",
+
+  data(){
+    return{
+      isActiveItem:null,
+    }
+  },
+  methods:{
+    setActiveItem(evt) {
+      this.isActiveItem = evt.currentTarget.id;
+    }
+  },
+
 }
 
 
@@ -310,4 +322,23 @@ name: "SideBar"
   text-align: right;
   padding-left: 10px;
 }
+
+
+a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
+  background-color: rgba(86, 122, 213, 0.5) !important;
+}
+
+
+.item-selected {
+  background-color: rgba(86, 122, 213, 1) !important;
+  box-shadow: 5px 5px 1px 0px rgba(0,0,0,0.75);
+  z-index: 2;
+}
+
+
+
+.item-not-selected{
+  background-color: black;
+}
+
 </style>

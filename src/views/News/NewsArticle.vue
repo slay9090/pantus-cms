@@ -20,7 +20,7 @@
                 <b-button class="ml-3 py-1" :disabled="!filter" @click="filter = ''">Clear</b-button>
               </div>
               <div class="p-2 px-1">
-                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length == 0">Удалить</b-button>
+                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>
                 <b-button variant="outline-success" class="py-1 ">Создать</b-button>
               </div>
 
@@ -60,7 +60,7 @@
 
               <template v-slot:cell(name)="data">
                 <!-- `data.value` is the value after formatted by the Formatter -->
-                <a :href="'/news/articles/edit?id='+data.item.id"  class="mb-0" >{{ data.value }} </a>
+                <router-link :to="'/news/articles/edit?id='+data.item.id"  class="mb-0" >{{ data.value }} </router-link>
               </template>
 
 

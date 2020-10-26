@@ -22,7 +22,7 @@
               <b-form-group id="input-group-brand" label="Брэнд:" label-for="brand">
                 <div class="input-catalog form-control d-flex justify-content-between" id="brand">
                   <div>
-                    <a v-for="(item, index) in selectedBrand" :key="index" :href="'/catalog/brand/edit?id='+item.id">{{item.name}} </a>
+                    <router-link v-for="(item, index) in selectedBrand" :key="index" :to="'/catalog/brands/edit?id='+item.id">{{item.name}} </router-link>
                   </div>
                   <div>
                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="editProductBrands" ></i>
@@ -34,7 +34,7 @@
 
                 <div class="input-catalog form-control d-flex justify-content-between" id="categories">
                   <div>
-                    <a v-for="item in selectedCategories" :key="item.id" :href="'/catalog/category/edit?id='+item.id">{{item.name}}, </a>
+                    <router-link v-for="item in selectedCategories" :key="item.id" :to="'/catalog/category/edit?id='+item.id">{{item.name}}, </router-link>
                   </div>
                   <div>
                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="editProductCategories"></i>
@@ -47,7 +47,7 @@
 
                 <div class="input-catalog form-control d-flex justify-content-between" id="applicabilities">
                   <div>
-                    <a v-for="item in form.applicabilities_arr" :key="item.id" :href="'/catalog/applicabilities/edit?id='+item.id">{{item.name}}, </a>
+                    <router-link v-for="item in form.applicabilities_arr" :key="item.id" :to="'/catalog/applicabilities/edit?id='+item.id">{{item.name}}, </router-link>
                   </div>
                   <div>
                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>

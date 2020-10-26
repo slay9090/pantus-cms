@@ -125,6 +125,16 @@ export default {
 
   },
 
+
+  watch: {
+    '$route' (){
+    //  this.$store.dispatch("CatalogApplicabilities/getDataAllItems");
+      let data = this.$store.getters["CatalogApplicabilities/allItems"];
+      this.treeById = [] // Если убрать будет всё полное дерево детей этого узла всегда
+      this.GetChildrenById(data ,Number(this.query))
+    },
+  },
+
   async mounted() {
     await this.$store.dispatch("CatalogApplicabilities/getDataAllItems");
     let data = await this.$store.getters["CatalogApplicabilities/allItems"];

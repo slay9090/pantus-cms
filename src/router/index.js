@@ -29,6 +29,11 @@ Vue.use(VueRouter)
       }
 
   },
+      {
+          path: '*',
+          name: '404',
+          component: () => import('../components/ClientError'),
+      },
 
       {
           path: '/login',
@@ -62,12 +67,6 @@ Vue.use(VueRouter)
           name: 'Brands',
           component: () => import('../views/Catalog/CatalogBrands.vue'),
             props: route => ({ query: route.query.page }),
-            //по ролям разграниение
-            // beforeEnter: (to, from, next) => {
-            //    // if (1 === 1) {
-            //      //   next(true)
-            //   //  }
-        //    },
           meta: {
               requiresAuth: true,
 
@@ -106,6 +105,7 @@ Vue.use(VueRouter)
 
 
             { path: '/catalog/category/edit',
+                name: 'categoryEdit',
               component: () => import('../components/catalog/Category/CatalogCategoryFormEdit'),
               props: route => ({ query: route.query.id }),
                 meta: {
@@ -117,6 +117,20 @@ Vue.use(VueRouter)
                     ]
                 }
             },
+
+      // { path: '/catalog/category/edit?id=360',
+      //     component: () => import('../components/catalog/Category/CatalogCategoryFormEdit'),
+      //     props: route => ({ query: route.query.id }),
+      //     meta: {
+      //         requiresAuth: true,
+      //         breadcrumb: [
+      //             { name: 'Каталог' },
+      //             { name: 'Категории1', link: '/catalog/category/' },
+      //             { name: 'Изменение' },
+      //         ]
+      //     }
+      // },
+
 
           { path: '/catalog/category/add',
               component: () => import('../components/catalog/Category/CatalogCategoryFormAdd'),

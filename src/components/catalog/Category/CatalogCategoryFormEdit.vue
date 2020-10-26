@@ -49,6 +49,7 @@
       <div class="card col-4 p-0 ml-5 " id="treechild" >
         <h4 class="card-header"> <small class="text-muted">Дочерние категории</small></h4>
           <div class="card-body">
+
             <tree :url="url" :tree-data="treeById[0]"></tree>
           </div>
       </div>
@@ -126,7 +127,17 @@ export default {
 
   },
 
+  watch: {
+    '$route' (){
+    //  this.$store.dispatch("CatalogCategories/getDataAllItems");
+      let data = this.$store.getters["CatalogCategories/allItems"];
+      this.treeById = []  // Если убрать будет всё полное дерево детей этого узла всегда
+      this.GetChildrenById(data ,Number(this.query))
+    },
+  },
+
   async mounted() {
+    // this.$route.query.id
     await this.$store.dispatch("CatalogCategories/getDataAllItems");
     let data = await this.$store.getters["CatalogCategories/allItems"];
     this.GetChildrenById(data ,Number(this.query))
