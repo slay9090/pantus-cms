@@ -48,17 +48,6 @@ export default {
     Breadcrumbs,
   },
 
-  // data() {
-  //
-  // },
-  // mounted() {
-  //
-  // },
-  //
-  // updated(){// при обновление страницы
-  //
-  // },
-
   //Обработка просроченных токенов
   created: function () {
     this.$http.interceptors.response.use(undefined, function (err) {
