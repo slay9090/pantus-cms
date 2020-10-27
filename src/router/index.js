@@ -25,6 +25,7 @@ Vue.use(VueRouter)
     component: Home,
 
       meta: {
+        title: 'xxxx',
           requiresAuth: true,
       }
 
@@ -68,6 +69,7 @@ Vue.use(VueRouter)
           component: () => import('../views/Catalog/CatalogBrands.vue'),
             props: route => ({ query: route.query.page }),
           meta: {
+              title: 'xxxx',
               requiresAuth: true,
 
             breadcrumb: [
