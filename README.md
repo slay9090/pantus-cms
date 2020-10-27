@@ -47,3 +47,13 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Deploy
+See [Official vue cli deployment guide](https://cli.vuejs.org/guide/deployment.html#docker-nginx).
+```
+git clone {prj url}
+cd {prj dir}
+docker build -t adm-dev ./
+docker run -d --name adm-dev -p 8080:80 adm-dev
+```
+Go to: http://localhost:8080
