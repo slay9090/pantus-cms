@@ -8,7 +8,6 @@
         :id=node.id.toString()
         v-model="select"
         name="checkbox"
-
         :state="lastNode"
 
     >
@@ -19,7 +18,7 @@
 
     <!-- Element to collapse -->
     <b-collapse v-if="node.children&& node.children.length&&collapse===true"  :visible="collapse">
-      <ul> <check-box-tree v-for="child in node.children" :node="child" :key="child.id" ></check-box-tree> </ul>
+      <ul> <check-box-tree v-for="child in node.children" :node="child" :key="child.id" :type-content="typeContent"></check-box-tree> </ul>
     </b-collapse>
   </div>
 
@@ -30,15 +29,14 @@ export default {
 name: "CheckBoxTree",
   props: {
     node: Object,
+    typeContent: String,
   },
   data() {
     return {
-
       collapse: false,
-
       lastNode: false,
       select: false,
-
+      typeFilter: null,
     }
 
   },
@@ -48,8 +46,9 @@ name: "CheckBoxTree",
       return this.$store.getters["ProductParts/selectedCategories"]
     },
 
-
-
+    itemsSelectedProductApplicabilities(){
+      return this.$store.getters["ProductParts/selectedApplicabilities"]
+    },
 
   },
 
@@ -72,16 +71,8 @@ name: "CheckBoxTree",
   },
 
   methods: {
-
-    isOpenNodeTree(){
-
-
-    },
-
+    // Отрефакторить, разделить на три функции валидация, запись и удаление вьюкс
     validations(node){
-
-
-
 
       if (node.children&& node.children.length){
         //если есть чилдрен, то не последний узел дерева
@@ -95,10 +86,14 @@ name: "CheckBoxTree",
 
           if (this.select===true){
 
-            let index = this.itemSelectProductCategories.findIndex(s => s.id === node.id);
-            console.log(index)
-
-            this.$store.commit("ProductParts/deleteItemSelectedCategories", index)
+            if (this.typeContent === 'Categories') {
+              let index = this.itemSelectProductCategories.findIndex(s => s.id === node.id);
+              this.$store.commit("ProductParts/deleteItemSelectedCategories", index)
+            }
+            if (this.typeContent === 'Applicabilities') {
+              let index = this.itemsSelectedProductApplicabilities.findIndex(s => s.id === node.id);
+              this.$store.commit("ProductParts/deleteItemSelectedApplicabilities", index)
+            }
 
             this.lastNode=false
 
@@ -106,22 +101,20 @@ name: "CheckBoxTree",
           else {
             //какой-то последний узел дерева выбран
             //
+            if (this.typeContent === 'Categories') {
+              this.$store.commit("ProductParts/addItemSelectedCategories", node);
+            }
+            if (this.typeContent === 'Applicabilities') {
+              //console.log('rofl?', this.typeContent)
+              this.$store.commit('ProductParts/addItemSelectedApplicabilities', node)
+            }
 
-            this.$store.commit("ProductParts/addItemSelectedCategories", node);
-
-           // console.log('какой-то последний узел дерева выбран ', this.selectData)
           }
         }
     },
 
 
-
-
-
   },
-  watch: {
-
-  }
 
 }
 </script>

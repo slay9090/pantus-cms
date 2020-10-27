@@ -96,7 +96,10 @@ const mutations = {
      */
     addItemSelectedCategories(state, data){
         state.selected_categories.push(data);
-       // console.log(state.Selected_parts_categories)
+    },
+
+    addItemSelectedApplicabilities(state, data){
+        state.selected_applicabilities.push(data);
     },
 
     /**
@@ -108,12 +111,20 @@ const mutations = {
         state.selected_categories.splice(index, 1);
     },
 
+    deleteItemSelectedApplicabilities(state, index){
+        state.selected_applicabilities.splice(index, 1);
+    },
+
     /**
      * ###Очистить хранилище выбранные категории
      * @param state
      */
     clearItemSelectedCategories(state){
         state.selected_categories.splice(0);
+    },
+
+    clearItemsSelectedApplicabilities(state) {
+        state.selected_applicabilities.splice(0);
     },
 
     setDataParentsSelectedNodes(state, data){
@@ -150,7 +161,6 @@ const mutations = {
     },
 
     setDataCurrentImages(state, data){
-        console.log('KAKOGO HU')
         state.current_images = data.slice();
     },
     ///Откатить все изображения на дефолтные

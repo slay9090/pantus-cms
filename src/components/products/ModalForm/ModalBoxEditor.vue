@@ -41,28 +41,20 @@
 
             </div>
 
-
-<!--            <div class="mt-3 scrollblock" >-->
-<!--              <b-form-radio-group v-model.lazy="currentSelectItems.id"   id="radio-group-1" stacked  >-->
-<!--                <b-form-radio v-for="(item, index) in filteredList()" :key="index"  :value="item.id" @change="setSelectItems(item)">{{ item.name }}</b-form-radio>-->
-<!--              </b-form-radio-group>-->
-<!--            </div>-->
           </div>
 
 
           <div v-if="typeContent==='Categories'">
-<!--            <b-form-group >-->
-<!--              <b-form-checkbox-group id="categories-checkbox-group" v-model="currentSelectItems.id" name="categories-group" stacked>-->
-<!--                <b-form-checkbox v-for="(item, index) in items" :key="index" :value=item.id> {{item.name}} </b-form-checkbox>-->
-
-<!--              </b-form-checkbox-group>-->
-<!--            </b-form-group>-->
-
-<!--{{items}}-->
-
             <div class="scrollblock" >
-                <checkboxtree   v-for="item in items" :node="item" :key="item.id"
+                <checkboxtree   v-for="item in items" :node="item" :key="item.id" :type-content="typeContent"
                 ></checkboxtree>
+            </div>
+          </div>
+
+          <div v-if="typeContent==='Applicabilities'">
+            <div class="scrollblock" >
+              <checkboxtree   v-for="item in items" :node="item" :key="item.id" :type-content="typeContent"
+              ></checkboxtree>
             </div>
           </div>
 
@@ -78,6 +70,11 @@
         <div v-if="typeContent==='Categories'">
           <p class="float-left"><b>Текущее значение: </b>
           <span  v-for= "(item, index) in itemSelectProductCategories" :key="index">{{item.name}},  </span>
+          </p>
+        </div>
+        <div v-if="typeContent==='Applicabilities'">
+          <p class="float-left"><b>Текущее значение: </b>
+            <span  v-for= "(item, index) in itemSelectProductApplicabilities" :key="index">{{item.name}},  </span>
           </p>
         </div>
 
@@ -108,7 +105,9 @@
 </template>
 
 <script>
+
 import checkboxtree from "./CheckBoxTree"
+
 export default {
   name: "checkBoxForm",
   components:{
@@ -123,10 +122,6 @@ export default {
     return {
       inputSearchText: '',
       selectItems: '',
-     // cancelStateItems: [],
-
-     // parentSelectedNode:
-
     }
   },
 
@@ -137,6 +132,10 @@ export default {
 
     itemSelectProductCategories(){
       return this.$store.getters["ProductParts/selectedCategories"]
+    },
+
+    itemSelectProductApplicabilities(){
+      return this.$store.getters["ProductParts/selectedApplicabilities"]
     },
 
   },
@@ -170,9 +169,11 @@ export default {
           break;
 
         case 'Applicabilities':
-
+          console.log('asasdd')
+          this.$store.commit('ProductParts/setDataCurrentApplicabilitiesByPart', this.itemSelectProductApplicabilities)
 
           break;
+
         default:
           console.log('Такого типа модального окна не существует')
       }
@@ -185,45 +186,27 @@ export default {
     handleCancel(bvModalEvt){
       bvModalEvt.preventDefault()
 
-      console.log('CLOSE')
+      if (this.typeContent === 'Categories') {
+        this.$store.commit("ProductParts/clearItemSelectedCategories"); //
+        this.$store.getters["ProductParts/currentCategoriesByPart"]
+            .forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element)); //запись селектов на текущие
+      }
 
+      if (this.typeContent === 'Applicabilities') {
+        this.$store.commit('ProductParts/clearItemsSelectedApplicabilities');
+        this.$store.getters["ProductParts/currentApplicabilitiesByPart"]
+            .forEach(element => this.$store.commit("ProductParts/addItemSelectedApplicabilities", element)); //запись селектов на текущие
+      }
 
-     // console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
-
-      this.$store.commit("ProductParts/clearItemSelectedCategories") //
-
-    //  console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
-
-      this.$store.getters["ProductParts/currentCategoriesByPart"]
-          .forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element)); //запись селектов на текущие
-
-    //  console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
-
-      this.$nextTick(() => {
-        this.$bvModal.hide('modal-catalog-edit')
-      })
-
+        this.$nextTick(() => {
+          this.$bvModal.hide('modal-catalog-edit')
+        })
     },
 
-    /**
-     * Вернуть всех родителей конкретного узла
-     * @param dataset - набор данных
-     * @param nodeId - ид узла
-     * @returns {[]} - родители
-     */
-
-
-    },
-
-
-
-
+   },
 
  async mounted() {
-
-  // console.log('parent node ',this.getAllParentThisNode(this.items, 442))
-
-  }
+ }
 
 }
 </script>

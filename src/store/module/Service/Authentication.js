@@ -53,22 +53,6 @@ const actions = {
         })
     },
 
-    // async login({commit}, user){
-    //     commit('auth_request')
-    //    await Axios.post('https://reqres.in/api/login' ,  user).then( res =>{
-    //
-    //        Axios.defaults.headers.common['Authorization'] = 'token'
-    //        const token = res.data.token
-    //                        //const user = resp.data.user
-    //                        localStorage.setItem('token', token)
-    //                        localStorage.setItem('username', user.email)
-    //
-    //        commit('auth_success', token, ) //  user тоже передать
-    //
-    //         console.log('мы в действиях получили ', token);
-    //     })
-    // },
-
     logout({commit}){
         return new Promise((resolve) => {
             commit('logout')

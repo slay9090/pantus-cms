@@ -47,14 +47,15 @@
 
                 <div class="input-catalog form-control d-flex justify-content-between" id="applicabilities">
                   <div>
-                    <router-link v-for="item in form.applicabilities_arr" :key="item.id" :to="'/catalog/applicabilities/edit?id='+item.id">{{item.name}}, </router-link>
+                    <router-link v-for="item in selectedApplicabilities" :key="item.id" :to="'/catalog/applicabilities/edit?id='+item.id">{{item.name}}, </router-link>
                   </div>
                   <div>
-                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="editProductApplicabilities"></i>
                   </div>
                 </div>
 
               </b-form-group>
+
 
               <b-form-group id="input-group-article" label="Артикул:" label-for="article">
                 <b-form-input id="article" v-model="form.article_origin" ></b-form-input>
@@ -269,7 +270,19 @@ name: "ProductsListFormEdit",
       //Открываем модалку
       this.typeContent = 'Categories'
       this.$store.commit('ProductParts/clearDataParentsSelectedNodes')
-      this.$store.commit('ProductParts/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes())
+      this.$store.commit('ProductParts/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes(this.selectedCategories))
+      await this.$bvModal.show('modal-catalog-edit')
+
+    },
+
+    async editProductApplicabilities() {
+      // собираем данные
+      await this.$store.dispatch('CatalogApplicabilities/getDataAllItems');
+      this.dataSet = await this.$store.getters["CatalogApplicabilities/allItems"];
+      // Открываем модаль
+      this.typeContent = 'Applicabilities';
+      this.$store.commit('ProductParts/clearDataParentsSelectedNodes')
+      this.$store.commit('ProductParts/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes(this.selectedApplicabilities))
       await this.$bvModal.show('modal-catalog-edit')
 
     },
@@ -280,9 +293,9 @@ name: "ProductsListFormEdit",
     },
 
     ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
-    getAllParentsForAllSelectedNodes(){
+    getAllParentsForAllSelectedNodes(selectedCatalogFilter){
       let parent= []
-        this.selectedCategories.forEach(element => {
+        selectedCatalogFilter.forEach(element => {
           parent.push(this.getAllParentForOneNode(this.dataSet, element.id))
         })
 
@@ -320,7 +333,6 @@ name: "ProductsListFormEdit",
         });
 
       }
-      console.log('==========='+this.form.productCardImages)
 
       let img = this.form.productCardImages
       this.$store.commit('ProductParts/setDataCurrentImages', img)
@@ -345,6 +357,10 @@ name: "ProductsListFormEdit",
 
     this.$store.commit("ProductParts/clearItemSelectedCategories")
     this.productsJson.productCard.categories.forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element));
+
+    this.$store.commit("ProductParts/clearItemsSelectedApplicabilities")
+    this.productsJson.productCard.applicabilities.forEach(element => this.$store.commit("ProductParts/addItemSelectedApplicabilities", element));
+
     this.getImagesProduct(); // записываем картинки
 
     this.form.product_id = this.productsJson.productCard.id
@@ -358,7 +374,7 @@ name: "ProductsListFormEdit",
     this.$store.commit('ProductParts/setDataSelectedImages', this.form.productCardImages)
 
 
-    //console.log('FICHA '+this.$store.getters['ProductParts/selectedImages'])
+
 
 
     this.form.prices_retail= this.productsJson.productOffer.prices.retail
@@ -373,7 +389,6 @@ name: "ProductsListFormEdit",
     selectedImages(){
       //let arr = []
       if (this.$store.getters["ProductParts/selectedImages"][0]) {
-        console.log(this.$store.getters["ProductParts/selectedImages"])
         return this.$store.getters["ProductParts/selectedImages"]
       }
       else {
@@ -388,6 +403,10 @@ name: "ProductsListFormEdit",
 
     selectedCategories(){
       return  this.$store.getters["ProductParts/selectedCategories"]
+    },
+
+    selectedApplicabilities(){
+      return this.$store.getters["ProductParts/selectedApplicabilities"]
     },
 
   },
