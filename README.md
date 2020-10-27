@@ -47,3 +47,11 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Deploy
+```
+git clone {prj url}
+cd {prj dir}
+docker build -t adm-dev ./
+docker run -d --name adm-dev -p 8082:80 adm-dev
+```
