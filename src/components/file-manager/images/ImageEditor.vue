@@ -112,13 +112,16 @@ name: "ImageEditor",
     },
     /// Запускаем в хуке, кидаем урлы из хранилища -> через вычисляемое свойство , ждем выполнения очереди промисов
    getPropertyImg(curentUrl){
+      let counter=0;
       curentUrl.forEach(async (url, idx, array) => {
         this.metaDataInfoImg.splice(idx, 0, ([0, 'unknown'])); // предварительно заполняем массив свойст изобр. что бы индексы соответсвовали в случае исключ.
         Promise.all([await this.getFileSize(url), await this.getMetaInfo(url),])
            .then(values => {
           this.metaDataInfoImg.splice(idx, 1, (values)); // записываем в дату строго по индексу, что бы свойства файлов соотствовали самим фйлам, иначе рандом.
-             /// Ждем окончания загрузки, отключаем фон
-          if (this.metaDataInfoImg.length === array.length) {
+
+          // / Ждем окончания загрузки, отключаем фон
+          counter++;
+          if (counter === array.length) {
             this.loadingFile = false;
           }
         }
