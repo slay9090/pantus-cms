@@ -76,7 +76,7 @@
 
 
 <script>
-import imagepopup from "@/components/ImagePopup"
+import imagepopup from "@/components/image-detail-popup"
 export default {
   name: "ImageLoader",
 

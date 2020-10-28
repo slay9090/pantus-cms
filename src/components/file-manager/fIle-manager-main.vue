@@ -80,9 +80,9 @@
 </template>
 
 <script>
-import imagefileview from '@/components/file-manager/images/ImageEditor';
-import imagefileselect from '@/components/file-manager/images/ImageUploader';
-import imagefileserver from '@/components/file-manager/images/ImageLoader';
+import imagefileview from '@/components/file-manager/images/image-editor';
+import imagefileselect from '@/components/file-manager/images/image-uploader';
+import imagefileserver from '@/components/file-manager/images/image-loader';
 
 
 

@@ -8,7 +8,7 @@
 
 <script>
 
-import NodeTree from "./NodeTree";
+import NodeTree from "./node-tree";
 
 export default {
   props: {

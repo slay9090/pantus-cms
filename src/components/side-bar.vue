@@ -2,7 +2,7 @@
   <!-- Sidebar -->
     <div id="sidebar-container" class="sidebar-expanded d-none d-lg-block col-2">
     <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
-    <!-- Bootstrap MainForm Group -->
+    <!-- Bootstrap edit Group -->
     <ul class="list-group sticky-top sticky-offset">
       <!-- Separator with title -->
       <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
@@ -231,7 +231,7 @@
         <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30">
       </li>
     </ul>
-    <!-- MainForm Group END-->
+    <!-- edit Group END-->
   </div>
   <!-- sidebar-container END -->
 

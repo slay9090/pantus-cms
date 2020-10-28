@@ -33,19 +33,19 @@ Vue.use(VueRouter)
       {
           path: '*',
           name: '404',
-          component: () => import('../components/ClientError'),
+          component: () => import('../components/client-error'),
       },
 
       {
           path: '/login',
           name: 'Login',
-          component: () => import('../components/Login'),
+          component: () => import('../components/login'),
 
       },
       {
           path: '/test',
           name: 'Test',
-          component: () => import('../components/Test'),
+          component: () => import('../components/test-bench/Test'),
 
       },
 
@@ -57,7 +57,7 @@ Vue.use(VueRouter)
             meta: {
                 requiresAuth: true,
               breadcrumb: [
-                { name: 'Catalog' }
+                { name: 'catalog' }
               ]
             }
         },
@@ -66,22 +66,22 @@ Vue.use(VueRouter)
 
           path: '/catalog/brands',
           name: 'Brands',
-          component: () => import('../views/Catalog/CatalogBrands.vue'),
+          component: () => import('../views/catalog/brands-view.vue'),
             props: route => ({ query: route.query.page }),
           meta: {
               title: 'xxxx',
               requiresAuth: true,
 
             breadcrumb: [
-              { name: 'Catalog' },
-              { name: 'Brands' }
+              { name: 'catalog' },
+              { name: 'brands' }
             ]
           }
 
         },
 
         { path: '/catalog/brands/edit',
-          component: () => import('../components/catalog/Brands/CatalogBrandsFormEdit.vue'),
+          component: () => import('../components/catalog/brands/brands-edit.vue'),
           props: route => ({ query: route.query.id }),
             meta: {
                 requiresAuth: true,
@@ -93,12 +93,12 @@ Vue.use(VueRouter)
 
           path: '/catalog/category',
           name: 'CatalogCategory',
-          component: () => import('../views/Catalog/CatalogCategories'),
+          component: () => import('../views/catalog/categories-view'),
           meta: {
               requiresAuth: true,
             breadcrumb: [
-              { name: 'Catalog' },
-              { name: 'Category' }
+              { name: 'catalog' },
+              { name: 'category' }
             ]
           }
 
@@ -108,7 +108,7 @@ Vue.use(VueRouter)
 
             { path: '/catalog/category/edit',
                 name: 'categoryEdit',
-              component: () => import('../components/catalog/Category/CatalogCategoryFormEdit'),
+              component: () => import('../components/catalog/category/category-edit'),
               props: route => ({ query: route.query.id }),
                 meta: {
                     requiresAuth: true,
@@ -121,7 +121,7 @@ Vue.use(VueRouter)
             },
 
       // { path: '/catalog/category/edit?id=360',
-      //     component: () => import('../components/catalog/Category/CatalogCategoryFormEdit'),
+      //     component: () => import('../components/catalog/category/CatalogCategoryFormEdit'),
       //     props: route => ({ query: route.query.id }),
       //     meta: {
       //         requiresAuth: true,
@@ -135,7 +135,7 @@ Vue.use(VueRouter)
 
 
           { path: '/catalog/category/add',
-              component: () => import('../components/catalog/Category/CatalogCategoryFormAdd'),
+              component: () => import('../components/catalog/category/category-create'),
               name: 'categoryAdd',
                   meta: {
                       requiresAuth: true,
@@ -153,12 +153,12 @@ Vue.use(VueRouter)
 
           path: '/catalog/applicabilities',
           name: 'CatalogApplicabilities',
-          component: () => import('../views/Catalog/CatalogApplicabilities'),
+          component: () => import('../views/catalog/applicabilities-view'),
           meta: {
               requiresAuth: true,
               breadcrumb: [
-                  { name: 'Catalog' },
-                  { name: 'Applicabilities' }
+                  { name: 'catalog' },
+                  { name: 'applicabilities' }
               ]
           }
 
@@ -167,7 +167,7 @@ Vue.use(VueRouter)
 
 
       { path: '/catalog/applicabilities/edit',
-          component: () => import('../components/catalog/Applicabilities/CatalogApplicabilitiesFormEdit'),
+          component: () => import('../components/catalog/applicabilities/applicabilities-edit'),
           props: route => ({ query: route.query.id }),
           meta: {
               requiresAuth: true,
@@ -180,7 +180,7 @@ Vue.use(VueRouter)
       },
 
       { path: '/catalog/applicabilities/add',
-          component: () => import('../components/catalog/Applicabilities/CatalogApplicabilitiesFormAdd'),
+          component: () => import('../components/catalog/applicabilities/applicabilities-create'),
           name: 'applicabilitiesAdd',
           meta: {
               requiresAuth: true,
@@ -197,7 +197,7 @@ Vue.use(VueRouter)
 
           path: '/news/category',
           name: 'NewsCategory',
-          component: () => import('../views/News/NewsCategory'),
+          component: () => import('../views/news/category-view'),
           meta: {
               requiresAuth: true,
               breadcrumb: [
@@ -214,7 +214,7 @@ Vue.use(VueRouter)
           path: '/news/articles',
           props: route => ({ query: route.query.page }),
           name: 'NewsArticles',
-          component: () => import('../views/News/NewsArticle'),
+          component: () => import('../views/news/article-view'),
           meta: {
               requiresAuth: true,
               breadcrumb: [
@@ -225,7 +225,7 @@ Vue.use(VueRouter)
 
       },
       { path: '/news/articles/edit',
-          component: () => import('../components/news/Articles/FormEdit'),
+          component: () => import('../components/news/articles/articles-edit'),
           props: route => ({ query: route.query.id }),
           name: 'ArticlesFormEdit',
           meta: {
@@ -238,7 +238,7 @@ Vue.use(VueRouter)
           }
       },
       { path: '/news/articles/add',
-          component: () => import('../components/news/Articles/FormAdd'),
+          component: () => import('../components/news/articles/articles-create'),
           name: 'ArticlesFormAdd',
           meta: {
               requiresAuth: true,
@@ -254,7 +254,7 @@ Vue.use(VueRouter)
           path: '/products/list',
           props: route => ({ query: route.query.page }),
           name: 'ProductsList',
-          component: () => import('../views/Products/ProductsParts'),
+          component: () => import('../views/products/parts-view'),
           meta: {
               requiresAuth: true,
               breadcrumb: [
@@ -265,7 +265,7 @@ Vue.use(VueRouter)
       },
 
       { path: '/products/list/edit',
-          component: () => import('../components/products/MainForm/FormEditor'),
+          component: () => import('../components/products/edit/product-editor'),
           props: route => ({ query: route.query.id }),
           name: 'ProductFormEdit',
           meta: {

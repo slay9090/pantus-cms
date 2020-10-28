@@ -31,7 +31,7 @@
 </template>
 
 <script>
- import Autocomplete from '../components/vue-suggestion';
+ import Autocomplete from './autocompiler-field-adress';
 import Axios from 'axios';
 export default {
 

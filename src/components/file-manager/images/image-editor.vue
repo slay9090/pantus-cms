@@ -60,7 +60,7 @@
 
 <script>
 import Axios from "axios";
-import loading from "@/components/file-manager/private/VisualLoading"
+import loading from "@/components/file-manager/subcomponents/visual-loading"
 
 export default {
 name: "ImageEditor",

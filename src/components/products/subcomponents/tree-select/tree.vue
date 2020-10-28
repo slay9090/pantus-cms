@@ -90,7 +90,7 @@ name: "CheckBoxTree",
               let index = this.itemSelectProductCategories.findIndex(s => s.id === node.id);
               this.$store.commit("ProductParts/deleteItemSelectedCategories", index)
             }
-            if (this.typeContent === 'Applicabilities') {
+            if (this.typeContent === 'applicabilities') {
               let index = this.itemsSelectedProductApplicabilities.findIndex(s => s.id === node.id);
               this.$store.commit("ProductParts/deleteItemSelectedApplicabilities", index)
             }
@@ -104,7 +104,7 @@ name: "CheckBoxTree",
             if (this.typeContent === 'Categories') {
               this.$store.commit("ProductParts/addItemSelectedCategories", node);
             }
-            if (this.typeContent === 'Applicabilities') {
+            if (this.typeContent === 'applicabilities') {
               //console.log('rofl?', this.typeContent)
               this.$store.commit('ProductParts/addItemSelectedApplicabilities', node)
             }

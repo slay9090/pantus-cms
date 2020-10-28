@@ -39,7 +39,7 @@
 
 <script>
 
-import Tree from "../../components/Tree";
+import Tree from "../../components/catalog/subcomponents/tree-view/tree";
 
 export default {
 

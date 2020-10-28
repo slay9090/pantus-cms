@@ -36,9 +36,9 @@
 
 <script>
 // @ is an alias to /src
-import NavBar from '@/components/NavBar'
-import SideBar from "@/components/SideBar";
-import Breadcrumbs from './components/Breadcrumbs'
+import NavBar from '@/components/nav-bar'
+import SideBar from "@/components/side-bar";
+import Breadcrumbs from './components/bread-crumbs'
 
 export default {
   name: 'Home',

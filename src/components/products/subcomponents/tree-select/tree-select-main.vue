@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <div v-if="typeContent==='Applicabilities'">
+          <div v-if="typeContent==='applicabilities'">
             <div class="scrollblock" >
               <checkboxtree   v-for="item in items" :node="item" :key="item.id" :type-content="typeContent"
               ></checkboxtree>
@@ -72,7 +72,7 @@
           <span  v-for= "(item, index) in itemSelectProductCategories" :key="index">{{item.name}},  </span>
           </p>
         </div>
-        <div v-if="typeContent==='Applicabilities'">
+        <div v-if="typeContent==='applicabilities'">
           <p class="float-left"><b>Текущее значение: </b>
             <span  v-for= "(item, index) in itemSelectProductApplicabilities" :key="index">{{item.name}},  </span>
           </p>
@@ -106,7 +106,7 @@
 
 <script>
 
-import checkboxtree from "./CheckBoxTree"
+import checkboxtree from "./tree"
 
 export default {
   name: "checkBoxForm",
@@ -168,7 +168,7 @@ export default {
 
           break;
 
-        case 'Applicabilities':
+        case 'applicabilities':
           console.log('asasdd')
           this.$store.commit('ProductParts/setDataCurrentApplicabilitiesByPart', this.itemSelectProductApplicabilities)
 
@@ -192,7 +192,7 @@ export default {
             .forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element)); //запись селектов на текущие
       }
 
-      if (this.typeContent === 'Applicabilities') {
+      if (this.typeContent === 'applicabilities') {
         this.$store.commit('ProductParts/clearItemsSelectedApplicabilities');
         this.$store.getters["ProductParts/currentApplicabilitiesByPart"]
             .forEach(element => this.$store.commit("ProductParts/addItemSelectedApplicabilities", element)); //запись селектов на текущие

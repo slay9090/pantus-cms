@@ -182,8 +182,8 @@
 
 <script>
 
-import catalogboxformeditor from '@/components/products/ModalForm/ModalBoxEditor'
-import imageuploader from '@/components/file-manager/ModalFIleManager'
+import catalogboxformeditor from '@/components/products/subcomponents/tree-select/tree-select-main'
+import imageuploader from '@/components/file-manager/fIle-manager-main'
 
 export default {
 name: "ProductsListFormEdit",
@@ -280,7 +280,7 @@ name: "ProductsListFormEdit",
       await this.$store.dispatch('CatalogApplicabilities/getDataAllItems');
       this.dataSet = await this.$store.getters["CatalogApplicabilities/allItems"];
       // Открываем модаль
-      this.typeContent = 'Applicabilities';
+      this.typeContent = 'applicabilities';
       this.$store.commit('ProductParts/clearDataParentsSelectedNodes')
       this.$store.commit('ProductParts/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes(this.selectedApplicabilities))
       await this.$bvModal.show('modal-catalog-edit')
