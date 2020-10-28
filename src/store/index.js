@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import CatalogBrands from "@/store/module/Catalog/Brands";
-import CatalogCategories from "@/store/module/Catalog/Categories";
-import CatalogApplicabilities from "@/store/module/Catalog/Applicabilities";
-import NewsArticles from "@/store/module/News/Articles"
-import NewsCategory from "@/store/module/News/Category"
-import Authentication from "@/store/module/Service/Authentication"
-import ProductParts from "@/store/module/Products/Parts";
-import FileManager from "@/store/module/Service/File-manager";
+import CatalogBrands from "@/store/module/catalog/Brands";
+import CatalogCategories from "@/store/module/catalog/Categories";
+import CatalogApplicabilities from "@/store/module/catalog/Applicabilities";
+import NewsArticles from "@/store/module/news/Articles"
+import NewsCategory from "@/store/module/news/Category"
+import Authentication from "@/store/module/services/Authentication"
+import ProductParts from "@/store/module/products/Parts";
+import FileManager from "@/store/module/services/File-manager";
 
 
 Vue.use(Vuex)
