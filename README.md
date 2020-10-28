@@ -35,9 +35,9 @@ npm install
 npm run serve
 ```
 
-### Билд с отключенной вебпак картой
+### Compiles and minifies for production
 ```
-vue-cli-service build
+npm run build
 ```
 
 ### Lints and fixes files
