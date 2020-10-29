@@ -1,6 +1,6 @@
 <template>
   <div class="mybg" >
-    <h1 class="center">АХТУНГ!</h1>
+    <h1 class="center">Ошибка 404!</h1>
     <p class="center">
 
       Космические захватчики уничтожили эту страницу! Отомстите им!
@@ -143,7 +143,7 @@ export default {
         draw: function () {
 
           if (this.lost) {
-            screen.fillStyle = "rgba(0, 0, 0, 0.03)";
+            screen.fillStyle = "rgba(51, 51, 51, 0.1)";
             screen.fillRect(0, 0, gameSize.width, gameSize.height);
 
             screen.font = "55px Lucida Console";
