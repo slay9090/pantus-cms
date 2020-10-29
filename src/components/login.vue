@@ -63,6 +63,8 @@ export default {
           .catch(err => console.log(err))
 
     // console.log('ne bili', localStorage.getItem('token'))
+     // this.$router.go(1);
+    //  this.$forceUpdate()
 
     }
   }

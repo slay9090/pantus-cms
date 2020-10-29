@@ -43,7 +43,7 @@ const actions = {
 
                     commit('auth_success', {token: token, username: user.email}) //  user тоже передать
                     resolve(resp)
-                    console.log(token)
+
                 })
                 .catch(err => {
                     commit('auth_error')
