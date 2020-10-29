@@ -36,7 +36,7 @@ export default {
 
 
     game() {
-      console.log('asdasdasdasd')
+
       // General
       var canvas,
           screen,
