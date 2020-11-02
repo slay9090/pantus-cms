@@ -1,5 +1,5 @@
 <template>
-  <div class="mybg" >
+  <div class="mybg">
 
     <b-modal
         id="modal-center"
@@ -14,15 +14,14 @@
         @ok="login"
 
 
-
     >
 
       <form class="login" @submit.prevent="login">
         <div class="input-group form-group">
           <div class="input-group-prepend">
-
             <span class="input-group-text"><i class="fa fa-user"></i></span>
           </div>
+
           <input v-model="email" type="text" class="form-control" placeholder="username">
 
         </div>
@@ -30,7 +29,9 @@
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fa fa-key"></i></span>
           </div>
+
           <input v-model="password" type="password" class="form-control" placeholder="password">
+
         </div>
 
       </form>
@@ -40,10 +41,18 @@
 
 <script>
 export default {
-  mounted() {
-    this.$bvModal.show("modal-center");
-  },
+
   name: "Login",
+
+
+
+  mounted() {
+
+    this.$store.getters["Authentication/isLoggedIn"] ?
+        this.$router.push('/') :
+        this.$bvModal.show("modal-center");
+
+  },
 
   data(){
     return {
@@ -62,14 +71,8 @@ export default {
           .then(() => this.$router.push('/'))
           .catch(err => console.log('err ',err))
 
-    // console.log('ne bili', localStorage.getItem('token'))
-     // this.$router.go(1);
-    //  this.$forceUpdate()
-
     }
   }
-
-
 
 }
 </script>
