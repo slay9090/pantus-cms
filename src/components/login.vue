@@ -55,12 +55,12 @@ export default {
   methods: {
     login: function (bvModalEvt) {
       bvModalEvt.preventDefault()
-    //  console.log('sadsdafsdf')
-      let email = this.email
+
+      let login = this.email
       let password = this.password
-      this.$store.dispatch('Authentication/login', { email, password })
+      this.$store.dispatch('Authentication/login', { login, password })
           .then(() => this.$router.push('/'))
-          .catch(err => console.log(err))
+          .catch(err => console.log('err ',err))
 
     // console.log('ne bili', localStorage.getItem('token'))
      // this.$router.go(1);

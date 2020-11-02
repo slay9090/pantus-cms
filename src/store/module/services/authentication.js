@@ -32,16 +32,18 @@ const actions = {
     login({commit}, user){
         return new Promise((resolve, reject) => {
             commit('auth_request')
-           console.log(user.email)
-            Axios({url: 'https://reqres.in/api/login', data: user, method: 'POST' })
+          // console.log(user.email, user.password)
+            Axios({url: 'http://adm.pantus.ru:8081/auth/login', data: user, method: 'POST' })
                 .then(resp => {
                     const token = resp.data.token
 
+                    console.log('New TOken', token)
+
                     localStorage.setItem('token', token)
-                    localStorage.setItem('username', user.email)
+                    localStorage.setItem('username', user.login)
                     Axios.defaults.headers.common['Authorization'] = token
 
-                    commit('auth_success', {token: token, username: user.email}) //  user тоже передать
+                    commit('auth_success', {token: token, username: user.login}) //  user тоже передать
                     resolve(resp)
 
                 })

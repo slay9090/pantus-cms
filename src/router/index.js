@@ -290,13 +290,11 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)) {
-
-        //console.log( 'skot' + store.getters['Authentication/isLoggedIn']);
         if (store.getters['Authentication/isLoggedIn']) {
             next()
             return
         }
-        next('/login')
+        next('/login111')
     } else {
         next()
     }

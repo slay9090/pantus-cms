@@ -1,6 +1,6 @@
 <template>
-  <div id="app" >
-    <div class="" v-if="forbidden">
+  <div id="app">
+    <div class="" v-if="isLoggedIn">
       <header>
         <div>
           <nav-bar/>
@@ -31,7 +31,6 @@
   </div>
 
 
-
 </template>
 
 
@@ -49,6 +48,8 @@ import SideBar from "@/components/side-bar";
 import Breadcrumbs from './components/bread-crumbs'
 import login from "@/components/login"
 
+import Axios from 'axios'
+
 export default {
   name: 'Home',
   components: {
@@ -60,15 +61,44 @@ export default {
 
   data() {
     return {
+      check: false,
+
     }
   },
 
-
   computed: {
-    forbidden () {
-    //  return !!localStorage.getItem('token')
-      return this.$store.getters["Authentication/isUserName"]
+    isLoggedIn() {
+      return this.$store.getters["Authentication/isLoggedIn"]
     }
+  },
+
+  methods: {
+
+    logout: function () {
+      this.$store.dispatch('Authentication/logout')
+          .then(() => {
+            if (this.$route.fullPath !== '/login'){
+              this.$router.push('/login')
+            }
+          })
+    },
+
+    async forbidden() {
+
+      await Axios.get("http://adm.pantus.ru:8081/api/catalog/testprotected").then(res => {
+        if (res.data.text !== 'THIS IS PROTECTED') {
+          this.logout();
+        }
+      })
+          .catch(err => {
+            console.log('BAD TOKEN ', err)
+            this.logout();
+          });
+    }
+  },
+
+  mounted() {
+    this.forbidden();
   },
 
   //Обработка просроченных токенов
@@ -81,6 +111,7 @@ export default {
         throw err;
       });
     });
+
   }
 }
 </script>
