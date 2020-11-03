@@ -98,6 +98,7 @@ export default {
   },
 
   mounted() {
+
     this.forbidden();
   },
 

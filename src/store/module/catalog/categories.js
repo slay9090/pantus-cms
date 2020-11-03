@@ -25,7 +25,7 @@ const actions = {
      * @returns {Promise<AxiosResponse<any>>}
      */
     async getDataAllItems({commit}){
-        return  await Axios.get('http://194.67.113.201:8080/categories?view=tree').then( res =>{
+        return  await Axios.get(process.env.VUE_APP_API_URL_CATALOG_CATEGORIES).then( res =>{
             commit("setDataAllCategories",res.data);
             // console.log('мы в действиях получили ', res.data);
         })

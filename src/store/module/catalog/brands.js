@@ -25,7 +25,8 @@ const actions = {
      * @returns {Promise<AxiosResponse<any>>}
      */
     async getDataAllItems({commit}){
-        return  await Axios.get('http://194.67.113.201:8080/brands').then( res =>{
+
+        return  await Axios.get(process.env.VUE_APP_API_URL_CATALOG_BRANDS).then( res =>{
             commit("setDataAllBrands",res.data);
             // console.log('мы в действиях получили ', res.data);
         })

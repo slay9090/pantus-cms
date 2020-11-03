@@ -16,7 +16,7 @@ const actions = {
 
     // действие получение данных по апи
     async GetData({commit}){
-        return  await Axios.get('https://www.pantus.ru/api/rest/2.0/news/categories').then( res =>{
+        return  await Axios.get(process.env.VUE_APP_API_URL_NEWS_CATEGORIES).then( res =>{
             commit("SetData",res.data.data);
             // console.log('мы в действиях получили ', res.data);
         })
