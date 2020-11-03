@@ -13,6 +13,7 @@ import VueAxios from 'vue-axios'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
 import TreeModel from 'tree-model'
+
 Vue.use(VueVirtualScroller)
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 

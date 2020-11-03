@@ -16,13 +16,13 @@
 
     >
 
-      <form class="login" @submit.prevent="login">
+      <form class="login" @submit.prevent="login" autocomplete="off">
         <div class="input-group form-group">
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fa fa-user"></i></span>
           </div>
 
-          <input v-model="email" type="text" class="form-control" placeholder="username">
+          <input v-model="email" type="text" class="form-control" placeholder="username" >
 
         </div>
         <div class="input-group form-group">
@@ -33,38 +33,38 @@
           <input v-model="password" type="password" class="form-control" placeholder="password">
 
         </div>
-
+        <captcha :checkRecaptcha.sync="checkRecaptcha" :getError.sync="getError"  />
       </form>
     </b-modal>
   </div>
 </template>
 
 <script>
+ import captcha from "@/components/captcha";
+ import checkCaptcha from "@/mixins/forms/captcha/index"
+
 export default {
-
   name: "Login",
+  mixins:[checkCaptcha,],
 
-
-
-  mounted() {
-
-    this.$store.getters["Authentication/isLoggedIn"] ?
-        this.$router.push('/') :
-        this.$bvModal.show("modal-center");
-
+  components: {
+    captcha,
   },
 
   data(){
     return {
       email : "",
-      password : ""
+      password : "",
     }
   },
 
   methods: {
     login: function (bvModalEvt) {
       bvModalEvt.preventDefault()
-
+      this.checkValidateRecaptcha();
+      if(this.checkRecaptcha === false){
+        return;
+      }
       let login = this.email
       let password = this.password
       this.$store.dispatch('Authentication/login', { login, password })
@@ -72,7 +72,14 @@ export default {
           .catch(err => console.log('err ',err))
 
     }
-  }
+  },
+
+  mounted() {
+
+    this.$store.getters["Authentication/isLoggedIn"] ?
+        this.$router.push('/') :
+        this.$bvModal.show("modal-center");
+  },
 
 }
 </script>
@@ -99,6 +106,19 @@ export default {
   color: black;
   border:0 !important;
 }
+
+  #modal-center___BV_modal_body_ > form > div:nth-child(3) > p {
+    color: red;
+    font-size: 14px;
+    font-family: Roboto,helvetica,arial,sans-serif;
+  }
+
+  .form-control {
+
+
+    font-size: 18px;
+    font-family: Roboto,helvetica,arial,sans-serif;
+  }
 
 
 
