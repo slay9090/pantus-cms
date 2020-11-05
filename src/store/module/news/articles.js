@@ -18,14 +18,14 @@ const actions = {
     async GetData({commit}){
         return  await Axios.get(process.env.VUE_APP_API_URL_NEWS_ARTICLES,  ).then( res =>{
             // Axios.defaults.headers.common['Authorization'] = 'token'
-            commit("SetData",res.data.data);
-            //console.log('мы в действиях получили ', res.data.data);
+            commit("SetData",res.data);
+            console.log('мы в действиях получили ', res.data);
         })
     },
     async GetDetalail({commit}, id){
         //https://www.pantus.ru/api/rest/2.0/news/2333
         return  await Axios.get(process.env.VUE_APP_API_URL_NEWS_ARTICLES+'/'+id).then( res =>{
-            commit("SetData",res.data.data);
+            commit("SetData",res.data);
            // console.log('мы в действиях получили ', res.data.data);
         })
     },

@@ -3,7 +3,7 @@ export default [
 
         path: '/news/category',
         name: 'NewsCategory',
-        component: () => import('@/views/news/category-view'),
+        component: () => import('@/pages/news/categories/news-category-list'),
         meta: {
             requiresAuth: true,
             breadcrumb: [

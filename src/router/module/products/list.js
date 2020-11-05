@@ -3,7 +3,7 @@ export default [
         path: '/products/list',
         props: route => ({ query: route.query.page }),
         name: 'ProductsList',
-        component: () => import('@/views/products/parts-view'),
+        component: () => import('@/pages/products/products-parts-list'),
         meta: {
             requiresAuth: true,
             breadcrumb: [
@@ -14,7 +14,7 @@ export default [
     },
 
     { path: '/products/list/edit',
-        component: () => import('@/components/products/edit/product-editor'),
+        component: () => import('@/pages/products/product-part-editor'),
         props: route => ({ query: route.query.id }),
         name: 'ProductFormEdit',
         meta: {

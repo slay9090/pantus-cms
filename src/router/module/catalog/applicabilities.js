@@ -3,7 +3,7 @@ export default [
 
         path: '/catalog/applicabilities',
         name: 'CatalogApplicabilities',
-        component: () => import('@/views/catalog/applicabilities-view'),
+        component: () => import('@/pages/catalog/applicabilities/catalog-applicabilities-list'),
         meta: {
             requiresAuth: true,
             breadcrumb: [
@@ -17,7 +17,7 @@ export default [
 
 
     { path: '/catalog/applicabilities/edit',
-        component: () => import('@/components/catalog/applicabilities/applicabilities-edit'),
+        component: () => import('@/pages/catalog/applicabilities/catalog-applicabilities-edit'),
         props: route => ({ query: route.query.id }),
         meta: {
             requiresAuth: true,
@@ -30,7 +30,7 @@ export default [
     },
 
     { path: '/catalog/applicabilities/add',
-        component: () => import('@/components/catalog/applicabilities/applicabilities-create'),
+        component: () => import('@/pages/catalog/applicabilities/catalog-applicabilities-create'),
         name: 'applicabilitiesAdd',
         meta: {
             requiresAuth: true,

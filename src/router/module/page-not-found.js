@@ -3,7 +3,7 @@ export default [
     {
         path: '*',
         name: '404',
-        component: () => import('@/components/client-error'),
+        component: () => import('@/pages/error-page-not-found'),
         meta: {
             title: '404',
             requiresAuth: true,

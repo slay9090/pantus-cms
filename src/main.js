@@ -2,7 +2,7 @@ import '@babel/polyfill'
 import 'mutationobserver-shim'
 import Vue from 'vue'
 import './plugins/bootstrap-vue'
-import App from './app.vue'
+import App from './App.vue'
 import Vuex from 'vuex'
 import VueRouter from './router'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
@@ -13,6 +13,11 @@ import VueAxios from 'vue-axios'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
 import TreeModel from 'tree-model'
+
+
+
+
+
 
 Vue.use(VueVirtualScroller)
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
@@ -29,6 +34,16 @@ if (token) {
   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
  // Vue.prototype.$http.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 }
+
+
+import baseButton from '@/components/base/base-button'
+import searchInput from '@/components/base/input/search-input'
+Vue.component("base-button", baseButton)
+Vue.component("search-input", searchInput)
+
+
+
+
 
 
 

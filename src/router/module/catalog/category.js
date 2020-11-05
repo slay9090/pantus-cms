@@ -3,7 +3,7 @@ export default [
 
         path: '/catalog/category',
         name: 'CatalogCategory',
-        component: () => import('@/views/catalog/categories-view'),
+        component: () => import('@/pages/catalog/category/catalog-categories-list'),
         meta: {
             requiresAuth: true,
             breadcrumb: [
@@ -18,7 +18,7 @@ export default [
 
     { path: '/catalog/category/edit',
         name: 'categoryEdit',
-        component: () => import('@/components/catalog/category/category-edit'),
+        component: () => import('@/pages/catalog/category/catalog-category-edit'),
         props: route => ({ query: route.query.id }),
         meta: {
             requiresAuth: true,
@@ -32,7 +32,7 @@ export default [
 
 
     { path: '/catalog/category/add',
-        component: () => import('@/components/catalog/category/category-create'),
+        component: () => import('@/pages/catalog/category/catalog-category-create'),
         name: 'categoryAdd',
         meta: {
             requiresAuth: true,

@@ -4,7 +4,7 @@ export default [
         path: '/news/articles',
         props: route => ({ query: route.query.page }),
         name: 'NewsArticles',
-        component: () => import('@/views/news/article-view'),
+        component: () => import('@/pages/news/articles/news-article-list'),
         meta: {
             requiresAuth: true,
             breadcrumb: [
@@ -15,7 +15,7 @@ export default [
 
     },
     { path: '/news/articles/edit',
-        component: () => import('@/components/news/articles/articles-edit'),
+        component: () => import('@/pages/news/articles/news-articles-edit'),
         props: route => ({ query: route.query.id }),
         name: 'ArticlesFormEdit',
         meta: {
@@ -28,7 +28,7 @@ export default [
         }
     },
     { path: '/news/articles/add',
-        component: () => import('@/components/news/articles/articles-create'),
+        component: () => import('@/pages/news/articles/news-articles-create'),
         name: 'ArticlesFormAdd',
         meta: {
             requiresAuth: true,
