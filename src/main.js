@@ -15,24 +15,19 @@ import VueVirtualScroller from 'vue-virtual-scroller'
 import TreeModel from 'tree-model'
 
 
-
-
-
-
 Vue.use(VueVirtualScroller)
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVueIcons);
 Vue.use(BootstrapVue);
-//Vue.use(TreeModel);
 
 
 Vue.prototype.$http = axios;
 const token = localStorage.getItem('token')
 if (token) {
   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
- // Vue.prototype.$http.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+//  Vue.prototype.$http.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 }
 
 
@@ -40,13 +35,6 @@ import baseButton from '@/components/base/base-button'
 import searchInput from '@/components/base/input/search-input'
 Vue.component("base-button", baseButton)
 Vue.component("search-input", searchInput)
-
-
-
-
-
-
-
 
 new Vue({
   VueRouter,

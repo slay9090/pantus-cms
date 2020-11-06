@@ -1,6 +1,7 @@
 import Axios from 'axios'
 
 
+
 const state = () => ({
     all_items_applicabilities: [],
 
@@ -25,7 +26,11 @@ const actions = {
      * @returns {Promise<AxiosResponse<any>>}
      */
     async getDataAllItems({commit}){
+
+
         return  await Axios.get(process.env.VUE_APP_API_URL_CATALOG_APPLICABILITIES).then( res =>{
+
+
             commit("setDataAllApplicabilities",res.data);
             // console.log('мы в действиях получили ', res.data);
         })
