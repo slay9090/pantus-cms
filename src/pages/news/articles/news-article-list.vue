@@ -12,23 +12,15 @@
             <div class="py-3 d-flex  align-items-center">
               <div class="flex-grow-1 d-flex">
 
-<!--                <b-form-input size="sm" class="col-3 py-3"-->
-<!--                              v-model="filter"-->
-<!--                              type="search"-->
-<!--                              id="filterInput"-->
-<!--                              placeholder="Type to Search"-->
-
-<!--                ></b-form-input>-->
-
                 <search-input
+                    id="search-input-news-article"
                     size="sm"
-                    placeholder="Найти новость"
-                    class="col-3 py-3"
+                    placeholder="Найти"
+                    class="col-5 py-3"
                 > </search-input>
 
+                <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_searchInputCleaned('search-input-news-article')">Clear</b-button>
 
-
-                <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="cleanedSearchField()">Clear</b-button>
               </div>
               <div class="p-2 px-1">
                 <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>
@@ -109,9 +101,13 @@
 </template>
 
 <script>
-
+import baseComponentsMixin from '@/mixins/base-components/inputs'
 export default {
+
 name: "NewsArticle",
+
+  mixins: [baseComponentsMixin],
+
   props: ["query"],
 
   data() {
@@ -178,16 +174,6 @@ name: "NewsArticle",
 
   },
 
-    /// Установить значение инпута поиск
-    setValueSearchInput(value){
-      this.$store.commit('BaseComponents/setValueNewsInputSearch', value)
-
-    },
-
-    cleanedSearchField(){
-      this.setValueSearchInput(null)
-
-    },
 
   },
 
@@ -198,7 +184,7 @@ name: "NewsArticle",
       return this.itemDataTab.length
     },
     valueSearchInput() {
-        return this.$store.getters["BaseComponents/getValueNewsInputSearch"];
+        return this.$store.getters["BaseComponents/getValueNewsInputSearch"]('search-input-news-article');
     }
 
   },
@@ -206,7 +192,8 @@ name: "NewsArticle",
     await this.$store.dispatch("NewsArticles/GetData");
     let data = await this.$store.getters["NewsArticles/AllItems"];
     this.itemDataTab = data;
-    this.spinerLoaderIsShow= false
+    this.spinerLoaderIsShow= false;
+
 
   },
   // исправить

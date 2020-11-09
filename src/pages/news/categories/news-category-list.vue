@@ -8,13 +8,15 @@
           <div>
             <div class="py-3 d-flex  align-items-center">
               <div class="flex-grow-1 d-flex">
-                <b-form-input size="sm" class="col-3 py-3"
-                              v-model="filter"
-                              type="search"
-                              id="filterInput"
-                              placeholder="Type to Search"
-                ></b-form-input>
-                <b-button class="ml-3 py-1" :disabled="!filter" @click="filter = ''">Clear</b-button>
+
+                <search-input
+                    id="search-input-news-categories"
+                    size="sm"
+                    placeholder="Найти"
+                    class="col-5 py-3"
+                > </search-input>
+
+                <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_searchInputCleaned('search-input-news-categories')">Clear</b-button>
               </div>
               <div class="p-2 px-1">
                 <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>
@@ -42,7 +44,7 @@
                 responsive="sm"
                 :per-page="perPage"
                 :current-page="currentPage"
-                :filter="filter"
+                :filter="valueSearchInput"
                 head-variant="light"
                 small
             >
@@ -81,8 +83,13 @@
 </template>
 
 <script>
+
+import baseComponentsMixin from '@/mixins/base-components/inputs'
+
 export default {
 name: "NewsCategory",
+
+  mixins: [baseComponentsMixin],
 
   data() {
     return {
@@ -92,7 +99,7 @@ name: "NewsCategory",
       sortBy: 'age',
       sortDesc: false,
 
-      filter: null,
+
 
       selected: [],
 
@@ -121,12 +128,17 @@ name: "NewsCategory",
       this.$router.push({ path: '/catalog/brands/edit', query: { id: datarow.id } })
 
     },
+    // cleanedSearchField(inputId){
+    //   this.$store.commit('BaseComponents/setValueNewsInputSearch', {'key': inputId, 'value': null})
+    // },
   },
 
   components: {
   },
   computed: {
-
+    valueSearchInput() {
+      return this.$store.getters["BaseComponents/getValueNewsInputSearch"]('search-input-news-categories');
+    },
 
     rows() {
       return this.itemDataTab.length
@@ -138,6 +150,7 @@ name: "NewsCategory",
     let data = await this.$store.getters["NewsCategory/AllItems"];
     //console.log(data)
     this.itemDataTab = data;
+
   }
 
 }

@@ -41,7 +41,7 @@
 
 <script>
  import captcha from "@/components/captcha";
- import checkCaptcha from "@/mixins/forms/captcha"
+ import checkCaptcha from "@/mixins/forms/captcha";
 
 export default {
   name: "Login",

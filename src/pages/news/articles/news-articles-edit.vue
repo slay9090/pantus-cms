@@ -30,7 +30,7 @@
                 ></b-form-input>
               </b-form-group>
 
-              <b-form-group id="body" label="body:" label-for="bodytext">
+              <b-form-group v-if="content" id="body" label="body:" label-for="bodytext">
 
                     <editor
                         api-key="gqpfxv5x5qu51tfngt21fta5oyzrbn4ncpirg46a13hlomt0"
@@ -157,13 +157,13 @@ name: "FormEdit",
     },
   },
 
-  async created() {
+  async mounted() {
     await this.$store.dispatch("NewsArticles/GetDetalail", this.query );
     let data = await this.$store.getters["NewsArticles/AllItems"]; // getTodoById(Number(this.query))
     this.form.name = data.name;
     this.form.id = data.id;
-    this.content=data.content;
-    //console.log(this.editorText)
+    this.content= data.content;
+    console.log(this.content)
 
   },
 

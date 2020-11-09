@@ -10,16 +10,17 @@
           <div>
             <div class="py-3 d-flex  align-items-center">
               <div class="flex-grow-1 d-flex">
-                <b-form-input size="sm" class="col-3 py-3"
-                              v-model="filter"
-                              type="search"
-                              id="filterInput"
-                              placeholder="Type to Search"
-                ></b-form-input>
-                <b-button class="ml-3 py-1" :disabled="!filter" @click="filter = ''">Clear</b-button>
+                <search-input
+                    id="search-input-catalog-brands"
+                    size="sm"
+                    class="col-4 py-3"
+                    type="search"
+                    placeholder="Поиск"
+                ></search-input>
+                <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_searchInputCleaned('search-input-catalog-brands')">Clear</b-button>
               </div>
               <div class="p-2 px-1">
-                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length == 0">Удалить</b-button>
+                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>
                 <b-button variant="outline-success" class="py-1 ">Создать</b-button>
               </div>
 
@@ -44,7 +45,7 @@
                 responsive="sm"
                 :per-page="perPage"
                 :current-page="currentPage"
-                :filter="filter"
+                :filter="valueSearchInput"
                 head-variant="light"
                 small
             >
@@ -99,10 +100,11 @@
 
 <script>
 // @ is an alias to /src
-
+import baseComponentsInputMixin from '@/mixins/base-components/inputs'
 
 export default {
   name: 'Home',
+  mixins: [baseComponentsInputMixin],
   props: ["query"],
 
   data() {
@@ -113,7 +115,7 @@ export default {
       sortBy: 'age',
       sortDesc: false,
 
-      filter: null,
+
 
       selected: [],
 
@@ -151,10 +153,15 @@ export default {
   },
   computed: {
 
+    valueSearchInput() {
+      return this.$store.getters["BaseComponents/getValueNewsInputSearch"]('search-input-catalog-brands');
+    },
 
     rows() {
       return this.itemDataTab.length
     }
+
+
 
   },
   async mounted() {

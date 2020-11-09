@@ -7,14 +7,23 @@
       :state="isValid"
       debounce="500"
 
+
   >
+
   </b-form-input>
+
 </template>
 
 <script>
 export default {
   name: "search-input",
   props: {
+
+    id: {
+      type: String,
+      required: true,
+    },
+
     size: {
       validator(value) {
         return ['', 'sm', 'lg'].indexOf(value) !== -1
@@ -38,12 +47,16 @@ export default {
 
     valueNewsSearchInput: {
       get() {
-        console.log(this.$store.getters["BaseComponents/getValueNewsInputSearch"])
-        return this.$store.getters["BaseComponents/getValueNewsInputSearch"]
+        //console.log()
+       // console.log('GETTER BASE COMP', this.$store.getters["BaseComponents/getValueNewsInputSearch"](this.id))
+        return this.$store.getters["BaseComponents/getValueNewsInputSearch"](this.id)
       },
       set(val) {
+        //запустить валидацию
+
         this.valid(val)
-        this.$store.commit('BaseComponents/setValueNewsInputSearch', val)
+
+        this.$store.commit('BaseComponents/setValueNewsInputSearch', {'key': this.id, 'value': val})
         val === 'q' ? this.isValid=false : this.isValid=null
 
       },

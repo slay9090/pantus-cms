@@ -1,17 +1,24 @@
 //import Axios from 'axios'
+import Vue from 'vue'
+
 const state = () => ({
-    news_input_search_value: null,
+    news_input_search_value: {},
 })
 
 const mutations = {
-    setValueNewsInputSearch(state ,data){state.news_input_search_value = data;},
+    setValueNewsInputSearch(state ,data){
+        Vue.set(state.news_input_search_value, data.key, data.value)
+        },
 }
 
 const actions = {
 }
 
 const getters = {
-    getValueNewsInputSearch: arr => arr.news_input_search_value,
+    getValueNewsInputSearch: state => key => {
+        return state.news_input_search_value[key];
+    },
+
 }
 
 export  default {
