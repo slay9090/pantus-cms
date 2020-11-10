@@ -129,7 +129,7 @@ name: "NewsCategory",
 
     },
     // cleanedSearchField(inputId){
-    //   this.$store.commit('BaseComponents/setValueNewsInputSearch', {'key': inputId, 'value': null})
+    //   this.$store.commit('BaseComponents/setValueInputSearch', {'key': inputId, 'value': null})
     // },
   },
 
@@ -137,7 +137,7 @@ name: "NewsCategory",
   },
   computed: {
     valueSearchInput() {
-      return this.$store.getters["BaseComponents/getValueNewsInputSearch"]('search-input-news-categories');
+      return this.$store.getters["BaseComponents/getValueInputSearch"]('search-input-news-categories');
     },
 
     rows() {

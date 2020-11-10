@@ -184,7 +184,7 @@ name: "NewsArticle",
       return this.itemDataTab.length
     },
     valueSearchInput() {
-        return this.$store.getters["BaseComponents/getValueNewsInputSearch"]('search-input-news-article');
+        return this.$store.getters["BaseComponents/getValueInputSearch"]('search-input-news-article');
     }
 
   },

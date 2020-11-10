@@ -33,8 +33,16 @@ if (token) {
 
 import baseButton from '@/components/base/base-button'
 import searchInput from '@/components/base/input/search-input'
-Vue.component("base-button", baseButton)
-Vue.component("search-input", searchInput)
+import indexInput from '@/components/base/input/index-input'
+import previewRequestBody from '@/components/base/preview-request-body'
+import htmlEditorInput from '@/components/base/input/html-editor'
+Vue.component("base-button", baseButton);
+Vue.component("search-input", searchInput);
+Vue.component("index-input", indexInput);
+Vue.component("preview-request-body", previewRequestBody);
+Vue.component("html-editor", htmlEditorInput);
+
+
 
 new Vue({
   VueRouter,

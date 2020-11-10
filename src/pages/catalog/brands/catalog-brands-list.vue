@@ -14,7 +14,6 @@
                     id="search-input-catalog-brands"
                     size="sm"
                     class="col-4 py-3"
-                    type="search"
                     placeholder="Поиск"
                 ></search-input>
                 <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_searchInputCleaned('search-input-catalog-brands')">Clear</b-button>
@@ -154,7 +153,7 @@ export default {
   computed: {
 
     valueSearchInput() {
-      return this.$store.getters["BaseComponents/getValueNewsInputSearch"]('search-input-catalog-brands');
+      return this.$store.getters["BaseComponents/getValueInputSearch"]('search-input-catalog-brands');
     },
 
     rows() {

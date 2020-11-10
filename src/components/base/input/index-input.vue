@@ -1,22 +1,20 @@
 <template>
   <b-form-input
-      v-model="valueNewsSearchInput"
-      type="search"
+      v-model="valueInputIndex"
       :size="size"
+      type="number"
       :placeholder="placeholder"
       :state="isValid"
-      debounce="500"
-
-
+      required
   >
 
   </b-form-input>
-
 </template>
 
 <script>
 export default {
-  name: "search-input",
+  name: "index-input",
+
   props: {
 
     id: {
@@ -33,7 +31,7 @@ export default {
 
     placeholder: {
       type: String,
-      default: 'Search',
+      default: 'Id',
     },
 
   },
@@ -46,19 +44,18 @@ export default {
 
   computed: {
 
-    valueNewsSearchInput: {
+    valueInputIndex: {
       get() {
-        //console.log()
-       // console.log('GETTER BASE COMP', this.$store.getters["BaseComponents/getValueInputSearch"](this.id))
-        return this.$store.getters["BaseComponents/getValueInputSearch"](this.id)
+
+        return this.$store.getters["BaseComponents/getValueInputIndex"](this.id)
       },
       set(val) {
         //запустить валидацию
 
-        this.valid(val)
+       // this.valid(val)
 
-        this.$store.commit('BaseComponents/setValueInputSearch', {'key': this.id, 'value': val})
-        val === 'q' ? this.isValid=false : this.isValid=null
+        this.$store.commit('BaseComponents/setValueInputIndex', {'key': this.id, 'value': val})
+        val === 'q' ? this.isValid = false : this.isValid = null
 
       },
 
@@ -66,10 +63,11 @@ export default {
 
   },
   methods: {
-    valid(val){
-      console.log('VALIDA ', val)
-    }
+    // valid(val) {
+    //   console.log('VALIDA ', val)
+    // }
   },
+
 
 }
 </script>

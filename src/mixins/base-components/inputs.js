@@ -9,7 +9,7 @@ export default {
 
     methods:{
         $_searchInputCleaned(inputId){
-            this.$store.commit('BaseComponents/setValueNewsInputSearch', {'key': inputId, 'value': null})
+            this.$store.commit('BaseComponents/setValueInputSearch', {'key': inputId, 'value': null})
         },
 
     },
