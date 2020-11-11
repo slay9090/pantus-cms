@@ -2,14 +2,20 @@ export default {
 
     data(){
         return{
-
+            storeNameOfBaseComponents: 'BaseComponents',
+            inputType:{
+                search: '/setValueInputSearch',
+                index: '/setValueInputIndex',
+                htmlEditor: '/setValueHtmlEditor',
+                text: '/setValueInputText',
+            }
         }
     },
 
 
     methods:{
-        $_searchInputCleaned(inputId){
-            this.$store.commit('BaseComponents/setValueInputSearch', {'key': inputId, 'value': null})
+        $_inputCleaned(nameMutations,inputId){
+            this.$store.commit(this.storeNameOfBaseComponents+nameMutations, {'key': inputId, 'value': null})
         },
 
     },

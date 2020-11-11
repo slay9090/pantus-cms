@@ -1,8 +1,6 @@
 <template>
 
-
-
-  <div class="home">
+  <div class="articles">
 
     <div class="card" id="tbl" >
       <h4 class="card-header"> <small class="text-muted">Редактор новостей</small></h4>
@@ -12,86 +10,41 @@
             <div class="py-3 d-flex  align-items-center">
               <div class="flex-grow-1 d-flex">
 
-                <search-input
+                <input-search
                     id="search-input-news-article"
                     size="sm"
                     placeholder="Найти"
                     class="col-5 py-3"
-                > </search-input>
+                > </input-search>
 
-                <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_searchInputCleaned('search-input-news-article')">Clear</b-button>
+                <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_inputCleaned(inputType.search,'search-input-news-article')">Clear</b-button>
 
               </div>
               <div class="p-2 px-1">
-                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>
+<!--                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>-->
                 <b-button variant="outline-success" class="py-1 ">Создать</b-button>
               </div>
 
             </div>
 
-            <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
-            <b-table
-                ref="selectableTable"
-                selectable
-                select-mode="single"
-                selected-variant="warning"
-                @row-selected="onRowSelected"
-                id="my-table"
-                :items="itemDataTab"
+            <table-limit-data
+                id="news-articles-list-table"
                 :fields="fields"
-                :sort-compare="myCompare"
-                sort-icon-left
-                responsive="sm"
-                :per-page="perPage"
-                :current-page="currentPage"
+                :per-page="20"
+                :current-page="query"
                 :filter="valueSearchInput"
-                head-variant="light"
-                small
             >
-
-              <template v-slot:cell(selected)="{ rowSelected }">
-                <template  v-if="rowSelected">
-                  <span  aria-hidden="true">&check;</span>
-
+                <template v-slot:cell(preview.image)="data">
+                  <img :src="data.value" style="max-width: 100%"/>
                 </template>
-                <template  v-else>
-                  <span  aria-hidden="true">&nbsp;</span>
 
+                <template v-slot:cell(name)="data">
+                  <router-link :to="'/news/articles/edit?id='+data.item.id" class="mb-0">{{ data.value }}</router-link>
                 </template>
-              </template>
-
-
-              <template v-slot:cell(name)="data">
-                <!-- `data.value` is the value after formatted by the Formatter -->
-                <router-link :to="'/news/articles/edit?id='+data.item.id"  class="mb-0" >{{ data.value }} </router-link>
-              </template>
-
-
-              <template v-slot:cell(preview.image)="data">
-                <img :src="data.value" />
-              </template>
-
-
-
-            </b-table>
-            </b-overlay>
-            <b-pagination-nav
-                :link-gen="linkGen"
-                :number-of-pages="(rows/perPage)+1"
-                use-router
-                v-model="currentPage"
-            ></b-pagination-nav>
-
-
-            <p class="mt-3">Current Page: {{ currentPage }}</p>
+            </table-limit-data>
 
           </div>
-          <div>
-            <p>
-              Selected Rows:<br>
-              {{ selected }}
-            </p>
-          </div>
+
         </ul>
       </div>
     </div>
@@ -102,6 +55,7 @@
 
 <script>
 import baseComponentsMixin from '@/mixins/base-components/inputs'
+
 export default {
 
 name: "NewsArticle",
@@ -112,13 +66,7 @@ name: "NewsArticle",
 
   data() {
     return {
-      perPage: 20, // кол-во строк в пагинации
-      currentPage: this.query,
-      sortBy: 'id',
-      sortDesc: false,
-      textInputSearch: null,
-      selected: [],
-      itemDataTab: [],
+
       fields: [
         { key: 'selected', label:  '✓',  thStyle: {  width: '30px' }},
         { key: 'id',  sortable: true ,  thStyle: {  width: '80px' } },
@@ -128,81 +76,40 @@ name: "NewsArticle",
         { key: 'preview.image', label: 'Изображение'  ,  thStyle: {  width: '100px' }},
         { key: 'dates.updated', sortable: true , label: 'Дата' , thStyle: {  width: '100px' }},
       ],
-      show: true,
-      spinerLoaderIsShow: true,
+
     }
   },
 
   methods:{
-
-    //записать данные выбраной строки в таблице
-    onRowSelected(items) {
-      this.selected = items
-    },
-
-    //генерация урл для пагинации
-    linkGen(pageNum){
-      return pageNum === 1 ? '?' : `?page=${pageNum}`
-    },
-    //сортировка по дате
-    myCompare(itemA, itemB, key) {
-      if (key !== 'dates.updated') {
-        // If field is not `date` we let b-table handle the sorting
-        return false
-      } else {
-        // Convert the string formatted date to a number that can be compared
-        // Get the values being compared from the items
-        let a = itemA['dates']['updated']
-        let b = itemB['dates']['updated']
-        // Split them into an array of parts (dd, mm, and yyyy)
-       // console.log(itemA['dates']['updated'])
-       // console.log(a, " ", b)
-        a = a.split(' ')
-        b = b.split(' ')
-
-       // console.log(a[0], " ", b[0])
-        a = a[0].split('.')
-        b = b[0].split('.')
-       // console.log(a, " ", b)
-        //
-        // // convert string parts to numbers
-        a = (parseInt(a[2], 10) * 10000) + (parseInt(a[1], 10) * 100) + parseInt(a[0])
-        b = (parseInt(b[2], 10) * 10000) + (parseInt(b[1], 10) * 100) + parseInt(b[0])
-        // Return the comparison result
-        return a - b
-      }
-
-  },
 
 
   },
 
   computed: {
 
-    //кол-во строк в таблице
-    rows() {
-      return this.itemDataTab.length
-    },
     valueSearchInput() {
         return this.$store.getters["BaseComponents/getValueInputSearch"]('search-input-news-article');
+    },
+
+    dataTableLimit(){
+      return this.$store.getters["BaseComponents/getDataLimitTable"]('news-articles-list-table');
     }
 
   },
+
   async mounted() {
     await this.$store.dispatch("NewsArticles/GetData");
     let data = await this.$store.getters["NewsArticles/AllItems"];
-    this.itemDataTab = data;
-    this.spinerLoaderIsShow= false;
-
-
+    this.$store.commit('BaseComponents/setDataLimitTable', {'key': 'news-articles-list-table', 'value': data});
   },
-  // исправить
+
   watch: {
-  $route() {
-    //скролл на верх при переходе по пагинации
-    window.scrollTo(0,0)
-  }
+    '$route' (){
+      //скролл на верх при переходе по пагинации
+      window.scrollTo(0,0)
+    }
   },
+
 }
 
 </script>

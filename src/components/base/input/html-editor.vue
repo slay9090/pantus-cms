@@ -2,13 +2,13 @@
   <editor
       api-key="gqpfxv5x5qu51tfngt21fta5oyzrbn4ncpirg46a13hlomt0"
       :init="myinit"
-      :initial-value="content"
       v-model="valueHtmlEditor"
+
   />
 </template>
 
 <script>
-
+// :initial-value="content" - начальный текст ес чё.
 import Editor from '@tinymce/tinymce-vue'
 
 export default {
@@ -22,10 +22,7 @@ name: "html-editor",
     type: String,
     required: true,
   },
-  content: {
-    type: String,
-    default: '',
-  }
+
 
   },
 
@@ -84,15 +81,12 @@ name: "html-editor",
 
     valueHtmlEditor: {
       get() {
-
         return this.$store.getters["BaseComponents/getValueHtmlEditor"](this.id)
       },
       set(val) {
         //запустить валидацию
-
         this.$store.commit('BaseComponents/setValueHtmlEditor', {'key': this.id, 'value': val})
        // val === 'q' ? this.isValid = false : this.isValid = null
-
       },
 
     }

@@ -36,11 +36,16 @@ import searchInput from '@/components/base/input/search-input'
 import indexInput from '@/components/base/input/index-input'
 import previewRequestBody from '@/components/base/preview-request-body'
 import htmlEditorInput from '@/components/base/input/html-editor'
-Vue.component("base-button", baseButton);
-Vue.component("search-input", searchInput);
-Vue.component("index-input", indexInput);
+import textInput from '@/components/base/input/text-input'
+import limitDataTable from '@/components/base/table/limit-data-table'
+
+Vue.component("button-base", baseButton);
+Vue.component("input-search", searchInput);
+Vue.component("input-index", indexInput);
 Vue.component("preview-request-body", previewRequestBody);
-Vue.component("html-editor", htmlEditorInput);
+Vue.component("editor-html", htmlEditorInput);
+Vue.component("input-text", textInput);
+Vue.component("table-limit-data", limitDataTable);
 
 
 

@@ -11,32 +11,23 @@
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
               <b-form-group id="input-group-1" label="ID:" label-for="news-articles-edit-id-input">
-                <index-input
+                <input-index
                     id="news-articles-edit-id-input"
                     readonly
                 />
-
               </b-form-group>
 
-              <b-form-group id="input-group-2" label="Name:" label-for="input-2">
-                <b-form-input
-                    id="input-2"
-                    v-model="form.name"
-                    required
-                    placeholder="Enter brand name"
-                    autofocus
-                ></b-form-input>
-              </b-form-group>
-
-              <b-form-group v-if="content" id="body" label="body:" label-for="bodytext">
-
-                <html-editor
-                id="news-article-edit-html-editor"
-                :content="content"
+              <b-form-group id="input-group-2" label="Name:" label-for="news-article-edit-name-input">
+                <input-text id="news-article-edit-name-input"
+                            placeholder="Заголовок"
                 />
-
               </b-form-group>
 
+              <b-form-group id="body" label="body:" label-for="news-article-edit-html-editor">
+                <editor-html
+                    id="news-article-edit-html-editor"
+                />
+              </b-form-group>
 
               <b-button type="submit" variant="danger" class="">Удалить</b-button>
               <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
@@ -48,9 +39,8 @@
         </div>
       </div>
 
-
       <preview-request-body
-      :data = preViewRequestBody
+          :data=formData
       />
 
     </div>
@@ -59,23 +49,18 @@
 </template>
 
 <script>
+import baseComponentsMixin from '@/mixins/base-components/inputs'
 
 export default {
-props: ["query"],
-name: "FormEdit",
+  props: ["query"],
+  mixins: [baseComponentsMixin],
+  name: "FormEdit",
 
-  components: {
-  },
+  components: {},
 
   data() {
     return {
-      form: {
-        id: '',
-        name: '',
-        content: '',
-      },
       show: true,
-      content: '',
     }
   },
   methods: {
@@ -86,24 +71,24 @@ name: "FormEdit",
     onReset(evt) {
       evt.preventDefault()
 
-      this.form.name = ''
+      this.$_inputCleaned(this.inputType.text,'news-article-edit-name-input')
+      this.$_inputCleaned(this.inputType.htmlEditor,'news-article-edit-html-editor')
       // Trick to reset/clear native browser form validation state
+
       this.show = false
       this.$nextTick(() => {
         this.show = true
+
       })
     },
   },
 
   computed: {
-    newsIndex(){
-      return this.$store.getters["BaseComponents/getValueInputIndex"]('news-articles-edit-id-input')
-    },
 
-    preViewRequestBody(){
-      const id = this.$store.getters["BaseComponents/getValueInputIndex"]('news-articles-edit-id-input')
-      const name = this.form.name
-      const content = this.$store.getters["BaseComponents/getValueHtmlEditor"]('news-article-edit-html-editor')
+    formData() {
+      const id = this.$store.getters["BaseComponents/getValueInputIndex"]('news-articles-edit-id-input');
+      const name = this.$store.getters["BaseComponents/getValueInputText"]('news-article-edit-name-input');
+      const content = this.$store.getters["BaseComponents/getValueHtmlEditor"]('news-article-edit-html-editor');
       const form = {id, name, content}
       return form
     },
@@ -111,14 +96,16 @@ name: "FormEdit",
   },
 
   async mounted() {
-    await this.$store.dispatch("NewsArticles/GetDetalail", this.query );
+    await this.$store.dispatch("NewsArticles/GetDetalail", this.query);
     let data = await this.$store.getters["NewsArticles/AllItems"]; // getTodoById(Number(this.query))
 
-    this.form.name = data.name;
-    // Устанавливаем значение идентификатора во вьюкс, ид инпута, значение
+    this.$store.commit('BaseComponents/setValueInputText', {'key': 'news-article-edit-name-input', 'value': data.name})
+
     this.$store.commit('BaseComponents/setValueInputIndex', {'key': 'news-articles-edit-id-input', 'value': data.id})
 
-    this.content= data.content;
+    this.$store.commit('BaseComponents/setValueHtmlEditor', {'key': 'news-article-edit-html-editor', 'value': data.content})
+
+
 
 
   },

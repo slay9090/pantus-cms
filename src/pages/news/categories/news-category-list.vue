@@ -9,14 +9,14 @@
             <div class="py-3 d-flex  align-items-center">
               <div class="flex-grow-1 d-flex">
 
-                <search-input
+                <input-search
                     id="search-input-news-categories"
                     size="sm"
                     placeholder="Найти"
                     class="col-5 py-3"
-                > </search-input>
+                > </input-search>
 
-                <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_searchInputCleaned('search-input-news-categories')">Clear</b-button>
+                <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_inputCleaned(inputType.search,'search-input-news-categories')">Clear</b-button>
               </div>
               <div class="p-2 px-1">
                 <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>
