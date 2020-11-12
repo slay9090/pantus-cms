@@ -29,7 +29,9 @@ const actions = {
 
         return  await Axios.get(process.env.VUE_APP_API_URL_CATALOG_BRANDS).then( res =>{
             commit("setDataAllBrands", jsonMaps.catalogBrandsList(res.data) );
-           // console.log('мы в действиях получили ', res.data);
+           //console.log('мы в действиях получили ', {res});
+           // console.debug(res.data)
+
         })
     },
 }

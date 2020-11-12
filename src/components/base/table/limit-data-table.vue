@@ -59,6 +59,7 @@
 
 <script>
 export default {
+
   name: "limit-data-table",
 
   props: {
@@ -100,6 +101,7 @@ export default {
       filteredDataTable: null,
       sortBy: this.sortByField,
       sortDesc: this.sortDescMode,
+      debugStartTime: null,
     }
   },
 
@@ -167,7 +169,6 @@ export default {
 
     dataTable: {
       get() {
-        console.log(this.$store.getters["BaseComponents/getDataLimitTable"](this.id))
         return this.$store.getters["BaseComponents/getDataLimitTable"](this.id)
       },
       set(val) {
@@ -177,6 +178,19 @@ export default {
     }
 
   },
+
+  beforeCreate() {
+
+    this.debugStartTime = window.performance.now();
+  },
+
+
+  updated() {
+    let seconds = (this.debugStartTime) ? 'error' : (((window.performance.now() - this.debugStartTime) % 60000) / 1000).toFixed(2)
+    console.log('UPDATE: ',seconds, 'sec.')
+  },
+
+
 
   watch: {
     /// При поиске кидать на 1ю пагинацию
