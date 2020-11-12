@@ -21,13 +21,10 @@
           :current-page="currentPage"
           :filter="filter"
           @filtered="setFilteredDataTable"
-
           head-variant="light"
           small
-
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
-
 
       >
 
@@ -103,16 +100,14 @@ export default {
       filteredDataTable: null,
       sortBy: this.sortByField,
       sortDesc: this.sortDescMode,
-
-
     }
   },
 
   methods: {
+    //выбраная строка в таблице
     onRowSelected(items) {
       this.selected = items
     },
-
     //генерация урл для пагинации
     linkGen(pageNum) {
       return pageNum === 1 ? '?' : `?page=${pageNum}`
@@ -146,7 +141,7 @@ export default {
       }
 
     },
-
+    // получаем строки после фильтра
     setFilteredDataTable(row) {
       this.filteredDataTable = row;
     },
@@ -154,21 +149,21 @@ export default {
   },
 
   computed: {
+    //размер всей таблицы
     dataTableLength() {
       return Object.keys(this.dataTable).length
     },
-
+    //размер таблицы после фильтра
     filteredDataTableLength() {
       return Object.keys(this.filteredDataTable).length
     },
-
+    // вычисляем размер таблицы для пагинации
     countDataRows() {
       if (this.filteredDataTable) {
         return this.filteredDataTableLength
       }
       return this.dataTableLength
     },
-
 
     dataTable: {
       get() {
@@ -182,12 +177,9 @@ export default {
     }
 
   },
-  updated() {
-  },
-  mounted() {
-  },
 
   watch: {
+    /// При поиске кидать на 1ю пагинацию
     filteredDataTable() {
       this.currentPage = '1';
     }

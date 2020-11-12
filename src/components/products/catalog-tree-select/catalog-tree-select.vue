@@ -1,106 +1,108 @@
 <template>
 
-<div >
-  <b-modal
+  <div>
+    <b-modal
 
-      id="modal-catalog-edit"
-      title="BootstrapVue"
-      size="lg"
-      centered no-fade no-close-on-backdrop no-close-on-esc
-      ok-title="Сохранить">
+        id="modal-catalog-edit"
+        title="BootstrapVue"
+        size="lg"
+        centered no-fade no-close-on-backdrop no-close-on-esc
+        ok-title="Сохранить">
 
-          <div v-if="typeContent==='Brand'" class="">
-            <div class="mt-0">
-              <div class="wrap">
-                <div class="search">
-                  <input type="text" class="searchTerm" placeholder="What are you looking for?" @input="filteredList" v-model="inputSearchText">
-                  <button type="submit" class="searchButton">
-                    <i class="fa fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <hr>
-
-
-              <div class="mt-3 " >
-
-            <RecycleScroller
-                class="scrollblock"
-                :items="filteredList()"
-                :item-size="30"
-                key-field="id"
-                v-slot="{ item }"
-                content-tag="b-form-radio-group"
-            >
-              <div class="ml-2">
-                  <b-form-radio v-model.lazy="itemSelectProductBrand[0].id"   :value="item.id" @change="setSelectItems(item)">{{ item.name }}</b-form-radio>
-              </div>
-            </RecycleScroller>
-
-            </div>
-
-          </div>
-
-
-          <div v-if="typeContent==='Categories'">
-            <div class="scrollblock" >
-                <checkboxtree   v-for="item in items" :node="item" :key="item.id" :type-content="typeContent"
-                ></checkboxtree>
+      <div v-if="typeContent==='Brand'" class="">
+        <div class="mt-0">
+          <div class="wrap">
+            <div class="search">
+              <input type="text" class="searchTerm" placeholder="What are you looking for?" @input="filteredList"
+                     v-model="inputSearchText">
+              <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+              </button>
             </div>
           </div>
+        </div>
 
-          <div v-if="typeContent==='applicabilities'">
-            <div class="scrollblock" >
-              <checkboxtree   v-for="item in items" :node="item" :key="item.id" :type-content="typeContent"
-              ></checkboxtree>
+        <hr>
+
+
+        <div class="mt-3 ">
+
+          <RecycleScroller
+              class="scrollblock"
+              :items="filteredList()"
+              :item-size="30"
+              key-field="id"
+              v-slot="{ item }"
+              content-tag="b-form-radio-group"
+          >
+            <div class="ml-2">
+              <b-form-radio v-model.lazy="itemSelectProductBrand[0].id" :value="item.id" @change="setSelectItems(item)">
+                {{ item.name }}
+              </b-form-radio>
             </div>
-          </div>
+          </RecycleScroller>
 
-
-
-    <template v-slot:modal-footer>
-      <div class="w-100">
-        <div v-if="typeContent==='Brand'">
-          <p class="float-left"><b>Текущее значение: </b>
-            <span  v-for= "(item, index) in itemSelectProductBrand" :key="index">{{item.name}}, </span>
-          </p>
         </div>
-        <div v-if="typeContent==='Categories'">
-          <p class="float-left"><b>Текущее значение: </b>
-          <span  v-for= "(item, index) in itemSelectProductCategories" :key="index">{{item.name}},  </span>
-          </p>
-        </div>
-        <div v-if="typeContent==='applicabilities'">
-          <p class="float-left"><b>Текущее значение: </b>
-            <span  v-for= "(item, index) in itemSelectProductApplicabilities" :key="index">{{item.name}},  </span>
-          </p>
-        </div>
-
-
-        <b-button
-            variant="primary"
-            class="float-right "
-            @click="handleOk"
-        >
-          Сохранить
-        </b-button>
-        <b-button
-            variant=""
-            class="float-right mx-3"
-            @click="handleCancel"
-        >
-          Отмена
-        </b-button>
 
       </div>
-    </template>
-
-  </b-modal>
 
 
-</div>
+      <div v-if="typeContent==='Categories'">
+        <div class="scrollblock">
+          <checkboxtree v-for="item in items" :node="item" :key="item.id" :type-content="typeContent"
+          ></checkboxtree>
+        </div>
+      </div>
+
+      <div v-if="typeContent==='applicabilities'">
+        <div class="scrollblock">
+          <checkboxtree v-for="item in items" :node="item" :key="item.id" :type-content="typeContent"
+          ></checkboxtree>
+        </div>
+      </div>
+
+
+      <template v-slot:modal-footer>
+        <div class="w-100">
+          <div v-if="typeContent==='Brand'">
+            <p class="float-left"><b>Текущее значение: </b>
+              <span v-for="(item, index) in itemSelectProductBrand" :key="index">{{ item.name }}, </span>
+            </p>
+          </div>
+          <div v-if="typeContent==='Categories'">
+            <p class="float-left"><b>Текущее значение: </b>
+              <span v-for="(item, index) in itemSelectProductCategories" :key="index">{{ item.name }},  </span>
+            </p>
+          </div>
+          <div v-if="typeContent==='applicabilities'">
+            <p class="float-left"><b>Текущее значение: </b>
+              <span v-for="(item, index) in itemSelectProductApplicabilities" :key="index">{{ item.name }},  </span>
+            </p>
+          </div>
+
+
+          <b-button
+              variant="primary"
+              class="float-right "
+              @click="handleOk"
+          >
+            Сохранить
+          </b-button>
+          <b-button
+              variant=""
+              class="float-right mx-3"
+              @click="handleCancel"
+          >
+            Отмена
+          </b-button>
+
+        </div>
+      </template>
+
+    </b-modal>
+
+
+  </div>
 
 </template>
 
@@ -110,8 +112,8 @@ import checkboxtree from "./catalog-tree-select-node"
 
 export default {
   name: "checkBoxForm",
-  components:{
-   checkboxtree,
+  components: {
+    checkboxtree,
   },
   props: {
     items: Array,
@@ -125,29 +127,29 @@ export default {
     }
   },
 
-  computed:{
-    itemSelectProductBrand(){
+  computed: {
+    itemSelectProductBrand() {
       return this.$store.getters["ProductParts/selectedBrands"]
     },
 
-    itemSelectProductCategories(){
+    itemSelectProductCategories() {
       return this.$store.getters["ProductParts/selectedCategories"]
     },
 
-    itemSelectProductApplicabilities(){
+    itemSelectProductApplicabilities() {
       return this.$store.getters["ProductParts/selectedApplicabilities"]
     },
 
   },
-  methods:{
+  methods: {
     filteredList() {
       return this.items.filter(post => {
         return post.name.toLowerCase().includes(this.inputSearchText.toLowerCase())
       })
     },
-    setSelectItems(item){
+    setSelectItems(item) {
       this.selectItems = item
-      console.log ('this.selectItems ',this.selectItems)
+      console.log('this.selectItems ', this.selectItems)
     },
 
     handleOk(bvModalEvt) {
@@ -156,15 +158,15 @@ export default {
 
       switch (this.typeContent) {
         case 'Brand':
-            this.$store.commit("ProductParts/clearItemSelectedBrands")
-            this.$store.commit('ProductParts/addItemSelectedBrands', this.selectItems)
+          this.$store.commit("ProductParts/clearItemSelectedBrands")
+          this.$store.commit('ProductParts/addItemSelectedBrands', this.selectItems)
           break;
 
         case 'Categories':
           console.log(this.itemSelectProductCategories)
           this.$store.commit("ProductParts/setDataCurrentCategoriesByPart", this.itemSelectProductCategories) // подгружаем в текущие // variable *//push
-           // console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
-         // this.itemSelectProductCategories.forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element)); //запись селектов
+          // console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
+          // this.itemSelectProductCategories.forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element)); //запись селектов
 
           break;
 
@@ -183,7 +185,7 @@ export default {
       })
     },
 
-    handleCancel(bvModalEvt){
+    handleCancel(bvModalEvt) {
       bvModalEvt.preventDefault()
 
       if (this.typeContent === 'Categories') {
@@ -198,21 +200,20 @@ export default {
             .forEach(element => this.$store.commit("ProductParts/addItemSelectedApplicabilities", element)); //запись селектов на текущие
       }
 
-        this.$nextTick(() => {
-          this.$bvModal.hide('modal-catalog-edit')
-        })
+      this.$nextTick(() => {
+        this.$bvModal.hide('modal-catalog-edit')
+      })
     },
 
-   },
+  },
 
- async mounted() {
- }
+  async mounted() {
+  }
 
 }
 </script>
 
 <style scoped>
-
 
 
 .scroller {
@@ -221,7 +222,6 @@ export default {
   align-items: center;
   height: 500px;
 }
-
 
 
 .scrollblock {
@@ -251,7 +251,7 @@ export default {
   color: #9DBFAF;
 }
 
-.searchTerm:focus{
+.searchTerm:focus {
   color: #00B4CC;
 }
 

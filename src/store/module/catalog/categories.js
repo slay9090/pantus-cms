@@ -1,4 +1,5 @@
 import Axios from 'axios'
+const jsonMaps = require ("@/store/json-config"); // json data-maps
 
 
 const state = () => ({
@@ -26,7 +27,7 @@ const actions = {
      */
     async getDataAllItems({commit}){
         return  await Axios.get(process.env.VUE_APP_API_URL_CATALOG_CATEGORIES).then( res =>{
-            commit("setDataAllCategories",res.data);
+            commit("setDataAllCategories", jsonMaps.catalogCategoriesList(res.data));
             // console.log('мы в действиях получили ', res.data);
         })
     },

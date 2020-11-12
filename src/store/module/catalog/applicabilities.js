@@ -1,5 +1,5 @@
 import Axios from 'axios'
-
+const jsonMaps = require ("@/store/json-config"); // json data-maps
 
 
 const state = () => ({
@@ -31,7 +31,12 @@ const actions = {
         return  await Axios.get(process.env.VUE_APP_API_URL_CATALOG_APPLICABILITIES).then( res =>{
 
 
-            commit("setDataAllApplicabilities",res.data);
+            commit("setDataAllApplicabilities",jsonMaps.catalogApplicabilitiesList(res.data));
+
+            // var myJsonString = JSON.stringify(jsonMaps.catalogApplicabilitiesList(res.data));
+            //
+            // console.log('myserialize json applica ', myJsonString);
+
             // console.log('мы в действиях получили ', res.data);
         })
     },
