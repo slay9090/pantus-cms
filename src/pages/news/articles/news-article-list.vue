@@ -14,13 +14,20 @@
                     id="search-input-news-article"
                     size="sm"
                     placeholder="Найти"
-                    class="col-5 py-3"
+                    class="col-4 py-3"
                 > </input-search>
 
-                <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_inputCleaned(inputType.search,'search-input-news-article')">Clear</b-button>
+                <b-button
+                    class="ml-3 py-1"
+                    :disabled="!valueSearchInput"
+                    @click="$_inputCleaned(inputType.search,'search-input-news-article')"
+                >Clear
+                </b-button>
+
 
               </div>
               <div class="p-2 px-1">
+<!--                !!! не удалять кнопку, потом пробросить ов вьюкс выбранную в таблице строку-->
 <!--                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>-->
                 <b-button variant="outline-success" class="py-1 ">Создать</b-button>
               </div>
@@ -33,6 +40,8 @@
                 :per-page="20"
                 :current-page="query"
                 :filter="valueSearchInput"
+                sort-by-field="dates.updated"
+                :sort-desc-mode="true"
             >
                 <template v-slot:cell(preview.image)="data">
                   <img :src="data.value" style="max-width: 100%"/>

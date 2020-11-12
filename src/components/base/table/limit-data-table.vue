@@ -1,3 +1,5 @@
+<!--Переделать на апдейт, филтер получить дату 2 раза аотрабатывает-->
+
 <template>
 
   <b-overlay :show="!dataTable" no-fade rounded="sm">
@@ -18,8 +20,15 @@
           :per-page="perPage"
           :current-page="currentPage"
           :filter="filter"
+          @filtered="setFilteredDataTable"
+
           head-variant="light"
           small
+
+          :sort-by.sync="sortBy"
+          :sort-desc.sync="sortDesc"
+
+
       >
 
         <!--        Принимаем все слоты -->
@@ -39,9 +48,9 @@
       </b-table>
 
       <b-pagination-nav
-          v-if="rowsLength"
+          v-if="countDataRows"
           :link-gen="linkGen"
-          :number-of-pages="(rowsLength/perPage)+1"
+          :number-of-pages="(countDataRows/perPage)+1"
           use-router
           v-model="currentPage"
       ></b-pagination-nav>
@@ -68,20 +77,33 @@ export default {
       type: Number,
       default: 10,
     },
-    currentPage: {
+    urlPageValue: {
       type: String,
-      default: '0',
+      default: '1',
     },
     filter: {
       type: String,
+    },
 
-    }
+    sortByField: {
+      type: String,
+      default: null
+    },
+    sortDescMode: {
+      type: Boolean,
+      default: false,
+    },
 
   },
 
   data() {
     return {
       selected: [],
+      currentPage: this.urlPageValue,
+      filteredDataTable: null,
+      sortBy: this.sortByField,
+      sortDesc: this.sortDescMode,
+
 
     }
   },
@@ -125,14 +147,28 @@ export default {
 
     },
 
+    setFilteredDataTable(row) {
+      this.filteredDataTable = row;
+    },
+
   },
 
   computed: {
-    rowsLength() {
-      //console.log('lenght', this.dataTable.length)
-      //let count = this.$store.getters["BaseComponents/getDataLimitTable"](this.id)
+    dataTableLength() {
       return Object.keys(this.dataTable).length
     },
+
+    filteredDataTableLength() {
+      return Object.keys(this.filteredDataTable).length
+    },
+
+    countDataRows() {
+      if (this.filteredDataTable) {
+        return this.filteredDataTableLength
+      }
+      return this.dataTableLength
+    },
+
 
     dataTable: {
       get() {
@@ -146,9 +182,15 @@ export default {
     }
 
   },
-
+  updated() {
+  },
   mounted() {
+  },
 
+  watch: {
+    filteredDataTable() {
+      this.currentPage = '1';
+    }
   },
 
 
