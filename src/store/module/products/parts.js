@@ -14,17 +14,17 @@ const state = () => ({
     current_categories_by_parts: [],
     ///### Текущие применимости для конкретной запчасти
     current_applicabilities_by_parts: [],
-    ///### Выбранные бренды
+    ///### Выбранные бренды для конкретной запчасти
     selected_brands: [],
-    ///### Выбранные категории
+    ///### Выбранные категории для конкретной запчасти
     selected_categories: [],
-    ///###Выбранные применимости
+    ///###Выбранные применимости для конкретной запчасти
     selected_applicabilities: [],
     ///### Узлы выбранных итемов
     parents_selected_items: [],
-    ///### Выбранные Изображения
+    ///### Выбранные Изображения для конкретной запчасти
     selected_images: [],
-    ///### Изображения продукта
+    ///### Изображения продукта для конкретной запчасти
     current_images: [],
 
 })
@@ -198,9 +198,7 @@ const actions = {
                         "normalized": null
                     },
                     "brand": {
-                        "id": 12,
-                        "bitrixId": 12,
-                        "active": null,
+                        "id": 266,
                         "name": "РЕЗИНОТЕХНИКА",
                         "code": "REZINOTEHNIKA",
                         "timestampCreated": null,

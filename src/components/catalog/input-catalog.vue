@@ -1,0 +1,79 @@
+<template>
+  <div v-if="valueInputCatalog"
+       class="input-catalog form-control d-flex justify-content-between"
+
+  >
+    <div>
+      <slot></slot>
+    </div>
+    <div>
+
+      <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" v-b-modal.modal-input-catalog></i>
+      <component
+          :is="typeCatalog"
+          v-bind="{ id: id, items: items }"
+      />
+
+    </div>
+  </div>
+</template>
+
+<script>
+
+import singleSelect from '@/components/catalog/catalog-input-single-selector/catalog-single-select'
+import multiSelectTree from '@/components/catalog/catalog-input-multi-tree-selector/catalog-tree-multi-select'
+
+
+export default {
+  name: "input-catalog",
+  components: {
+
+    singleSelect,
+    multiSelectTree,
+  },
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+
+    typeCatalog: {
+      type: String,
+      required: true,
+    },
+    items: {
+      type: Array
+    },
+  },
+
+  computed: {
+
+    valueInputCatalog() {
+      return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id)
+    }
+
+  },
+
+  methods: {},
+
+}
+</script>
+
+<style scoped>
+
+.input-catalog.form-control {
+  height: auto !important;
+  /*background-color: #e9ecef;*/
+}
+
+i {
+  cursor: pointer;
+  color: #007bff;
+  opacity: 0.6;
+}
+
+i:hover {
+  opacity: 1;
+}
+
+</style>

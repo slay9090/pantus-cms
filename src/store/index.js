@@ -8,7 +8,8 @@ import NewsCategory from "@/store/module/news/categories"
 import Authentication from "@/store/module/services/authentication"
 import ProductParts from "@/store/module/products/parts";
 import FileManager from "@/store/module/services/file-manager";
-import BaseComponents from "@/store/prompt-data/base-components"
+import BaseComponents from "@/store/temp-data/base-components"
+import TempDataCatalog from '@/store/temp-data/temp-data-catalog'
 
 
 Vue.use(Vuex)
@@ -25,6 +26,7 @@ export default new Vuex.Store({
       ProductParts,
       FileManager,
       BaseComponents,
+      TempDataCatalog,
 
   },
 })
