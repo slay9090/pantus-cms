@@ -8,11 +8,11 @@
     </div>
     <div>
 
-      <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="openedModal"></i>
-      <component
+      <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="openedModal(modalId, id)"></i>
 
+      <component
           :is="typeCatalog"
-          v-bind="{ id: id, items: items }"
+          v-bind="{ id: id, items: items, modalId: modalId }"
       />
 
     </div>
@@ -45,6 +45,13 @@ export default {
     items: {
       type: Array
     },
+
+    modalId: {
+      type: String,
+      required: true,
+    }
+
+
   },
 
   computed: {
@@ -55,10 +62,23 @@ export default {
 
   },
 
+  data(){
+    return{
+
+    }
+  },
+
   methods: {
-    openedModal(){
-     this.typeCatalog === 'singleSelect' ?  this.$bvModal.show('modal-input-catalog-single-select') : null ;
-      this.typeCatalog === 'multiSelectTree' ?  this.$bvModal.show('modal-input-catalog-multi-tree-select') : null ;
+    openedModal(modalId, InputId){
+
+      this.typeCatalog === 'singleSelect' ?  this.$bvModal.show(modalId) : null ;
+      this.typeCatalog === 'multiSelectTree' ?  this.$bvModal.show(modalId) : null ;
+
+      /// что бы не кидать пропс потом в рекрсию, просто запишем ид инпута хранилище
+      this.$store.commit('TempDataCatalog/setIdInput', InputId)
+
+
+
     },
   },
 

@@ -1,16 +1,16 @@
 <template>
 
-  <div>
+  <div >
     <b-modal
 
-        id="modal-input-catalog-multi-tree-select"
+        :id="modalId"
         title="Дерево Каталога"
         size="lg"
         centered no-fade no-close-on-backdrop no-close-on-esc
         ok-title="Сохранить">
       <div class="scrollblock">
 
-        <checkboxtree v-for="item in items" :node="item" :key="item.id"
+        <checkboxtree :id="id" v-for="item in items" :node="item" :key="item.id"
         ></checkboxtree>
       </div>
 
@@ -56,17 +56,25 @@ export default {
       type: String,
     },
     items: Array,
+
+    modalId: {
+      type: String,
+      required: true,
+    }
+
   },
 
   data() {
-    return {}
+    return {
+
+    }
   },
 
   computed: {
 
 
-    tempItemsSelected() {
-      return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"]
+    tempItemsSelected () {
+      return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id)
     },
 
 
@@ -78,32 +86,49 @@ export default {
       // Prevent modal from closing
       bvModalEvt.preventDefault()
 
-      this.$store.commit('TempDataCatalog/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes(this.tempItemsSelected)) // сделать выч. свлв=-во
+
+      // Список ид узлов до конечного выбранного, что бы раскрыть нужные ветки.
+      this.$store.dispatch('TempDataCatalog/loadParentsSelectedNodes',
+          {
+            'key': this.id,
+            'value': this.getAllParentsForAllSelectedNodes(this.tempItemsSelected)}
+      )
+
+      console.log('TEMP NA ZAPIC ', this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id))
+
+
+
       this.$store.commit('TempDataCatalog/setValueInputCatalog', {
         'key': this.id,
-        'value': this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"]
+        'value': this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id)
       })
 
-      this.resetTempData();
+      console.log('ZAPICAL', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id))
+
+    //  this.resetTempData();
+
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-input-catalog-multi-tree-select')
+        this.$bvModal.hide(this.modalId)
       })
     },
 
     handleCancel(bvModalEvt) {
       bvModalEvt.preventDefault()
 
-      this.resetTempData();
+     // this.resetTempData();
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-input-catalog-multi-tree-select')
+        this.$bvModal.hide(this.modalId)
+
       })
+
     },
 
 
     ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
-    getAllParentsForAllSelectedNodes(selectedCatalogFilter) {
+     getAllParentsForAllSelectedNodes(selectedCatalogFilter) {
+
       let parent = []
-      selectedCatalogFilter.forEach(element => {
+       selectedCatalogFilter.forEach(element => {
         parent.push(this.getAllParentForOneNode(this.items, element.id))
       })
 
@@ -113,7 +138,7 @@ export default {
       let parents = []
       var TreeModel = require('tree-model'),
           tree = new TreeModel();
-      dataset.forEach(element => {
+       dataset.forEach(element => {
         let rootMain = tree.parse(element);
         rootMain.walk(function (node) {
           if (node.model.id === nodeId) {
@@ -131,18 +156,30 @@ export default {
 
     ///КОНЕЦ ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
     // Сброс временного состояния и запись в него то, что находится в getValueInputCatalog
-    async resetTempData() {
-      await this.$store.dispatch('TempDataCatalog/loadTempValueInputCatalog', [])
-      await this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).forEach(elem => {
-        this.$store.commit('TempDataCatalog/addItemTempValue', elem)
+    resetTempData() {
+      // this.$store.dispatch('TempDataCatalog/loadTempValueInputCatalog', [])
+      this.$store.commit('TempDataCatalog/clearDataItemsTempValue', {data: this.id})
+      this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).forEach(elem => {
+        this.$store.commit('TempDataCatalog/addItemTempValue', {
+          'key': this.id,
+          'value': elem
+        })
       })
     }
   },
 
-  async mounted() {
-    await this.resetTempData();
-    await this.$store.commit('TempDataCatalog/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes(this.tempItemsSelected))
+  mounted() {
+
+    this.resetTempData();
+
+    // Список ид узлов до конечного выбранного, что бы раскрыть нужные ветки.
+    this.$store.dispatch('TempDataCatalog/loadParentsSelectedNodes',
+        {
+          'key': this.id,
+          'value': this.getAllParentsForAllSelectedNodes(this.tempItemsSelected)}
+          )
   },
+
 
 }
 </script>

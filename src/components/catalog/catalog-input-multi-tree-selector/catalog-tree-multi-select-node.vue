@@ -28,7 +28,6 @@ export default {
 name: "CheckBoxTree",
   props: {
     node: Object,
-
   },
   data() {
     return {
@@ -43,7 +42,7 @@ name: "CheckBoxTree",
   computed: {
 
     tempSelectedItems(){
-      return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"]
+      return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.$store.getters["TempDataCatalog/idInput"])
     },
 
   },
@@ -52,7 +51,8 @@ name: "CheckBoxTree",
 
   mounted() {
 
-    this.$store.getters["TempDataCatalog/parentsSelectedNodes"].forEach(element => {
+
+    this.$store.getters["TempDataCatalog/parentsSelectedNodes"](this.$store.getters["TempDataCatalog/idInput"]).forEach(element => {
       let lastElement=element[element.length - 1]
       element.forEach(element => {
         if(this.node.id === element)
@@ -86,14 +86,20 @@ name: "CheckBoxTree",
           if (this.select===true){
 
               let index = this.tempSelectedItems.findIndex(s => s.id === node.id);
-              this.$store.commit("TempDataCatalog/removeItemTempValue", index)
+              this.$store.commit("TempDataCatalog/removeItemTempValue", {index: index, inputid: this.$store.getters["TempDataCatalog/idInput"]})
 
             this.lastNode=false
 
           }
           else {
             //какой-то последний узел дерева выбран      //
-              this.$store.commit('TempDataCatalog/addItemTempValue', node)
+
+            this.$store.commit('TempDataCatalog/addItemTempValue', {
+              'key': this.$store.getters["TempDataCatalog/idInput"],
+              'value': node
+            })
+            console.log('TEMP NA ZAPIC ', this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.$store.getters["TempDataCatalog/idInput"]))
+              //this.$store.commit('TempDataCatalog/addItemTempValue', node)
 
           }
         }

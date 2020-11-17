@@ -1,4 +1,8 @@
 export default {
+
+
+
+
     methods: {
        async dataInit () {
             /////////////////////////////////////////////////////
@@ -50,6 +54,7 @@ export default {
                    'key': 'product-part-applicabilities-edit',
                    'value': this.$store.getters["ProductParts/currentApplicabilitiesByPart"]
                })
+
         },
 
 

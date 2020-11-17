@@ -1,7 +1,7 @@
 <template>
   <b-modal v-if="itemSelectProductBrand"
 
-      id="modal-input-catalog-single-select"
+      :id="modalId"
       title="Выбор одного значения"
       size="lg"
       centered
@@ -89,6 +89,10 @@ export default {
     items: {
       type: Array
     },
+    modalId: {
+      type: String,
+      required: true,
+    }
   },
 
   data() {
@@ -135,7 +139,7 @@ export default {
       bvModalEvt.preventDefault()
       this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.id, 'value': this.selectItem})
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-input-catalog-single-select')
+        this.$bvModal.hide(this.modalId)
       })
     },
 
@@ -143,7 +147,7 @@ export default {
       bvModalEvt.preventDefault()
       this.selectItemId = this.itemSelectProductBrandId
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-input-catalog-single-select')
+        this.$bvModal.hide(this.modalId)
       })
     },
 

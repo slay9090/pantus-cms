@@ -4,9 +4,9 @@ import Vue from 'vue'
 
 const state = () => ({
     input_catalog_value: {},
-    temp_input_catalog_value: [],
-
-    node_items_input_catalog: [],
+    temp_input_catalog_value: {},
+    node_items_input_catalog: {},
+    id_input_for_recursive: null,
 
 })
 
@@ -17,27 +17,32 @@ const mutations = {
     },
 
     addItemTempValue(state, data){
-        state.temp_input_catalog_value.push(data);
+        if(state.temp_input_catalog_value[data.key] === undefined){
+            state.temp_input_catalog_value[data.key] = [];
+        }
+        state.temp_input_catalog_value[data.key].push(data.value)
+
     },
 
-    removeItemTempValue(state, index){
-        state.temp_input_catalog_value.splice(index, 1);
+    removeItemTempValue(state, data){
+        console.log(data)
+        state.temp_input_catalog_value[data.inputid].splice(data.index, 1);
     },
 
     setDataParentsSelectedNodes(state, data){
-        state.node_items_input_catalog = data.slice();
-    },
-
-    clearDataParentsSelectedNodes(state){
-        state.node_items_input_catalog.splice(0);
+        Vue.set(state.node_items_input_catalog, data.key, data.value)
+        //state.node_items_input_catalog = data.slice();
     },
 
 
-
-    setDataItemTempValue(state, data){
-        state.temp_input_catalog_value = data.slice();
+    clearDataItemsTempValue(state, data){
+        state.temp_input_catalog_value[data.inputid]=[];
     },
 
+
+    setIdInput(state, data){
+        state.id_input_for_recursive = data.slice();
+    },
 
 
 }
@@ -47,8 +52,8 @@ const actions = {
         return  await commit("setValueInputCatalog",data);
     },
 
-    async loadTempValueInputCatalog({commit}, data){
-        return  await commit("setDataItemTempValue",data);
+    async loadParentsSelectedNodes({commit}, data){
+        return  await commit("setDataParentsSelectedNodes",data);
     },
 
 }
@@ -59,20 +64,16 @@ const getters = {
         return state.input_catalog_value[key];
     },
 
-
-    getTempValuesInputCatalog: arr => arr.temp_input_catalog_value,
+    getTempValuesInputCatalog: state => key => {
+        return state.temp_input_catalog_value[key];
+    },
 
     /// Все потомки выбранных узлов, что бы раскрыть список
-    parentsSelectedNodes: arr => arr.node_items_input_catalog,
+    parentsSelectedNodes: state => key => {
+        return state.node_items_input_catalog[key];
+    },
 
-
-    // getValueInputCatalogId: (state => (key) => (
-    //     state.input_catalog_value[key].id.map(key => state.input_catalog_value[key])
-    // )),
-
-//     getValueInputCatalogId: (state) => (key) => {
-//         return state.input_catalog_value[key].id;
-// }
+    idInput: state => state.id_input_for_recursive,
 
 }
 
