@@ -1,8 +1,8 @@
 <template>
-  <b-modal
+  <b-modal v-if="itemSelectProductBrand"
 
-      id="modal-input-catalog"
-      title="BootstrapVue"
+      id="modal-input-catalog-single-select"
+      title="Выбор одного значения"
       size="lg"
       centered
       no-fade
@@ -103,30 +103,22 @@ export default {
 
     itemSelectProductBrandId:{
       get() {
+       // console.log('ddddddddddddd', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id)
         return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id
       },
-      set(){
-
-      }
     },
-
 
     itemSelectProductBrand() {
       return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id)
 
     },
 
-    // itemsAllBrands(){
-    //   return this.$store.getters["CatalogBrands/allItems"];
-    // },
-
-
   },
 
   methods: {
 
     filteredList() {
-      console.log('this.allItemsBrands',this.items);
+     //console.log('this.allItemsBrands',this.items);
       if (this.items) {
         return this.items.filter(post => {
           return post.name.toLowerCase().includes(this.inputSearchText.toLowerCase())
@@ -143,7 +135,7 @@ export default {
       bvModalEvt.preventDefault()
       this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.id, 'value': this.selectItem})
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-input-catalog')
+        this.$bvModal.hide('modal-input-catalog-single-select')
       })
     },
 
@@ -151,15 +143,15 @@ export default {
       bvModalEvt.preventDefault()
       this.selectItemId = this.itemSelectProductBrandId
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-input-catalog')
+        this.$bvModal.hide('modal-input-catalog-single-select')
       })
     },
 
   },
-  async mounted() {
-    //засунуть вычисл.
-   // await this.$store.dispatch('CatalogBrands/getDataAllItems')
-    this.selectItemId = this.itemSelectProductBrandId
+   async mounted() {
+    // хз, магия
+     this.selectItemId =  this.itemSelectProductBrandId
+
   }
 
 }

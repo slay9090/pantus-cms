@@ -230,10 +230,10 @@ const actions = {
                     ],
                     "applicabilities": [
                         {
-                            "id": 4820,
-                            "parentId": 4819,
+                            "id": 4981,
+                            "parentId": 4865,
                             "code": null,
-                            "name": "Almera",
+                            "name": "2197 (Datsun ON-DO)",
                             "description": null,
                             "lft": null,
                             "rght": null,
@@ -242,10 +242,10 @@ const actions = {
                             "children": null
                         },
                         {
-                            "id": 48201,
-                            "parentId": 48191,
+                            "id": 5338,
+                            "parentId": 5338,
                             "code": null,
-                            "name": "BMW",
+                            "name": "XRAY Cross",
                             "description": null,
                             "lft": null,
                             "rght": null,

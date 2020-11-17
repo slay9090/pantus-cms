@@ -9,7 +9,6 @@
         v-model="select"
         name="checkbox"
         :state="lastNode"
-
     >
 
      <span v-if="node.children&& node.children.length" class="font-weight-bold" > {{ node.name }} </span>
@@ -18,7 +17,7 @@
 
     <!-- Element to collapse -->
     <b-collapse v-if="node.children&& node.children.length&&collapse===true"  :visible="collapse">
-      <ul> <check-box-tree v-for="child in node.children" :node="child" :key="child.id" :type-content="typeContent"></check-box-tree> </ul>
+      <ul> <check-box-tree v-for="child in node.children" :node="child" :key="child.id" ></check-box-tree> </ul>
     </b-collapse>
   </div>
 
@@ -29,31 +28,31 @@ export default {
 name: "CheckBoxTree",
   props: {
     node: Object,
-    typeContent: String,
+
   },
   data() {
     return {
       collapse: false,
       lastNode: false,
       select: false,
-      typeFilter: null,
+
     }
 
   },
 
   computed: {
-    itemSelectProductCategories(){
-      return this.$store.getters["ProductParts/selectedCategories"]
-    },
 
-    itemsSelectedProductApplicabilities(){
-      return this.$store.getters["ProductParts/selectedApplicabilities"]
+    tempSelectedItems(){
+      return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"]
     },
 
   },
 
+
+
   mounted() {
-    this.$store.getters["ProductParts/parentsSelectedNodes"].forEach(element => {
+
+    this.$store.getters["TempDataCatalog/parentsSelectedNodes"].forEach(element => {
       let lastElement=element[element.length - 1]
       element.forEach(element => {
         if(this.node.id === element)
@@ -86,35 +85,30 @@ name: "CheckBoxTree",
 
           if (this.select===true){
 
-            if (this.typeContent === 'Categories') {
-              let index = this.itemSelectProductCategories.findIndex(s => s.id === node.id);
-              this.$store.commit("ProductParts/deleteItemSelectedCategories", index)
-            }
-            if (this.typeContent === 'applicabilities') {
-              let index = this.itemsSelectedProductApplicabilities.findIndex(s => s.id === node.id);
-              this.$store.commit("ProductParts/deleteItemSelectedApplicabilities", index)
-            }
+              let index = this.tempSelectedItems.findIndex(s => s.id === node.id);
+              this.$store.commit("TempDataCatalog/removeItemTempValue", index)
 
             this.lastNode=false
 
           }
           else {
-            //какой-то последний узел дерева выбран
-            //
-            if (this.typeContent === 'Categories') {
-              this.$store.commit("ProductParts/addItemSelectedCategories", node);
-            }
-            if (this.typeContent === 'applicabilities') {
-              //console.log('rofl?', this.typeContent)
-              this.$store.commit('ProductParts/addItemSelectedApplicabilities', node)
-            }
+            //какой-то последний узел дерева выбран      //
+              this.$store.commit('TempDataCatalog/addItemTempValue', node)
 
           }
         }
     },
 
 
+
+
+
+
   },
+
+
+
+
 
 }
 </script>

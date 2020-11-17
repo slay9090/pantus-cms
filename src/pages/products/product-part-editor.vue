@@ -20,7 +20,6 @@
               </b-form-group>
 
               <b-form-group id="input-group-brand" label="Брэнд:" label-for="product-part-brand-edit">
-
                 <input-catalog
                     v-if="allItemsCatalogBrands"
                     id="product-part-brand-edit"
@@ -30,38 +29,39 @@
                   <router-link v-if="currentItemBrandInput" :to="'/catalog/brands/edit?id='+currentItemBrandInput.id">
                     {{ currentItemBrandInput.name }}
                   </router-link>
-
                 </input-catalog>
               </b-form-group>
 
-<!--              <b-form-group id="input-group-categories" label="Категории:"-->
-<!--                            label-for="input-product-part-categories-edit">-->
 
-<!--                <input-catalog-->
-<!--                    id="input-product-part-categories-edit"-->
-<!--                    type-catalog="multiSelectTree"-->
-<!--                >-->
-<!--                  <router-link v-for="item in currentItemsCategoriesInput" :key="item.id"-->
-<!--                               :to="'/catalog/category/edit?id='+item.id">-->
-<!--                  {{ item.name }},-->
-<!--                  </router-link>-->
 
-<!--                </input-catalog>-->
-
-<!--              </b-form-group>-->
-
-              <b-form-group id="input-group-applicabilities" label="Применимости:" label-for="applicabilities">
-
-                <div class="input-catalog form-control d-flex justify-content-between" id="applicabilities">
-                  <div>
-                    <router-link v-for="item in selectedApplicabilities" :key="item.id" :to="'/catalog/applicabilities/edit?id='+item.id">{{item.name}}, </router-link>
-                  </div>
-                  <div>
-                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="editProductApplicabilities"></i>
-                  </div>
-                </div>
-
+              <b-form-group id="input-group-categories" label="Категории:" label-for="product-part-categories-edit">
+                <input-catalog
+                    v-if="allItemsCatalogCategories"
+                    id="product-part-categories-edit"
+                    type-catalog="multiSelectTree"
+                    :items="allItemsCatalogCategories"
+                >
+                  <router-link v-for="item in currentItemsCategoriesInput" :key="item.id"
+                               :to="'/catalog/category/edit?id='+item.id">
+                                      {{ item.name }},
+                  </router-link>
+                </input-catalog>
               </b-form-group>
+
+
+<!--              <b-form-group id="input-group-applicabilities" label="Применимости:" label-for="product-part-applicabilities-edit">-->
+<!--                <input-catalog-->
+<!--                    v-if="allItemsCatalogApplicabilities"-->
+<!--                    id="product-part-applicabilities-edit"-->
+<!--                    type-catalog="multiSelectTree"-->
+<!--                    :items="allItemsCatalogApplicabilities"-->
+<!--                >-->
+<!--                  <router-link v-for="item in currentItemsApplicabilitiesInput" :key="item.id"-->
+<!--                               :to="'/catalog/category/edit?id='+item.id">-->
+<!--                    {{ item.name }},-->
+<!--                  </router-link>-->
+<!--                </input-catalog>-->
+<!--              </b-form-group>-->
 
 
               <b-form-group id="input-group-article" label="Артикул:" label-for="article">
@@ -96,8 +96,6 @@
                         no-animation
                         ref="myCarousel"
                     >
-
-
 
                       <b-carousel-slide v-for="(item, index) in selectedImages" :key="index" >
 
@@ -149,19 +147,9 @@
                 <b-form-input id="categories" v-model="form.prices_retail" ></b-form-input>
               </b-form-group>
 
-
-
-
               <b-button type="submit" variant="danger" class="">Удалить</b-button>
               <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
               <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
-
-              <catalogboxformeditor
-                  :items=dataSet
-                  :type-content= typeContent
-              >
-
-              </catalogboxformeditor>
 
               <imageuploader />
 
@@ -191,17 +179,16 @@
 
 <script>
 
-import catalogboxformeditor from '@/components/catalog/catalog-input-multi-tree-selector/catalog-tree-multi-select'
 import imageuploader from '@/components/file-manager/fIle-manager'
 import InputCatalog from "@/components/catalog/input-catalog";
+import init from '@/mixins/forms/products/product-init'
 
 export default {
 name: "ProductsListFormEdit",
   props: ["query"],
-
+  mixins:[init,],
   components: {
     InputCatalog,
-    catalogboxformeditor,
     imageuploader,
   },
 
@@ -222,20 +209,12 @@ name: "ProductsListFormEdit",
 
       productsJson: {},
       show: true,
-      dataSet: [],
-      typeContent: '',
       slide: 0,
       sliding: null,
       imgIsNotExist: false,
-
-      currentBrand: null,
-
-
       allItemsCatalogBrands: null,
       allItemsCatalogCategories: null,
       allItemsCatalogApplicabilities: null,
-
-
 
     }
 
@@ -243,7 +222,6 @@ name: "ProductsListFormEdit",
   methods:{
 
     hasImgError(){
-
       this.imgIsNotExist = true
     },
 
@@ -254,15 +232,10 @@ name: "ProductsListFormEdit",
       this.$refs.myCarousel.prev()
     },
 
-
-
-
     onSubmit(evt) {
       evt.preventDefault()
       alert(JSON.stringify(this.form))
     },
-
-
 
     onReset(evt) {
       evt.preventDefault()
@@ -273,163 +246,21 @@ name: "ProductsListFormEdit",
         this.show = true
       })
     },
-    async editProductBrands(){
-      // Собираем данные
-      await this.$store.dispatch("CatalogBrands/getDataAllItems");
-      this.dataSet = await this.$store.getters["CatalogBrands/allItems"];
-      //Открываем модалку
-      await this.$bvModal.show('modal-catalog-brands-edit')
-    },
-
-    async editProductCategories(){
-
-      // Собираем данные
-      await this.$store.dispatch("CatalogCategories/getDataAllItems");
-      this.dataSet = await this.$store.getters["CatalogCategories/allItems"];
-      //Открываем модалку
-      this.typeContent = 'Categories'
-      this.$store.commit('ProductParts/clearDataParentsSelectedNodes')
-      this.$store.commit('ProductParts/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes(this.selectedCategories))
-      await this.$bvModal.show('modal-catalog-edit')
-
-    },
-
-    async editProductApplicabilities() {
-      // собираем данные
-      await this.$store.dispatch('CatalogApplicabilities/getDataAllItems');
-      this.dataSet = await this.$store.getters["CatalogApplicabilities/allItems"];
-      // Открываем модаль
-      this.typeContent = 'applicabilities';
-      this.$store.commit('ProductParts/clearDataParentsSelectedNodes')
-      this.$store.commit('ProductParts/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes(this.selectedApplicabilities))
-      await this.$bvModal.show('modal-catalog-edit')
-
-    },
-
 
     imageUpload(){
       this.$bvModal.show('modal-file-uploader')
     },
 
-    ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
-    getAllParentsForAllSelectedNodes(selectedCatalogFilter){
-      let parent= []
-        selectedCatalogFilter.forEach(element => {
-          parent.push(this.getAllParentForOneNode(this.dataSet, element.id))
-        })
-
-      return parent
-    },
-    getAllParentForOneNode(dataset, nodeId)
-    {
-      let parents = []
-      var TreeModel = require('tree-model'),
-          tree = new TreeModel();
-      dataset.forEach(element => {
-        let rootMain = tree.parse(element);
-        rootMain.walk(function (node) {
-          if (node.model.id === nodeId) {
-            let x = node.getPath()
-            x.forEach(element => {
-              parents.push(element.model.id)
-
-            })}})})
-
-      return parents
-    },
-    ///КОНЕЦ ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
-
-    /// Получаем изображения товара при загрузке формы
-    getImagesProduct(){
-      /// если нет мейн имг, то не читаем альбум имг
-      if (this.productsJson.productCard.productCardImages.main.url!== undefined && this.productsJson.productCard.productCardImages.main.url!==null){
-        this.form.productCardImages.push(this.productsJson.productCard.productCardImages.main.url) // записываем первое имг
-
-        this.productsJson.productCard.productCardImages.album.forEach(element => {
-          if (element.url!== undefined && element.url!== null) {
-            this.form.productCardImages.push(element.url) // записываем все остальные в альбомах
-          }
-        });
-
-      }
-
-      let img = this.form.productCardImages
-      this.$store.commit('ProductParts/setDataCurrentImages', img)
-
-    },
-
   },
-
-
-
+  async created(){
+    await this.dataInit();
+  },
   async mounted() {
-
-
-  /////////////////////////////////////////////////////
-
-    await this.$store.dispatch("ProductParts/getDataAllParts");
-    this.productsJson = await this.$store.getters["ProductParts/partsItemById"](Number(this.query))
-
-
-
-    this.$store.commit("ProductParts/setDataCurrentCategoriesByPart", this.productsJson.productCard.categories) // подгружаем текущие категории товара
-    this.$store.commit("ProductParts/setDataCurrentBrandsByPart", this.productsJson.productCard.brand) // подгружаем текущие Бренды товара
-    this.$store.commit("ProductParts/setDataCurrentApplicabilitiesByPart", this.productsJson.productCard.applicabilities) // подгружаем текущие Применимости товара
-
-    this.$store.commit("ProductParts/clearItemSelectedBrands")
-    this.$store.commit("ProductParts/addItemSelectedBrands", this.productsJson.productCard.brand);
-
-    this.$store.commit("ProductParts/clearItemSelectedCategories")
-    this.productsJson.productCard.categories.forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element));
-
-    this.$store.commit("ProductParts/clearItemsSelectedApplicabilities")
-    this.productsJson.productCard.applicabilities.forEach(element => this.$store.commit("ProductParts/addItemSelectedApplicabilities", element));
-
-    this.getImagesProduct(); // записываем картинки
-
-    this.form.product_id = this.productsJson.productCard.id
-    this.form.product_name= this.productsJson.productCard.name
-    this.form.brand_arr= this.productsJson.productCard.brand
-    this.form.categories_arr= this.productsJson.productCard.categories
-    this.form.applicabilities_arr= this.productsJson.productCard.applicabilities
-    this.form.article_origin= this.productsJson.productCard.sku.original
-
-
-    this.$store.commit('ProductParts/setDataSelectedImages', this.form.productCardImages)
-
-
-
-
-
-    this.form.prices_retail= this.productsJson.productOffer.prices.retail
-    this.form.product_timestampUpdated= this.productsJson.productCard.timestampUpdated
-
-
-    /////////////////////////////////////////////////////
-
-    await this.$store.dispatch('CatalogBrands/getDataAllItems')
-    this.allItemsCatalogBrands = this.$store.getters["CatalogBrands/allItems"] // neeed
-
-
-    this.$store.commit('TempDataCatalog/setValueInputCatalog',
-        {'key': 'product-part-brand-edit', 'value': this.$store.getters["ProductParts/currentBrandByPart"]}
-        )
-
-    this.$store.commit('TempDataCatalog/setValueInputCatalog',
-        {'key': 'input-product-part-categories-edit', 'value': this.$store.getters["ProductParts/currentCategoriesByPart"]}
-    )
-
-
-
-
 
   },
 
   computed:{
-
-
     selectedImages(){
-      //let arr = []
       if (this.$store.getters["ProductParts/selectedImages"][0]) {
         return this.$store.getters["ProductParts/selectedImages"]
       }
@@ -438,28 +269,17 @@ name: "ProductsListFormEdit",
       }
     },
 
-
     currentItemBrandInput() {
       return this.$store.getters["TempDataCatalog/getValueInputCatalog"]('product-part-brand-edit')
     },
 
     currentItemsCategoriesInput(){
-      return this.$store.getters["TempDataCatalog/getValueInputCatalog"]('input-product-part-categories-edit')
+      return this.$store.getters["TempDataCatalog/getValueInputCatalog"]('product-part-categories-edit')
     },
 
-/////////////////////////////////////
-    selectedBrand(){
-      return this.$store.getters["ProductParts/selectedBrands"]
+    currentItemsApplicabilitiesInput(){
+      return this.$store.getters["TempDataCatalog/getValueInputCatalog"]('product-part-applicabilities-edit')
     },
-
-    selectedCategories(){
-      return  this.$store.getters["ProductParts/selectedCategories"]
-    },
-
-    selectedApplicabilities(){
-      return this.$store.getters["ProductParts/selectedApplicabilities"]
-    },
-    //////////////////////////////////////////////
 
   },
 

@@ -28,7 +28,7 @@ const actions = {
     async getDataAllItems({commit}){
         return  await Axios.get(process.env.VUE_APP_API_URL_CATALOG_CATEGORIES).then( res =>{
             commit("setDataAllCategories", jsonMaps.catalogCategoriesList(res.data));
-            // console.log('мы в действиях получили ', res.data);
+           //  console.log('мы в действиях CATEGORIES получили ', res.data);
         })
     },
 }

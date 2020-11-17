@@ -1,5 +1,5 @@
 <template>
-  <div v-if="valueInputCatalog"
+  <div
        class="input-catalog form-control d-flex justify-content-between"
 
   >
@@ -8,8 +8,9 @@
     </div>
     <div>
 
-      <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" v-b-modal.modal-input-catalog></i>
+      <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="openedModal"></i>
       <component
+
           :is="typeCatalog"
           v-bind="{ id: id, items: items }"
       />
@@ -54,7 +55,12 @@ export default {
 
   },
 
-  methods: {},
+  methods: {
+    openedModal(){
+     this.typeCatalog === 'singleSelect' ?  this.$bvModal.show('modal-input-catalog-single-select') : null ;
+      this.typeCatalog === 'multiSelectTree' ?  this.$bvModal.show('modal-input-catalog-multi-tree-select') : null ;
+    },
+  },
 
 }
 </script>

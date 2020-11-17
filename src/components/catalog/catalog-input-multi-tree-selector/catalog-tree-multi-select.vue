@@ -3,44 +3,19 @@
   <div>
     <b-modal
 
-        id="modal-input-catalog"
-        title="BootstrapVue"
+        id="modal-input-catalog-multi-tree-select"
+        title="Дерево Каталога"
         size="lg"
         centered no-fade no-close-on-backdrop no-close-on-esc
         ok-title="Сохранить">
+      <div class="scrollblock">
 
-   
-
-
-      <div v-if="typeContent==='Categories'">
-        <div class="scrollblock">
-          <checkboxtree v-for="item in items" :node="item" :key="item.id" :type-content="typeContent"
-          ></checkboxtree>
-        </div>
+        <checkboxtree v-for="item in items" :node="item" :key="item.id"
+        ></checkboxtree>
       </div>
-
-      <div v-if="typeContent==='applicabilities'">
-        <div class="scrollblock">
-          <checkboxtree v-for="item in items" :node="item" :key="item.id" :type-content="typeContent"
-          ></checkboxtree>
-        </div>
-      </div>
-
 
       <template v-slot:modal-footer>
         <div class="w-100">
-
-          <div v-if="typeContent==='Categories'">
-            <p class="float-left"><b>Текущее значение: </b>
-              <span v-for="(item, index) in itemSelectProductCategories" :key="index">{{ item.name }},  </span>
-            </p>
-          </div>
-          <div v-if="typeContent==='applicabilities'">
-            <p class="float-left"><b>Текущее значение: </b>
-              <span v-for="(item, index) in itemSelectProductApplicabilities" :key="index">{{ item.name }},  </span>
-            </p>
-          </div>
-
 
           <b-button
               variant="primary"
@@ -77,98 +52,112 @@ export default {
     checkboxtree,
   },
   props: {
+    id: {
+      type: String,
+    },
     items: Array,
-    typeContent: String,
   },
 
   data() {
-    return {
-      inputSearchText: '',
-      selectItems: '',
-    }
+    return {}
   },
 
   computed: {
 
 
-    itemSelectProductCategories() {
-      return this.$store.getters["ProductParts/selectedCategories"]
+    tempItemsSelected() {
+      return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"]
     },
 
-    itemSelectProductApplicabilities() {
-      return this.$store.getters["ProductParts/selectedApplicabilities"]
-    },
 
   },
   methods: {
-    filteredList() {
-      return this.items.filter(post => {
-        return post.name.toLowerCase().includes(this.inputSearchText.toLowerCase())
-      })
-    },
-    setSelectItems(item) {
-      this.selectItems = item
-      console.log('this.selectItems ', this.selectItems)
-    },
+
 
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault()
 
-      switch (this.typeContent) {
+      this.$store.commit('TempDataCatalog/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes(this.tempItemsSelected)) // сделать выч. свлв=-во
+      this.$store.commit('TempDataCatalog/setValueInputCatalog', {
+        'key': this.id,
+        'value': this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"]
+      })
 
-
-        case 'Categories':
-          console.log(this.itemSelectProductCategories)
-          this.$store.commit("ProductParts/setDataCurrentCategoriesByPart", this.itemSelectProductCategories) // подгружаем в текущие // variable *//push
-          // console.log(this.$store.getters["ProductParts/currentCategoriesByPart"])
-          // this.itemSelectProductCategories.forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element)); //запись селектов
-
-          break;
-
-        case 'applicabilities':
-          console.log('asasdd')
-          this.$store.commit('ProductParts/setDataCurrentApplicabilitiesByPart', this.itemSelectProductApplicabilities)
-
-          break;
-
-        default:
-          console.log('Такого типа модального окна не существует')
-      }
-
+      this.resetTempData();
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-input-catalog')
+        this.$bvModal.hide('modal-input-catalog-multi-tree-select')
       })
     },
 
     handleCancel(bvModalEvt) {
       bvModalEvt.preventDefault()
 
-      if (this.typeContent === 'Categories') {
-        this.$store.commit("ProductParts/clearItemSelectedCategories"); //
-        this.$store.getters["ProductParts/currentCategoriesByPart"]
-            .forEach(element => this.$store.commit("ProductParts/addItemSelectedCategories", element)); //запись селектов на текущие
-      }
-
-      if (this.typeContent === 'applicabilities') {
-        this.$store.commit('ProductParts/clearItemsSelectedApplicabilities');
-        this.$store.getters["ProductParts/currentApplicabilitiesByPart"]
-            .forEach(element => this.$store.commit("ProductParts/addItemSelectedApplicabilities", element)); //запись селектов на текущие
-      }
-
+      this.resetTempData();
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-input-catalog')
+        this.$bvModal.hide('modal-input-catalog-multi-tree-select')
       })
     },
 
+
+    ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
+    getAllParentsForAllSelectedNodes(selectedCatalogFilter) {
+      let parent = []
+      selectedCatalogFilter.forEach(element => {
+        parent.push(this.getAllParentForOneNode(this.items, element.id))
+      })
+
+      return parent
+    },
+    getAllParentForOneNode(dataset, nodeId) {
+      let parents = []
+      var TreeModel = require('tree-model'),
+          tree = new TreeModel();
+      dataset.forEach(element => {
+        let rootMain = tree.parse(element);
+        rootMain.walk(function (node) {
+          if (node.model.id === nodeId) {
+            let x = node.getPath()
+            x.forEach(element => {
+              parents.push(element.model.id)
+
+            })
+          }
+        })
+      })
+
+      return parents
+    },
+
+    ///КОНЕЦ ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
+    // Сброс временного состояния и запись в него то, что находится в getValueInputCatalog
+    async resetTempData() {
+      await this.$store.dispatch('TempDataCatalog/loadTempValueInputCatalog', [])
+      await this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).forEach(elem => {
+        this.$store.commit('TempDataCatalog/addItemTempValue', elem)
+      })
+    }
   },
 
   async mounted() {
-  }
+    await this.resetTempData();
+    await this.$store.commit('TempDataCatalog/setDataParentsSelectedNodes', this.getAllParentsForAllSelectedNodes(this.tempItemsSelected))
+  },
 
 }
 </script>
 
 <style scoped>
+.scrollblock {
+  height: 500px;
+  width: 100%;
+  overflow-y: auto;
+}
 
+.scroller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+}
 </style>
