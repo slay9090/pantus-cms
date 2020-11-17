@@ -1,5 +1,11 @@
 # Система управления интернет-магазином
 
+###Релизы:
+
+- Realise: full refactory and decompositions on base components
+
+###Инфо:
+
 - Без использования БД
 
 - API 
