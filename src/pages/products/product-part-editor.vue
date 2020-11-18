@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
     <div class="row  align-items-start">
 
       <div class="col-6">
@@ -9,7 +9,8 @@
           <div class="card-body">
 
             <div>
-              <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+              <b-form @submit="onSubmit" @reset="onReset" >
+
 
                 <b-form-group id="input-group-product-id" label="ID:" label-for="input-product-id">
                   <b-form-input readonly id="input-product-id" v-model="form.product_id" required></b-form-input>
@@ -87,6 +88,7 @@
                 <b-button type="submit" variant="danger" class="">Удалить</b-button>
                 <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
                 <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
+
               </b-form>
 
             </div>
@@ -98,6 +100,7 @@
           :data="form"
       />
     </div>
+    </b-overlay>
   </div>
 
 </template>
@@ -120,7 +123,7 @@ export default {
 
   data() {
     return {
-
+      spinerLoaderIsShow: true,
       form: {
         product_id: '',
         product_name: '',
@@ -134,7 +137,7 @@ export default {
       },
 
       productsJson: {},
-      show: true,
+     // show: true,
       allItemsCatalogBrands: null,
       allItemsCatalogCategories: null,
       allItemsCatalogApplicabilities: null,
@@ -152,10 +155,10 @@ export default {
     onReset(evt) {
       evt.preventDefault()
       // Trick to reset/clear native browser form validation state
-      this.form.name = ''
-      this.show = false
+     // this.form.name = ''
+      //this.show = false
       this.$nextTick(() => {
-        this.show = true
+       // this.show = true
       })
     },
 
@@ -164,8 +167,9 @@ export default {
   created() {
 
   },
-   mounted() {
-    this.dataInit();
+  async mounted() {
+   await this.dataInit();
+    this.spinerLoaderIsShow = false;
   },
 
   computed: {

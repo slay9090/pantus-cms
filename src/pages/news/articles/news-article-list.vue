@@ -33,7 +33,7 @@
               </div>
 
             </div>
-
+            <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
             <table-limit-data
                 id="news-articles-list-table"
                 :fields="fields"
@@ -51,7 +51,7 @@
                   <router-link :to="'/news/articles/edit?id='+data.item.id" class="mb-0">{{ data.value }}</router-link>
                 </template>
             </table-limit-data>
-
+            </b-overlay>
           </div>
 
         </ul>
@@ -75,7 +75,7 @@ name: "NewsArticle",
 
   data() {
     return {
-
+      spinerLoaderIsShow: true,
       fields: [
         { key: 'selected', label:  '✓',  thStyle: {  width: '30px' }},
         { key: 'id',  sortable: true ,  thStyle: {  width: '80px' } },
@@ -110,6 +110,7 @@ name: "NewsArticle",
     await this.$store.dispatch("NewsArticles/GetData");
     let data = await this.$store.getters["NewsArticles/AllItems"];
     this.$store.commit('BaseComponents/setDataLimitTable', {'key': 'news-articles-list-table', 'value': data});
+    this.spinerLoaderIsShow = false
   },
 
   watch: {
