@@ -161,8 +161,8 @@ export default {
 
 
   },
-  async created() {
-    await this.dataInit();
+  created() {
+    this.dataInit();
   },
   async mounted() {
 

@@ -74,6 +74,7 @@ export default {
 
 
     tempItemsSelected () {
+      console.log('COMP', this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id))
       return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id)
     },
 
@@ -126,7 +127,7 @@ export default {
 
     ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
      getAllParentsForAllSelectedNodes(selectedCatalogFilter) {
-
+      console.log('selectedCatalogFilter', selectedCatalogFilter)
       let parent = []
        selectedCatalogFilter.forEach(element => {
         parent.push(this.getAllParentForOneNode(this.items, element.id))
@@ -135,6 +136,7 @@ export default {
       return parent
     },
     getAllParentForOneNode(dataset, nodeId) {
+      console.log('dataset', dataset, 'nodeId', nodeId)
       let parents = []
       var TreeModel = require('tree-model'),
           tree = new TreeModel();
@@ -156,9 +158,12 @@ export default {
 
     ///КОНЕЦ ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
     // Сброс временного состояния и запись в него то, что находится в getValueInputCatalog
-    resetTempData() {
+   resetTempData() {
       // this.$store.dispatch('TempDataCatalog/loadTempValueInputCatalog', [])
-      this.$store.commit('TempDataCatalog/clearDataItemsTempValue', {data: this.id})
+     console.log(this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id))
+
+      this.$store.commit('TempDataCatalog/clearDataItemsTempValue', {inputid: this.id})
+
       this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).forEach(elem => {
         this.$store.commit('TempDataCatalog/addItemTempValue', {
           'key': this.id,
@@ -170,14 +175,19 @@ export default {
 
   mounted() {
 
+
     this.resetTempData();
 
     // Список ид узлов до конечного выбранного, что бы раскрыть нужные ветки.
-    this.$store.dispatch('TempDataCatalog/loadParentsSelectedNodes',
-        {
-          'key': this.id,
-          'value': this.getAllParentsForAllSelectedNodes(this.tempItemsSelected)}
-          )
+    if (this.items) {
+      this.$store.dispatch('TempDataCatalog/loadParentsSelectedNodes',
+          {
+            'key': this.id,
+            'value': this.getAllParentsForAllSelectedNodes(this.tempItemsSelected)
+          }
+      )
+    }
+
   },
 
 
