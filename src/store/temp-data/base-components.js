@@ -6,8 +6,8 @@ const state = () => ({
     input_index_value: {},
     html_editor: {},
     input_text_value: {},
-
     table_limit_data: {},
+    input_slug_data: {},
 })
 
 const mutations = {
@@ -30,7 +30,11 @@ const mutations = {
 
     setDataLimitTable(state, data){
         Vue.set(state.table_limit_data, data.key, data.value)
-    }
+    },
+
+    setValueInputSlug(state, data){
+        Vue.set(state.input_slug_data, data.key, data.value)
+    },
 
 }
 
@@ -58,6 +62,10 @@ const getters = {
 
     getDataLimitTable: state => key => {
         return state.table_limit_data[key];
+    },
+
+    getValueInputSlug: state => key => {
+        return state.input_slug_data[key];
     },
 
 }

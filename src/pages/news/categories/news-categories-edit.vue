@@ -18,6 +18,13 @@
               <input-text id="news-categories-edit-name-input" />
             </b-form-group>
 
+            <b-form-group id="input-group-product-slug" label="Код:" label-for="news-categories-edit-slug-input">
+              <input-slug
+              id="news-categories-edit-slug-input"
+              target-id="news-categories-edit-name-input"
+              />
+            </b-form-group>
+
 
             <b-button type="submit" variant="danger" class="">Удалить</b-button>
             <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
@@ -44,7 +51,8 @@ name: "news-categories-edit",
     formData() {
       const id = this.$store.getters["BaseComponents/getValueInputIndex"]('news-categories-edit-id-input');
       const name = this.$store.getters["BaseComponents/getValueInputText"]('news-categories-edit-name-input');
-      const form = {id, name, }
+      const code = this.$store.getters["BaseComponents/getValueInputSlug"]('news-categories-edit-slug-input')
+      const form = {id, name, code}
       return form
     },
 
