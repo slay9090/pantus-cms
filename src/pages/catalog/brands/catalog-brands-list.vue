@@ -3,7 +3,7 @@
 
   <div class="home">
 
-    <div class="card" id="tbl" >
+    <div class="shadow card" id="tbl" >
       <h4 class="card-header"> <small class="text-muted">Редактор новостей</small></h4>
       <div class="card-body">
         <ul>

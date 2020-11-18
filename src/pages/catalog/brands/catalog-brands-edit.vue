@@ -1,6 +1,6 @@
 <template>
   <div class="brandedit">
-    <h1>This is an about page</h1>
+    <h1>This is an about p11age</h1>
     <div>$route.query: {{$route.query}}</div>
     <div>query: {{query}}</div>
 

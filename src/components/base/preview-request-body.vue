@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex card col-4 p-0 ml-5" id="treechild">
+  <div class="d-flex card col-3 p-0 ml-5 shadow" id="treechild">
     <h4 class="card-header"><small class="text-muted">Формализованный запрос</small></h4>
     <div class="card-body">
       <pre class="m-0 m-0 overflow-auto heigh-json">{{ data }}</pre>
@@ -21,6 +21,6 @@ name: "preview-request-body",
 
 <style scoped>
 .heigh-json{
-  height: 50em;
+  max-height: 50em;
 }
 </style>

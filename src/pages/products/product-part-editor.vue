@@ -4,7 +4,7 @@
     <div class="row  align-items-start">
 
       <div class="col-6">
-        <div class="card " id="tbl">
+        <div class="card shadow" id="tbl">
           <h4 class="card-header"><small class="text-muted">Редактирование товар</small></h4>
           <div class="card-body">
 

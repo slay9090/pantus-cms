@@ -27,11 +27,12 @@ const actions = {
 const getters = {
     //получить весь массив
     AllItems: arr => arr.state_data,
+
     //получить одну запись по ид
-    ItemById: arr => id => {
-        //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
-        return arr.state_data.find(todo => todo.id === id);
-    }
+    itemById: state => id => {
+        return state.state_data.find(item => item.id == id);
+    },
+
 
 }
 export  default {

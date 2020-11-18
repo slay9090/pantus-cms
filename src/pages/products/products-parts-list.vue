@@ -3,7 +3,7 @@
 
 
 
-    <div class="card" id="tbl" >
+    <div class="card shadow" id="tbl" >
       <h4 class="card-header"> <small class="text-muted">Список продукции</small></h4>
       <div class="card-body">
         <ul>

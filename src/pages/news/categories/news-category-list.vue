@@ -1,10 +1,10 @@
 <template>
   <div class="home">
 
-    <div class="card" id="tbl" >
+    <div class="card shadow" id="tbl" >
       <h4 class="card-header"> <small class="text-muted">Редактор новостей</small></h4>
       <div class="card-body">
-        <ul>
+
           <div>
             <div class="py-3 d-flex  align-items-center">
               <div class="flex-grow-1 d-flex">
@@ -19,66 +19,32 @@
                 <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_inputCleaned(inputType.search,'search-input-news-categories')">Clear</b-button>
               </div>
               <div class="p-2 px-1">
-                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>
+<!--                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>-->
                 <b-button variant="outline-success" class="py-1 ">Создать</b-button>
               </div>
-
             </div>
 
 
-            <b-table
-                ref="selectableTable"
-                selectable
-                select-mode="single"
-                selected-variant="warning"
-
-
-
-                @row-selected="onRowSelected"
-                id="my-table"
-                :items="itemDataTab"
+            <table-limit-data
+                id="news-categories-list"
                 :fields="fields"
-                :sort-by.sync="sortBy"
-                :sort-desc.sync="sortDesc"
-                sort-icon-left
-                responsive="sm"
-                :per-page="perPage"
-                :current-page="currentPage"
+                :per-page="20"
+                :current-page="query"
                 :filter="valueSearchInput"
-                head-variant="light"
-                small
+                sort-by-field="id"
+
             >
-
-              <template v-slot:cell(selected)="{ rowSelected }">
-                <template  v-if="rowSelected">
-                  <span  aria-hidden="true">&check;</span>
-
-                </template>
-                <template  v-else>
-                  <span  aria-hidden="true">&nbsp;</span>
-
-                </template>
-              </template>
-
-
               <template v-slot:cell(name)="data">
-                <!-- `data.value` is the value after formatted by the Formatter -->
-                <a v-on:click="openFormEdit(data.item)"  class="mb-0" >{{ data.value }} </a>
+                <router-link :to="'/news/category/edit?id='+data.item.id" class="mb-0">{{ data.value }}</router-link>
               </template>
-
-
-            </b-table>
-
-
+            </table-limit-data>
 
           </div>
 
-        </ul>
       </div>
     </div>
 
 
-    <router-view></router-view>
   </div>
 </template>
 
@@ -86,26 +52,14 @@
 
 import baseComponentsMixin from '@/mixins/base-components/inputs'
 
+
 export default {
 name: "NewsCategory",
 
   mixins: [baseComponentsMixin],
-
+  props: ["query"],
   data() {
     return {
-      perPage: 20, // кол-во строк на 1й стр
-      currentPage: 1,
-
-      sortBy: 'age',
-      sortDesc: false,
-
-
-
-      selected: [],
-
-      itemDataTab: [],
-
-
 
       fields: [
         { key: 'selected', label: '',  thStyle: {  width: '50px' }},
@@ -120,17 +74,13 @@ name: "NewsCategory",
   },
 
   methods:{
-    onRowSelected(items) {
-      this.selected = items
-    },
-    openFormEdit: function (datarow) {
 
-      this.$router.push({ path: '/catalog/brands/edit', query: { id: datarow.id } })
-
-    },
-    // cleanedSearchField(inputId){
-    //   this.$store.commit('BaseComponents/setValueInputSearch', {'key': inputId, 'value': null})
+    // openFormEdit: function (datarow) {
+    //
+    //   this.$router.push({ path: '/catalog/brands/edit', query: { id: datarow.id } })
+    //
     // },
+
   },
 
   components: {
@@ -140,19 +90,13 @@ name: "NewsCategory",
       return this.$store.getters["BaseComponents/getValueInputSearch"]('search-input-news-categories');
     },
 
-    rows() {
-      return this.itemDataTab.length
-    }
-
   },
   async mounted() {
     await this.$store.dispatch("NewsCategory/GetData");
-    let data = await this.$store.getters["NewsCategory/AllItems"];
-    //console.log(data)
-    this.itemDataTab = data;
-
+    this.$store.commit('BaseComponents/setDataLimitTable',
+        {'key': 'news-categories-list', 'value': this.$store.getters["NewsCategory/AllItems"]}
+        );
   }
-
 }
 </script>
 

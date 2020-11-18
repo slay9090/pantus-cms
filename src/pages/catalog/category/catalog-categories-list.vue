@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="card " id="tbl" >
+    <div class="shadow card " id="tbl" >
       <h4 class="card-header ">
         <b-container fluid  class="bv-example-row px-0">
           <b-row align-h="between" >

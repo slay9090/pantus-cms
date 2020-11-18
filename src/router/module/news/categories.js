@@ -13,4 +13,18 @@ export default [
         }
 
     },
+
+    { path: '/news/category/edit',
+        component: () => import('@/pages/news/categories/news-categories-edit'),
+        props: route => ({ query: route.query.id }),
+        meta: {
+            requiresAuth: true,
+            breadcrumb: [
+                { name: 'Новости' },
+                { name: 'Категории', link: '/news/category' },
+                { name: 'Редактирование' },
+            ]
+        }
+
+    },
 ]

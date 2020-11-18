@@ -3,7 +3,7 @@
 
     <div class="d-flex align-items-start">
 
-      <div class="card col-4 p-0  mr-5" id="tbl" >
+      <div class="card col-4 p-0  mr-5 shadow" id="tbl" >
         <h4 class="card-header"> <small class="text-muted">Редактирование категорий</small></h4>
         <div class="card-body">
 
