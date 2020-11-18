@@ -628,7 +628,7 @@ const actions = {
         ]
         return  await Axios.get(process.env.VUE_APP_API_URL_CATALOG_BRANDS).then( res =>{
             commit("setDataAllParts",fakedata);
-           console.log('мы в действиях получили ', res.data);
+         //  console.log('мы в действиях получили ', res.data);
         })
     },
 

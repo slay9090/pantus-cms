@@ -162,10 +162,10 @@ export default {
 
   },
   created() {
-    this.dataInit();
-  },
-  async mounted() {
 
+  },
+   mounted() {
+    this.dataInit();
   },
 
   computed: {

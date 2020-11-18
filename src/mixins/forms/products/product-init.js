@@ -1,8 +1,5 @@
 export default {
 
-
-
-
     methods: {
        async dataInit () {
             /////////////////////////////////////////////////////

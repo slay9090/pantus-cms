@@ -2,7 +2,7 @@
 
   <div >
     <b-modal
-
+        @hidden="handleResetTempData"
         :id="modalId"
         title="Дерево Каталога"
         size="lg"
@@ -13,6 +13,7 @@
         <checkboxtree :id="id" v-for="item in items" :node="item" :key="item.id"
         ></checkboxtree>
       </div>
+
 
       <template v-slot:modal-footer>
         <div class="w-100">
@@ -72,12 +73,10 @@ export default {
 
   computed: {
 
-
     tempItemsSelected () {
-      console.log('COMP', this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id))
+
       return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id)
     },
-
 
   },
   methods: {
@@ -87,7 +86,6 @@ export default {
       // Prevent modal from closing
       bvModalEvt.preventDefault()
 
-
       // Список ид узлов до конечного выбранного, что бы раскрыть нужные ветки.
       this.$store.dispatch('TempDataCatalog/loadParentsSelectedNodes',
           {
@@ -95,18 +93,12 @@ export default {
             'value': this.getAllParentsForAllSelectedNodes(this.tempItemsSelected)}
       )
 
-      console.log('TEMP NA ZAPIC ', this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id))
-
-
-
       this.$store.commit('TempDataCatalog/setValueInputCatalog', {
         'key': this.id,
         'value': this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id)
       })
 
       console.log('ZAPICAL', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id))
-
-    //  this.resetTempData();
 
       this.$nextTick(() => {
         this.$bvModal.hide(this.modalId)
@@ -116,7 +108,7 @@ export default {
     handleCancel(bvModalEvt) {
       bvModalEvt.preventDefault()
 
-     // this.resetTempData();
+
       this.$nextTick(() => {
         this.$bvModal.hide(this.modalId)
 
@@ -124,10 +116,13 @@ export default {
 
     },
 
+    handleResetTempData(){
+      this.resetTempData();
+    },
 
     ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
      getAllParentsForAllSelectedNodes(selectedCatalogFilter) {
-      console.log('selectedCatalogFilter', selectedCatalogFilter)
+
       let parent = []
        selectedCatalogFilter.forEach(element => {
         parent.push(this.getAllParentForOneNode(this.items, element.id))
@@ -136,7 +131,7 @@ export default {
       return parent
     },
     getAllParentForOneNode(dataset, nodeId) {
-      console.log('dataset', dataset, 'nodeId', nodeId)
+
       let parents = []
       var TreeModel = require('tree-model'),
           tree = new TreeModel();
@@ -160,7 +155,7 @@ export default {
     // Сброс временного состояния и запись в него то, что находится в getValueInputCatalog
    resetTempData() {
       // this.$store.dispatch('TempDataCatalog/loadTempValueInputCatalog', [])
-     console.log(this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id))
+     //console.log(this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id))
 
       this.$store.commit('TempDataCatalog/clearDataItemsTempValue', {inputid: this.id})
 
@@ -175,7 +170,6 @@ export default {
 
   mounted() {
 
-
     this.resetTempData();
 
     // Список ид узлов до конечного выбранного, что бы раскрыть нужные ветки.
@@ -189,6 +183,7 @@ export default {
     }
 
   },
+
 
 
 }

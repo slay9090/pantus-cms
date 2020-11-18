@@ -1,14 +1,14 @@
 <template>
   <b-modal v-if="itemSelectProductBrand"
-
-      :id="modalId"
-      title="Выбор одного значения"
-      size="lg"
-      centered
-      no-fade
-      no-close-on-backdrop
-      no-close-on-esc
-      ok-title="Сохранить">
+           @hidden="handleResetTempData"
+           :id="modalId"
+           title="Выбор одного значения"
+           size="lg"
+           centered
+           no-fade
+           no-close-on-backdrop
+           no-close-on-esc
+           ok-title="Сохранить">
 
     <div class="">
       <div class="mt-0">
@@ -105,9 +105,9 @@ export default {
 
   computed: {
 
-    itemSelectProductBrandId:{
+    itemSelectProductBrandId: {
       get() {
-       // console.log('ddddddddddddd', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id)
+        // console.log('ddddddddddddd', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id)
         return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id
       },
     },
@@ -122,7 +122,6 @@ export default {
   methods: {
 
     filteredList() {
-     //console.log('this.allItemsBrands',this.items);
       if (this.items) {
         return this.items.filter(post => {
           return post.name.toLowerCase().includes(this.inputSearchText.toLowerCase())
@@ -131,7 +130,7 @@ export default {
     },
 
     setSelectItems(item) {
-       this.selectItem = item
+      this.selectItem = item
     },
 
     handleOk(bvModalEvt) {
@@ -151,10 +150,15 @@ export default {
       })
     },
 
+    handleResetTempData(){
+      this.inputSearchText = '';
+    }
+
+
   },
-   async mounted() {
-    // хз, магия
-     this.selectItemId =  this.itemSelectProductBrandId
+  async mounted() {
+
+    this.selectItemId = this.itemSelectProductBrandId
 
   }
 

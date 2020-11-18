@@ -93,13 +93,10 @@ name: "CheckBoxTree",
           }
           else {
             //какой-то последний узел дерева выбран      //
-
             this.$store.commit('TempDataCatalog/addItemTempValue', {
               'key': this.$store.getters["TempDataCatalog/idInput"],
               'value': node
             })
-            console.log('TEMP NA ZAPIC ', this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.$store.getters["TempDataCatalog/idInput"]))
-              //this.$store.commit('TempDataCatalog/addItemTempValue', node)
 
           }
         }
