@@ -1,96 +1,130 @@
 <template>
-  <div class="mybg">
+  <div class="mybg login-page  d-flex justify-content-center align-items-center">
 
-    <b-modal
-        id="modal-center"
-        centered
-        title="Авторизация"
-        no-close-on-backdrop
-        no-close-on-esc
-        hide-header-close
-        ok-only
-        ok-title="Войти"
-        no-fade
-        @ok="login"
+    <div class="login-page__form px-4 py-3 d-flex justify-content-center shadow">
 
+      <b-form @submit="login" class="align-items-center" @keyup.enter="login">
 
-    >
-
-      <form class="login" @submit.prevent="login" autocomplete="off">
-        <div class="input-group form-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fa fa-user"></i></span>
+        <span class="d-block mb-3">Авторизация</span>
+        <hr>
+        <b-form-group id="input-group-username-input" label-for="username-input">
+          <div class="input-group form-group" id="username-input">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-user "></i></span>
+            </div>
+            <b-form-input v-model="email" type="text" class="form-control" placeholder="username"
+                          required></b-form-input>
           </div>
+        </b-form-group>
 
-          <input v-model="email" type="text" class="form-control" placeholder="username" >
-
-        </div>
-        <div class="input-group form-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fa fa-key"></i></span>
+        <b-form-group id="input-group-password-input" label-for="password-input">
+          <div class="input-group form-group" id="password-input">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-key "></i></span>
+            </div>
+            <b-form-input v-model="password" type="password" class="form-control" placeholder="username" required
+                          ref="input-password"></b-form-input>
           </div>
+        </b-form-group>
 
-          <input v-model="password" type="password" class="form-control" placeholder="password">
+        <captcha :checkRecaptcha.sync="checkRecaptcha" :getError.sync="getError"/>
 
+        <hr>
+        <div class="mt-3 d-flex d-flex d-flex justify-content-between align-items-center">
+          <span class="login-page__form__text-error text-break text-wrap font-weight-light">{{ textErrLogIn }}</span>
+          <b-button type="submit" variant="primary">Войти</b-button>
         </div>
-        <captcha :checkRecaptcha.sync="checkRecaptcha" :getError.sync="getError"  />
-      </form>
-    </b-modal>
+
+      </b-form>
+
+    </div>
+
   </div>
 </template>
 
 <script>
- import captcha from "@/components/captcha";
- import checkCaptcha from "@/mixins/forms/captcha";
+import captcha from "@/components/captcha";
+import checkCaptcha from "@/mixins/forms/captcha";
 
 export default {
   name: "Login",
-  mixins:[checkCaptcha,],
+  mixins: [checkCaptcha,],
 
   components: {
     captcha,
   },
 
-  data(){
+  data() {
     return {
-      email : "",
-      password : "",
+      email: "",
+      password: "",
+      textErrLogIn: null,
     }
   },
 
   methods: {
-    login: function (bvModalEvt) {
-      bvModalEvt.preventDefault()
+
+
+    login: function (evt) {
+
+      evt.preventDefault()
       this.checkValidateRecaptcha();
-      if(this.checkRecaptcha === false){
+      this.$refs["input-password"].focus()
+      if (this.checkRecaptcha === false) {
+        this.textErrLogIn = 'Подтвердите что вы не робот'
         return;
       }
       let login = this.email
       let password = this.password
-      this.$store.dispatch('Authentication/login', { login, password })
-          .then(() => this.$router.push('/'))
-          .catch(err => console.log('err ',err))
+      this.$store.dispatch('Authentication/login', {login, password})
+
+          .catch(err =>
+                  console.log('err ', err),
+              this.textErrLogIn = 'Ошибка имени или пароля',
+          )
+
+      this.checkRecaptcha = false
+      window.grecaptcha.reset()
 
     }
   },
 
-  mounted() {
-
+  created() {
     this.$store.getters["Authentication/isLoggedIn"] ?
         this.$router.push('/') :
-        this.$bvModal.show("modal-center");
+        null;
   },
 
 }
 </script>
 
-<style >
+<style>
 
+.login-page {
+  height: 100vh;
+  background-image: url('http://getwallpapers.com/wallpaper/full/d/c/9/57345.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center top;
+  font-family: 'Numans', sans-serif;
+}
 
+.login-page__form {
 
-  /* Made with love by Mutiullah Samim*/
+  background: linear-gradient(90deg, #b9deed, #efefef);
+  border-radius: 10px;
+}
 
-#modal-center{
+.login-page__form__text-error {
+  color: red;
+  display: block;
+  width: 230px;
+  font-size: 0.8em;
+
+}
+
+#modal-center {
   background-image: url('http://getwallpapers.com/wallpaper/full/d/c/9/57345.jpg');
   background-size: cover;
   background-repeat: no-repeat;
@@ -100,28 +134,30 @@ export default {
   font-family: 'Numans', sans-serif;
 }
 
-.input-group-prepend span{
+.input-group-prepend span {
   width: 40px;
   background-color: #FFC312;
   color: black;
-  border:0 !important;
+  border: 0 !important;
+  font-size: 1.3em;
 }
 
-  #modal-center___BV_modal_body_ > form > div:nth-child(3) > p {
-    color: red;
-    font-size: 14px;
-    font-family: Roboto,helvetica,arial,sans-serif;
-  }
+/*#modal-center___BV_modal_body_ > form > div:nth-child(3) > p {*/
+/*  color: red;*/
+/*  font-size: 14px;*/
+/*  font-family: Roboto,helvetica,arial,sans-serif;*/
+/*}*/
 
-  .form-control {
+.form-control {
+  /*font-size: 18px;*/
+  /*font-family: Roboto,helvetica,arial,sans-serif;*/
+  background-color: #F9F9F9;
+}
 
-
-    font-size: 18px;
-    font-family: Roboto,helvetica,arial,sans-serif;
-  }
-
-
-
+input:-webkit-autofill {
+  /*-webkit-ba: yellow !important;*/
+  transition: background-color 5000s ease-in-out 0s;
+}
 
 
 </style>

@@ -1,12 +1,13 @@
 <template>
   <div>
+<!--    <p class="error mt-2 mb-0" v-if="getError === true">{{ textError }}  </p>-->
     <vueRecaptcha
         sitekey="6LdMI94ZAAAAADQt2xBdUxgnhr0QpnezUwkcqiHV"
         :loadRecaptchaScript="true"
         @verify="registerTrue"
     >
     </vueRecaptcha>
-    <p class="error mt-2 mb-0" v-if="getError === true">{{ textError }}  </p>
+
   </div>
 </template>
 <script>
@@ -26,7 +27,7 @@ export default {
     },
     textError: {
       type: String,
-      default: "Пройдите капчу"
+      default: "Докажите, что вы не БОТ"
     }
   },
   components: {
@@ -36,6 +37,7 @@ export default {
     registerTrue() {
       this.$emit("update:checkRecaptcha", true);
       this.$emit("update:getError", false);
+      // this.$emit("update:getError", false);
     }
   }
 };
