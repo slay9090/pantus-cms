@@ -98,7 +98,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .login-page {
   height: 100vh;
@@ -124,16 +124,6 @@ export default {
 
 }
 
-#modal-center {
-  background-image: url('http://getwallpapers.com/wallpaper/full/d/c/9/57345.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center top;
-  height: 100%;
-  font-family: 'Numans', sans-serif;
-}
-
 .input-group-prepend span {
   width: 40px;
   background-color: #FFC312;
@@ -142,20 +132,11 @@ export default {
   font-size: 1.3em;
 }
 
-/*#modal-center___BV_modal_body_ > form > div:nth-child(3) > p {*/
-/*  color: red;*/
-/*  font-size: 14px;*/
-/*  font-family: Roboto,helvetica,arial,sans-serif;*/
-/*}*/
-
 .form-control {
-  /*font-size: 18px;*/
-  /*font-family: Roboto,helvetica,arial,sans-serif;*/
   background-color: #F9F9F9;
 }
 
 input:-webkit-autofill {
-  /*-webkit-ba: yellow !important;*/
   transition: background-color 5000s ease-in-out 0s;
 }
 
