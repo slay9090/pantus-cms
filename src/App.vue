@@ -82,12 +82,6 @@ export default {
             if (this.$route.fullPath !== '/login'){
               this.$router.push('/login')
             }
-            // this.isLoggedIn ?
-            //     this.$router.push('/') :
-
-
-
-
           })
     },
 
