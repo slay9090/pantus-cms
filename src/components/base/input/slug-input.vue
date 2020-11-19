@@ -5,6 +5,7 @@
       type="text"
       :size="size"
       :placeholder="placeholder"
+      readonly
   >
 
   </b-form-input>
@@ -49,18 +50,13 @@ export default {
   computed: {
     valueSlugField: {
       get() {
-        // return this.$store.getters["BaseComponents/getValueInputText"](this.targetId)
-       // return  1;
        return this.convertTextToSlug( this.$store.getters["BaseComponents/getValueInputText"](this.targetId))
-       //  console.log(x)
-       //   return x
       },
       set(val) {
         this.$store.commit('BaseComponents/setValueInputSlug', {'key': this.id, 'value': val})
       },
     },
   },
-
 
   methods: {
     transliterate(word) {
@@ -138,10 +134,9 @@ export default {
       }).join("");
     },
     convertTextToSlug(text) {
+
       /// Временно
-
       if(text === undefined){return;}
-
 
       let str = this.transliterate(text)
       str = str.replace(/^\s+|\s+$/g, '');
@@ -150,9 +145,9 @@ export default {
       str = str.toLowerCase();
 
       // Remove accents, swap ñ for n, etc
-      var from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
-      var to = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
-      for (var i = 0, l = from.length; i < l; i++) {
+      let from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
+      let to = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
+      for (let i = 0, l = from.length; i < l; i++) {
         str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
       }
       // Remove invalid chars
@@ -164,9 +159,6 @@ export default {
       return str;
     }
   },
-  mounted() {
-    console.log(this.convertTextToSlug('ываывафвафывапывапывп'));
-  }
 
 }
 </script>
