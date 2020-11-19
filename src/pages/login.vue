@@ -27,7 +27,7 @@
           </div>
         </b-form-group>
 
-        <captcha :checkRecaptcha.sync="checkRecaptcha" :getError.sync="getError"/>
+        <captcha :checkRecaptcha.sync="checkRecaptcha" :getError.sync="getError" />
 
         <hr>
         <div class="mt-3 d-flex d-flex d-flex justify-content-between align-items-center">
@@ -54,6 +54,13 @@ export default {
     captcha,
   },
 
+  computed: {
+    //если проблемы с промисями капчи тамута то это в v-if
+    isTokenExist() {
+      return localStorage.getItem('token')
+    }
+  },
+
   data() {
     return {
       email: "",
@@ -64,9 +71,7 @@ export default {
 
   methods: {
 
-
-    login: function (evt) {
-
+    login(evt) {
       evt.preventDefault()
       this.checkValidateRecaptcha();
       this.$refs["input-password"].focus()
@@ -74,17 +79,19 @@ export default {
         this.textErrLogIn = 'Подтвердите что вы не робот'
         return;
       }
+      this.checkRecaptcha = true
       let login = this.email
       let password = this.password
       this.$store.dispatch('Authentication/login', {login, password})
+          .then(this.textErrLogIn = null)
+          .catch(err => {
+            console.log('err auth login or pass', err)
+            this.textErrLogIn = 'Ошибка имени или пароля'
+            this.$store.dispatch('Authentication/logout')
+          })
 
-          .catch(err =>
-                  console.log('err ', err),
-              this.textErrLogIn = 'Ошибка имени или пароля',
-          )
-
-      this.checkRecaptcha = false
       window.grecaptcha.reset()
+      this.checkRecaptcha = false
 
     }
   },
@@ -94,6 +101,14 @@ export default {
         this.$router.push('/') :
         null;
   },
+
+  watch: {
+    checkRecaptcha() {
+      if (this.checkRecaptcha === true) {
+        this.textErrLogIn = null
+      }
+    }
+  }
 
 }
 </script>

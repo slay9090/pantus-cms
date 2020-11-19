@@ -39,6 +39,10 @@ export default {
       this.$emit("update:getError", false);
       // this.$emit("update:getError", false);
     }
-  }
+  },
+  // destroyed() {
+  //   console.log('DESTRO CAPTHA')
+  //   window.recaptcha.reset()
+  // }
 };
 </script>

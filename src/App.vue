@@ -93,7 +93,8 @@ export default {
         }
       })
           .catch(err => {
-            console.log('BAD TOKEN ', err)
+            console.log('BAD TOKEN or NULL', err, )
+            console.log('token value= ', localStorage.getItem('token'))
             this.logout();
           });
     }
@@ -108,7 +109,7 @@ export default {
   created: function () {
     this.$http.interceptors.response.use(undefined, function (err) {
       return new Promise(function () {
-        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+        if (err.status === 403 && err.config && !err.config.__isRetryRequest) {
           this.$store.dispatch("Authentication/logout")
         }
         throw err;
