@@ -7,7 +7,9 @@ const state = () => ({
     html_editor: {},
     input_text_value: {},
     table_limit_data: {},
-    input_slug_data: {},
+    input_slug_value: {},
+    input_price_value: {},
+    input_vendor_code_value: {},  // Артикул
 })
 
 const mutations = {
@@ -33,7 +35,15 @@ const mutations = {
     },
 
     setValueInputSlug(state, data){
-        Vue.set(state.input_slug_data, data.key, data.value)
+        Vue.set(state.input_slug_value, data.key, data.value)
+    },
+
+    setValueInputPrice(state, data){
+        Vue.set(state.input_price_value, data.key, data.value)
+    },
+    /// Установить значение Артикул-инпута
+    setValueInputVendorCode(state, data){
+        Vue.set(state.input_vendor_code_value, data.key, data.value)
     },
 
 }
@@ -65,7 +75,15 @@ const getters = {
     },
 
     getValueInputSlug: state => key => {
-        return state.input_slug_data[key];
+        return state.input_slug_value[key];
+    },
+
+    getValueInputPrice: state => key => {
+        return state.input_slug_value[key];
+    },
+    /// Получить значение артикул-инпута
+    getValueInputVendorCode: state => key => {
+        return state.input_vendor_code_value[key];
     },
 
 }

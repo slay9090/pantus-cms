@@ -4,6 +4,8 @@ const newsCategoriesItemList = require('@/store/json-config/data-maps/news-careg
 const catalogApplicabilitiesList = require('@/store/json-config/data-maps/catalog-applicabilities');
 const catalogCategoriesList = require('@/store/json-config/data-maps/catalog-categories');
 const catalogBrandsList = require('@/store/json-config/data-maps/catalog-brands')
+const productsPartsItemsList = require('@/store/json-config/data-maps/products-parts-list-get')
+const urlMapFilterPartsGetList = require('@/store/json-config/data-maps/products-parts-list-get')
 
 /// все новости
 exports.newsArticlesItemsList = newsArticleItemList;
@@ -17,3 +19,9 @@ exports.catalogApplicabilitiesList = catalogApplicabilitiesList;
 exports.catalogCategoriesList = catalogCategoriesList;
 /// все бренды каталга
 exports.catalogBrandsList = catalogBrandsList;
+/// все запчасти + фильтры
+exports.productsPartsItemsList = productsPartsItemsList;
+
+exports.urlMapFilterPartsGetList = urlMapFilterPartsGetList;
+
+//exports.urlMapFilterPartsGetList = urlMapFilterPartsGetList;

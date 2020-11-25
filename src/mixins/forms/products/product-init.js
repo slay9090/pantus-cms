@@ -51,6 +51,8 @@ export default {
                    'key': 'product-part-applicabilities-edit',
                    'value': this.$store.getters["ProductParts/currentApplicabilitiesByPart"]
                })
+         //  this.$store.commit('BaseComponents/setValueInputVendorCode', {'key': 'products-part-price-edit', 'value': this.form.prices_retail})
+           this.$store.commit('BaseComponents/setValueInputPrice', {'key': 'products-part-price-edit', 'value': this.form.prices_retail})
 
         },
 

@@ -37,8 +37,9 @@ import indexInput from '@/components/base/input/index-input'
 import previewRequestBody from '@/components/base/preview-request-body'
 import htmlEditorInput from '@/components/base/input/html-editor'
 import textInput from '@/components/base/input/text-input'
-import limitDataTable from '@/components/base/table/limit-data-table'
+import limitDataTable from '@/components/base/table/static-table'
 import slugInput from '@/components/base/input/slug-input'
+import priceInput from '@/components/base/input/price-input'
 
 Vue.component("button-base", baseButton);
 Vue.component("input-search", searchInput);
@@ -46,8 +47,9 @@ Vue.component("input-index", indexInput);
 Vue.component("preview-request-body", previewRequestBody);
 Vue.component("editor-html", htmlEditorInput);
 Vue.component("input-text", textInput);
-Vue.component("table-limit-data", limitDataTable);
+Vue.component("table-static", limitDataTable);
 Vue.component("input-slug", slugInput);
+Vue.component("input-price", priceInput);
 
 
 

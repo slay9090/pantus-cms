@@ -80,9 +80,15 @@
                 </b-form-group>
 
 
-                <b-form-group id="input-group-prices" label="Цена:" label-for="prices">
-                  <b-form-input id="categories" v-model="form.prices_retail"></b-form-input>
-                </b-form-group>
+<!--                <b-form-group id="input-group-prices" label="Цена:" label-for="prices">-->
+<!--                  <b-form-input id="categories" v-model="form.prices_retail"></b-form-input>-->
+<!--                </b-form-group>-->
+
+                <input-price
+                    id="products-part-price-edit"
+
+                    placeholder="Цена"
+                />
 
 
                 <b-button type="submit" variant="danger" class="">Удалить</b-button>

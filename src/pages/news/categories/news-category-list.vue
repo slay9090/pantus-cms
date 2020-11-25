@@ -25,7 +25,7 @@
             </div>
 
 
-            <table-limit-data
+            <table-static
                 id="news-categories-list"
                 :fields="fields"
                 :per-page="20"
@@ -37,7 +37,7 @@
               <template v-slot:cell(name)="data">
                 <router-link :to="'/news/category/edit?id='+data.item.id" class="mb-0">{{ data.value }}</router-link>
               </template>
-            </table-limit-data>
+            </table-static>
 
           </div>
 

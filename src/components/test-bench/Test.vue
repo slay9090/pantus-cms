@@ -1,104 +1,31 @@
 <template>
   <div>
-<!--    <b-form   >-->
-
-
-      <b-form-group id="input-group-2" label="Your city:" label-for="input-2">
-        <b-form-input
-            id="input-2"
-            v-model="form.name"
-            required
-            placeholder="Enter city"
-            @input="getCity"
-        ></b-form-input>
-      </b-form-group>
-
-
-
-<!--      <b-button type="submit" variant="primary">Submit</b-button>-->
-
-<!--    </b-form>-->
-<div >
-  <autocomplete  :items=arr />
-</div>
-
-
-   <div v-if="searchResponse.length!==0">  {{searchResponse[1]}} </div>
-
-
-
+    <input type="text" class="" v-model="task" @change="eventTodoAdd">
   </div>
 </template>
-
 <script>
- import Autocomplete from './autocompiler-field-adress';
-import Axios from 'axios';
+
 export default {
-
 name: "Test",
-
-  components:{
-    Autocomplete,
-  },
-
   data() {
     return {
-      form: {
-
-        name: '',
-
-      },
-      searchResponse:{},
-      arr: [],
-
+    task: null,
+      todos: ['1','2','3','4', '5'],
     }
-
   },
   methods: {
-
-    getCity(){
-      console.log(this.form.name)
-      //delete Axios.defaults.headers.common["Host"];
-      this.login();
-
+    eventTodoAdd(){
+      let isUniq = true;
+        this.todos.forEach(item => {
+         item === this.task ? isUniq=false : null
+        })
+      isUniq ? this.todos.push(this.task) : null
+      console.log(isUniq ,this.todos)
     },
-
-
-    login(){
-
-      let axiosConfig = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          "Access-Control-Allow-Origin": "*",
-          'Access-Control-Allow-Headers': '*'
-        }
-      };
-
-      Axios.get(`https://cors-anywhere.herokuapp.com/https://kladr-api.ru/api.php?query=${this.form.name}&contentType=city&withParent=1&token=ADy8fErZKZsbezdF37QbihtZSbiaabza&limit=10`, axiosConfig)
-          .then((res) => {
-
-            this.searchResponse=res.data.result
-
-            console.log("RESPONSE RECEIVED: ", this.searchResponse.length);
-            this.arr=[]
-            this.arr.push(res.data.result[1].name)
-
-          })
-          .catch((err) => {
-            console.log("AXIOS ERROR: ", err);
-          })
-    },
-
-
   },
-  computed:{
-
-  },
-
 
 }
 </script>
 
 <style scoped>
-
 </style>

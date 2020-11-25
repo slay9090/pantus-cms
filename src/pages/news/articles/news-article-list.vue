@@ -34,7 +34,7 @@
 
             </div>
             <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
-            <table-limit-data
+            <table-static
                 id="news-articles-list-table"
                 :fields="fields"
                 :per-page="20"
@@ -50,7 +50,7 @@
                 <template v-slot:cell(name)="data">
                   <router-link :to="'/news/articles/edit?id='+data.item.id" class="mb-0">{{ data.value }}</router-link>
                 </template>
-            </table-limit-data>
+            </table-static>
             </b-overlay>
           </div>
 
