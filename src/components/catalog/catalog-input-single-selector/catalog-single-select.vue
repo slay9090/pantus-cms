@@ -1,5 +1,6 @@
 <template>
-  <b-modal v-if="itemSelectProductBrand"
+  <b-modal
+            v-if="itemSelectProductBrand"
            @hidden="handleResetTempData"
            :id="modalId"
            title="Выбор одного значения"
@@ -24,7 +25,7 @@
       </div>
 
       <hr>
-
+      {{itemSelectProductBrandId}} sdf
 
       <div class="mt-3 ">
 
@@ -48,9 +49,9 @@
 
     <template v-slot:modal-footer>
       <div class="w-100">
-        <p class="float-left"><b>Текущее значение: </b>
-          <span> {{ itemSelectProductBrand.name }} </span>
-        </p>
+<!--        <p class="float-left"><b>Текущее значение: </b>-->
+<!--          <span> {{ itemSelectProductBrand.name }} </span>-->
+<!--        </p>-->
         <b-button
             variant="primary"
             class="float-right "
@@ -85,6 +86,7 @@ export default {
     id: {
       type: String,
       required: true,
+
     },
     items: {
       type: Array
@@ -107,7 +109,7 @@ export default {
 
     itemSelectProductBrandId: {
       get() {
-        // console.log('ddddddddddddd', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id)
+         console.log('ddddddddddddd', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id)
         return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id
       },
     },
@@ -157,8 +159,8 @@ export default {
 
   },
   async mounted() {
-
-    this.selectItemId = this.itemSelectProductBrandId
+    // console.log('asdasdasd',this.itemSelectProductBrandId)
+    // this.selectItemId = this.itemSelectProductBrandId                     // Если будут траблы с начальным значением раскоментить
 
   }
 

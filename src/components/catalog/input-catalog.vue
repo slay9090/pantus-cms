@@ -5,6 +5,7 @@
   >
     <div>
       <slot></slot>
+
     </div>
     <div>
 
@@ -55,10 +56,6 @@ export default {
   },
 
   computed: {
-
-    valueInputCatalog() {
-      return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id)
-    }
 
   },
 
