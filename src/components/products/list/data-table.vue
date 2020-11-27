@@ -1,6 +1,6 @@
 <template>
 <div class="dynamic-table">
-  <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
+
     <b-table
         ref="selectableTable"
         selectable
@@ -8,7 +8,7 @@
         selected-variant="warning"
         @row-selected="onRowSelected"
         id="my-table"
-        :items="dataTable"
+        :items="dataTable.data"
         :fields="fields"
 
         sort-icon-left
@@ -99,7 +99,7 @@
       </template>
 
     </b-table>
-  </b-overlay>
+
 
 
 <!--  <b-pagination-nav-->
@@ -157,7 +157,7 @@ name: "dynamics-table",
   data(){
   return{
 
-    // perPage: 20, // кол-во строк в пагинации
+    perPage: 20, // кол-во строк в пагинации
     currentPage: this.query,
     sortBy: 'id',
     sortDesc: false,
@@ -186,11 +186,13 @@ name: "dynamics-table",
 
   computed: {
     dataTable: {
+
       get() {
-        return this.$store.getters["BaseComponents/getDataLimitTable"](this.id)
+        console.log('this.$store.getters["TempDataTableDymamic/getDataInputCatalog"](this.id)', this.$store.getters["TempDataTableDymamic/getDataInputCatalog"](this.id))
+        return this.$store.getters["TempDataTableDymamic/getDataInputCatalog"](this.id)
       },
       set(val) {
-        this.$store.commit('BaseComponents/setDataLimitTable', {'key': this.id, 'value': val})
+        this.$store.commit('TempDataTableDymamic/setDataTable', {'key': this.id, 'value': val})
       },
 
     }
