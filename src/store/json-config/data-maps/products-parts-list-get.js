@@ -1,92 +1,100 @@
 
 
 function productsPartsItemsList (data) {
-    let serialisationData = [];
-    data.forEach((elem, ) =>{
+    let serialisationData = {data:[], meta: {}};
 
-        serialisationData.push(
-            {
-                id: elem.id,
-                guid: elem.guid,
-                name: elem.name,
+    data.data.forEach((elem, ) =>{
+        serialisationData['data'].push(
 
-                images: {
-                    main: {
-                        url: elem.images.main,
-                    },
-                    album: {
-                        url: elem.images.extra,
-                    }
-                },
-
-                sku: {
-                    origin: elem.sku.origin,
-                    custom: elem.sku.custom,
-                },
-
-                brand: {
-                    id: elem.brand.id,
-                    name: elem.brand.name,
-                    code: elem.brand.code,
-                    deliveryDelay: elem.brand.deliveryDelay
-                },
+                    {
 
 
-                categories: elem.categories.map(function(item) {
-                    return {
-                                id: item.id,
-                                name: item.name
-                    }
-                }),
+                        id: elem.id,
+                        guid: elem.guid,
+                        name: elem.name,
 
-                applicabilities: elem.applicabilities.map(function(item) {
-                    return {
-                        id: item.id,
-                        name: item.name
-                    }
-                }),
-
-
-                oems: elem.oems.map(function(item) {
-                    return item
-                }),
-
-                dates: {
-                    created: elem.dates.created,
-                    modified: elem.dates.modified,
-                    release: elem.dates.release
-                },
-
-                offers: elem.offers.map(function(item) {
-                    return {
-                        id: item.id,
-                        guid: item.guid,
-                        name: item.name,
-                        activity: item.activity,
-                        quantity: item.quantity,
-                        price: item.price,
-                        productId: item.productId,
-
-                        supplier: {
-                            code: item.supplier.code,
-                            name: item.supplier.name,
-                            itemId: item.supplier.itemId,
-                            storehouse: item.supplier.storehouse,
-                            deliveryDelay: item.supplier.deliveryDelay,
-                            orderMultiplicity: item.supplier.orderMultiplicity
+                        images: {
+                            main: {
+                                url: elem.images.main,
+                            },
+                            album: {
+                                url: elem.images.extra,
+                            }
                         },
 
-                        dates: {
-                            created: item.dates.created,
-                            modified: item.dates.modified
-                        }
-                    }
-                }),
+                        sku: {
+                            origin: elem.sku.origin,
+                            custom: elem.sku.custom,
+                        },
 
-            }
+                        brand: {
+                            id: elem.brand.id,
+                            name: elem.brand.name,
+                            code: elem.brand.code,
+                            deliveryDelay: elem.brand.deliveryDelay
+                        },
+
+
+                        categories: elem.categories.map(function (item) {
+                            return {
+                                id: item.id,
+                                name: item.name
+                            }
+                        }),
+
+                        applicabilities: elem.applicabilities.map(function (item) {
+                            return {
+                                id: item.id,
+                                name: item.name
+                            }
+                        }),
+
+
+                        oems: elem.oems.map(function (item) {
+                            return item
+                        }),
+
+                        dates: {
+                            created: elem.dates.created,
+                            modified: elem.dates.modified,
+                            release: elem.dates.release
+                        },
+
+                        offers: elem.offers.map(function (item) {
+                            return {
+                                id: item.id,
+                                guid: item.guid,
+                                name: item.name,
+                                activity: item.activity,
+                                quantity: item.quantity,
+                                price: item.price,
+                                productId: item.productId,
+
+                                supplier: {
+                                    code: item.supplier.code,
+                                    name: item.supplier.name,
+                                    itemId: item.supplier.itemId,
+                                    storehouse: item.supplier.storehouse,
+                                    deliveryDelay: item.supplier.deliveryDelay,
+                                    orderMultiplicity: item.supplier.orderMultiplicity
+                                },
+
+                                dates: {
+                                    created: item.dates.created,
+                                    modified: item.dates.modified
+                                },
+
+                            }
+                        }),
+
+                    }
         )
 
     });
+
+    serialisationData['meta'] = {
+        count: data.meta.count
+    }
 
     return serialisationData;
 
@@ -107,9 +115,9 @@ function urlMapFilterPartsGetList (urlParams) {
 
 }
 
-module.exports = productsPartsItemsList;
+module.exports.urlMapFilterPartsGetList = urlMapFilterPartsGetList;
+module.exports.productsPartsItemsList = productsPartsItemsList;
 
-module.exports = urlMapFilterPartsGetList;
 
 
 // ПРИМЕР СЕРИАЛИЗОВАННЫЙ ФОРМАТ JSON

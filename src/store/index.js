@@ -12,6 +12,7 @@ import BaseComponents from "@/store/temp-data/base-components"
 import TempDataCatalog from '@/store/temp-data/temp-data-catalog'
 
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({

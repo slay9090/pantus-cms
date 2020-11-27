@@ -257,12 +257,14 @@ name: "ProductsList",
 
   },
   async mounted() {
+    this.$store.commit("")
 
     this.spinerLoaderIsShow= false
     // await this.$store.dispatch("ProductParts/dataDetailPartsById", '109478,55171,55213');
     // this.productsJson = await this.$store.getters["ProductParts/getDetailPartsById"]('109478')
 
-    await this.$store.dispatch('ProductParts/dataItemsPartsByFilter', {substr: 'sdfsdf',})
+    await this.$store.dispatch('ProductParts/dataItemsPartsByFilter', {substr: 'asd',})
+      // console.log(this.$store.getters[""])
     console.log( 'this.productsJson', this.productsJson)
 
 

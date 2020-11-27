@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link :to="{ name: 'home'}" class="btn">Назад</router-link>
     <b-card-group deck>
       <b-card title="Title" header-tag="header" footer-tag="footer" class="shadow">
         <template #header>

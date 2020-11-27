@@ -94,7 +94,9 @@ const actions = {
     },
 
     async dataItemsPartsByFilter({commit}, urlParams) {
+       // console.log('ALLO', jsonMaps.urlMapFilterPartsGetList(urlParams))
         const formattedUrl = jsonMaps.urlMapFilterPartsGetList(urlParams)
+        console.log(formattedUrl)
         return await Axios.get('http://api.pantus.ru/products_filter?',
             {
                 params: {
@@ -102,8 +104,8 @@ const actions = {
                 }
             }
         ).then(res => {
-            commit("setDataItemsPartsByFilter", jsonMaps.productsPartsItemsList(res.data));
-            console.log('RESULT FILTER', res.data)
+           commit("setDataItemsPartsByFilter", jsonMaps.productsPartsItemsList(res.data));
+           console.log('RESULT FILTER', jsonMaps.productsPartsItemsList(res.data))
         })
     },
 
