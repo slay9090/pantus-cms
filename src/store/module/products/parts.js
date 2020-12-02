@@ -54,9 +54,9 @@ const mutations = {
 
 
 
-    setDataParentsSelectedNodes(state, data){
-        state.parents_selected_items = data.slice();
-    },
+    // setDataParentsSelectedNodes(state, data){
+    //     state.parents_selected_items = data.slice();
+    // },
 
 
     setDataSelectedImages(state, data){

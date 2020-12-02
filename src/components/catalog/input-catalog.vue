@@ -13,7 +13,7 @@
 
       <component
           :is="typeCatalog"
-          v-bind="{ id: id, items: items, modalId: modalId }"
+          v-bind="{ id: id, items: items, modalId: modalId,  multiMode: multiMode,}"
       />
 
     </div>
@@ -50,6 +50,10 @@ export default {
     modalId: {
       type: String,
       required: true,
+    },
+
+    multiMode: {
+      type: String
     }
 
 

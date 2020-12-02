@@ -9,13 +9,15 @@
 
             <filters />
 
+
+
             <b-overlay :show="!dataTable" no-fade rounded="sm">
             <dynamics-table
                 v-if="dataTable"
                 id="table-products-parts-list"
             />
             </b-overlay>
-
+            <hr>
           </div>
 
       </div>
@@ -59,6 +61,8 @@ name: "ProductsList",
 
     await this.$store.dispatch('ProductParts/dataItemsPartsByFilter', {substr: '',})
     this.$store.commit('TempDataTableDymamic/setDataTable', {'key': 'table-products-parts-list', 'value': this.itemsProductParts})
+
+
 
   },
   // исправить

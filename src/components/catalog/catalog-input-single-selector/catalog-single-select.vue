@@ -25,7 +25,6 @@
       </div>
 
       <hr>
-      {{itemSelectProductBrandId}} sdf
 
       <div class="mt-3 ">
 
@@ -37,7 +36,7 @@
             v-slot="{ item }"
             content-tag="b-form-radio-group"
         >
-          <div class="ml-2">
+          <div class="ml-2" >
             <b-form-radio v-model="selectItemId" :value="item.id" @change="setSelectItems(item)">
               {{ item.name }}
             </b-form-radio>
@@ -109,6 +108,7 @@ export default {
 
     itemSelectProductBrandId: {
       get() {
+
          console.log('ddddddddddddd', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id)
         return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id
       },
@@ -159,10 +159,16 @@ export default {
 
   },
   async mounted() {
-    // console.log('asdasdasd',this.itemSelectProductBrandId)
-    // this.selectItemId = this.itemSelectProductBrandId                     // Если будут траблы с начальным значением раскоментить
+     console.log('asdasdasd',this.itemSelectProductBrandId)
+     this.selectItemId = await this.itemSelectProductBrandId                     // Если будут траблы с начальным значением раскоментить
 
-  }
+  },
+
+  watch: {
+    itemSelectProductBrandId () {
+      this.selectItemId = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id
+    }
+  },
 
 }
 </script>

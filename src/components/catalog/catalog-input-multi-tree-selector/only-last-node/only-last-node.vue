@@ -1,8 +1,9 @@
 <template>
-  <div class="node-tree " >
+  <div class="node-tree" >
 
 
     <b-form-checkbox
+        class="label-catalog"
         @change="validations(node)"
         @input="collapse=!collapse"
         :id=node.id.toString()
@@ -116,17 +117,17 @@ name: "CheckBoxTree",
 }
 </script>
 
-<style>
-.custom-control-input.is-invalid:checked~.custom-control-label::before, .was-validated .custom-control-input:invalid:checked~.custom-control-label::before{
+<style scoped>
+.node-tree .custom-control-input.is-invalid:checked~.custom-control-label::before, .was-validated .custom-control-input:invalid:checked~.custom-control-label::before{
   border-color: #adb5bd;
   background-color:#adb5bd;
 
 }
-.custom-control-input.is-invalid~.custom-control-label::before, .was-validated .custom-control-input:invalid{
+.node-tree .custom-control-input.is-invalid~.custom-control-label::before, .was-validated .custom-control-input:invalid{
   border-color:#adb5bd;
 
 }
-.custom-control-input.is-invalid~.custom-control-label, .was-validated .custom-control-input:invalid~.custom-control-label
+.node-tree .custom-control-input.is-invalid~.custom-control-label, .was-validated .custom-control-input:invalid~.custom-control-label
 {
   color: #212529;
 

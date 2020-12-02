@@ -1,7 +1,8 @@
 <template>
-<div class="dynamic-table">
-
+  <b-container class="dynamic-table mx-0 my-3 " >
+    Данные:
     <b-table
+
         ref="selectableTable"
         selectable
         select-mode="single"
@@ -120,7 +121,7 @@
     </p>
   </div>
 
-</div>
+</b-container>
 </template>
 
 <script>
@@ -197,6 +198,8 @@ name: "dynamics-table",
 
     }
   },
+
+
 
   methods: {
 

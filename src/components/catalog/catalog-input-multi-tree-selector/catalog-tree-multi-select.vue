@@ -10,8 +10,16 @@
         ok-title="Сохранить">
       <div class="scrollblock">
 
-        <checkboxtree :id="id" v-for="item in items" :node="item" :key="item.id"
-        ></checkboxtree>
+        <template v-if="multiMode === 'all-node'">
+        <allNode :id="id" v-for="item in items" :node="item" :key="item.id"
+        />
+        </template>
+
+        <template v-if="multiMode === 'only-last-node'">
+          <onlyLastNode :id="id" v-for="item in items" :node="item" :key="item.id"
+          />
+        </template>
+
       </div>
 
 
@@ -45,15 +53,18 @@
 
 <script>
 
-import checkboxtree from "./catalog-tree-multi-select-node"
+import onlyLastNode from "./only-last-node/only-last-node";
+import allNode from "./all-nodes/all-node";
 
 export default {
   name: "checkBoxForm",
   components: {
-    checkboxtree,
+    onlyLastNode,
+    allNode,
   },
   props: {
     id: {
+      required: true,
       type: String,
     },
     items: Array,
@@ -61,7 +72,11 @@ export default {
     modalId: {
       type: String,
       required: true,
-    }
+    },
+    multiMode: {
+      type: String,
+      required: true,
+    },
 
   },
 
@@ -73,32 +88,29 @@ export default {
 
   computed: {
 
-    tempItemsSelected () {
-
-      return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id)
-    },
-
   },
   methods: {
-
 
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault()
 
-      // Список ид узлов до конечного выбранного, что бы раскрыть нужные ветки.
-      this.$store.dispatch('TempDataCatalog/loadParentsSelectedNodes',
+    //  console.log('TEST', this.id, this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id), this.items)
+
+      // НАЧАЛО ПУТЬ ид узлов до конечного выбранного логика во вьюксе
+      this.$store.dispatch('TempDataCatalog/addPathTreeForThisNode',
           {
             'key': this.id,
-            'value': this.getAllParentsForAllSelectedNodes(this.tempItemsSelected)}
+            'value': this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id),
+            'items': this.items,
+          }
       )
+
 
       this.$store.commit('TempDataCatalog/setValueInputCatalog', {
         'key': this.id,
         'value': this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id)
       })
-
-      console.log('ZAPICAL', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id))
 
       this.$nextTick(() => {
         this.$bvModal.hide(this.modalId)
@@ -120,45 +132,9 @@ export default {
       this.resetTempData();
     },
 
-    ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
-     getAllParentsForAllSelectedNodes(selectedCatalogFilter) {
-
-      let parent = []
-       selectedCatalogFilter.forEach(element => {
-        parent.push(this.getAllParentForOneNode(this.items, element.id))
-      })
-
-      return parent
-    },
-    getAllParentForOneNode(dataset, nodeId) {
-
-      let parents = []
-      var TreeModel = require('tree-model'),
-          tree = new TreeModel();
-       dataset.forEach(element => {
-        let rootMain = tree.parse(element);
-        rootMain.walk(function (node) {
-          if (node.model.id === nodeId) {
-            let x = node.getPath()
-            x.forEach(element => {
-              parents.push(element.model.id)
-
-            })
-          }
-        })
-      })
-
-      return parents
-    },
-
-    ///КОНЕЦ ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
     // Сброс временного состояния и запись в него то, что находится в getValueInputCatalog
    resetTempData() {
-      // this.$store.dispatch('TempDataCatalog/loadTempValueInputCatalog', [])
-     //console.log(this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id))
-
       this.$store.commit('TempDataCatalog/clearDataItemsTempValue', {inputid: this.id})
-
       this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).forEach(elem => {
         this.$store.commit('TempDataCatalog/addItemTempValue', {
           'key': this.id,
@@ -172,15 +148,11 @@ export default {
 
     this.resetTempData();
 
-    // Список ид узлов до конечного выбранного, что бы раскрыть нужные ветки.
-    if (this.items) {
-      this.$store.dispatch('TempDataCatalog/loadParentsSelectedNodes',
-          {
-            'key': this.id,
-            'value': this.getAllParentsForAllSelectedNodes(this.tempItemsSelected)
-          }
-      )
-    }
+    //это что бы прокинуть алл айтемс фильтров в рекурсию !!!
+    this.$store.commit('TempDataCatalog/setDataTempItemsForCurrentFilter', {
+      'key': this.id,
+      'value': this.items
+    })
 
   },
 
@@ -196,10 +168,4 @@ export default {
   overflow-y: auto;
 }
 
-.scroller {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 500px;
-}
 </style>
