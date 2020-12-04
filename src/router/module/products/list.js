@@ -1,7 +1,10 @@
 export default [
     {
         path: '/products/list',
-        props: route => ({ query: route.query.page }),
+        props: route => ({ filter_substr: route.query.filter_substr }),
+        // props(route) {
+        //     return  route.query || {}
+        // },
         name: 'ProductsList',
         component: () => import('@/pages/products/products-parts-list'),
         meta: {

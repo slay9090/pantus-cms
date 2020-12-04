@@ -30,7 +30,7 @@ name: "catalog-tree-multi-filter-node",
   data() {
     return {
       collapse: false,
-      lastNode: false,
+      lastNode: null,
       select: false,
     }
   },
@@ -40,7 +40,6 @@ name: "catalog-tree-multi-filter-node",
       return this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.$store.getters["TempDataCatalog/idInput"])
     },
   },
-
 
 
   mounted() {
@@ -96,8 +95,10 @@ name: "catalog-tree-multi-filter-node",
           this.$store.commit("TempDataCatalog/removeItemTempValue", {index: index, inputid: this.$store.getters["TempDataCatalog/idInput"]})
         }
       })
+      console.log('now temp', this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.$store.getters["TempDataCatalog/idInput"]))
     },
     uncheckAllExcessItems (excessNode){
+      console.log('on uncheck', excessNode)
       excessNode.forEach(element => {
         if (document.getElementById(element.toString())) {
           document.getElementById(element.toString()).className = ''
@@ -131,9 +132,6 @@ name: "catalog-tree-multi-filter-node",
     },
 
 
-
-
-
     // Отрефакторить, разделить на три функции валидация, запись и удаление вьюкс
     validations(node){
       if (node.children&& node.children.length){
@@ -150,16 +148,28 @@ name: "catalog-tree-multi-filter-node",
           this.removeAllExcessItems(this.getAllParentsByNode(this.$store.getters["TempDataCatalog/getTempAllItemsCurrentFilter"](this.$store.getters["TempDataCatalog/idInput"]), node.id))
           this.removeAllExcessItems(this.getAllChildrenByNode(node))
 
+          console.log('this.select===false', 'no last node')
+
           this.$store.commit('TempDataCatalog/addItemTempValue', {
             'key': this.$store.getters["TempDataCatalog/idInput"],
             'value': node
           })
           this.lastNode=true
 
+         // this.setCheckBoxProperty(this.$store.getters["TempDataCatalog/parentsSelectedNodes"](this.$store.getters["TempDataCatalog/idInput"]));
+
         }
         else {
           //какой-то последний узел дерева выбран      //
         }
+        ///Каждый раз переформировываем пути выбранных узлов
+        this.$store.dispatch('TempDataCatalog/addPathTreeForThisNode',
+            {
+              'key': this.$store.getters["TempDataCatalog/idInput"],
+              'value': this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.$store.getters["TempDataCatalog/idInput"]),
+              'items': this.$store.getters["TempDataCatalog/getTempAllItemsCurrentFilter"](this.$store.getters["TempDataCatalog/idInput"]),
+            }
+        )
 
       }
       else
@@ -189,25 +199,25 @@ name: "catalog-tree-multi-filter-node",
 </script>
 
 <style>
-.node-tree-all-node-mode .custom-control-input.is-invalid:checked~.custom-control-label::before, .was-validated .custom-control-input:invalid:checked~.custom-control-label::before{
-  border-color: #adb5bd ;
-  background-color:#adb5bd ;
+/*.node-tree-all-node-mode .custom-control-input.is-invalid:checked~.custom-control-label::before, .was-validated .custom-control-input:invalid:checked~.custom-control-label::before{*/
+/*  border-color: #adb5bd ;*/
+/*  background-color:#adb5bd ;*/
 
-}
-.node-tree-all-node-mode .custom-control-input.is-invalid~.custom-control-label::before, .was-validated .custom-control-input:invalid{
-  border-color:#adb5bd ;
+/*}*/
+/*.node-tree-all-node-mode .custom-control-input.is-invalid~.custom-control-label::before, .was-validated .custom-control-input:invalid{*/
+/*  border-color:#adb5bd ;*/
 
-}
-.node-tree-all-node-mode .custom-control-input.is-invalid~.custom-control-label, .was-validated .custom-control-input:invalid~.custom-control-label
-{
-  color: #424242;
+/*}*/
+/*.node-tree-all-node-mode .custom-control-input.is-invalid~.custom-control-label, .was-validated .custom-control-input:invalid~.custom-control-label*/
+/*{*/
+/*  color: #424242;*/
 
-}
-.node-tree-all-node-mode .custom-control-input.is-invalid:focus:not(:checked)~.custom-control-label::before, .was-validated .custom-control-input:invalid:focus:not(:checked)~.custom-control-label::before {
-  border-color: #adb5bd ;
-}
-.node-tree-all-node-mode .custom-control-input.is-invalid:focus~.custom-control-label::before, .was-validated .custom-control-input:invalid:focus~.custom-control-label::before {
-  box-shadow: 0 0 0 0.2rem transparent ;
-  border-color:#adb5bd ;
-}
+/*}*/
+/*.node-tree-all-node-mode .custom-control-input.is-invalid:focus:not(:checked)~.custom-control-label::before, .was-validated .custom-control-input:invalid:focus:not(:checked)~.custom-control-label::before {*/
+/*  border-color: #adb5bd ;*/
+/*}*/
+/*.node-tree-all-node-mode .custom-control-input.is-invalid:focus~.custom-control-label::before, .was-validated .custom-control-input:invalid:focus~.custom-control-label::before {*/
+/*  box-shadow: 0 0 0 0.2rem transparent ;*/
+/*  border-color:#adb5bd ;*/
+/*}*/
 </style>

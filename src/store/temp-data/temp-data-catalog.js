@@ -103,6 +103,50 @@ const actions = {
         ///КОНЕЦ ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
     },
 
+
+//{
+// substr_value: 'asd',
+// brand_value: '123',
+// categories_value: '123,123',
+// applicabilities_value: '123,123',
+// substr_input_id: 'xxx',
+// brand_input_id: 'xxx',
+// categories_input_id: 'xxx',
+// applicabilities_input_id: 'xxx'
+// }
+
+    // const subString = this.$store.getters["BaseComponents/getValueInputSearch"](this.searchInputId);
+    // const brand = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.brandInputId);
+    // const categories = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.categoriesInputId);
+    // const applicabilities = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.applicabilitiesInputId);
+
+    async addFiltersByRoute({commit, rootGetters}, data){
+        //
+         console.log('in',data.categories_value)
+        //
+        //console.log('addFiltersByRoute astart', rootGetters["CatalogCategories/itemById"](266))
+
+        //заполняем поиск
+        commit('BaseComponents/setValueInputSearch', {'key': data.substr_input_id, 'value': data.substr_value}, { root: true })
+        // заполняем бренд
+        commit("setValueInputCatalog", {'key': data.brand_input_id, 'value': rootGetters["CatalogBrands/itemById"](parseInt(data.brand_value))})
+        //заполняем категории
+
+
+        data.categories_value.forEach( id => {
+            // commit('setValueInputCatalog', {'key': data.categories_input_id,
+            //     'value': rootGetters["CatalogCategories/itemById"](parseInt(id))
+            // })
+            console.log(id);
+            console.log(rootGetters["CatalogCategories/itemById"](parseInt(id)))
+        })
+
+
+
+
+
+    },
+
 }
 
 const getters = {

@@ -48,8 +48,11 @@ const getters = {
      * @returns {function(*): *}
      */
     itemById: arr => id => {
-        //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
-        return arr.all_items_categories.find(todo => todo.id === id);
+
+        console.log('categories bu id', arr.all_items_categories)
+          console.log('In store11 = ', arr.all_items_categories.find(item => item.id === 264))
+
+       // return arr.all_items_categories.find(todo => id === id);
     }
 
 }

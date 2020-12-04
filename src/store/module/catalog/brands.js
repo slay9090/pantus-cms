@@ -51,7 +51,8 @@ const getters = {
      * @summary `await this.$store.getters["имяМодуля/имяГетера"](Аргументы)`
      */
     itemById: arr => id => {
-        //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
+        console.log('ROFL')
+          console.log('In store = ',arr.all_items_brands.find(todo => todo.id === 255))
         return arr.all_items_brands.find(todo => todo.id === id);
     }
 

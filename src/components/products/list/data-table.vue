@@ -1,5 +1,6 @@
 <template>
-  <b-container class="dynamic-table mx-0 my-3 " >
+<!--  <b-container class="dynamic-table mx-0 my-3 " >-->
+  <div>
     Данные:
     <b-table
 
@@ -121,7 +122,7 @@
     </p>
   </div>
 
-</b-container>
+  </div>
 </template>
 
 <script>

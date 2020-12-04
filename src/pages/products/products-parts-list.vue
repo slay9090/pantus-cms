@@ -5,7 +5,7 @@
       <h4 class="card-header"> <small class="text-muted">Запчасти</small></h4>
       <div class="card-body">
 
-          <div>
+
 
             <filters />
 
@@ -22,7 +22,7 @@
 
       </div>
     </div>
-  </div>
+<!--  </div>-->
 </template>
 
 <script>
@@ -47,11 +47,10 @@ name: "ProductsList",
   },
   computed: {
 
-
-
     dataTable() {  return this.$store.getters["TempDataTableDymamic/getDataInputCatalog"]('table-products-parts-list'); },
-
     itemsProductParts() { return this.$store.getters["ProductParts/getDataItemsPartsByFilter"]; },
+
+
 
 
 
@@ -68,6 +67,11 @@ name: "ProductsList",
   // исправить
   watch: {
     $route() {
+      /// http://api.pantus.ru/products_filter?filter_brands=270&filter_categories=265,266&ilter_applicabilities=3138,3140
+
+    //  console.log('CHANGE ROUTE')
+
+
       //скролл на верх при переходе по пагинации
       window.scrollTo(0,0)
     }
