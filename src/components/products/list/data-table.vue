@@ -1,7 +1,7 @@
 <template>
 <!--  <b-container class="dynamic-table mx-0 my-3 " >-->
   <div>
-    Данные:
+    Данные: {{countItems}} поз.
     <b-table
 
         ref="selectableTable"
@@ -112,15 +112,15 @@
 <!--  ></b-pagination-nav>-->
 
 
-  <p class="mt-3">Current Page: {{ currentPage }}</p>
+<!--  <p class="mt-3">Current Page: {{ currentPage }}</p>-->
 
 
-  <div>
-    <p>
-      Selected Rows:<br>
-      {{ selected }}
-    </p>
-  </div>
+<!--  <div>-->
+<!--    <p>-->
+<!--      Selected Rows:<br>-->
+<!--      {{ selected }}-->
+<!--    </p>-->
+<!--  </div>-->
 
   </div>
 </template>
@@ -197,6 +197,12 @@ name: "dynamics-table",
         this.$store.commit('TempDataTableDymamic/setDataTable', {'key': this.id, 'value': val})
       },
 
+    },
+    countItems() {
+      if (this.$store.getters["TempDataTableDymamic/getDataInputCatalog"]('table-products-parts-list')) {
+        return this.$store.getters["TempDataTableDymamic/getDataInputCatalog"]('table-products-parts-list').meta.count;
+      }
+      else {return 0}
     }
   },
 
@@ -214,9 +220,9 @@ name: "dynamics-table",
      * @param pageNum sdfgsfdgdfg
      * @returns {string|string}
      */
-    linkGen(pageNum){
-      return pageNum === 1 ? '?' : `?page=${pageNum}`
-    },
+    // linkGen(pageNum){
+    //   return pageNum === 1 ? '?' : `?page=${pageNum}`
+    // },
     //сортировка по дате
   },
 

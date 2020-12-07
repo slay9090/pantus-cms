@@ -97,7 +97,7 @@ const actions = {
        // console.log('ALLO', jsonMaps.urlMapFilterPartsGetList(urlParams))
         const formattedUrl = jsonMaps.urlMapFilterPartsGetList(urlParams)
         console.log('in dataItemsPartsByFilter', formattedUrl)
-        return await Axios.get('http://api.pantus.ru/products_filter?',
+        return await Axios.get('http://api.pantus.ru/products_filter?page_size=20&',
             {
                 params: {
                     ...formattedUrl
@@ -111,14 +111,14 @@ const actions = {
         /// берем напрямую, отрефактоирт потом
     async dataItemsPartsByFilterNoConvertUrl({commit}, urlParams) {
         console.log('in dataItemsPartsByFilter', urlParams)
-        return await Axios.get('http://api.pantus.ru/products_filter?',
+        return await Axios.get('http://api.pantus.ru/products_filter?page_size=20&',
             {  params: { ...urlParams } }
         ).then(res => {
             commit("setDataItemsPartsByFilter", jsonMaps.productsPartsItemsList(res.data));
             console.log('RESULT FILTER NO CONVERT URL', jsonMaps.productsPartsItemsList(res.data))
         })
     },
-
+//+ '&page_size=20'
 }
 
 const getters = {

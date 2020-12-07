@@ -66,9 +66,9 @@
     </b-row>
 
 
-    <b-row  align-h="between" class="my-3">
+    <b-row  align-h="end" class="my-3">
 
-      <b-col cols="3">Найдено: {{itemsProductParts.meta.count}}</b-col>
+<!--      <b-col cols="3" v-if="itemsProductParts">Найдено: {{itemsProductParts.meta.count}}</b-col>-->
 
       <b-col cols="3" class="text-right">
         <b-button class="mr-3" @click="clearAllFilters">Сбросить</b-button>
@@ -157,7 +157,7 @@ export default {
     allItemsCatalogCategories()  { return this.$store.getters["CatalogCategories/allItems"]; },
     allItemsCatalogApplicabilities() { return this.$store.getters["CatalogApplicabilities/allItems"]; },
 
-    itemsProductParts() { return this.$store.getters["ProductParts/getDataItemsPartsByFilter"]; },
+    //itemsProductParts() { return this.$store.getters["ProductParts/getDataItemsPartsByFilter"]; },
    // dataTable() {  return this.$store.getters["TempDataTableDymamic/getDataInputCatalog"]('table-products-parts-list'); },
 
     filterValue() {

@@ -9,7 +9,7 @@
 
             <filters />
 
-
+<!--       <span v-if="dataTable">{{dataTable}}</span>-->
 
             <b-overlay :show="!dataTable" no-fade rounded="sm">
             <dynamics-table
@@ -17,7 +17,17 @@
                 id="table-products-parts-list"
             />
             </b-overlay>
-            <hr>
+        <hr>
+            <b-pagination-nav
+                v-if="dataTable"
+                :link-gen="linkGen"
+                :number-of-pages="(countItems/perPage)+1"
+                use-router
+                v-model="currentPage"
+            ></b-pagination-nav>
+
+
+
           </div>
 
       </div>
@@ -36,23 +46,39 @@ name: "ProductsList",
   props: ["query"],
   data() {
     return {
-
+      perPage: 20,
+      //currentPage: 1
     }
   },
 
   methods:{
-
+    linkGen(pageNum) {
+      // генерация ссылок Page
+      let page;
+      pageNum === 1 ? page = undefined : page = pageNum
+      return {
+        query: {
+          ...this.$route.query,
+          page_number: page,
+        },
+      };
+    },
 
 
   },
   computed: {
 
+    currentPage(){ return  this.$route.query.page_number ?  this.$route.query.page_number :  1 },
+
     dataTable() {  return this.$store.getters["TempDataTableDymamic/getDataInputCatalog"]('table-products-parts-list'); },
     itemsProductParts() { return this.$store.getters["ProductParts/getDataItemsPartsByFilter"]; },
 
-
-
-
+    countItems() {
+      if (this.$store.getters["TempDataTableDymamic/getDataInputCatalog"]('table-products-parts-list')) {
+        return this.$store.getters["TempDataTableDymamic/getDataInputCatalog"]('table-products-parts-list').meta.count;
+      }
+      else {return 0}
+    }
 
   },
   async mounted() {
