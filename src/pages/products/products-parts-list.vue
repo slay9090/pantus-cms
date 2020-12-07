@@ -58,20 +58,20 @@ name: "ProductsList",
   async mounted() {
 
 
-    await this.$store.dispatch('ProductParts/dataItemsPartsByFilter', {substr: '',})
+    await this.$store.dispatch('ProductParts/dataItemsPartsByFilterNoConvertUrl', this.$route.query)
     this.$store.commit('TempDataTableDymamic/setDataTable', {'key': 'table-products-parts-list', 'value': this.itemsProductParts})
-
 
 
   },
   // исправить
   watch: {
-    $route() {
+    async $route() {
       /// http://api.pantus.ru/products_filter?filter_brands=270&filter_categories=265,266&ilter_applicabilities=3138,3140
+      console.log('change ')
+      this.$store.commit('TempDataTableDymamic/setDataTable', {'key': 'table-products-parts-list', 'value': null})
+      await this.$store.dispatch('ProductParts/dataItemsPartsByFilterNoConvertUrl', this.$route.query)
 
-    //  console.log('CHANGE ROUTE')
-
-
+      this.$store.commit('TempDataTableDymamic/setDataTable', {'key': 'table-products-parts-list', 'value': this.itemsProductParts})
       //скролл на верх при переходе по пагинации
       window.scrollTo(0,0)
     }

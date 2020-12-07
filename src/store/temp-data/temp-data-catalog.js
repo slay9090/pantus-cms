@@ -121,29 +121,41 @@ const actions = {
     // const applicabilities = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.applicabilitiesInputId);
 
     async addFiltersByRoute({commit, rootGetters}, data){
-        //
-         console.log('in',data.categories_value)
-        //
-        //console.log('addFiltersByRoute astart', rootGetters["CatalogCategories/itemById"](266))
 
         //заполняем поиск
-        commit('BaseComponents/setValueInputSearch', {'key': data.substr_input_id, 'value': data.substr_value}, { root: true })
+        commit('BaseComponents/setValueInputSearch', {'key': data.substr_input_id, 'value': data.substr_value}, { root: true });
         // заполняем бренд
-        commit("setValueInputCatalog", {'key': data.brand_input_id, 'value': rootGetters["CatalogBrands/itemById"](parseInt(data.brand_value))})
+        data.brand_value ? commit("setValueInputCatalog", {'key': data.brand_input_id, 'value': rootGetters["CatalogBrands/itemById"](parseInt(data.brand_value))})
+            : commit("setValueInputCatalog", {'key': data.brand_input_id, 'value': {id: 0}});
         //заполняем категории
-
-
-        data.categories_value.forEach( id => {
-            // commit('setValueInputCatalog', {'key': data.categories_input_id,
-            //     'value': rootGetters["CatalogCategories/itemById"](parseInt(id))
-            // })
-            console.log(id);
-            console.log(rootGetters["CatalogCategories/itemById"](parseInt(id)))
+        if (data.categories_value) {
+            let categoriesUrlValues =[];
+            data.categories_value.forEach( id => {
+                categoriesUrlValues.push(rootGetters["CatalogCategories/itemById"](parseInt(id)))
         })
-
-
-
-
+            commit('setValueInputCatalog', {'key': data.categories_input_id,
+                'value': categoriesUrlValues
+            })
+        } else {
+            commit('setValueInputCatalog', {'key': data.categories_input_id,
+                'value': []
+            })
+        }
+        // Applicabilities
+        if (data.applicabilities_value) {
+            let applicabilitiesUrlValues =[];
+            data.applicabilities_value.forEach( id => {
+                applicabilitiesUrlValues.push(rootGetters["CatalogApplicabilities/itemById"](parseInt(id)))
+            })
+            commit('setValueInputCatalog', {'key': data.applicabilities_input_id,
+                'value': applicabilitiesUrlValues
+            })
+        }
+        else {
+            commit('setValueInputCatalog', {'key': data.applicabilities_input_id,
+                'value': []
+            })
+        }
 
     },
 

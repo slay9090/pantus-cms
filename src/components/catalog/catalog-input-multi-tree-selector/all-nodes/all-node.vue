@@ -44,7 +44,7 @@ name: "catalog-tree-multi-filter-node",
 
   mounted() {
     this.setCheckBoxProperty(this.$store.getters["TempDataCatalog/parentsSelectedNodes"](this.$store.getters["TempDataCatalog/idInput"]));
-    //console.log(this.$store.getters["TempDataCatalog/idInput"])
+   // console.log('chk', this.$store.getters["TempDataCatalog/parentsSelectedNodes"](this.$store.getters["TempDataCatalog/idInput"]))
   },
 
   methods: {

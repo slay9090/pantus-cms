@@ -148,6 +148,15 @@ export default {
 
     this.resetTempData();
 
+    this.$store.dispatch('TempDataCatalog/addPathTreeForThisNode',
+        {
+          'key': this.id,
+          'value': this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id),
+          'items': this.items,
+        }
+    )
+
+
     //это что бы прокинуть алл айтемс фильтров в рекурсию !!!
     this.$store.commit('TempDataCatalog/setDataTempItemsForCurrentFilter', {
       'key': this.id,

@@ -66,9 +66,11 @@
     </b-row>
 
 
-    <b-row  align-h="end" class="my-3">
+    <b-row  align-h="between" class="my-3">
 
-      <b-col cols="3" class="text-right" align-self="end">
+      <b-col cols="3">Найдено: {{itemsProductParts.meta.count}}</b-col>
+
+      <b-col cols="3" class="text-right">
         <b-button class="mr-3" @click="clearAllFilters">Сбросить</b-button>
         <b-button @click="getItemsPartsByFilter">Найти</b-button>
         <!--                <b-button variant="outline-danger" class="py-1 mx-2" :disabled="selected.length === 0">Удалить</b-button>-->
@@ -108,32 +110,15 @@ export default {
   methods: {
 
     async getItemsPartsByFilter() {
-      // this.$store.commit('TempDataTableDymamic/setDataTable', {'key': this.tableId, 'value': null})
-      // await this.$store.dispatch('ProductParts/dataItemsPartsByFilter', {
-      //   substr: this.filterValue.subString,
-      //   brands: this.filterValue.brand,
-      //   categories: this.filterValue.categories,
-      //   applicabilities: this.filterValue.applicabilities,
-      //
-      //
-      // })
-      // //console.log(this.$store.getters["ProductParts/getDataItemsPartsByFilter"])
-      // this.$store.commit('TempDataTableDymamic/setDataTable', {'key': this.tableId, 'value': this.itemsProductParts})
-
-      console.log('sss',this.$route.query)
-
 
       let url = jsonMaps.urlMapFilterPartsGetList(
           {
             substr: this.filterValue.subString,
-            brands: this.filterValue.brand,
+            brand: this.filterValue.brand,
             categories: this.filterValue.categories,
             applicabilities: this.filterValue.applicabilities,
           }
-
       );
-
-     // console.log('url', url, this.$route.query, JSON.stringify(url)===JSON.stringify(this.$route.query))
 
     if(this.$route.query){
       if(JSON.stringify(url)!==JSON.stringify(this.$route.query)){
@@ -145,14 +130,12 @@ export default {
 
     clearAllFilters () {
       this.$store.commit('BaseComponents/setValueInputSearch', {'key': this.searchInputId, 'value': null})
-      this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.brandInputId, 'value': null})
+      this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.brandInputId, 'value': {id: 0}})
+      this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.categoriesInputId, 'value': []})
+      this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.applicabilitiesInputId, 'value': []})
     },
 
     setFiltersByRoute(url){
-      //console.log('setFiltersByRoute', url.filter_categories.split(','));
-
-
-
       this.$store.dispatch('TempDataCatalog/addFiltersByRoute', {
         substr_value: url.filter_substr ? url.filter_substr : null,
         substr_input_id: this.searchInputId,
@@ -189,26 +172,10 @@ export default {
   },
 
   async mounted() {
-    console.log('magic',this.filter_substr)
+
     await this.$store.dispatch('CatalogBrands/getDataAllItems')
     await this.$store.dispatch('CatalogCategories/getDataAllItems')
     await this.$store.dispatch('CatalogApplicabilities/getDataAllItems')
-
-    await this.$store.dispatch('TempDataCatalog/loadValueInputCatalog',
-        {
-          'key': this.brandInputId,
-          'value': {id: 0}
-        })
-
-    await this.$store.dispatch('TempDataCatalog/loadValueInputCatalog', {
-      'key': this.categoriesInputId,
-      'value': []
-    })
-
-    await this.$store.dispatch('TempDataCatalog/loadValueInputCatalog', {
-      'key': this.applicabilitiesInputId,
-      'value': []
-    })
 
     this.setFiltersByRoute(this.$route.query)
 
@@ -216,7 +183,7 @@ export default {
 
   watch: {
     $route() {
-        this.setFiltersByRoute(this.$route.query)
+       // this.setFiltersByRoute(this.$route.query)
     }
   },
 

@@ -48,11 +48,20 @@ const getters = {
      * @returns {function(*): *}
      */
     itemById: arr => id => {
+        let item;
+        function  findItemById (id, data) {
+            data.forEach(elem => {
+                if (elem.id === id){
+                   item = elem;
+                }
+                if (elem.children && elem.children.length > 0){
+                    findItemById(id, elem.children);
+                }
+            })
+            return item;
+        }
 
-        console.log('categories bu id', arr.all_items_categories)
-          console.log('In store11 = ', arr.all_items_categories.find(item => item.id === 264))
-
-       // return arr.all_items_categories.find(todo => id === id);
+       return  findItemById(id, arr.all_items_categories)
     }
 
 }

@@ -102,10 +102,12 @@ function productsPartsItemsList (data) {
 
 function urlMapFilterPartsGetList (urlParams) {
 
+
+
     const formattedUrl={};
 
     urlParams.substr ? formattedUrl.filter_substr = urlParams.substr : null
-    urlParams.brands && urlParams.brands.id > 0 ? formattedUrl.filter_brands = urlParams.brands.id : null
+    urlParams.brand && urlParams.brand.id > 0 ? formattedUrl.filter_brands = urlParams.brand.id : null
     urlParams.categories && urlParams.categories.length > 0 ?
         formattedUrl.filter_categories = [...urlParams.categories.map(prop => prop.id)].toString() : null
     urlParams.applicabilities && urlParams.applicabilities.length > 0 ?
@@ -113,7 +115,7 @@ function urlMapFilterPartsGetList (urlParams) {
     urlParams.page_number ? formattedUrl.page_number = urlParams.page_number : null
     urlParams.page_size ? formattedUrl.page_size = urlParams.page_size : null
 
-    console.log('Вышло', formattedUrl)
+   // console.log('Вышло11', formattedUrl)
 
     return formattedUrl;
 

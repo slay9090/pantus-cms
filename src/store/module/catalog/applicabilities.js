@@ -59,9 +59,24 @@ const getters = {
      * @constructor
      */
     itemById: arr => id => {
-        //  console.log('In store = ',state.state_data.find(todo => todo.id === id))
-        return arr.all_items_applicabilities.find(todo => todo.id === id);
-    }
+        let item;
+        function  findItemById (id, data) {
+            data.forEach(elem => {
+                if (elem.id === id){
+                    item = elem;
+                }
+                if (elem.children && elem.children.length > 0){
+                    findItemById(id, elem.children);
+                }
+            })
+            return item;
+        }
+
+        return  findItemById(id, arr.all_items_applicabilities)
+    },
+
+
+
 
 }
 export  default {
