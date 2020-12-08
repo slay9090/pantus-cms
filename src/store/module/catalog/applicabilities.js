@@ -33,11 +33,6 @@ const actions = {
 
             commit("setDataAllApplicabilities",jsonMaps.catalogApplicabilitiesList(res.data));
 
-            // var myJsonString = JSON.stringify(jsonMaps.catalogApplicabilitiesList(res.data));
-            //
-            // console.log('myserialize json applica ', myJsonString);
-
-            // console.log('мы в действиях получили ', res.data);
         })
     },
 }

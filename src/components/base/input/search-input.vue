@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     valid(val){
-      console.log('VALIDA ', val)
+     // console.log('VALIDA ', val)
     }
   },
 

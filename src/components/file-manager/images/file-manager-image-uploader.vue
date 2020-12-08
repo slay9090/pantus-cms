@@ -105,7 +105,7 @@ name: "ImageLoader",
       for (let i = 0; i < selectedFiles.length; i++) {
         this.images.push(selectedFiles[i]);
       }
-      console.log('this.images', this.images)
+
       for (let i = 0; i < this.images.length; i++) {
         let reader = new FileReader();
         reader.onload = () => {
@@ -117,7 +117,7 @@ name: "ImageLoader",
               if (image.width!==0) {
                 return  image;
               } else {
-                console.log(image.width)
+
                 return "promise failed";
               }
           }

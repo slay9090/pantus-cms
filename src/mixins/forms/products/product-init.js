@@ -2,29 +2,42 @@ export default {
 
     methods: {
        async dataInit () {
+
+
+
             /////////////////////////////////////////////////////
-            await this.$store.dispatch("ProductParts/getDataAllParts");
-            this.productsJson = await this.$store.getters["ProductParts/partsItemById"](Number(this.query))
-            this.form.product_id = this.productsJson.productCard.id
-            this.form.product_name = this.productsJson.productCard.name
-            this.form.brand_arr = this.productsJson.productCard.brand
-            this.form.categories_arr = this.productsJson.productCard.categories
-            this.form.applicabilities_arr = this.productsJson.productCard.applicabilities
-            this.form.article_origin = this.productsJson.productCard.sku.original
-            this.form.prices_retail = this.productsJson.productOffer.prices.retail
-            this.form.product_timestampUpdated = this.productsJson.productCard.timestampUpdated
+            await this.$store.dispatch("ProductParts/dataDetailPartsById", this.query);
+            this.productsJson = await this.$store.getters["ProductParts/getDetailPartsById"](null).data[0]
+            console.log(this.productsJson)
+            this.form.product_id = this.productsJson.id
+            this.form.product_name = this.productsJson.name
+            this.form.brand_arr = this.productsJson.brand
+            this.form.categories_arr = this.productsJson.categories
+            this.form.applicabilities_arr = this.productsJson.applicabilities
+            this.form.article_origin = this.productsJson.sku.original
+            //this.form.offers = this.productsJson.offers
+            this.form.product_timestampUpdated = this.productsJson.dates
+            this.form.params = this.productsJson.params
+
+           if (this.productsJson.offers.length > 0) {
+               this.productsJson.offers.forEach(elem => {
+                   elem.measure = this.productsJson.params.measure
+                   this.form.offers.push(elem)
+               })
+           }
+
             /////////////////////////////////////////////////////
 
             this.getImagesProduct(); // записываем картинки
-            this.$store.commit('ProductParts/setDataSelectedImages', this.form.productCardImages)
+            this.$store.commit('ProductParts/setDataSelectedImages', this.form.images)
 
            await this.$store.dispatch('CatalogBrands/getDataAllItems')
            await this.$store.dispatch('CatalogCategories/getDataAllItems')
            await this.$store.dispatch('CatalogApplicabilities/getDataAllItems')
 
-            this.$store.commit("ProductParts/setDataCurrentCategoriesByPart", this.productsJson.productCard.categories) // подгружаем текущие категории товара
-            this.$store.commit("ProductParts/setDataCurrentBrandsByPart", this.productsJson.productCard.brand) // подгружаем текущие Бренды товара
-            this.$store.commit("ProductParts/setDataCurrentApplicabilitiesByPart", this.productsJson.productCard.applicabilities) // подгружаем текущие Применимости товара
+            this.$store.commit("ProductParts/setDataCurrentCategoriesByPart", this.productsJson.categories) // подгружаем текущие категории товара
+            this.$store.commit("ProductParts/setDataCurrentBrandsByPart", this.productsJson.brand) // подгружаем текущие Бренды товара
+            this.$store.commit("ProductParts/setDataCurrentApplicabilitiesByPart", this.productsJson.applicabilities) // подгружаем текущие Применимости товара
 
 
             /// вынессти в выч. св-ва
@@ -35,24 +48,24 @@ export default {
 
            await this.$store.dispatch('TempDataCatalog/loadValueInputCatalog',
                 {
-                    'key': 'product-part-brand-edit',
+                    'key': this.identifierComponents.input.brand,
                     'value': this.$store.getters["ProductParts/currentBrandByPart"]
                 })
 
 
            await  this.$store.dispatch('TempDataCatalog/loadValueInputCatalog',
                     {
-                        'key': 'product-part-categories-edit',
+                        'key': this.identifierComponents.input.categories,
                         'value': this.$store.getters["ProductParts/currentCategoriesByPart"]
                     })
 
            await  this.$store.dispatch('TempDataCatalog/loadValueInputCatalog',
                {
-                   'key': 'product-part-applicabilities-edit',
+                   'key': this.identifierComponents.input.applicabilities,
                    'value': this.$store.getters["ProductParts/currentApplicabilitiesByPart"]
                })
-         //  this.$store.commit('BaseComponents/setValueInputVendorCode', {'key': 'products-part-price-edit', 'value': this.form.prices_retail})
-           this.$store.commit('BaseComponents/setValueInputPrice', {'key': 'products-part-price-edit', 'value': this.form.prices_retail})
+
+           this.$store.commit('BaseComponents/setDataLimitTable', {'key': this.identifierComponents.table.offers, 'value': this.form.offers});
 
         },
 
@@ -60,18 +73,17 @@ export default {
         /// Получаем изображения товара при загрузке формы
         getImagesProduct(){
             /// если нет мейн имг, то не читаем альбум имг
-            if (this.productsJson.productCard.productCardImages.main.url!== undefined && this.productsJson.productCard.productCardImages.main.url!==null){
-                this.form.productCardImages.push(this.productsJson.productCard.productCardImages.main.url) // записываем первое имг
+            if (this.productsJson.images.main.url!== undefined && this.productsJson.images.main.url!==null){
+                this.form.images.push(this.productsJson.images.main.url) // записываем первое имг
 
-                this.productsJson.productCard.productCardImages.album.forEach(element => {
-                    if (element.url!== undefined && element.url!== null) {
-                        this.form.productCardImages.push(element.url) // записываем все остальные в альбомах
+                this.productsJson.images.album.url.forEach(element => {
+                    if (element!== undefined && element!== null) {
+                        this.form.images.push(element) // записываем все остальные в альбомах
                     }
                 });
             }
 
-            let img = this.form.productCardImages
-            this.$store.commit('ProductParts/setDataCurrentImages', img)
+            this.$store.commit('ProductParts/setDataCurrentImages', this.form.images)
         },
 
     },

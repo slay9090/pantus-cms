@@ -1,5 +1,5 @@
 <template>
-  <div class="node-tree" >
+  <div class="node-tree-only-last-node" >
 
 
     <b-form-checkbox
@@ -77,6 +77,16 @@ name: "CheckBoxTree",
       if (node.children&& node.children.length){
         //если есть чилдрен, то не последний узел дерева
         this.lastNode=false
+        if (this.select===true) {
+
+          let index = this.tempSelectedItems.findIndex(s => s.id === node.id);
+          if (index !== -1) {
+            this.$store.commit("TempDataCatalog/removeItemTempValue", {
+              index: index,
+              inputid: this.$store.getters["TempDataCatalog/idInput"]
+            })
+          }
+        }
 
       }
       else
@@ -84,12 +94,17 @@ name: "CheckBoxTree",
           //иначе последний узел дерева
           this.lastNode=true
 
-          if (this.select===true){
+          if (this.select === true) {
 
-              let index = this.tempSelectedItems.findIndex(s => s.id === node.id);
-              this.$store.commit("TempDataCatalog/removeItemTempValue", {index: index, inputid: this.$store.getters["TempDataCatalog/idInput"]})
+            let index = this.tempSelectedItems.findIndex(s => s.id === node.id);
+            if (index !== -1) {
+              this.$store.commit("TempDataCatalog/removeItemTempValue", {
+                index: index,
+                inputid: this.$store.getters["TempDataCatalog/idInput"]
+              })
+            }
 
-            this.lastNode=false
+            this.lastNode = false
 
           }
           else {
@@ -117,25 +132,25 @@ name: "CheckBoxTree",
 }
 </script>
 
-<style scoped>
-.node-tree .custom-control-input.is-invalid:checked~.custom-control-label::before, .was-validated .custom-control-input:invalid:checked~.custom-control-label::before{
+<style >
+.node-tree-only-last-node .custom-control-input.is-invalid:checked~.custom-control-label::before, .was-validated .custom-control-input:invalid:checked~.custom-control-label::before{
   border-color: #adb5bd;
   background-color:#adb5bd;
 
 }
-.node-tree .custom-control-input.is-invalid~.custom-control-label::before, .was-validated .custom-control-input:invalid{
+.node-tree-only-last-node .custom-control-input.is-invalid~.custom-control-label::before, .was-validated .custom-control-input:invalid{
   border-color:#adb5bd;
 
 }
-.node-tree .custom-control-input.is-invalid~.custom-control-label, .was-validated .custom-control-input:invalid~.custom-control-label
+.node-tree-only-last-node .custom-control-input.is-invalid~.custom-control-label, .was-validated .custom-control-input:invalid~.custom-control-label
 {
   color: #212529;
 
 }
-.custom-control-input.is-invalid:focus:not(:checked)~.custom-control-label::before, .was-validated .custom-control-input:invalid:focus:not(:checked)~.custom-control-label::before {
+.node-tree-only-last-node .custom-control-input.is-invalid:focus:not(:checked)~.custom-control-label::before, .was-validated .custom-control-input:invalid:focus:not(:checked)~.custom-control-label::before {
   border-color: #adb5bd;
 }
-.custom-control-input.is-invalid:focus~.custom-control-label::before, .was-validated .custom-control-input:invalid:focus~.custom-control-label::before {
+.node-tree-only-last-node .custom-control-input.is-invalid:focus~.custom-control-label::before, .was-validated .custom-control-input:invalid:focus~.custom-control-label::before {
    box-shadow: 0 0 0 0.2rem transparent;
   border-color:#adb5bd;
 }

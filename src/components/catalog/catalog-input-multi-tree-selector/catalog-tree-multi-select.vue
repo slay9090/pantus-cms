@@ -133,20 +133,28 @@ export default {
     },
 
     // Сброс временного состояния и запись в него то, что находится в getValueInputCatalog
-   resetTempData() {
+ async resetTempData() {
+
+     // console.log(this.id,'NOW IN INPUT', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id))
+
       this.$store.commit('TempDataCatalog/clearDataItemsTempValue', {inputid: this.id})
-      this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).forEach(elem => {
+     await this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).forEach(elem => {
         this.$store.commit('TempDataCatalog/addItemTempValue', {
           'key': this.id,
           'value': elem
         })
       })
+
+
+
     }
   },
 
   mounted() {
 
     this.resetTempData();
+
+   // console.log('wait?', this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id), this.items)
 
     this.$store.dispatch('TempDataCatalog/addPathTreeForThisNode',
         {

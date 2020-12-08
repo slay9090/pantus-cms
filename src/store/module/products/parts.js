@@ -86,18 +86,18 @@ const mutations = {
 
 const actions = {
     async dataDetailPartsById({commit}, id){
-      //  console.log(id)
+
         return  await Axios.get(`http://api.pantus.ru/products_filter?id=${id}`).then( res =>{
            commit("setDataDetailPartsById", jsonMaps.productsPartsItemsList(res.data));
-            console.log(res.data)
+
         })
     },
 
     async dataItemsPartsByFilter({commit}, urlParams) {
        // console.log('ALLO', jsonMaps.urlMapFilterPartsGetList(urlParams))
         const formattedUrl = jsonMaps.urlMapFilterPartsGetList(urlParams)
-        console.log('in dataItemsPartsByFilter', formattedUrl)
-        return await Axios.get('http://api.pantus.ru/products_filter?page_size=20&',
+
+        return await Axios.get('http://api.pantus.ru/products_filter?page_size=20',
             {
                 params: {
                     ...formattedUrl
@@ -105,17 +105,17 @@ const actions = {
             }
         ).then(res => {
            commit("setDataItemsPartsByFilter", jsonMaps.productsPartsItemsList(res.data));
-           console.log('RESULT FILTER', jsonMaps.productsPartsItemsList(res.data))
+
         })
     },
         /// берем напрямую, отрефактоирт потом
     async dataItemsPartsByFilterNoConvertUrl({commit}, urlParams) {
-        console.log('in dataItemsPartsByFilter', urlParams)
-        return await Axios.get('http://api.pantus.ru/products_filter?page_size=20&',
+
+        return await Axios.get('http://api.pantus.ru/products_filter?page_size=20',
             {  params: { ...urlParams } }
         ).then(res => {
             commit("setDataItemsPartsByFilter", jsonMaps.productsPartsItemsList(res.data));
-            console.log('RESULT FILTER NO CONVERT URL', jsonMaps.productsPartsItemsList(res.data))
+
         })
     },
 //+ '&page_size=20'
@@ -135,9 +135,9 @@ const getters = {
     },
 
 
-    partsItemById: arr => id => {
-        return arr.all_parts.find(todo => todo.productCard.id === id);
-    },
+    // partsItemById: arr => id => {
+    //     return arr.all_parts.find(todo => todo.productCard.id === id);
+    // },
 
     /// ### Текущие бренды этой запчасти
     currentBrandByPart: arr => arr.current_brands_by_parts,

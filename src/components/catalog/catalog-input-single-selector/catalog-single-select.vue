@@ -109,7 +109,7 @@ export default {
     itemSelectProductBrandId: {
       get() {
 
-         console.log('ddddddddddddd', this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id)
+
         return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id
       },
     },
@@ -159,7 +159,7 @@ export default {
 
   },
   async mounted() {
-     console.log('asdasdasd',this.itemSelectProductBrandId)
+
      this.selectItemId = await this.itemSelectProductBrandId                     // Если будут траблы с начальным значением раскоментить
 
   },

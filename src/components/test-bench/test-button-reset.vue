@@ -12,7 +12,7 @@ export default {
   name: "test-button-reset",
   methods: {
     console() {
-      console.log("привет мир!")
+
     },
     consoleFocus() {
       console.log("привет фокус!")

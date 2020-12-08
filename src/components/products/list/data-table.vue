@@ -190,7 +190,6 @@ name: "dynamics-table",
     dataTable: {
 
       get() {
-        console.log('this.$store.getters["TempDataTableDymamic/getDataInputCatalog"](this.id)', this.$store.getters["TempDataTableDymamic/getDataInputCatalog"](this.id))
         return this.$store.getters["TempDataTableDymamic/getDataInputCatalog"](this.id)
       },
       set(val) {

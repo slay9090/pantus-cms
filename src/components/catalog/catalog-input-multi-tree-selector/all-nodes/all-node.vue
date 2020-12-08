@@ -148,7 +148,7 @@ name: "catalog-tree-multi-filter-node",
           this.removeAllExcessItems(this.getAllParentsByNode(this.$store.getters["TempDataCatalog/getTempAllItemsCurrentFilter"](this.$store.getters["TempDataCatalog/idInput"]), node.id))
           this.removeAllExcessItems(this.getAllChildrenByNode(node))
 
-          console.log('this.select===false', 'no last node')
+
 
           this.$store.commit('TempDataCatalog/addItemTempValue', {
             'key': this.$store.getters["TempDataCatalog/idInput"],

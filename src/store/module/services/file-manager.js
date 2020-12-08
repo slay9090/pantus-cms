@@ -25,7 +25,6 @@ const mutations = {
     },
     /// Удалить из хранилища одно  выбранное изображениЕ  в файл-менеджере
     delItemSelectedImageFromFIleManager(state, index){
-        console.log('del' + index)
         state.selected_images_in_file_manager.splice(index, 1);
     },
 

@@ -65,7 +65,7 @@ name: "html-editor",
           }
           success(json.location);
         };
-        console.log(blobInfo.filename())
+      //  console.log(blobInfo.filename())
         formData =  new FormData();
         formData.append('file', blobInfo.blob(), blobInfo.filename());
         xhr.send(formData);

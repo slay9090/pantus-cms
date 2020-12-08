@@ -7,4 +7,4 @@ let urlParams = { 'categories': [
 
 //console.log(urlParams.categories)
 let x = [...urlParams.categories.map(cat => cat.id)].toString() ;
-console.log(x)
+//console.log(x)

@@ -20,7 +20,7 @@ name: "Test",
          item === this.task ? isUniq=false : null
         })
       isUniq ? this.todos.push(this.task) : null
-      console.log(isUniq ,this.todos)
+
     },
   },
 

@@ -12,6 +12,7 @@
       <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="openedModal(modalId, id)"></i>
 
       <component
+          v-if="items"
           :is="typeCatalog"
           v-bind="{ id: id, items: items, modalId: modalId,  multiMode: multiMode,}"
       />

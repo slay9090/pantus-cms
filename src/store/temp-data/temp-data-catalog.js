@@ -64,7 +64,7 @@ const actions = {
     async addPathTreeForThisNode({commit}, data){
         ///НАЧАЛО ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ
 
-       function getAllParentsForAllSelectedNodes(selectedCatalogFilter) {
+         function getAllParentsForAllSelectedNodes(selectedCatalogFilter) {
 
             let parent = []
             selectedCatalogFilter.forEach(element => {
@@ -73,7 +73,7 @@ const actions = {
 
             return parent
         }
-        function getAllParentForOneNode(dataset, nodeId) {
+         function getAllParentForOneNode(dataset, nodeId) {
 
             let parents = []
             var TreeModel = require('tree-model'),
@@ -94,10 +94,10 @@ const actions = {
             return parents
         }
 
-        return  await commit("setDataParentsSelectedNodes",
+        return await  commit("setDataParentsSelectedNodes",
             {
                 'key': data.key,
-                'value': getAllParentsForAllSelectedNodes(data.value)}
+                'value':  getAllParentsForAllSelectedNodes(data.value)}
             );
 
         ///КОНЕЦ ПОЛУЧАЕМ И ФОРМИРУЕМ ПУТЬ ДО ВЫБРАННЫХ УЗЛОВ

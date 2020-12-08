@@ -29,8 +29,7 @@ const actions = {
 
         return  await Axios.get(process.env.VUE_APP_API_URL_CATALOG_BRANDS).then( res =>{
             commit("setDataAllBrands", jsonMaps.catalogBrandsList(res.data) );
-          //console.log('All brands ', res.data);
-           // console.debug(res.data)
+
 
         })
     },
@@ -51,8 +50,6 @@ const getters = {
      * @summary `await this.$store.getters["имяМодуля/имяГетера"](Аргументы)`
      */
     itemById: arr => id => {
-        console.log('ROFL')
-          console.log('In store = ',arr.all_items_brands.find(todo => todo.id === 255))
         return arr.all_items_brands.find(todo => todo.id === id);
     }
 

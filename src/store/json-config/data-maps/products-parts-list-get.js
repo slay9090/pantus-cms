@@ -60,6 +60,15 @@ function productsPartsItemsList (data) {
                             release: elem.dates.release
                         },
 
+                        params: {
+                            material: elem.params.material,
+                            length: elem.params.length,
+                            width: elem.params.width,
+                            height: elem.params.height,
+                            weight: elem.params.weight,
+                            measure: elem.params.measure
+                        },
+
                         offers: elem.offers.map(function (item) {
                             return {
                                 id: item.id,

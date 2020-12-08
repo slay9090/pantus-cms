@@ -45,7 +45,7 @@ name: "ImagePopup",
 
   },
   mounted() {
-  console.log('I OPEN AI' + this.image.url)
+
   }
 }
 </script>

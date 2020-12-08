@@ -140,7 +140,7 @@ export default {
 
     addItemInSelectedImages(img){
         if (this.isSelect(img.url)) {
-          console.log(this.selectedImages.indexOf(img.url))
+
           this.$store.commit('FileManager/delItemSelectedImageFromFIleManager', this.selectedImages.indexOf(img.url))
         }
         else {
