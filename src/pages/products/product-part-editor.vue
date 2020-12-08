@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="mx-3">
     <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
-    <div class="row  align-items-start" v-if="!spinerLoaderIsShow">
+    <div class="row  align-items-start " v-if="!spinerLoaderIsShow">
 
-      <div class="col-6 col-xl-6 mr-5" >
+      <div class="parts-edit-form px-0 col-auto col-xl-6 mr-xl-5 order-1 order-xl-0 " >
         <div class="card shadow" id="tbl">
           <h4 class="card-header"><small class="text-muted">Редактирование товар</small></h4>
           <div class="card-body">
@@ -106,7 +106,7 @@
       </div>
 
 
-      <div class="d-flex card  col-auto shadow px-0" >
+      <div class="parts-view-offers px-0 card col-xl-auto shadow  order-0 order-xl-1 mb-3 mb-xl-0" >
         <h4 class="card-header"><small class="text-muted">Торговые предложения</small></h4>
         <div class="card-body">
 
@@ -120,7 +120,6 @@
       </div>
 
 
-
     </div>
     </b-overlay>
   </div>
@@ -129,10 +128,9 @@
 
 <script>
 
-
 import InputCatalog from "@/components/catalog/input-catalog";
-import init from '@/mixins/forms/products/product-init'
-import imageCarousel from '@/components/image-carousel'
+import init from '@/mixins/forms/products/product-init';
+import imageCarousel from '@/components/image-carousel';
 
 export default {
   name: "ProductsListFormEdit",
@@ -249,5 +247,23 @@ export default {
 
 <style scoped>
 
+@media screen and (max-width: 900px) {
+  .parts-view-offers {
+    min-width: 500px !important;
+  }
+  .parts-edit-form  {
+    min-width: 500px !important;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .parts-edit-form  {
+    max-width: 700px !important;
+    min-width: 650px !important;
+  }
+  .parts-view-offers {
+    max-width: 700px !important;
+  }
+}
 
 </style>
