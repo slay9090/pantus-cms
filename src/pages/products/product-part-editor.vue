@@ -1,5 +1,7 @@
 <template>
-  <div class="mx-3">
+  <div>
+  <div class="mx-3" v-if="!initFailed">
+
     <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
     <div class="row  align-items-start " v-if="!spinerLoaderIsShow">
 
@@ -123,7 +125,11 @@
     </div>
     </b-overlay>
   </div>
-
+    <div v-else>
+      <h5 class="text-center text-danger " >Ошибка инициализации данных </h5>
+      <h5 class="text-center text-danger ">или указанный ID не существует</h5>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -211,9 +217,7 @@ export default {
 
 
   },
-  created() {
 
-  },
   async mounted() {
    await this.dataInit();
     this.spinerLoaderIsShow = false;
