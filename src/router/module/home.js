@@ -2,15 +2,13 @@ import Home from "@/pages/home";
 
 export default [
     {
-        path: '/catalog',
-        component: Home,
-        name: 'Home2',
-
+        path: '',
+        name: 'home',
+        component: () => import('@/pages/home'),
         meta: {
+            title: 'home',
             requiresAuth: true,
-            breadcrumb: [
-                { name: 'catalog' }
-            ]
         }
+
     },
 ]

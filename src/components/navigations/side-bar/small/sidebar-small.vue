@@ -1,36 +1,74 @@
 <template>
-  <!-- Sidebar -->
-    <div id="sidebar-container" class="sidebar-expanded d-none d-lg-block col-2">
+
+  <div id="sidebar-container" class="sidebar-expanded ">
     <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
     <!-- Bootstrap edit Group -->
     <ul class="list-group sticky-top sticky-offset">
       <!-- Separator with title -->
       <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
-        <small>МАГАЗИН</small>
+<!--        <small>МАГАЗИН</small>-->
       </li>
       <!-- /END Separator -->
 
 
-
       <!-- Menu with submenu -->
-      <a v-b-toggle.collapse-1-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-        <div class="d-flex w-100 justify-content-start align-items-center">
-          <span class="fa fa-cube fa-fw mr-3"></span>
-          <span class="menu-collapsed">CRM</span>
-          <span class="submenu-icon ml-auto"></span>
-        </div>
+      <a v-b-toggle.collapse-1-inner  class="sidebar-expanded_link bg-dark list-group-item list-group-item-action d-block">
+
+<!--        <b-container class="my-0 mx-0 px-0 py-0 " >-->
+<!--          <b-row  align-h="center">-->
+<!--            <b-col cols="auto" class="px-0">-->
+<!--              <span  class="fa fa-cube fa-fw icon-size"></span>-->
+
+<!--            </b-col>-->
+
+<!--          </b-row>-->
+<!--          <b-rows  class="px-0">-->
+<!--            <b-col  cols="auto" class="px-0 d-flex align-items-center align-content-center justify-content-center">-->
+<!--              <small class="text-icon-descriptions" >CRM <span class="submenu-icon"> </span></small>-->
+<!--            </b-col>-->
+<!--          </b-rows>-->
+
+<!--        </b-container>-->
+
+        <items-menu
+            name-item="CRM"
+        >
+
+                    <template #itemicon>
+                      <span  class="fa fa-cube fa-fw icon-size"></span>
+                    </template>
+        </items-menu>
+
+
+
+
+
+
+
       </a>
 
       <!-- Submenu content -->
       <b-collapse id="collapse-1-inner" class="">
-        <router-link  id="crm-item-1" to="#1" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Item</span>
+
+        <router-link class="sidebar-expanded_link bg-dark list-group-item list-group-item-action"
+                     active-class="item-selected" to="#6">
+          <b-container class="my-0 mx-0 px-0 py-0 ">
+            <b-row align-h="center">
+              <b-col cols="auto" class="px-0"><span class="fa fa-usd fa-fw icon-size"></span></b-col>
+            </b-row>
+            <b-row align-h="center">
+              <b-col cols="auto" class="px-0 d-flex align-items-center align-content-center justify-content-center">
+                <small class="text-icon-descriptions">Заказы</small>
+              </b-col>
+            </b-row>
+          </b-container>
         </router-link>
-        <router-link id="crm-item-2" to="#2" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected" >
-          <span class="menu-collapsed">Item</span>
-        </router-link>
-        <router-link to="#3" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected" >
-          <span class="menu-collapsed">Item</span>
+
+        <router-link class=" sidebar-expanded_link bg-dark list-group-item list-group-item-action flex-column align-items-start" active-class="item-selected" to="#16">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-shopping-bag fa-fw pl-4 ml-3 mr-4"></span>
+            <span class="menu-collapsed ml-2">Корзины</span>
+          </div>
         </router-link>
       </b-collapse>
 
@@ -38,7 +76,7 @@
       <a v-b-toggle.collapse-2-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-book fa-fw mr-3"></span>
-          <span class="menu-collapsed">Каталог</span>
+          <span class="menu-collapsed ">Каталог</span>
           <span class="submenu-icon ml-auto"></span>
         </div>
       </a>
@@ -46,13 +84,17 @@
       <!-- Submenu content -->
       <b-collapse id="collapse-2-inner" class="">
         <router-link :to="{ name: 'Brands'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Бренды</span>
-       </router-link>
+          <span class="fa fa-tags fa-fw pl-4 ml-3 mr-4"></span>
+          <span class="menu-collapsed ml-2">Бренды</span>
+
+        </router-link>
         <router-link :to="{ name: 'CatalogCategory'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Категории</span>
+          <span class="fa fa-th-list fa-fw pl-4 ml-3 mr-4"></span>
+          <span class="menu-collapsed ml-2">Категории</span>
         </router-link>
         <router-link :to="{ name: 'CatalogApplicabilities'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Применимости</span>
+          <span class="fa fa-car fa-fw pl-4 ml-3 mr-4"></span>
+          <span class="menu-collapsed ml-2">Применимости</span>
         </router-link>
       </b-collapse>
 
@@ -68,23 +110,13 @@
       <!-- Submenu content -->
       <b-collapse id="collapse-3-inner" class="">
         <router-link :to="{ name: 'ProductsList'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Список</span>
+          <span class="fa fa-cogs fa-fw pl-4 ml-3 mr-4"></span>
+          <span class="menu-collapsed ml-2">Автозапчасти</span>
         </router-link>
-        <router-link to="#4" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Item</span>
-        </router-link>
-        <router-link to="#5" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Item</span>
-        </router-link>
+
       </b-collapse>
 
-      <router-link class="bg-dark list-group-item list-group-item-action flex-column align-items-start" active-class="item-selected" to="#6">
-        <div class="d-flex w-100 justify-content-start align-items-center">
-          <span class="fa fa-usd fa-fw mr-3"></span>
-          <span class="menu-collapsed">Заказы</span>
-          <span class="submenu-icon ml-auto"></span>
-        </div>
-      </router-link>
+
 
 
 
@@ -99,7 +131,7 @@
       <!-- Menu with submenu -->
       <a v-b-toggle.collapse-4-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-start align-items-center">
-          <span class="fa fa-newspaper-o fa-fw mr-3"></span>
+          <span class="fa fa-paper-plane-o fa-fw mr-3"></span>
           <span class="menu-collapsed">Новости</span>
           <span class="submenu-icon ml-auto"></span>
         </div>
@@ -108,10 +140,12 @@
       <!-- Submenu content -->
       <b-collapse id="collapse-4-inner" class="">
         <router-link :to="{ name: 'NewsArticles'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Статьи</span>
+          <span class="fa fa-list-alt fa-fw pl-4 ml-3 mr-4"></span>
+          <span class="menu-collapsed ml-2">Статьи</span>
         </router-link>
         <router-link :to="{ name: 'NewsCategory'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Категории</span>
+          <span class="fa fa-th-list fa-fw pl-4 ml-3 mr-4"></span>
+          <span class="menu-collapsed ml-2">Категории</span>
         </router-link>
 
       </b-collapse>
@@ -124,18 +158,7 @@
         </div>
       </a>
 
-      <!-- Submenu content -->
-      <b-collapse id="collapse-5-inner" class="">
-        <router-link to="#8" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">О нас</span>
-        </router-link>
-        <router-link to="#9" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">За вас</span>
-        </router-link>
-        <router-link to="#10" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">За тех кто в море</span>
-        </router-link>
-      </b-collapse>
+
 
 
       <!-- Menu with submenu -->
@@ -147,20 +170,6 @@
         </div>
       </a>
 
-      <!-- Submenu content -->
-      <b-collapse id="collapse-6-inner" class="">
-        <router-link to="#11" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Категории</span>
-        </router-link>
-        <router-link to="#12" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Категории2</span>
-        </router-link>
-        <router-link to="#13" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
-          <span class="menu-collapsed">Категории3</span>
-        </router-link>
-      </b-collapse>
-
-
 
 
 
@@ -170,9 +179,6 @@
           <span class="menu-collapsed">Отзывы</span>
         </div>
       </a>
-
-
-
 
       <!-- Separator with title -->
       <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
@@ -220,12 +226,7 @@
           <span class="menu-collapsed">Help</span>
         </div>
       </router-link>
-      <a href="#" data-toggle="sidebar-colapse" class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
-        <div class="d-flex w-100 justify-content-start align-items-center">
-          <span id="collapse-icon" class="fa fa-2x mr-3"></span>
-          <span id="collapse-text" class="menu-collapsed">Collapse</span>
-        </div>
-      </a>
+
       <!-- Logo -->
       <li class="list-group-item logo-separator d-flex justify-content-center">
         <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30">
@@ -233,36 +234,19 @@
     </ul>
     <!-- edit Group END-->
   </div>
-  <!-- sidebar-container END -->
 
 </template>
 
 <script>
+import ItemsMenu from "@/components/navigations/side-bar/small/items-menu";
 export default {
-name: "SideBar",
-
-  data(){
-    return{
-      isActiveItem:null,
-    }
-  },
-  methods:{
-    setActiveItem(evt) {
-      this.isActiveItem = evt.currentTarget.id;
-    }
-  },
-
+name: "sidebar-small",
+  components: {ItemsMenu}
 }
-
-
 </script>
 
-<style>
+<style scoped>
 
-#body-row {
-  margin-left:0;
-  margin-right:0;
-}
 #sidebar-container {
   min-height: 100vh;
   background-color: #333;
@@ -271,15 +255,13 @@ name: "SideBar",
 
 /* Sidebar sizes when expanded and expanded */
 .sidebar-expanded {
-  width: 230px;
+  width: 100px;
 }
-.sidebar-collapsed {
-  width: 60px;
-}
+
 
 /* Menu item*/
 #sidebar-container .list-group a {
-  height: 50px;
+
   color: white;
 }
 
@@ -288,19 +270,14 @@ name: "SideBar",
   height: 45px;
   padding-left: 30px;
 }
-.sidebar-submenu {
-  font-size: 0.9rem;
-}
+
 
 /* Separators */
 .sidebar-separator-title {
   background-color: #333;
   height: 35px;
 }
-.sidebar-separator {
-  background-color: #333;
-  height: 25px;
-}
+
 .logo-separator {
   background-color: #333;
   height: 60px;
@@ -328,17 +305,15 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
   background-color: rgba(86, 122, 213, 0.5) !important;
 }
 
-
-.item-selected {
-  background-color: rgba(86, 122, 213, 1) !important;
-  box-shadow: 5px 5px 1px 0px rgba(0,0,0,0.75);
-  z-index: 2;
+.text-icon-descriptions {
+  font-size: 0.6rem;
 }
-
-
-
-.item-not-selected{
-  background-color: black;
+.icon-size {
+  font-size: 1.3rem;
+}
+.sidebar-expanded_link {
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 </style>

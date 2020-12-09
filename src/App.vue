@@ -10,7 +10,7 @@
 
       <div class="d-flex " id="body-row">
         <SideBar/>
-        <div class="col-10 py-3">
+        <div class="col-10 my-3">
           <div class="text-muted">
             <breadcrumbs/>
 
@@ -43,11 +43,12 @@
 
 <script>
 // @ is an alias to /src
-import NavBar from '@/components/the-navbar'
-import SideBar from "@/components/the-sidebar";
-import Breadcrumbs from './components/the-breadcrumbs'
-import login from "@/pages/login"
-import Axios from 'axios'
+
+import NavBar from '@/components/navigations/nav-bar/the-navbar';
+import SideBar from "@/components/navigations/side-bar/sidebar-index";
+import Breadcrumbs from './components/navigations/the-breadcrumbs';
+import login from "@/pages/login";
+import Axios from 'axios';
 
 
 

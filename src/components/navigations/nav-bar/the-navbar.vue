@@ -1,5 +1,8 @@
 <template>
   <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark shadow" style="background-color: #567AD5" >
+
+
+
     <a class="navbar-brand" href="#">
 <!--      src="https://www.pantus.ru/images_uploader/images/logo_hidden_background2.png"-->
 <!--      https://www.pantus.ru/images_uploader/images/logo_white.png-->
