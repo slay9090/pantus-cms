@@ -1,18 +1,18 @@
 <template>
   <router-link class="sidebar-expanded_link bg-dark list-group-item list-group-item-action"
-               active-class="item-selected" :to="{ name: nameRouter}">
+               :active-class="activeItem ? 'item-selected' : null"
+               :to="{ name: nameRouter}"
+
+  >
     <b-container class="my-0 mx-0 px-0 py-0 ">
       <b-row align-h="center">
         <b-col cols="auto" class="px-0">
-          <slot name="itemicon">
-
-          </slot>
-
+         <slot name="itemicon" ></slot>
         </b-col>
       </b-row>
       <b-row align-h="center">
         <b-col cols="auto" class="px-0 d-flex align-items-center align-content-center justify-content-center">
-          <small class="text-icon-descriptions">{{nameItem}}</small>
+          <small class="text-icon-descriptions">{{nameItem}}<span v-if="collapseIcon" class="submenu-icon"></span></small>
         </b-col>
       </b-row>
     </b-container>
@@ -29,7 +29,17 @@ name: "items-menu",
     },
     nameRouter: {
       type: String,
-      default: 'home'
+      default: null
+    },
+
+    collapseIcon: {
+      type: Boolean,
+      default: false,
+    },
+
+    activeItem: {
+      type: Boolean,
+      default: false,
     },
 
   },
@@ -39,20 +49,23 @@ name: "items-menu",
 
 <style scoped>
 
-
-/* Menu item*/
-#sidebar-container .list-group a {
-  color: white;
+.sidebar-expanded_link {
+  padding-bottom: 5px;
+  padding-top: 10px;
 }
 
-/* Submenu item*/
-#sidebar-container .list-group .sidebar-submenu a {
-  height: 45px;
-  padding-left: 30px;
+.item-selected {
+  background-color: rgba(86, 122, 213, 1) !important;
+  box-shadow: 3px 3px 1px 0px rgba(0,0,0,0.75);
+  z-index: 2;
+}
+
+.text-icon-descriptions {
+  /*font-size: 0.7rem;*/
 }
 
 /* Closed submenu icon */
-#sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
+#sidebar-container-small .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
   content: " \f0d7";
   font-family: FontAwesome;
   display: inline;
@@ -60,7 +73,7 @@ name: "items-menu",
   padding-left: 10px;
 }
 /* Opened submenu icon */
-#sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
+#sidebar-container-small .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
   content: " \f0da";
   font-family: FontAwesome;
   display: inline;
@@ -68,20 +81,5 @@ name: "items-menu",
   padding-left: 10px;
 }
 
-
-a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
-  background-color: rgba(86, 122, 213, 0.5) !important;
-}
-
-.text-icon-descriptions {
-  font-size: 0.6rem;
-}
-.icon-size {
-  font-size: 1.3rem;
-}
-.sidebar-expanded_link {
-  padding-bottom: 5px;
-  padding-top: 5px;
-}
 
 </style>

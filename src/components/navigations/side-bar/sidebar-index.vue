@@ -1,11 +1,11 @@
 <template>
-<div>
-  <div class="d-none d-lg-block ">
+<div class="">
+  <div class="sidebar-panel d-none d-lg-block ">
     <side-bar-long />
 
   </div >
 
-  <div class="">
+  <div class="sidebar-panel d-xl-none d-lg-none">
     <sidebar-small />
   </div>
 </div>
@@ -21,5 +21,9 @@ name: "sidebar-index",
 </script>
 
 <style scoped>
-
+.sidebar-panel{
+  position: sticky;
+  top:0;
+  z-index: 1;
+}
 </style>

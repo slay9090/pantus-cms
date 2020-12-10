@@ -2,14 +2,11 @@
   <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark shadow" style="background-color: #567AD5" >
 
 
+      <router-link :to="{ name: 'home'}" >
+        <b-img src="https://www.pantus.ru/images_uploader/images/logo_white.png"
+               alt="logo" style="opacity: 1"/>
+      </router-link>
 
-    <a class="navbar-brand" href="#">
-<!--      src="https://www.pantus.ru/images_uploader/images/logo_hidden_background2.png"-->
-<!--      https://www.pantus.ru/images_uploader/images/logo_white.png-->
-
-      <b-img src="https://www.pantus.ru/images_uploader/images/logo_white.png"
-           alt="logo" style="opacity: 1"/>
-    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

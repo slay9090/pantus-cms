@@ -231,7 +231,10 @@ name: "SideBar",
 
 <style scoped>
 
+
+
 #sidebar-container {
+
   min-height: 100vh;
   background-color: #333;
   padding: 0;
@@ -288,6 +291,12 @@ name: "SideBar",
 
 a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
   background-color: rgba(86, 122, 213, 0.5) !important;
+}
+
+.item-selected {
+  background-color: rgba(86, 122, 213, 1) !important;
+  box-shadow: 5px 5px 1px 0px rgba(0,0,0,0.75);
+  z-index: 2;
 }
 
 
