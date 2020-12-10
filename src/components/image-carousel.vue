@@ -63,7 +63,9 @@
       <div class=""><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="imageUpload"></i></div>
 
     </div>
-    <imageuploader />
+    <imageuploader
+    :modal-id="modalId"
+    />
   </div>
 </template>
 
@@ -80,7 +82,11 @@ export default {
   props: {
     images: {
       type: Array
-    }
+    },
+    modalId: {
+      type: String,
+      require: true
+    },
   },
 
   data() {
@@ -103,7 +109,7 @@ export default {
       this.$refs.myCarousel.prev()
     },
     imageUpload() {
-      this.$bvModal.show('modal-file-uploader')
+      this.$bvModal.show(this.modalId)
     },
   },
 }

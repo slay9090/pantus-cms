@@ -29,7 +29,7 @@ name: "html-editor",
   data(){
   return{
     myinit:{
-      height: 500,
+      height: 800,
       menubar: true,
 
       plugins: [

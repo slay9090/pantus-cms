@@ -2,7 +2,7 @@
   <div >
     <b-modal
 
-        id="modal-file-uploader"
+        :id="modalId"
         title="Загрузка файлов"
         size="lg"
         centered no-fade no-close-on-backdrop no-close-on-esc
@@ -89,6 +89,13 @@ import imagefileserver from '@/components/file-manager/images/file-manager-image
 export default {
 name: "UpLoader",
 
+  props: {
+  modalId: {
+    type: String,
+    require: true
+  },
+  },
+
   components:{
     'imagefileselect':imagefileselect,
     'imagefileview':imagefileview,
@@ -118,7 +125,7 @@ name: "UpLoader",
       console.log('OK')
 
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-file-uploader')
+        this.$bvModal.hide(this.modalId)
       })
     },
 
@@ -128,7 +135,7 @@ name: "UpLoader",
      this.resetSelectedImages();
 
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-file-uploader')
+        this.$bvModal.hide(this.modalId)
       })
 
     },

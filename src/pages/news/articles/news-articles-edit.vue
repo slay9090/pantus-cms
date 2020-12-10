@@ -23,6 +23,8 @@
                 />
               </b-form-group>
 
+
+
               <b-form-group id="body" label="body:" label-for="news-article-edit-html-editor">
                 <editor-html
                     id="news-article-edit-html-editor"
@@ -39,8 +41,13 @@
         </div>
       </div>
 
-      <preview-request-body
-          :data=formData
+<!--      <preview-request-body-->
+<!--          :data=formData-->
+<!--      />-->
+
+      <title-images
+          id="news-article-edit"
+          modal-id="modal-news-article-edit"
       />
 
     </div>
@@ -50,13 +57,16 @@
 
 <script>
 import baseComponentsMixin from '@/mixins/base-components/inputs'
+import TitleImages from "@/components/news/title-images";
+
 
 export default {
+  components: {TitleImages},
   props: ["query"],
   mixins: [baseComponentsMixin],
   name: "FormEdit",
 
-  components: {},
+
 
   data() {
     return {

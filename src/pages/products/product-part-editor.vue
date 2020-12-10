@@ -81,6 +81,7 @@
                   <image-carousel
                       id="image-carousel-products-parts-edit"
                       :images="selectedImages"
+                      modal-id="modal-products-parts-edit"
                   />
                 </b-form-group>
 
