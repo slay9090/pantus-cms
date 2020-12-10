@@ -48,6 +48,7 @@ const actions = {
 
                 })
                 .catch(err => {
+                    console.error('Ошибка авторизации', err)
                     commit('auth_error')
                     localStorage.removeItem('token')
                     reject(err)

@@ -30,10 +30,12 @@
         <captcha :checkRecaptcha.sync="checkRecaptcha" :getError.sync="getError" />
 
         <hr>
+        <b-overlay :show="isLoading" rounded="sm" opacity="0">
         <div class="mt-3 d-flex d-flex d-flex justify-content-between align-items-center">
           <span class="login-page__form__text-error text-break text-wrap font-weight-light">{{ textErrLogIn }}</span>
-          <b-button type="submit" variant="primary">Войти</b-button>
+          <b-button type="submit" variant="primary" :disabled="isLoading">Войти</b-button>
         </div>
+        </b-overlay>
 
       </b-form>
 
@@ -66,28 +68,40 @@ export default {
       email: "",
       password: "",
       textErrLogIn: null,
+      isLoading: false,
     }
   },
 
   methods: {
 
     login(evt) {
+      this.isLoading = true;
+      this.textErrLogIn = null;
       evt.preventDefault()
       this.checkValidateRecaptcha();
       this.$refs["input-password"].focus()
       if (this.checkRecaptcha === false) {
         this.textErrLogIn = 'Подтвердите что вы не робот'
+        this.isLoading = false
         return;
       }
       this.checkRecaptcha = true
       let login = this.email
       let password = this.password
       this.$store.dispatch('Authentication/login', {login, password})
-          .then(this.textErrLogIn = null)
+          .then(c =>
+      {
+        this.textErrLogIn = null
+            this.isLoading = false
+      }
+          )
           .catch(err => {
-            console.log('err auth login or pass', err)
-            this.textErrLogIn = 'Ошибка имени или пароля'
+            !err.response ? this.textErrLogIn = 'Ошибка соединения' :
+                err.response.status === 403 ? this.textErrLogIn = 'Ошибка имени или пароля' :
+                    this.textErrLogIn = err.message
+
             this.$store.dispatch('Authentication/logout')
+            this.isLoading = false
           })
 
       window.grecaptcha.reset()

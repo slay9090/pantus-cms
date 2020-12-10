@@ -32,7 +32,7 @@
 
 <!--       <span v-if="dataTable">{{dataTable}}</span>-->
 
-            <b-overlay :show="!dataTable" no-fade rounded="sm">
+            <b-overlay :show="!dataTable" no-fade rounded="sm" >
             <dynamics-table
                 v-if="dataTable"
                 id="table-products-parts-list"
