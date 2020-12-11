@@ -83,7 +83,7 @@ import imagesLoad from '@/components/images-manager/loader';
 
 export default {
 name: "modal",
-
+//
   components:{
     'images-edit': imagesEdit,
     'images-upload': imagesUpload,
