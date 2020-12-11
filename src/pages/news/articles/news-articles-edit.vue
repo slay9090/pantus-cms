@@ -45,10 +45,36 @@
 <!--          :data=formData-->
 <!--      />-->
 
-      <title-images
-          id="news-article-edit"
-          modal-id="modal-news-article-edit"
-      />
+<!--      <title-images-->
+<!--          id="news-article-edit"-->
+<!--          modal-id="modal-news-article-edit"-->
+<!--      />-->
+
+
+      <div class="d-flex card col-4 p-0 ml-5 shadow">
+        <h4 class="card-header"><small class="text-muted">Изображение в заголовке</small></h4>
+        <div class="card-body d-flex">
+
+<!--          <b-form-group id="input-group-title-images" label="Image:" :label-for="id">-->
+<!--            <image-carousel-->
+<!--                :id="id"-->
+<!--                :modal-id="modalId"-->
+<!--            />-->
+<!--          </b-form-group>-->
+          <image-manager
+          id="xxx"
+          modal-id="xxx"
+          >
+            <template #btn>
+            <b-button >asdasd</b-button>
+<!--              <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i>-->
+            </template>
+          </image-manager>
+
+
+        </div>
+      </div>
+
 
     </div>
 
@@ -57,11 +83,12 @@
 
 <script>
 import baseComponentsMixin from '@/mixins/base-components/inputs'
-import TitleImages from "@/components/news/title-images";
+import ImageManager from "@/components/images-manager/index";
+//import TitleImages from "@/components/news/title-images";
 
 
 export default {
-  components: {TitleImages},
+  components: {ImageManager},
   props: ["query"],
   mixins: [baseComponentsMixin],
   name: "FormEdit",

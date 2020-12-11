@@ -75,7 +75,6 @@
 
     </b-modal>
 
-
   </div>
 </template>
 
@@ -157,10 +156,6 @@ name: "UpLoader",
       changeSelectedImg(){
         return this.$store.getters["ProductParts/selectedImages"];
       },
-      /// получаем изменения текста оповещения
-      alertText(){
-        return this.$store.getters["FileManager/textNotifications"];
-      },
 
       buttonSaveIsActive(){
         return this.currentComponent === 'imagefileview'
@@ -200,8 +195,6 @@ name: "UpLoader",
 </script>
 
 <style >
-
-
 
 #modal-file-uploader___BV_modal_body_ {
   height: 400px !important;

@@ -102,9 +102,10 @@ export default {
 
             this.$store.dispatch('Authentication/logout')
             this.isLoading = false
+
           })
 
-      window.grecaptcha.reset()
+      window.grecaptcha.reset();
       this.checkRecaptcha = false
 
     }

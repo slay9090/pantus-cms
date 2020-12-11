@@ -8,13 +8,19 @@ const state = () => ({
 
     ///### Все изображения на сервере
     all_images_on_server: [ ],
+    current_images: [],
     selected_images_in_file_manager: [],
     text_notifications: null,
 
 
 })
-
+// ch
 const mutations = {
+
+    ///Добавить текущии изображения
+
+
+
     ///Записать урлы в хранилище всех изображений на сервере
     setAllImagesOnServer(state ,data){
         state.all_images_on_server = data;
