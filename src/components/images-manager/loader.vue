@@ -8,15 +8,15 @@
 <!--    </div>-->
 
     <b-container class="block-header-load-buttons">
-      <b-row  align-v="center" class=" py-2">
+      <b-row  align-v="center" class=" py-3">
         <b-col class="  d-flex justify-content-start text-left" cols="10" > Выбрано: {{selectedImagesLenght}} шт. </b-col>
-        <b-col class=" d-flex justify-content-end  text-right my-2"  cols="2" >
-          <i class="block-header-load-buttons__icon fa fa-ban fa-2x text-danger mr-3" aria-hidden="true" @click="clearSelectedImages"></i>
-          <i class="block-header-load-buttons__icon fa fa-plus-circle fa-2x text-success" aria-hidden="true" @click="applySelectedImagesToCurrentImages"></i>
-        </b-col>
+<!--        <b-col class=" d-flex justify-content-end  text-right my-2"  cols="2" >-->
+<!--          <i class="block-header-load-buttons__icon fa fa-ban fa-2x text-danger mr-3" aria-hidden="true" @click="clearSelectedImages"></i>-->
+<!--          <i class="block-header-load-buttons__icon fa fa-plus-circle fa-2x text-success" aria-hidden="true" @click="applySelectedImagesToCurrentImages"></i>-->
+<!--        </b-col>-->
 
       </b-row>
-      <hr class="mt-1 mb-2">
+      <hr class="mt-0 mb-2">
     </b-container>
 
 
@@ -25,10 +25,12 @@
           <b-container class="h-100 ">
             <b-row cols="1" cols-sm="2" cols-md="4" cols-lg="4" class="justify-content-md-center h-100 " align-v="center" align-h="center">
               <b-col class="align-center " v-for="(item, key) in imgOfPageItems" :key="key">
+
                 <div class="bg "></div>
 <!--                Контейнер -->
                 <div class="image-box d-flex flex-column">
 <!--                  кнопки-->
+
                 <div class="image-space-block-button d-flex justify-content-between ">
                     <div class=" align-items-center text-center w-50 pt-1 block-on-button-zoom" v-b-modal.modal-multi-2 @click="openImagePopup(item);">
                       <i class="fa fa-search-plus ico-on-button" aria-hidden="true"></i>
@@ -48,6 +50,7 @@
                 </div>
                 </div>
                 <div class="bg"></div>
+
               </b-col>
             </b-row>
           </b-container>
@@ -80,6 +83,13 @@ import imagepopup from "@/components/file-manager/subcomponents/file-manager-ima
 export default {
   name: "ImageLoader",
 
+  props: {
+    id: {
+      type: String,
+      require: true,
+    },
+  },
+
   components: {
     imagepopup,
   },
@@ -94,6 +104,7 @@ export default {
       urlImgPopup: null,
       currentImgItem: null,
       selectImgCount: 0,
+
     }
   },
 
@@ -107,13 +118,22 @@ export default {
     },
 
     selectedImages(){
-      return this.$store.getters["FileManager/selectedImageFromFIleManager"]
+      return this.$store.getters["NewFileManager/getSelectedFiles"](this.id)
     },
-
+    /// кол-во выбранные изображения, которые есть в файлопомойке на сервере
     selectedImagesLenght(){
-      return this.selectedImages.length;
-    }
-
+    let count = 0
+      if (this.imgAllItems) {
+        this.selectedImages.forEach(imagesBySelect => {
+          this.imgAllItems.forEach(imagesByServer => {
+            if (imagesBySelect === imagesByServer.url) {
+              count++
+            }
+          })
+        })
+      }
+      return  count
+    },
 
   },
 
@@ -141,18 +161,19 @@ export default {
     addItemInSelectedImages(img){
         if (this.isSelect(img.url)) {
 
-          this.$store.commit('FileManager/delItemSelectedImageFromFIleManager', this.selectedImages.indexOf(img.url))
+         // this.$store.commit('FileManager/delItemSelectedImageFromFIleManager', this.selectedImages.indexOf(img.url))
+          this.$store.commit('NewFileManager/removeItemSelectedFiles', {key: this.id, index: this.selectedImages.indexOf(img.url)})
         }
         else {
-          this.$store.commit('FileManager/addItemSelectedImageFromFIleManager', img.url)
+          //this.$store.commit('FileManager/addItemSelectedImageFromFIleManager', img.url)
+          this.$store.commit('NewFileManager/addItemSelectedFiles', {key: this.id, value: img.url})
         }
     },
 
     ///  чекаем
-    isSelect(currentUrl){
+      isSelect(currentUrl){
       let result = false;
       for (let url in this.selectedImages) {
-        //console.log(this.selectedImages[url], currentUrl);
         if (currentUrl === this.selectedImages[url]) {
           result = true
           break;
@@ -161,24 +182,26 @@ export default {
       return result;
     },
 
-    clearSelectedImages(){
-        this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager')
-    },
 
-    applySelectedImagesToCurrentImages(){
-      let currentProductImg =   this.$store.getters["ProductParts/selectedImages"];
-      let concatCurrentImg = currentProductImg.concat(this.selectedImages);
-      this.$store.commit('ProductParts/setDataSelectedImages', concatCurrentImg);
-      this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager');
-    },
+
+    // clearSelectedImages(){
+    //     this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager')
+    // },
+    //
+    // applySelectedImagesToCurrentImages(){
+    //   let currentProductImg =   this.$store.getters["ProductParts/selectedImages"];
+    //   let concatCurrentImg = currentProductImg.concat(this.selectedImages);
+    //   this.$store.commit('ProductParts/setDataSelectedImages', concatCurrentImg);
+    //   this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager');
+    // },
 
 
   },
 
 
  async mounted() {
-   await this.$store.dispatch('FileManager/getDataAllImageOnServer')
-   this.imgAllItems = this.$store.getters["FileManager/imagesAllOnServer"]
+   await this.$store.dispatch('NewFileManager/getDataAllImageOnServer')
+   this.imgAllItems = this.$store.getters["NewFileManager/imagesAllOnServer"]
    this.imgOfPageItems = this.imgAllItems.slice(0, this.itemsCountOfPage) // обрезать до itemsCountOfPage
 
 

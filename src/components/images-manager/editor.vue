@@ -4,6 +4,8 @@
 
     <div class="text-center align-center h-100 mt-3 mb-0">Текущие изображения: {{currentImages.length}} шт. {{loadingFile}}</div>
 
+
+
     <label class="file-select mt-3 mb-0 ">
       <!-- We can't use a normal button element here, as it would become the target of the label. -->
       <div class="btn btn-outline-danger  " @click="resetSelectedImages">
@@ -17,21 +19,23 @@
   </div>
   <hr>
 
+
   <div class="scrollblock">
 
-    <div v-if="loadingFile && currentImages.length>0"  class="h-100"> <loading ></loading> </div>
-    <div v-else class="" v-for="(image, key ) in currentImages" :key="key">
+    <div v-if="loadingFile && metaDataInfoImg.length>0"  class="h-100"> <loading ></loading> </div>
+    <div v-else class="" v-for="(image, key ) in metaDataInfoImg" :key="key">
 
       <div class="d-flex" >
         <div class="imagecontain col-7 ">
-          <img class="preview" :src="image"  @error="replaceByDefault" />
+          <img class="preview" :src="image[0]"  @error="replaceByDefault" />
 
         </div>
         <div class="col-4 property-image-block">
+<!--          {{image}}-->
 
-          <div v-if="getNameImg(image)" class="row  text-break border-bottom property-image-block__text-limit" :title="image">  {{getNameImg(image)}}    </div>
-          <div v-if="metaDataInfoImg[key]" class="row border-bottom"> {{ metaDataInfoImg[key][1]  }}</div>
-          <div v-if="metaDataInfoImg[key]" class="row border-bottom"> {{ (metaDataInfoImg[key][0]/1024).toFixed(2) + " kb" }} </div>
+          <div v-if="image[1]" class="row  text-break border-bottom property-image-block__text-limit" :title="image">  {{image[1]}}    </div>
+          <div v-if="image[2]" class="row border-bottom"> {{image[3]  }}</div>
+          <div v-if="image[3]" class="row border-bottom"> {{ (parseInt(image[2])/1024).toFixed(2) + " kb" }} </div>
 
           <div class="row  align-center justify-content-end  h-25 text-center mt-1 position-absolute w-100">
 
@@ -65,6 +69,13 @@ import loading from "@/components/file-manager/subcomponents/file-manager-visual
 export default {
 name: "ImageEditor",
 
+  props: {
+    id: {
+      type: String,
+      require: true,
+    },
+  },
+
   components:{
     loading,
   },
@@ -72,7 +83,7 @@ name: "ImageEditor",
   data() {
     return{
       metaDataInfoImg: [],
-      loadingFile: true,
+      loadingFile: false,
     }
   },
 
@@ -82,93 +93,57 @@ name: "ImageEditor",
       e.target.src = 'https://www.pantus.ru/images_uploader/images/image_errorka.png'
     },
 
-    /// Получаем имя файла
-    getNameImg(url){
-    return   url.replace('https://www.pantus.ru/images_uploader/images/', '')
-    },
 
-    ///  Получить и вернуть разрешение изображения
-    async getMetaInfo(url){
-      return new Promise((resolve, reject) => {
-        let img = new Image()
-        img.onload = () => resolve(img.naturalWidth+'x'+img.naturalHeight)
-        img.onerror = reject
-        img.src = url
-      })
-    },
-    /// получить размер контента гет запросом = размер файла
-    async getFileSize(url) {
-      let err = null;
-      let response = await Axios.get(url).catch(function (error){
-        err= error
-      });
-      /// заодно обрабатываем исключения, что бы всеравно вывести изображения
-      if (err !== null){
-        this.$store.commit('FileManager/setTextNotifications', {type: 'danger', text: err})
-        this.loadingFile = false
-      }
-      return response.headers['content-length']
-
-    },
-    /// Запускаем в хуке, кидаем урлы из хранилища -> через вычисляемое свойство , ждем выполнения очереди промисов
-   getPropertyImg(curentUrl){
-      let counter=0;
-      curentUrl.forEach(async (url, idx, array) => {
-        this.metaDataInfoImg.splice(idx, 0, ([0, 'unknown'])); // предварительно заполняем массив свойст изобр. что бы индексы соответсвовали в случае исключ.
-        Promise.all([await this.getFileSize(url), await this.getMetaInfo(url),])
-           .then(values => {
-          this.metaDataInfoImg.splice(idx, 1, (values)); // записываем в дату строго по индексу, что бы свойства файлов соотствовали самим фйлам, иначе рандом.
-
-          // / Ждем окончания загрузки, отключаем фон
-          counter++;
-          if (counter === array.length) {
-            this.loadingFile = false;
-          }
-        }
-        )
-
-      });
-
-    },
-
+    /// не удалять
     /// Сортировка, если выбрана новая обложка товара
-    setMainImg(index){
-      var arr = this.$store.getters["ProductParts/selectedImages"];
-      var value = index;
-      arr.sort(function(x,y){
-        return x === arr[value] ? -1 : y === arr[value] ? 1 : 0;
-      });
-     this.$store.commit('ProductParts/setDataSelectedImages', arr)
-      this.metaDataInfoImg= [];
-      this.loadingFile = true;
-      this.getPropertyImg(this.$store.getters["ProductParts/selectedImages"]);
+    // setMainImg(index){
+    //   var arr = this.$store.getters["ProductParts/selectedImages"];
+    //   var value = index;
+    //   arr.sort(function(x,y){
+    //     return x === arr[value] ? -1 : y === arr[value] ? 1 : 0;
+    //   });
+    //  this.$store.commit('ProductParts/setDataSelectedImages', arr)
+    //   this.metaDataInfoImg= [];
+    //   //this.loadingFile = true;
+    //   this.getPropertyImg(this.$store.getters["ProductParts/selectedImages"]);
+    //
+    // },
+
+   async deleteImageItem(key){
+     this.$store.commit('NewFileManager/removeItemSelectedFiles', {key: this.id, index: key})
+
+     this.selectedImages ? this.metaDataInfoImg =  await this.$store.dispatch('NewFileManager/getPropertyImages',{url: this.selectedImages})
+         : this.metaDataInfoImg = null
 
     },
 
-    deleteImageItem(key){
-      this.$store.commit('ProductParts/delItemSelectedImages', key)
-    },
-
-    resetSelectedImages(){
-      this.$store.commit('ProductParts/resetSelectedImages')
+    async resetSelectedImages(){
+      this.$store.commit('NewFileManager/resetSelectedFiles', {key: this.id,})
       this.loadingFile = false
+      this.metaDataInfoImg =  await this.$store.dispatch('NewFileManager/getPropertyImages',{url: this.selectedImages})
     },
 
 
   },
 
   computed: {
-    ///Текущие изображения товара
-    currentImages(){
-      return this.$store.getters["ProductParts/selectedImages"]
-    },
+    ///Текущие изображения
+    currentImages(){ return this.$store.getters["NewFileManager/getCurrentFiles"](this.id) },
+
+    selectedImages() { return this.$store.getters["NewFileManager/getSelectedFiles"](this.id) },
+
+
+
   },
 
 
-  async created() {
+  async mounted() {
   ///запускаем получение свойств изображения
-      await this.getPropertyImg(this.currentImages)
+    //if (this.metaDataInfoImg) { this.loadingFile = false}
+    this.metaDataInfoImg =  await this.$store.dispatch('NewFileManager/getPropertyImages',{url: this.selectedImages})
+
   },
+
 
 
 }

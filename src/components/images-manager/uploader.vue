@@ -65,13 +65,20 @@ import loading from "@/components/file-manager/subcomponents/file-manager-visual
 import Axios from "axios";
 export default {
 name: "ImageLoader",
+
+
+
   components:{
     loading,
   },
 
   props: {
     // Using value here allows us to be v-model compatible.
-    value: FileList
+    //value: FileList,
+    id: {
+      type: String,
+      require: true,
+    },
   },
   data() {
     return {
@@ -156,6 +163,7 @@ name: "ImageLoader",
               'Content-Type': 'multipart/form-data'
             }
           })
+
           this.applySelectedImagesToCurrentImages(response.data);
 
         } catch {
@@ -172,9 +180,22 @@ name: "ImageLoader",
     },
 
     applySelectedImagesToCurrentImages(responseUrl){
-      let currentProductImg =   this.$store.getters["ProductParts/selectedImages"];
-      let concatCurrentImg = currentProductImg.concat(Object.values(responseUrl));
-      this.$store.commit('ProductParts/setDataSelectedImages', concatCurrentImg);
+      // let currentProductImg =   this.$store.getters["ProductParts/selectedImages"];
+      // let concatCurrentImg = currentProductImg.concat(Object.values(responseUrl));
+      // this.$store.commit('ProductParts/setDataSelectedImages', concatCurrentImg);
+      //this.$store.commit('NewFileManager/setDataSelectedFiles', {key: this.id, value: })
+
+      // responseUrl.forEach( elem => {
+      //   console.log(elem)
+      // })
+
+      Object.values(responseUrl).forEach(elem => {
+        this.$store.commit('NewFileManager/addItemSelectedFiles', {key: this.id, value: elem})
+      })
+
+
+
+
       //this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager');
     },
 

@@ -61,9 +61,16 @@
 <!--                :modal-id="modalId"-->
 <!--            />-->
 <!--          </b-form-group>-->
+
+<!--          {{initDataSet.preview}}-->
+<!--          {{test.length}}-->
           <image-manager
-          id="xxx"
+              v-if="initDataSet.preview"
+          :id="imageManagerId"
           modal-id="xxx"
+          :images="[initDataSet.preview.image]"
+
+
           >
             <template #btn>
             <b-button >asdasd</b-button>
@@ -98,6 +105,8 @@ export default {
   data() {
     return {
       show: true,
+      imageManagerId: 'file-manager-news-edit',
+    //  initDataSet: null,
     }
   },
   methods: {
@@ -126,23 +135,26 @@ export default {
       const id = this.$store.getters["BaseComponents/getValueInputIndex"]('news-articles-edit-id-input');
       const name = this.$store.getters["BaseComponents/getValueInputText"]('news-article-edit-name-input');
       const content = this.$store.getters["BaseComponents/getValueHtmlEditor"]('news-article-edit-html-editor');
-      const form = {id, name, content}
+      const previewImage = this.$store.getters["NewFileManager/getCurrentFiles"](this.imageManagerId);
+      const form = {id, name, previewImage, content}
       return form
     },
+
+    initDataSet() {
+     return  this.$store.getters["NewsArticles/AllItems"]
+    },
+
+
 
   },
 
   async mounted() {
     await this.$store.dispatch("NewsArticles/GetDetalail", this.query);
-    let data = await this.$store.getters["NewsArticles/AllItems"]; // getTodoById(Number(this.query))
-
-    this.$store.commit('BaseComponents/setValueInputText', {'key': 'news-article-edit-name-input', 'value': data.name})
-
-    this.$store.commit('BaseComponents/setValueInputIndex', {'key': 'news-articles-edit-id-input', 'value': data.id})
-
-    this.$store.commit('BaseComponents/setValueHtmlEditor', {'key': 'news-article-edit-html-editor', 'value': data.content})
-
-
+   // let initDataSet = await this.$store.getters["NewsArticles/AllItems"]; // getTodoById(Number(this.query))
+   // console.log(this.initDataSet)
+    this.$store.commit('BaseComponents/setValueInputText', {'key': 'news-article-edit-name-input', 'value': this.initDataSet.name})
+    this.$store.commit('BaseComponents/setValueInputIndex', {'key': 'news-articles-edit-id-input', 'value': this.initDataSet.id})
+    this.$store.commit('BaseComponents/setValueHtmlEditor', {'key': 'news-article-edit-html-editor', 'value': this.initDataSet.content})
 
 
   },

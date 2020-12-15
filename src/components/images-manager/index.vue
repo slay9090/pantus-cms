@@ -3,9 +3,10 @@
   <div v-b-modal="modalId" >
   <slot name="btn" ></slot>
     <modal
+        v-if="images"
         :id="id"
         :modal-id="modalId"
-        :images="images"
+
     />
   </div>
 
@@ -30,6 +31,13 @@ name: "image-manager",
       type: Array
     },
   },
+
+
+
+  mounted() {
+      this.$store.commit('NewFileManager/setDataCurrentFiles', {key: this.id, value: this.images.slice()})
+      this.$store.commit('NewFileManager/setDataSelectedFiles', {key: this.id, value: this.images.slice()})
+  }
 
 
 }

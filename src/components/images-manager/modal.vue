@@ -29,7 +29,7 @@
       </div>
       <div class="w-100 border h-100 px-3">
 
-        <component :is="currentComponent"></component>
+        <component :is="currentComponent" :id="id"></component>
 
       </div>
     </div>
@@ -99,9 +99,7 @@ name: "modal",
       type: String,
       require: true,
     },
-    images: {
-      type: Array
-    },
+
   },
 
   data() {

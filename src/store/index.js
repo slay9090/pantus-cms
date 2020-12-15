@@ -11,7 +11,7 @@ import FileManager from "@/store/module/services/file-manager";
 import BaseComponents from "@/store/temp-data/base-components"
 import TempDataCatalog from '@/store/temp-data/catalog'
 import TempDataTableDymamic from '@/store/temp-data/dynamic-table'
-//import FileManager from '@/store/temp-data/file-manager'
+import NewFileManager from '@/store/temp-data/new-file-manager'
 
 
 
@@ -31,6 +31,7 @@ export default new Vuex.Store({
       BaseComponents,
       TempDataCatalog,
       TempDataTableDymamic,
+      NewFileManager,
     //  FileManager,
 
   },
