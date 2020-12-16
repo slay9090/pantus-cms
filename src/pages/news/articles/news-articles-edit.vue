@@ -3,7 +3,7 @@
 
     <div class="d-flex align-items-start">
 
-      <div class="card col-7 p-0  mr-5 shadow" id="tbl">
+      <div class="card col-6 p-0  mr-5 shadow" id="tbl">
         <h4 class="card-header"><small class="text-muted">Редактирование статей</small></h4>
         <div class="card-body">
 
@@ -41,42 +41,31 @@
         </div>
       </div>
 
-<!--      <preview-request-body-->
-<!--          :data=formData-->
-<!--      />-->
-
-<!--      <title-images-->
-<!--          id="news-article-edit"-->
-<!--          modal-id="modal-news-article-edit"-->
-<!--      />-->
-
-
-      <div class="d-flex card col-4 p-0 ml-5 shadow">
+      <div class=" card col-3 p-0   shadow">
         <h4 class="card-header"><small class="text-muted">Изображение в заголовке</small></h4>
-        <div class="card-body d-flex">
+        <div class="card-body ">
 
-<!--          <b-form-group id="input-group-title-images" label="Image:" :label-for="id">-->
-<!--            <image-carousel-->
-<!--                :id="id"-->
-<!--                :modal-id="modalId"-->
-<!--            />-->
-<!--          </b-form-group>-->
+          <b-form-group id="input-group-title-images" label="Image:" label-for="image-carousel-news-edit">
 
-<!--          {{initDataSet.preview}}-->
-<!--          {{test.length}}-->
 
-          {{formData.previewImage}}
+            <image-carousel
+                id="image-carousel-news-edit"
+                v-if="initDataSet.preview"
+                :images="formData.previewImage"
+                heigh-block="200"
+            />
+
+          </b-form-group>
+
 
           <image-manager
               v-if="initDataSet.preview"
           :id="imageManagerId"
-          modal-id="xxx"
+          modal-id="news-edit-image-preview"
           :images="[initDataSet.preview.image]"
-
-
           >
             <template #btn>
-            <b-button >asdasd</b-button>
+            <b-button >Выбрать</b-button>
 <!--              <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i>-->
             </template>
           </image-manager>
@@ -94,11 +83,12 @@
 <script>
 import baseComponentsMixin from '@/mixins/base-components/inputs'
 import ImageManager from "@/components/images-manager/index";
+import ImageCarousel from "@/components/image-carousel";
 //import TitleImages from "@/components/news/title-images";
 
 
 export default {
-  components: {ImageManager},
+  components: {ImageCarousel, ImageManager},
   props: ["query"],
   mixins: [baseComponentsMixin],
   name: "FormEdit",
@@ -139,8 +129,7 @@ export default {
       const name = this.$store.getters["BaseComponents/getValueInputText"]('news-article-edit-name-input');
       const content = this.$store.getters["BaseComponents/getValueHtmlEditor"]('news-article-edit-html-editor');
       const previewImage = this.$store.getters["NewFileManager/getCurrentFiles"](this.imageManagerId);
-      const form = {id, name, previewImage, content}
-      return form
+      return {id, name, previewImage, content}
     },
 
     initDataSet() {
@@ -158,7 +147,6 @@ export default {
     this.$store.commit('BaseComponents/setValueInputText', {'key': 'news-article-edit-name-input', 'value': this.initDataSet.name})
     this.$store.commit('BaseComponents/setValueInputIndex', {'key': 'news-articles-edit-id-input', 'value': this.initDataSet.id})
     this.$store.commit('BaseComponents/setValueHtmlEditor', {'key': 'news-article-edit-html-editor', 'value': this.initDataSet.content})
-
 
   },
 

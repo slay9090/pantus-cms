@@ -10,7 +10,7 @@
 
       <div class="d-flex " id="body-row">
         <SideBar/>
-        <div class="col-10 my-3">
+        <div class="w-100 my-3 mx-4">
           <div class="text-muted">
             <breadcrumbs/>
 

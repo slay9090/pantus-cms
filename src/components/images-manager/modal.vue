@@ -2,7 +2,7 @@
   <b-modal
       class="modal-images-manager"
       :id="modalId"
-      title="Загрузка файлов"
+      title="Файл менеджер"
       size="lg"
       centered no-fade no-close-on-backdrop no-close-on-esc
       ok-title="Сохранить"

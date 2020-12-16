@@ -1,24 +1,20 @@
 <template>
-  <div class="input-catalog form-control d-flex justify-content-between" id="productCardImages_main">
+  <div class="input-catalog form-control d-flex justify-content-between" >
 
 
     <div class="d-flex flex-column justify-content-center ">
-      <div class=""><i class="fa fa-chevron-left fa-2x" aria-hidden="true" @click="prevSlide"></i></div>
+      <div class=""><i class="fa fa-chevron-left ico-navigate" aria-hidden="true" @click="prevSlide"></i></div>
     </div>
 
 
-    <div class="mx-3 " style="  width: 100%; ">
+    <div class="mx-1 w-100 " >
       <b-carousel
           id="carousel-1"
+          class="image-carousel-block"
           v-model="slide"
           :interval=0
           indicators
-          style="text-shadow: 1px 1px 2px #333;
-                        text-align: center;
-                        height: 400px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;"
+          :style="`height: ${heighBlock}px;`"
           no-animation
           ref="myCarousel"
       >
@@ -31,7 +27,7 @@
             </div>
 
             <img v-if="index===0"
-                 style="max-height: 400px "
+                 :style="`max-height: ${heighBlock}px;`"
                  class="w-100"
                  :src=item
                  alt="main image"
@@ -39,7 +35,7 @@
             >
 
             <img v-else
-                 style="max-height: 400px "
+                 :style="`max-height: ${heighBlock}px;`"
                  class="w-100"
                  :src=item
                  alt="album image"
@@ -55,38 +51,35 @@
 
     <div class="d-flex flex-column justify-content-center ">
 
-      <div class=""><i class="fa fa-chevron-right fa-2x" aria-hidden="true" @click="nextSlide"></i></div>
+
+
+      <div class=""><i class="fa fa-chevron-right ico-navigate" aria-hidden="true" @click="nextSlide"></i></div>
 
     </div>
     <div class="d-flex flex-column ">
 
-      <div class=""><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="imageUpload"></i></div>
+<!--      <div class=""><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="imageUpload"></i></div>-->
 
     </div>
-    <imageuploader
-    :modal-id="modalId"
-    />
+
   </div>
 </template>
 
 <script>
-import imageuploader from '@/components/file-manager/fIle-manager'
+
 
 export default {
   components: {
-    imageuploader,
   },
-
   name: "image-carousel",
-
   props: {
     images: {
       type: Array
     },
-    modalId: {
+    heighBlock: {
       type: String,
-      require: true
-    },
+      default: '400',
+    }
   },
 
   data() {
@@ -108,9 +101,7 @@ export default {
     prevSlide() {
       this.$refs.myCarousel.prev()
     },
-    imageUpload() {
-      this.$bvModal.show(this.modalId)
-    },
+
   },
 }
 </script>
@@ -120,9 +111,10 @@ export default {
   position: absolute;
   top: 1%;
   left: 1%;
-  width: 10%;
+  /*width: 10%;*/
   height: auto;
   text-align: left;
+
 }
 
 .input-catalog.form-control{
@@ -131,20 +123,32 @@ export default {
 }
 
 .icon-bookmark {
+  /*display: flex;*/
+  position: absolute;
   cursor: default;
   color: lightgray;
   opacity: 0.5;
-  font-size: 2em;
+  /*width: 100%;*/
+  font-size: 1.5vw;
 }
 
-i  {
+.ico-navigate  {
   cursor: pointer;
   color: #007bff;
   opacity: 0.6;
+  font-size: 1.5vw;
 
 }
 
 i:hover{
   opacity: 1;
+}
+
+.image-carousel-block {
+  text-shadow: 1px 1px 2px #333;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
