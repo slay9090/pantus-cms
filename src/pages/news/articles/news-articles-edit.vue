@@ -64,6 +64,9 @@
 
 <!--          {{initDataSet.preview}}-->
 <!--          {{test.length}}-->
+
+          {{formData.previewImage}}
+
           <image-manager
               v-if="initDataSet.preview"
           :id="imageManagerId"

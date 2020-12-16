@@ -1,6 +1,6 @@
 <template>
   <b-modal
-
+      class="modal-images-manager"
       :id="modalId"
       title="Загрузка файлов"
       size="lg"
@@ -121,6 +121,10 @@ name: "modal",
 
       console.log('OK')
 
+      this.$store.commit('NewFileManager/setDataCurrentFiles', {key: this.id, value:
+      this.$store.getters["NewFileManager/getSelectedFiles"](this.id).slice()
+      })
+
       this.$nextTick(() => {
         this.$bvModal.hide(this.modalId)
       })
@@ -128,9 +132,9 @@ name: "modal",
 
     handleCancel(bvModalEvt){
       bvModalEvt.preventDefault()
-
-    //  this.resetSelectedImages();
-
+      this.$store.commit('NewFileManager/setDataSelectedFiles', {key: this.id, value:
+            this.$store.getters["NewFileManager/getCurrentFiles"](this.id).slice()
+      })
       this.$nextTick(() => {
         this.$bvModal.hide(this.modalId)
       })
@@ -144,19 +148,40 @@ name: "modal",
   },
 
   computed: {
-    // changeSelectedImg(){
-    //   return this.$store.getters["ProductParts/selectedImages"];
-    // },
+    selectedImg(){
+      return this.$store.getters["NewFileManager/getSelectedFiles"](this.id);
+    },
 
     buttonSaveIsActive(){
       return this.currentComponent === 'images-edit'
     },
 
+    alertText() {
+      return this.$store.getters["NewFileManager/textNotifications"]
+    }
+
   },
 
   mounted() {
-  console.log('op modal')
-  }
+
+  },
+
+  watch:{
+    /// авто оповещения в футере при изменении кол-ва элелментов во вьюксе
+    selectedImg(){
+      this.$store.commit('NewFileManager/setTextNotifications', {type: 'success',
+        text: `Объектов: ${this.selectedImg.length} item(s)`})
+
+    },
+
+    ///Следим за изменением, и вызываем алерт если вьюкс изменился
+    alertText(){
+      this.dismissCountDown = this.dismissSecs // запустить оповещение
+      this.messageNotifications = this.$store.getters["NewFileManager/textNotifications"];
+    },
+
+
+  },
 
 
 }
@@ -174,4 +199,5 @@ name: "modal",
   text-shadow: 1px 1px 1px #adb5bd;
 
 }
+
 </style>

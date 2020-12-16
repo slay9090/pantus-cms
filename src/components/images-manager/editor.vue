@@ -2,7 +2,7 @@
 <div>
   <div class="align-center d-flex justify-content-between align-items-center">
 
-    <div class="text-center align-center h-100 mt-3 mb-0">Текущие изображения: {{currentImages.length}} шт. {{loadingFile}}</div>
+    <div class="text-center align-center h-100 mt-3 mb-0">Выгруженных: {{currentImages.length}} шт. </div>
 
 
 
@@ -21,8 +21,8 @@
 
 
   <div class="scrollblock">
-
-    <div v-if="loadingFile && metaDataInfoImg.length>0"  class="h-100"> <loading ></loading> </div>
+<!--    {{metaDataInfoImg}}-->
+    <div v-if="!metaDataInfoImg.complite"  class="h-100"> <loading v-if="metaDataInfoImg[0]"></loading> <span v-else>Нет изображений</span> </div>
     <div v-else class="" v-for="(image, key ) in metaDataInfoImg" :key="key">
 
       <div class="d-flex" >
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import Axios from "axios";
+
 import loading from "@/components/file-manager/subcomponents/file-manager-visual-loading"
 
 export default {
@@ -83,7 +83,8 @@ name: "ImageEditor",
   data() {
     return{
       metaDataInfoImg: [],
-      loadingFile: false,
+
+      item: [{xxx: 'xxx', yyy: 'yyyy'}],
     }
   },
 
@@ -93,34 +94,34 @@ name: "ImageEditor",
       e.target.src = 'https://www.pantus.ru/images_uploader/images/image_errorka.png'
     },
 
-
     /// не удалять
-    /// Сортировка, если выбрана новая обложка товара
-    // setMainImg(index){
-    //   var arr = this.$store.getters["ProductParts/selectedImages"];
-    //   var value = index;
-    //   arr.sort(function(x,y){
-    //     return x === arr[value] ? -1 : y === arr[value] ? 1 : 0;
-    //   });
-    //  this.$store.commit('ProductParts/setDataSelectedImages', arr)
-    //   this.metaDataInfoImg= [];
-    //   //this.loadingFile = true;
-    //   this.getPropertyImg(this.$store.getters["ProductParts/selectedImages"]);
-    //
-    // },
+    // Сортировка, если выбрана новая обложка товара
+   async setMainImg(index){
+      let arr = this.selectedImages;
+      let value = index;
+      arr.sort(function(x,y){
+        return x === arr[value] ? -1 : y === arr[value] ? 1 : 0;
+      });
+     this.$store.commit('NewFileManager/setDataSelectedFiles', {key: this.id, value: arr})
+      this.metaDataInfoImg= [];
+
+      this.metaDataInfoImg =  await this.$store.dispatch('NewFileManager/getPropertyImages',{url: this.selectedImages})
+
+    },
 
    async deleteImageItem(key){
      this.$store.commit('NewFileManager/removeItemSelectedFiles', {key: this.id, index: key})
 
      this.selectedImages ? this.metaDataInfoImg =  await this.$store.dispatch('NewFileManager/getPropertyImages',{url: this.selectedImages})
-         : this.metaDataInfoImg = null
+         : this.metaDataInfoImg = []
 
     },
 
     async resetSelectedImages(){
       this.$store.commit('NewFileManager/resetSelectedFiles', {key: this.id,})
-      this.loadingFile = false
+
       this.metaDataInfoImg =  await this.$store.dispatch('NewFileManager/getPropertyImages',{url: this.selectedImages})
+
     },
 
 
@@ -139,8 +140,9 @@ name: "ImageEditor",
 
   async mounted() {
   ///запускаем получение свойств изображения
-    //if (this.metaDataInfoImg) { this.loadingFile = false}
+
     this.metaDataInfoImg =  await this.$store.dispatch('NewFileManager/getPropertyImages',{url: this.selectedImages})
+
 
   },
 

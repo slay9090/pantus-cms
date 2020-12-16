@@ -14,6 +14,10 @@ const state = () => ({
     ///### Дефотлтные Изображения продукта для конкретной запчасти
     current_images: [],
 
+    text_notifications: null,
+
+    all_images_on_server: [],
+
 
 
 
@@ -23,17 +27,22 @@ const state = () => ({
 const mutations = {
 
     setAllImagesOnServer(state ,data){
-        state.all_images_on_server = data;
+        //Vue.set(state.all_images_on_server, data)
+       state.all_images_on_server = data;
+
+        // data.forEach( elem => {
+        //     state.all_images_on_server.push(elem)
+        // })
+
     },
 
 
     setDataSelectedFiles(state, data){
         Vue.set(state.selected_images, data.key, data.value)
-
     },
 
     removeItemSelectedFiles(state, data){
-        state.selected_images[data.key].splice(data.index, 1);
+       if (state.selected_images[data.key].length > 0) state.selected_images[data.key].splice(data.index, 1);
     },
 
     addItemSelectedFiles(state, data){
@@ -46,7 +55,11 @@ const mutations = {
     },
     ///Откатить все изображения на дефолтные
     resetSelectedFiles(state, data){
-        Vue.set(state.selected_images, data.key, state.current_images[data.key]);
+        Vue.set(state.selected_images, data.key, state.current_images[data.key].slice());
+    },
+
+    setTextNotifications(state, obj){
+        state.text_notifications = obj;
     },
 
 
@@ -57,6 +70,7 @@ const actions = {
   async  getPropertyImages ({commit}, data){
 
          let metaDataInfoImg = []
+            metaDataInfoImg.complite=false
 
         /// Получаем имя файла
         function  getNameImg(url){
@@ -82,6 +96,7 @@ const actions = {
             if (err !== null){
                // this.$store.commit('FileManager/setTextNotifications', {type: 'danger', text: err})
                 //this.loadingFile = false
+
             }
             return response.headers['content-length']
 
@@ -101,7 +116,7 @@ const actions = {
                             counter++;
                             if (counter === array.length) {
                                 //this.loadingFile = false;
-
+                                metaDataInfoImg.complite=true
                                // return metaDataInfoImg;
                             }
                         }
@@ -120,7 +135,7 @@ const actions = {
     async getDataAllImageOnServer({commit}){
         return  await Axios.get('https://www.pantus.ru/images_uploader/script.php').then( res =>{
             commit("setAllImagesOnServer", res.data);
-            // console.log('мы в действиях получили IMG', res.data);
+             console.log('мы в действиях получили IMG', res.data);
         })
     },
 
@@ -141,6 +156,7 @@ const getters = {
         return state.selected_images[key];
     },
 
+    textNotifications: text => text.text_notifications,
 }
 
 export  default {

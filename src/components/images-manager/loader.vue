@@ -9,7 +9,7 @@
 
     <b-container class="block-header-load-buttons">
       <b-row  align-v="center" class=" py-3">
-        <b-col class="  d-flex justify-content-start text-left" cols="10" > Выбрано: {{selectedImagesLenght}} шт. </b-col>
+        <b-col class="  d-flex justify-content-start text-left" cols="10" > Выбрано: {{selectedImagesLenght}} шт. </b-col>Всего: {{imgAllItems.length}}
 <!--        <b-col class=" d-flex justify-content-end  text-right my-2"  cols="2" >-->
 <!--          <i class="block-header-load-buttons__icon fa fa-ban fa-2x text-danger mr-3" aria-hidden="true" @click="clearSelectedImages"></i>-->
 <!--          <i class="block-header-load-buttons__icon fa fa-plus-circle fa-2x text-success" aria-hidden="true" @click="applySelectedImagesToCurrentImages"></i>-->
@@ -22,7 +22,7 @@
 
     <div class="scrollblock bg-color">
 
-          <b-container class="h-100 ">
+          <b-container class="h-100 " v-if="imgAllItems.length > 0">
             <b-row cols="1" cols-sm="2" cols-md="4" cols-lg="4" class="justify-content-md-center h-100 " align-v="center" align-h="center">
               <b-col class="align-center " v-for="(item, key) in imgOfPageItems" :key="key">
 
@@ -58,6 +58,9 @@
     </div>
 
     <div class="h-10 d-flex align-items-end justify-content-center">
+
+
+
       <b-pagination
           align="center"
           v-model="currentPage"
@@ -96,7 +99,6 @@ export default {
 
   data() {
     return {
-      imgAllItems: null,
       imgOfPageItems: null,
       itemsCountOfPage: 8,
       perPage: 1,
@@ -104,7 +106,6 @@ export default {
       urlImgPopup: null,
       currentImgItem: null,
       selectImgCount: 0,
-
     }
   },
 
@@ -123,7 +124,7 @@ export default {
     /// кол-во выбранные изображения, которые есть в файлопомойке на сервере
     selectedImagesLenght(){
     let count = 0
-      if (this.imgAllItems) {
+      if (this.imgAllItems.length > 0) {
         this.selectedImages.forEach(imagesBySelect => {
           this.imgAllItems.forEach(imagesByServer => {
             if (imagesBySelect === imagesByServer.url) {
@@ -133,6 +134,10 @@ export default {
         })
       }
       return  count
+    },
+
+    imgAllItems() {
+      return this.$store.getters["NewFileManager/imagesAllOnServer"]
     },
 
   },
@@ -182,31 +187,17 @@ export default {
       return result;
     },
 
-
-
-    // clearSelectedImages(){
-    //     this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager')
-    // },
-    //
-    // applySelectedImagesToCurrentImages(){
-    //   let currentProductImg =   this.$store.getters["ProductParts/selectedImages"];
-    //   let concatCurrentImg = currentProductImg.concat(this.selectedImages);
-    //   this.$store.commit('ProductParts/setDataSelectedImages', concatCurrentImg);
-    //   this.$store.commit('FileManager/clearItemsSelectedImageFromFIleManager');
-    // },
-
-
   },
 
 
  async mounted() {
+
+    console.log('mou')
+
    await this.$store.dispatch('NewFileManager/getDataAllImageOnServer')
-   this.imgAllItems = this.$store.getters["NewFileManager/imagesAllOnServer"]
+   // this.imgAllItems = this.$store.getters["NewFileManager/imagesAllOnServer"]
    this.imgOfPageItems = this.imgAllItems.slice(0, this.itemsCountOfPage) // обрезать до itemsCountOfPage
-
-
   }
-
 
 }
 </script>

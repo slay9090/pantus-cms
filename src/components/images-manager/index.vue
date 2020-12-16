@@ -28,15 +28,18 @@ name: "image-manager",
       require: true,
     },
     images: {
-      type: Array
+     type: Array
     },
   },
+
+
 
 
 
   mounted() {
       this.$store.commit('NewFileManager/setDataCurrentFiles', {key: this.id, value: this.images.slice()})
       this.$store.commit('NewFileManager/setDataSelectedFiles', {key: this.id, value: this.images.slice()})
+
   }
 
 

@@ -97,6 +97,8 @@ name: "html-editor",
 }
 </script>
 
-<style scoped>
-
+<style>
+.tox-notifications-container {
+  display: none !important;
+}
 </style>

@@ -8,8 +8,11 @@ let urlParams = { 'categories': [
 //let x = [...urlParams.categories.map(cat => cat.id)].toString() ;
 //console.log(x)
 
-urlParams['categories'][0].splice(1, 1)
+//urlParams['categories'][0].splice(1, 1)
 
 //delete urlParams['categories'][0][1];
 
-console.log(urlParams['categories'][0])
+
+
+
+console.log(false || "oh my gosh") // oh my gosh
