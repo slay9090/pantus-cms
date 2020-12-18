@@ -58,6 +58,7 @@
     </div>
     <div class="d-flex flex-column ">
 
+      <slot name="btn" ></slot>
 <!--      <div class=""><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" @click="imageUpload"></i></div>-->
 
     </div>
@@ -139,6 +140,8 @@ export default {
   font-size: 1.5vw;
 
 }
+
+
 
 i:hover{
   opacity: 1;

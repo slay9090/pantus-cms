@@ -15,11 +15,11 @@
 
 
                 <b-form-group id="input-group-product-id" label="ID:" label-for="input-product-id">
-                  <b-form-input readonly :id="identifierComponents.input.id" v-model="form.product_id" required></b-form-input>
+                  <b-form-input readonly :id="identifierComponents.input.id" v-model="formData.id" required></b-form-input>
                 </b-form-group>
 
                 <b-form-group id="input-group-product-name" label="Наименование:" label-for="product-name">
-                  <b-form-input :id="identifierComponents.input.name" v-model="form.product_name" required
+                  <b-form-input :id="identifierComponents.input.name" v-model="formData.name" required
                                 placeholder="Enter brand name"></b-form-input>
                 </b-form-group>
 
@@ -78,11 +78,35 @@
 
                 <b-form-group id="input-group-productCardImages_main" label="Изображения:"
                               label-for="image-carousel-products-parts-edit">
+<!--                  <image-carousel-->
+<!--                      id="image-carousel-products-parts-edit"-->
+<!--                      :images="selectedImages"-->
+<!--                      modal-id="modal-products-parts-edit"-->
+<!--                  />-->
+
                   <image-carousel
                       id="image-carousel-products-parts-edit"
-                      :images="selectedImages"
-                      modal-id="modal-products-parts-edit"
-                  />
+                      :images="formData.images"
+                      heigh-block="400"
+                  >
+                    <template #btn>
+
+                      <image-manager
+
+                          :id="identifierComponents.input.imageManagerId"
+                          modal-id="news-edit-image-preview"
+                          :images="getImagesProduct()"
+                      >
+                        <template #btn>
+                          <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i>
+                        </template>
+                      </image-manager>
+                    </template>
+                  </image-carousel>
+
+
+
+
                 </b-form-group>
 
 
@@ -114,7 +138,7 @@
         <div class="card-body">
 
           <table-static
-              v-if="form.offers.length > 0"
+              v-if="formData.offers.length > 0"
               :id="identifierComponents.table.offers"
               :fields="fields"
           />
@@ -137,7 +161,8 @@
 
 import InputCatalog from "@/components/catalog/input-catalog";
 import init from '@/mixins/forms/products/product-init';
-import imageCarousel from '@/components/image-carousel';
+import ImageManager from "@/components/images-manager/index";
+import ImageCarousel from "@/components/image-carousel";
 
 export default {
   name: "ProductsListFormEdit",
@@ -145,7 +170,9 @@ export default {
   mixins: [init,],
   components: {
     InputCatalog,
-    imageCarousel,
+    ImageCarousel,
+    ImageManager,
+
   },
 
   data() {
@@ -172,6 +199,7 @@ export default {
           brand: 'product-part-brand-edit',
           categories: 'product-part-categories-edit',
           applicabilities: 'product-part-applicabilities-edit',
+          imageManagerId: 'part-edit-images-manager'
         },
         table: {
           offers: 'part-edit-table-offers',
@@ -222,9 +250,23 @@ export default {
   async mounted() {
    await this.dataInit();
     this.spinerLoaderIsShow = false;
+    console.log(this.formData)
   },
 
   computed: {
+
+
+    formData() {
+      const id = this.$store.getters["BaseComponents/getValueInputIndex"](this.identifierComponents.input.id);
+      const name = this.$store.getters["BaseComponents/getValueInputText"](this.identifierComponents.input.name);
+      const brand = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.brand);
+      const categories = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.categories);
+      const applicabilities = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.applicabilities);
+      const images = this.$store.getters["NewFileManager/getCurrentFiles"](this.identifierComponents.input.imageManagerId);
+      const offers = this.$store.getters["BaseComponents/getDataLimitTable"](this.identifierComponents.table.offers)
+      return {id, name, brand, categories, applicabilities, images, offers}
+    },
+
     selectedImages() {
       if (this.$store.getters["ProductParts/selectedImages"][0]) {
         return this.$store.getters["ProductParts/selectedImages"]
@@ -251,6 +293,16 @@ export default {
 </script>
 
 <style scoped>
+
+i {
+  cursor: pointer;
+  color: #007bff;
+  opacity: 0.6;
+}
+
+i:hover {
+  opacity: 1;
+}
 
 @media screen and (max-width: 900px) {
   .parts-view-offers {
