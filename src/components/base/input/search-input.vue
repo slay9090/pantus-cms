@@ -5,7 +5,8 @@
       :size="size"
       :placeholder="placeholder"
       :state="isValid"
-      debounce="500"
+      :debounce="debounce"
+      v-on="$listeners"
 
 
   >
@@ -34,6 +35,10 @@ export default {
     placeholder: {
       type: String,
       default: 'Search',
+    },
+    debounce: {
+      type: String,
+      default: '500'
     },
 
   },

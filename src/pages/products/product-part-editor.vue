@@ -160,7 +160,7 @@
 <script>
 
 import InputCatalog from "@/components/catalog/input-catalog";
-import init from '@/mixins/forms/products/product-init';
+import init from '@/mixins/service/products/product-init';
 import ImageManager from "@/components/images-manager/index";
 import ImageCarousel from "@/components/image-carousel";
 

@@ -4,19 +4,29 @@
     <b-modal
         @hidden="handleResetTempData"
         :id="modalId"
-        title="Дерево Каталога"
+        :title="titleName"
         size="lg"
         centered no-fade no-close-on-backdrop no-close-on-esc
         ok-title="Сохранить">
+
+
+      <search-input
+          v-if="items.length>0"
+      :id="inputSearchId"
+      placeholder="Поиск"
+      @input="filteredData"
+      debounce="0"
+      />
+
       <div class="scrollblock">
 
         <template v-if="multiMode === 'all-node'">
-        <allNode :id="id" v-for="item in items" :node="item" :key="item.id"
+        <allNode :id="id" v-for="(item, index) in items" :node="item" :key="index"
         />
         </template>
 
-        <template v-if="multiMode === 'only-last-node'">
-          <onlyLastNode :id="id" v-for="item in items" :node="item" :key="item.id"
+        <template v-if="multiMode === 'only-last-node' &&  items.length>0">
+          <onlyLastNode :id="id" v-for="(item, index) in items" :node="item" :key="index"
           />
         </template>
 
@@ -55,10 +65,16 @@
 
 import onlyLastNode from "./only-last-node/only-last-node";
 import allNode from "./all-nodes/all-node";
+import SearchInput from "@/components/base/input/search-input";
+import {TreeConverter} from "@/mixins/service/tree/union-tree";
 
 export default {
   name: "checkBoxForm",
+  // mixins: {
+  //   UnionTree
+  // },
   components: {
+    SearchInput,
     onlyLastNode,
     allNode,
   },
@@ -77,19 +93,103 @@ export default {
       type: String,
       required: true,
     },
+    titleName: {
+      type: String,
+      default: 'Каталог'
+    },
 
   },
 
   data() {
     return {
-
+      inputSearchId: 'catalog-tree-select',
+      filterData: [],
+      treeUnion: new TreeConverter(),
+     // unionTree: new unionTree()
     }
   },
 
   computed: {
-
+    valueSearchInput() {
+      return this.$store.getters["BaseComponents/getValueInputSearch"](this.inputSearchId);
+    },
   },
   methods: {
+
+
+    filteredData(){
+      if (this.valueSearchInput!=='') {
+        this.filterData = []
+        this.items.forEach(elem => {
+          this.searchItems([elem], [elem], [], 0)
+        })
+      //  this.unionTree(this.filterData).getTree();
+
+      //  this.treeUnion.getTree(this.filterData);
+
+
+       // this.filterData = this.treeUnion.getTree(this.filterData)
+
+     //  console.log(this.filterData)
+
+      }
+      else {
+        this.filterData = this.items
+      }
+    },
+
+
+    searchItems(elem, parent, path, count){
+
+      elem.forEach(item => {
+
+        if(item.name) {
+          /// Система вентиляции картера
+          if (item.name.toUpperCase().includes(this.valueSearchInput.toUpperCase())) {
+
+            let arrayCopy = JSON.parse(JSON.stringify(parent));
+            arrayCopy.push(JSON.parse(JSON.stringify(item)));
+
+            this.getChildren(item.children).forEach(elem => {
+              arrayCopy.push(JSON.parse(JSON.stringify(elem)));
+            })
+
+            this.setFindedTree(arrayCopy);
+
+          }
+        }
+        if (item.children && item.children.length > 0){
+
+          parent[count]=item
+
+          return this.searchItems(item.children, parent, item, count+1)
+        }
+      })
+
+
+    },
+
+    setFindedTree(parentPath){
+
+      console.log('parentPath', parentPath)
+
+      this.filterData.push(parentPath)
+    },
+
+    getChildren(item){
+      //console.log(item)
+        return item.reduce(function(done,curr){
+          return done.concat(curr);
+
+          // eslint-disable-next-line no-unreachable
+          if (item.children && item.children.length > 0) {
+            return this.getChildren(curr.children);
+          }
+        }, []);
+
+    },
+
+
 
     handleOk(bvModalEvt) {
       // Prevent modal from closing
