@@ -6,10 +6,11 @@ export  class TreeConverter{
     //     this.data = data;
     // }
 
-    createNode(item, parentId)
+    createNode(item, parentId, i, lenght)
     {
-        //console.log(id)
+       // console.log('deep lvl',i, item)
         parentId = parentId ? parentId.id : null
+        let children =  i === lenght ? item.children : []
 
         return {
             id: item.id,
@@ -17,7 +18,7 @@ export  class TreeConverter{
             name: item.name,
             code: item.code,
             level: item.level,
-            children: []
+            children: children
         };
     }
 
@@ -30,10 +31,10 @@ export  class TreeConverter{
     {
         const flatNodes = {};
         data.forEach(line => {
-            // console.log(line)
+         //   console.log('data.length', data.length)
             line.forEach((el, i) => {
-
-                const newNode = this.createNode(el, line[i - 1]);
+           //     console.log('line.length',line.length)
+                const newNode = this.createNode(el, line[i - 1], i, (line.length-1));
                 //  console.log(newNode)
                 if (!this.isExistInFlatNodes(flatNodes, newNode)) {
                     flatNodes[newNode.id] = newNode;
@@ -61,6 +62,7 @@ export  class TreeConverter{
 
     getTree(data)
     {
+       // console.log('SINA', data)
         const flatNodes = this.getFlatNodes(data);
         return this.getTreeFromFlatNodes(flatNodes);
     }

@@ -26,7 +26,7 @@
         </template>
 
         <template v-if="multiMode === 'only-last-node' &&  items.length>0">
-          <onlyLastNode :id="id" v-for="(item, index) in items" :node="item" :key="index"
+          <onlyLastNode :id="id" v-for="(item, index) in filterData" :node="item" :key="index"
           />
         </template>
 
@@ -70,9 +70,7 @@ import {TreeConverter} from "@/mixins/service/tree/union-tree";
 
 export default {
   name: "checkBoxForm",
-  // mixins: {
-  //   UnionTree
-  // },
+
   components: {
     SearchInput,
     onlyLastNode,
@@ -120,17 +118,16 @@ export default {
     filteredData(){
       if (this.valueSearchInput!=='') {
         this.filterData = []
-        this.items.forEach(elem => {
-          this.searchItems([elem], [elem], [], 0)
-        })
-      //  this.unionTree(this.filterData).getTree();
 
-      //  this.treeUnion.getTree(this.filterData);
+        const searchResultItem = this.searchItems(this.valueSearchInput, this.items);
 
+        const searchItemsPath = searchResultItem.map((el) => {
+          return this.getAllParentForOneNode(this.items, el);
+        });
 
-       // this.filterData = this.treeUnion.getTree(this.filterData)
+        console.log(this.treeUnion.getTree(searchItemsPath))
 
-     //  console.log(this.filterData)
+        this.filterData = this.treeUnion.getTree(searchItemsPath);
 
       }
       else {
@@ -139,55 +136,56 @@ export default {
     },
 
 
-    searchItems(elem, parent, path, count){
+    searchItems(valueBySearch, items) {
 
-      elem.forEach(item => {
+      return items.reduce(function f(acc, curr) {
+        return (curr.name.toUpperCase().includes(valueBySearch.toUpperCase())) ? acc.concat(curr) :
+            (curr.children && curr.children.length) ? curr.children.reduce(f, acc) : acc;
+      }, []);
 
-        if(item.name) {
-          /// Система вентиляции картера
-          if (item.name.toUpperCase().includes(this.valueSearchInput.toUpperCase())) {
+    },
 
-            let arrayCopy = JSON.parse(JSON.stringify(parent));
-            arrayCopy.push(JSON.parse(JSON.stringify(item)));
 
-            this.getChildren(item.children).forEach(elem => {
-              arrayCopy.push(JSON.parse(JSON.stringify(elem)));
+    getAllParentForOneNode(dataset, searchResItem) {
+     // console.log(dataset, searchResItem)
+      let parents = []
+      var TreeModel = require('tree-model'),
+          tree = new TreeModel();
+      dataset.forEach(element => {
+        let rootMain = tree.parse(element);
+        rootMain.walk(function (node) {
+          if (node.model.id === searchResItem.id) {
+            let x = node.getPath()
+            x.forEach(element => {
+              parents.push(element.model)
+
             })
-
-            this.setFindedTree(arrayCopy);
-
           }
-        }
-        if (item.children && item.children.length > 0){
-
-          parent[count]=item
-
-          return this.searchItems(item.children, parent, item, count+1)
-        }
+        })
       })
 
-
+      return parents
     },
 
-    setFindedTree(parentPath){
+    // setFindedTree(parentPath){
+    //
+    //   //console.log('parentPath', parentPath)
+    //
+    //   this.filterData.push(parentPath)
+    // },
 
-      console.log('parentPath', parentPath)
-
-      this.filterData.push(parentPath)
-    },
-
-    getChildren(item){
-      //console.log(item)
-        return item.reduce(function(done,curr){
-          return done.concat(curr);
-
-          // eslint-disable-next-line no-unreachable
-          if (item.children && item.children.length > 0) {
-            return this.getChildren(curr.children);
-          }
-        }, []);
-
-    },
+    // getChildren(item){
+    //   //console.log(item)
+    //     return item.reduce(function(done,curr){
+    //       return done.concat(curr);
+    //
+    //       // eslint-disable-next-line no-unreachable
+    //       if (item.children && item.children.length > 0) {
+    //         return this.getChildren(curr.children);
+    //       }
+    //     }, []);
+    //
+    // },
 
 
 
