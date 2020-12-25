@@ -125,7 +125,7 @@ export default {
           return this.getAllParentForOneNode(this.items, el);
         });
 
-        console.log(this.treeUnion.getTree(searchItemsPath))
+       // console.log(this.treeUnion.getTree(searchItemsPath))
 
         this.filterData = this.treeUnion.getTree(searchItemsPath);
 
@@ -137,12 +137,10 @@ export default {
 
 
     searchItems(valueBySearch, items) {
-
       return items.reduce(function f(acc, curr) {
         return (curr.name.toUpperCase().includes(valueBySearch.toUpperCase())) ? acc.concat(curr) :
             (curr.children && curr.children.length) ? curr.children.reduce(f, acc) : acc;
       }, []);
-
     },
 
 
@@ -167,25 +165,7 @@ export default {
       return parents
     },
 
-    // setFindedTree(parentPath){
-    //
-    //   //console.log('parentPath', parentPath)
-    //
-    //   this.filterData.push(parentPath)
-    // },
 
-    // getChildren(item){
-    //   //console.log(item)
-    //     return item.reduce(function(done,curr){
-    //       return done.concat(curr);
-    //
-    //       // eslint-disable-next-line no-unreachable
-    //       if (item.children && item.children.length > 0) {
-    //         return this.getChildren(curr.children);
-    //       }
-    //     }, []);
-    //
-    // },
 
 
 
@@ -251,6 +231,7 @@ export default {
   mounted() {
 
     this.resetTempData();
+    this.filterData = this.items
 
    // console.log('wait?', this.$store.getters["TempDataCatalog/getTempValuesInputCatalog"](this.id), this.items)
 
