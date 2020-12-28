@@ -11,6 +11,7 @@ const state = () => ({
     input_price_value: {},
     input_vendor_code_value: {},  // Артикул
     text_area_value: {},
+
 })
 
 const mutations = {

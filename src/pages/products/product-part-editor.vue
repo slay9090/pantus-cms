@@ -72,17 +72,15 @@
                   </input-catalog>
                 </b-form-group>
 
-                <b-form-group id="input-group-article" label="Артикул:" label-for="article">
-                  <b-form-input id="article" v-model="form.article_origin"></b-form-input>
+                <b-form-group id="input-group-sku" label="Артикул:" :label-for="identifierComponents.input.sku">
+                  <input-sku
+                  :id="identifierComponents.input.sku"
+                  />
                 </b-form-group>
 
                 <b-form-group id="input-group-productCardImages_main" label="Изображения:"
                               label-for="image-carousel-products-parts-edit">
-<!--                  <image-carousel-->
-<!--                      id="image-carousel-products-parts-edit"-->
-<!--                      :images="selectedImages"-->
-<!--                      modal-id="modal-products-parts-edit"-->
-<!--                  />-->
+
 
                   <image-carousel
                       id="image-carousel-products-parts-edit"
@@ -90,7 +88,6 @@
                       heigh-block="400"
                   >
                     <template #btn>
-
                       <image-manager
 
                           :id="identifierComponents.input.imageManagerId"
@@ -109,16 +106,15 @@
 
                 </b-form-group>
 
+                <b-form-group label="Активный:" v-slot="{ ariaDescribedby }" >
+                  <b-container >
+                    <b-row align-h="start">
+                      <b-col cols="1"><b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="true">Да</b-form-radio></b-col>
+                      <b-col cols="1"> <b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="false">Нет</b-form-radio></b-col>
+                    </b-row>
+                  </b-container>
+                </b-form-group>
 
-<!--                <b-form-group id="input-group-prices" label="Цена:" label-for="prices">-->
-<!--                  <b-form-input id="categories" v-model="form.prices_retail"></b-form-input>-->
-<!--                </b-form-group>-->
-
-<!--                <input-price-->
-<!--                    id="products-part-price-edit"-->
-
-<!--                    placeholder="Цена"-->
-<!--                />-->
 
 
                 <b-button type="submit" variant="danger" class="">Удалить</b-button>
@@ -178,24 +174,12 @@ export default {
   data() {
     return {
       spinerLoaderIsShow: true,
-      form: {
-        product_id: '',
-        product_name: '',
-        brand_arr: [], // (ид) Имя
-        categories_arr: [],
-        applicabilities_arr: [],
-        article_origin: '',
-        images: [], // indx 0 - main img
-        prices_retail: '',
-        dates: '',
-        offers: [],
-        params: null,
-      },
 
       identifierComponents: {
         input: {
           id: 'input-product-id',
           name: 'product-name',
+          sku: 'product-part-sku-edit',
           brand: 'product-part-brand-edit',
           categories: 'product-part-categories-edit',
           applicabilities: 'product-part-applicabilities-edit',
@@ -211,6 +195,8 @@ export default {
       allItemsCatalogBrands: null,
       allItemsCatalogCategories: null,
       allItemsCatalogApplicabilities: null,
+      activity: true,
+
 
       fields: [
         // { key: 'selected', label:  '✓',  thStyle: {  width: '30px' }},
@@ -254,8 +240,6 @@ export default {
   },
 
   computed: {
-
-
     formData() {
       const id = this.$store.getters["BaseComponents/getValueInputIndex"](this.identifierComponents.input.id);
       const name = this.$store.getters["BaseComponents/getValueInputText"](this.identifierComponents.input.name);
@@ -264,7 +248,9 @@ export default {
       const applicabilities = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.applicabilities);
       const images = this.$store.getters["NewFileManager/getCurrentFiles"](this.identifierComponents.input.imageManagerId);
       const offers = this.$store.getters["BaseComponents/getDataLimitTable"](this.identifierComponents.table.offers)
-      return {id, name, brand, categories, applicabilities, images, offers}
+      const vendorCode = this.$store.getters["BaseComponents/getValueInputVendorCode"](this.identifierComponents.input.sku)
+      const activity = this.activity
+      return {id, name, brand, categories, applicabilities, images, offers, vendorCode, activity}
     },
 
     selectedImages() {

@@ -41,6 +41,7 @@ import limitDataTable from '@/components/base/table/static-table'
 import slugInput from '@/components/base/input/slug-input'
 import priceInput from '@/components/base/input/price-input'
 import textArea from '@/components/base/input/text-area'
+import skuInput from '@/components/base/input/sku-input'
 
 Vue.component("button-base", baseButton);
 Vue.component("input-search", searchInput);
@@ -52,6 +53,7 @@ Vue.component("table-static", limitDataTable);
 Vue.component("input-slug", slugInput);
 Vue.component("input-price", priceInput);
 Vue.component("text-area", textArea);
+Vue.component("input-sku", skuInput);
 
 
 

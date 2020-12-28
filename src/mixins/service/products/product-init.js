@@ -14,24 +14,10 @@ export default {
                await this.$store.dispatch("ProductParts/dataDetailPartsById", this.query);
                this.productsJson = await this.$store.getters["ProductParts/getDetailPartsById"](null).data[0]
 
-               console.log('lol?', this.productsJson)
-
-
-               this.form.brand_arr = this.productsJson.brand
-               this.form.categories_arr = this.productsJson.categories
-               this.form.applicabilities_arr = this.productsJson.applicabilities
-               this.form.article_origin = this.productsJson.sku.original
-               //this.form.offers = this.productsJson.offers
-               this.form.product_timestampUpdated = this.productsJson.dates
-               this.form.params = this.productsJson.params
-
-
-               /////////////////////////////////////////////////////
-
-
                this.$store.commit('BaseComponents/setValueInputIndex', {key: this.identifierComponents.input.id, value: this.productsJson.id})
-
                this.$store.commit('BaseComponents/setValueInputText', {key: this.identifierComponents.input.name, value: this.productsJson.name})
+               this.$store.commit('BaseComponents/setValueInputVendorCode', {key: this.identifierComponents.input.sku, value: this.productsJson.sku.origin})
+               this.activity = !this.productsJson.activity
 
 
                this.getImagesProduct(); // записываем картинки
