@@ -31,6 +31,20 @@
                 />
               </b-form-group>
 
+              <b-form-group id="tags" label="Тэги:" label-for="news-article-edit-tags">
+                <vue-tags-input
+                    class="tags-input"
+                    id="news-article-edit-tags"
+                    v-model="tag"
+                    :tags="tags"
+                    @tags-changed="newTags => tags = newTags"
+                    :maxlength="40"
+                    placeholder="Добавте тэг"
+
+                />
+
+              </b-form-group>
+
               <b-button type="submit" variant="danger" class="">Удалить</b-button>
               <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
               <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
@@ -84,11 +98,15 @@
 import baseComponentsMixin from '@/mixins/base-components/inputs'
 import ImageManager from "@/components/images-manager/index";
 import ImageCarousel from "@/components/image-carousel";
+import VueTagsInput from '@johmun/vue-tags-input';
+
+
+
 //import TitleImages from "@/components/news/title-images";
 
 
 export default {
-  components: {ImageCarousel, ImageManager},
+  components: {ImageCarousel, ImageManager, VueTagsInput},
   props: ["query"],
   mixins: [baseComponentsMixin],
   name: "FormEdit",
@@ -97,8 +115,11 @@ export default {
 
   data() {
     return {
+
       show: true,
       imageManagerId: 'file-manager-news-edit',
+      tag: '',
+      tags: [],
     //  initDataSet: null,
     }
   },
@@ -129,7 +150,9 @@ export default {
       const name = this.$store.getters["BaseComponents/getValueInputText"]('news-article-edit-name-input');
       const content = this.$store.getters["BaseComponents/getValueHtmlEditor"]('news-article-edit-html-editor');
       const previewImage = this.$store.getters["NewFileManager/getCurrentFiles"](this.imageManagerId);
-      return {id, name, previewImage, content}
+      const tags = this.tags.map(item => item.text);
+
+      return {id, name, previewImage, content, tags}
     },
 
     initDataSet() {
@@ -154,5 +177,7 @@ export default {
 </script>
 
 <style scoped>
-
+#news-article-edit-tags {
+  max-width: none;
+}
 </style>
