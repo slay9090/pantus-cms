@@ -21,7 +21,7 @@
       <div class="scrollblock">
 
         <template v-if="multiMode === 'all-node'">
-        <allNode :id="id" v-for="(item, index) in items" :node="item" :key="index"
+        <allNode :id="id" v-for="(item, index) in filterData" :node="item" :key="index"
         />
         </template>
 
