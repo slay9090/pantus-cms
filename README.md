@@ -6,6 +6,9 @@
 
 - pre realise product list filters, edit item product
 
+- search in filters, news edit finished components, parts edit finished components
+
+
 ###Инфо:
 
 - Без использования БД
