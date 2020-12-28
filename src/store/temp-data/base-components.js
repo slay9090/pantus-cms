@@ -10,6 +10,7 @@ const state = () => ({
     input_slug_value: {},
     input_price_value: {},
     input_vendor_code_value: {},  // Артикул
+    text_area_value: {},
 })
 
 const mutations = {
@@ -28,6 +29,9 @@ const mutations = {
 
     setValueInputText(state, data) {
         Vue.set(state.input_text_value, data.key, data.value)
+    },
+    setValueTextArea(state, data) {
+        Vue.set(state.text_area_value, data.key, data.value)
     },
 
     setDataLimitTable(state, data){
@@ -68,6 +72,10 @@ const getters = {
 
     getValueInputText: state => key => {
         return state.input_text_value[key];
+    },
+
+    getValueTextArea: state => key => {
+        return state.text_area_value[key];
     },
 
     getDataLimitTable: state => key => {

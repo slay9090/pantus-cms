@@ -106,11 +106,10 @@ export default {
 
   computed: {
 
-    itemSelectProductBrandId: {
+    itemSelectId: {
       get() {
 
-
-        return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id
+        return this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id) ? this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id : null
       },
     },
 
@@ -146,7 +145,7 @@ export default {
 
     handleCancel(bvModalEvt) {
       bvModalEvt.preventDefault()
-      this.selectItemId = this.itemSelectProductBrandId
+      this.selectItemId = this.itemSelectId
       this.$nextTick(() => {
         this.$bvModal.hide(this.modalId)
       })
@@ -160,12 +159,12 @@ export default {
   },
   async mounted() {
 
-     this.selectItemId = await this.itemSelectProductBrandId                     // Если будут траблы с начальным значением раскоментить
+     this.selectItemId = await this.itemSelectId                     // Если будут траблы с начальным значением раскоментить
 
   },
 
   watch: {
-    itemSelectProductBrandId () {
+    itemSelectId () {
       this.selectItemId = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.id).id
     }
   },

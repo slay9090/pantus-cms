@@ -250,7 +250,7 @@ export default {
   async mounted() {
    await this.dataInit();
     this.spinerLoaderIsShow = false;
-    console.log(this.formData)
+   // console.log(this.formData)
   },
 
   computed: {
