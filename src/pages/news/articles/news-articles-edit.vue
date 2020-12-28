@@ -35,7 +35,9 @@
 
               <b-form-group id="input-group-brand" label="Категория:" :label-for="categoriesNewsId">
                 <input-catalog
+
                     v-if="allNewsCategories"
+
                     :id="categoriesNewsId"
                     type-catalog="singleSelect"
                     :items="allNewsCategories"
@@ -162,6 +164,10 @@ export default {
     }
   },
   methods: {
+
+
+
+
     onSubmit(evt) {
       evt.preventDefault()
       alert(JSON.stringify(this.form))

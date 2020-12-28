@@ -16,6 +16,7 @@
       placeholder="Поиск"
       @input="filteredData"
       debounce="0"
+          class="mb-3"
       />
 
       <div class="scrollblock">

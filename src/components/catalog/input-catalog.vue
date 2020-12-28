@@ -1,9 +1,11 @@
 <template>
   <div
        class="input-catalog form-control d-flex justify-content-between"
+       v-on="$listeners"
+       @click.self="openedModal(modalId, id)"
 
   >
-    <div>
+    <div >
       <slot></slot>
 
     </div>
