@@ -30,7 +30,7 @@
                       type-catalog="singleSelect"
                       :items="allItemsCatalogBrands"
                       modal-id="modal-product-part-brand-edit"
-
+                      modal-title-name="Выбор бренда"
                   >
                     <router-link v-if="currentItemBrandInput" :to="'/catalog/brands/edit?id='+currentItemBrandInput.id">
                       {{ currentItemBrandInput.name }}
@@ -47,6 +47,7 @@
                       :items="allItemsCatalogCategories"
                       modal-id="modal-product-part-categories-edit"
                       multi-mode="only-last-node"
+                      modal-title-name="Выбор категорий"
                   >
                     <router-link v-for="(item, index) in currentItemsCategoriesInput" :key="index"
                                  :to="'/catalog/category/edit?id='+item.id">
@@ -55,7 +56,7 @@
                   </input-catalog>
                 </b-form-group>
 
-                <b-form-group id="input-group-applicabilities" label="Применимости:"
+                <b-form-group id="input-group-applicabilities" label="Применяемости:"
                               label-for="product-part-applicabilities-edit">
                   <input-catalog
                       v-if="currentItemsApplicabilitiesInput"
@@ -64,6 +65,7 @@
                       :items="allItemsCatalogApplicabilities"
                       modal-id="modal-product-part-applicabilities-edit"
                       multi-mode="only-last-node"
+                      modal-title-name="Выбор применяемостей"
                   >
                     <router-link v-for="(item, index) in currentItemsApplicabilitiesInput" :key="index"
                                  :to="'/catalog/applicabilities/edit?id='+item.id">

@@ -61,7 +61,7 @@
         </router-link>
         <router-link :to="{ name: 'CatalogApplicabilities'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="fa fa-car fa-fw pl-4 ml-3 mr-4"></span>
-          <span class="menu-collapsed ml-2">Применимости</span>
+          <span class="menu-collapsed ml-2">Применяемости</span>
         </router-link>
       </b-collapse>
 

@@ -73,7 +73,7 @@
         </items-menu>
 
         <items-menu
-            name-item="Применимости"
+            name-item="Применяемости"
             name-router="CatalogApplicabilities"
             active-item
         >

@@ -3,7 +3,7 @@
             v-if="itemSelectProductBrand"
            @hidden="handleResetTempData"
            :id="modalId"
-           title="Выбор одного значения"
+           :title="modalTitleName"
            size="lg"
            centered
            no-fade
@@ -15,7 +15,7 @@
       <div class="mt-0">
         <div class="wrap">
           <div class="search">
-            <input type="text" class="searchTerm" placeholder="What are you looking for?" @input="filteredList"
+            <input type="text" class="searchTerm" placeholder="Поиск по брендам" @input="filteredList"
                    v-model="inputSearchText">
             <button type="submit" class="searchButton">
               <i class="fa fa-search"></i>
@@ -48,12 +48,10 @@
 
     <template v-slot:modal-footer>
       <div class="w-100">
-<!--        <p class="float-left"><b>Текущее значение: </b>-->
-<!--          <span> {{ itemSelectProductBrand.name }} </span>-->
-<!--        </p>-->
+
         <b-button
             variant="primary"
-            class="float-right "
+            class="float-left "
             @click="handleOk"
         >
           Сохранить
@@ -61,7 +59,7 @@
         <b-button
 
             variant=""
-            class="float-right mx-3"
+            class="float-left mx-3"
             @click="handleCancel"
         >
           Отмена
@@ -93,6 +91,10 @@ export default {
     modalId: {
       type: String,
       required: true,
+    },
+    modalTitleName: {
+      type: String,
+      default: 'Выбор значения'
     }
   },
 

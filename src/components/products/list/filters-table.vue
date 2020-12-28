@@ -56,7 +56,7 @@
             multi-mode="all-node"
             modal-id="modal-catalog-applicabilities-filter-parts-list"
         >
-          <span v-if="filterValue.applicabilities.length===0">Применимости не выбраны</span>
+          <span v-if="filterValue.applicabilities.length===0">Применяемости не выбраны</span>
           <router-link v-for="(item, index) in filterValue.applicabilities" :key="index"
                        :to="'/catalog/applicabilities/edit?id='+item.id">
             <span > {{ item.name }}, </span>

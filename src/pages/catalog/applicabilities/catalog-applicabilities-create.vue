@@ -4,7 +4,7 @@
     <div class="d-flex align-items-start">
 
       <div class="card col-4 p-0  mr-5 shadow" id="tbl" >
-        <h4 class="card-header"> <small class="text-muted">Создание применимости</small></h4>
+        <h4 class="card-header"> <small class="text-muted">Создание Применяемости</small></h4>
         <div class="card-body">
 
           <div>

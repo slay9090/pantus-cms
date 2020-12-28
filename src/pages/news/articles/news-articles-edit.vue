@@ -42,6 +42,7 @@
                     type-catalog="singleSelect"
                     :items="allNewsCategories"
                     modal-id="modal-news-categories-select"
+                    modal-title-name="Выбор категории статьи"
                 >
                   <router-link v-if="formData.newsCategories" :to="'/news/category/edit?id='+formData.newsCategories.id">
                     {{ formData.newsCategories.name }}

@@ -4,7 +4,7 @@
     <b-modal
         @hidden="handleResetTempData"
         :id="modalId"
-        :title="titleName"
+        :title="modalTitleName"
         size="lg"
         centered no-fade no-close-on-backdrop no-close-on-esc
         ok-title="Сохранить">
@@ -39,14 +39,14 @@
 
           <b-button
               variant="primary"
-              class="float-right "
+              class="float-left "
               @click="handleOk"
           >
             Сохранить
           </b-button>
           <b-button
               variant=""
-              class="float-right mx-3"
+              class="float-left mx-3"
               @click="handleCancel"
           >
             Отмена
@@ -92,9 +92,9 @@ export default {
       type: String,
       required: true,
     },
-    titleName: {
+    modalTitleName: {
       type: String,
-      default: 'Каталог'
+      default: 'Выбор дерева'
     },
 
   },
