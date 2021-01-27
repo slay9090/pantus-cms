@@ -72,7 +72,7 @@ name: "ImageEditor",
   props: {
     id: {
       type: String,
-      require: true,
+      required: true,
     },
   },
 
