@@ -26,7 +26,7 @@
 
         <router-link :to="{ name: 'Orders'}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start" active-class="item-selected" >
           <div class="d-flex w-100 justify-content-start align-items-center">
-            <span class="fa fa-usd fa-fw pl-4 ml-3 mr-4"></span>
+            <span class="fa fa-shopping-cart fa-fw pl-4 ml-3 mr-4"></span>
             <span class="menu-collapsed ml-2">Заказы</span>
           </div>
         </router-link>

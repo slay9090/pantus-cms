@@ -53,7 +53,7 @@ export default {
 
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
     }
   },
 
@@ -71,14 +71,13 @@ export default {
     },
 
       $route() {
+        console.log('route')
         !this.isLoading ? this.isLoading = true : this.isLoading = false
       }
 
   },
 
-  mounted() {
-    this.isLoading = true
-  }
+
 }
 </script>
 

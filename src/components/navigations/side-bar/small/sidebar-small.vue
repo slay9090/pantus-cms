@@ -30,7 +30,7 @@
             active-item
 
         >
-          <template #itemicon> <span class="fa fa-usd fa-fw icon-size"></span> </template>
+          <template #itemicon> <span class="fa fa-shopping-cart fa-fw icon-size"></span> </template>
         </items-menu>
 
         <items-menu

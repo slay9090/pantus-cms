@@ -19,7 +19,11 @@
 export default {
   mounted() {
 
+
+
     this.$refs.restartgame.focus()
+
+    console.log('404')
 
     this.game()
 
@@ -406,8 +410,6 @@ export default {
 
       // Start game
       // ----------
-      window.addEventListener('load', function () {
-
         var invaderAsset = new Image;
         invaderAsset.onload = function () {
 
@@ -426,7 +428,7 @@ export default {
         };
         invaderAsset.src = "//stillh.art/project/spaceInvaders/invader.gif";
 
-      });
+
 
       window.addEventListener('resize', function () {
         initGameStart();
@@ -499,6 +501,7 @@ export default {
 #space-invaders {
   margin: 0 auto;
   display: block;
+  width: 100%;
 }
 .label {
   display: inline;
