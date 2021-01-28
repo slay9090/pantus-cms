@@ -63,6 +63,7 @@ export default {
 
       console.log('change items table')
       this.$store.commit('BaseComponents/setDataTable', {
+
         'key': this.tableId,
         'value': this.items
       });

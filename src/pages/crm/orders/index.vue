@@ -3,7 +3,7 @@
     <b-row v-if="!initFailed">
         <b-col>
 
-
+<!--t-->
             <table-dynamic
                 v-if="ordersList"
                 :table-id="identifierComponents.tables.ordersList"
@@ -67,6 +67,13 @@ export default {
 
   mounted() {
     this.dataInit();
+  },
+
+  watch: {
+    $route() {
+       this.$store.dispatch('CrmOrders/getDataAllItems', this.$route.query)
+      window.scrollTo(0,0)
+    }
   },
 
 }

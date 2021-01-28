@@ -115,16 +115,14 @@ function urlMapFilterPartsGetList (urlParams) {
 
     const formattedUrl={};
 
-    urlParams.substr ? formattedUrl.filter_substr = urlParams.substr : null
-    urlParams.brand && urlParams.brand.id > 0 ? formattedUrl.filter_brands = urlParams.brand.id : null
-    urlParams.categories && urlParams.categories.length > 0 ?
-        formattedUrl.filter_categories = [...urlParams.categories.map(prop => prop.id)].toString() : null
-    urlParams.applicabilities && urlParams.applicabilities.length > 0 ?
-        formattedUrl.filter_applicabilities = [...urlParams.applicabilities.map(prop => prop.id)].toString() : null
+    urlParams.filter_substr ? formattedUrl.filter_substr = urlParams.filter_substr : null
+    urlParams.filter_brands && urlParams.filter_brands > 0 ? formattedUrl.filter_brands = urlParams.filter_brands : null
+    urlParams.filter_categories ? formattedUrl.filter_categories =  urlParams.filter_categories : null
+    urlParams.filter_applicabilities ? formattedUrl.filter_applicabilities = urlParams.filter_applicabilities : null
     urlParams.page_number ? formattedUrl.page_number = urlParams.page_number : null
-    urlParams.page_size ? formattedUrl.page_size = urlParams.page_size : null
+    urlParams.page_size ? formattedUrl.page_size = urlParams.page_size : formattedUrl.page_size = '20'
 
-   // console.log('Вышло11', formattedUrl)
+
 
     return formattedUrl;
 

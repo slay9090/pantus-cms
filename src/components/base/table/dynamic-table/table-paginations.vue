@@ -51,8 +51,8 @@ name: "table-paginations",
 
   watch: {
     $route() {
-      /// только при изменении пагинации
-      this.currentPage.toString() !== this.$route.query.page_number ?  this.$store.dispatch('CrmOrders/getDataAllItems', this.$route.query) : null
+      /// сбросить карент пейдж, если нет пагинации в урл
+      this.$route.query.page_number ?  null : this.currentPage = 1;
     }
   },
 }
