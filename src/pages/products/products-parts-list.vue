@@ -1,35 +1,19 @@
 <template>
-  <div>
+  <b-container fluid>
 
-    <div class="card shadow" id="tbl" >
-
-      <h4 class="card-header">
-        <b-row class="my-0 mx-0" align-h="between">
-          <b-col cols="3" class="px-0">
-        <small class="text-muted">Запчасти</small>
-          </b-col>
-          <b-col cols="5" class="text-right px-0">
-        <b-icon-x-circle-fill
-            variant="danger"
-            class="btnn btnn-white btnn-animated rounded-circle h3 mb-0"
-        />
-        <b-icon-plus-circle-fill
-
-            class="btnn btnn-white btnn-animated rounded-circle h3 mb-0 ml-2 "
-            variant="success"
+    <b-row>
+      <b-col>
+        <b-card
+            header-tag="header"
+            class="shadow w-100"
         >
-        </b-icon-plus-circle-fill>
-          </b-col>
-          </b-row >
-      </h4>
+          <template #header>
+            <h4><small class="text-muted">Запчасти</small></h4>
+          </template>
 
+          <b-card-text>
 
-      <div class="card-body">
-
-
-
-            <filters />
-
+            <filters/>
 
             <table-dynamic
                 v-if="partsList"
@@ -44,13 +28,15 @@
 
               <template v-slot:cell(name)="data">
                 <!-- `data.value` is the value after formatted by the Formatter -->
-                <router-link :to="'/products/list/edit?id='+data.item.id"  class="mb-0 title-block__text-limit" >{{ data.value }} </router-link>
+                <router-link :to="'/products/list/edit?id='+data.item.id" class="mb-0 title-block__text-limit">
+                  {{ data.value }}
+                </router-link>
               </template>
 
 
               <template v-slot:cell(sku.origin)="data">
                 <!-- `data.value` is the value after formatted by the Formatter -->
-                <span class="mb-0 title-block__text-limit" >{{ data.value }} </span>
+                <span class="mb-0 title-block__text-limit">{{ data.value }} </span>
               </template>
 
 
@@ -59,23 +45,23 @@
               </template>
 
               <template v-slot:cell(categories)="data">
-                <span v-for="item in data.value" :key="item.id">{{item.name}}, </span>
+                <span v-for="item in data.value" :key="item.id">{{ item.name }}, </span>
               </template>
 
               <template v-slot:cell(applicabilities)="data">
-                <span v-for="item in data.value" :key="item.id">{{item.name}}, </span>
+                <span v-for="item in data.value" :key="item.id">{{ item.name }}, </span>
               </template>
 
 
               <template #cell(offers)="row">
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-                  {{ row.detailsShowing ? 'Hide' : 'Show'}} Offers
+                  {{ row.detailsShowing ? 'Hide' : 'Show' }} Offers
                 </b-button>
               </template>
 
               <template #row-details="row">
 
-                <b-card  v-for="item in row.item.offers" :key="item.id">
+                <b-card v-for="item in row.item.offers" :key="item.id">
                   <b-row class="mb-0">
                     <b-col sm="3" class="text-sm-right"><b>Наименование:</b></b-col>
                     <b-col>{{ item.supplier.name }}</b-col>
@@ -101,7 +87,7 @@
 
                   <b-row class="mb-0">
                     <b-col sm="3" class="text-sm-right"><b>Активен:</b></b-col>
-                    <b-col>{{ item.activity ? 'Да' : 'Нет' }} </b-col>
+                    <b-col>{{ item.activity ? 'Да' : 'Нет' }}</b-col>
                   </b-row>
 
                   <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
@@ -110,12 +96,13 @@
 
             </table-dynamic>
 
+          </b-card-text>
+        </b-card>
+      </b-col>
+    </b-row>
 
 
-          </div>
-
-      </div>
-    </div>
+  </b-container>
 
 </template>
 
@@ -124,9 +111,10 @@
 
 // import DynamicsTable from "@/components/products/list/data-table";
 import Filters from "@/components/products/list/filters-table";
+
 export default {
-name: "ProductsList",
-  components: {Filters, },
+  name: "ProductsList",
+  components: {Filters,},
   props: ["query"],
   data() {
     return {
@@ -138,27 +126,25 @@ name: "ProductsList",
       },
 
       fields: [
-        { key: 'selected', label:  '✓',  thStyle: {  width: '30px' }},
-        { key: 'id',  sortable: true , label: 'id',  },
-        { key: 'name', sortable: true , label: 'Наименование', },
-        { key: 'brand.name', label: 'Бренд'  , },
-        { key: 'categories', label: 'Категория'  , },
-        { key: 'applicabilities', label: 'Применяемость'  ,  },
-        { key: 'sku.origin', label: 'Артикул'  , },
-        { key: 'images.main.url', label: 'Изображение'  , },
-        { key: 'offers', label: 'Оферы'  , thStyle: {  width: '130px' } },
+        {key: 'selected', label: '✓', thStyle: {width: '30px'}},
+        {key: 'id', sortable: true, label: 'id',},
+        {key: 'name', sortable: true, label: 'Наименование',},
+        {key: 'brand.name', label: 'Бренд',},
+        {key: 'categories', label: 'Категория',},
+        {key: 'applicabilities', label: 'Применяемость',},
+        {key: 'sku.origin', label: 'Артикул',},
+        {key: 'images.main.url', label: 'Изображение',},
+        {key: 'offers', label: 'Оферы', thStyle: {width: '130px'}},
         // { key: 'offers[0].dates.modified', sortable: true , label: 'Дата' , thStyle: {  width: '100px' }},
       ],
 
     }
   },
 
-  methods:{
-
-  },
+  methods: {},
   computed: {
 
-    partsList(){
+    partsList() {
       console.log(this.$store.getters["ProductParts/getDataItemsPartsByFilter"])
       return this.$store.getters["ProductParts/getDataItemsPartsByFilter"];
     },
@@ -171,7 +157,7 @@ name: "ProductsList",
   watch: {
     $route() {
       this.$store.dispatch('ProductParts/dataItemsPartsByFilter', this.$route.query)
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0)
     }
   },
 

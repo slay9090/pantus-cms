@@ -1,7 +1,7 @@
 
 <template>
 
-  <div class="home">
+  <b-container fluid>
 
     <div class="shadow card" id="tbl" >
       <h4 class="card-header"> <small class="text-muted">Редактор новостей</small></h4>
@@ -90,9 +90,7 @@
       </div>
     </div>
 
-
-    <router-view></router-view>
-  </div>
+  </b-container>
 
 
 </template>

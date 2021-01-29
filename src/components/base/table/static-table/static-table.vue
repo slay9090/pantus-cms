@@ -169,10 +169,10 @@ export default {
 
     dataTable: {
       get() {
-        return this.$store.getters["BaseComponents/getDataLimitTable"](this.id)
+        return this.$store.getters["BaseComponents/getDataTable"](this.id)
       },
       set(val) {
-        this.$store.commit('BaseComponents/setDataLimitTable', {'key': this.id, 'value': val})
+        this.$store.commit('BaseComponents/setDataTable', {'key': this.id, 'value': val})
       },
 
     }

@@ -1,62 +1,91 @@
 <template>
-  <div>
-
-    <div class="d-flex align-items-start">
-
-        <div class="card col-4 p-0  mr-5 shadow" id="tbl" >
-            <h4 class="card-header"> <small class="text-muted">Редактирование категорий</small></h4>
-            <div class="card-body">
-
-             <div>
-                <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-
-                  <b-form-group id="input-group-1" label="ID:" label-for="input-1">
-                    <b-form-input
-                        readonly
-                        id="input-1"
-                        v-model="form.id"
-                        required
-
-                    ></b-form-input>
-                  </b-form-group>
-
-                  <b-form-group id="input-group-2" label="Name:" label-for="input-2">
-                    <b-form-input
-                        id="input-2"
-                        v-model="form.name"
-                        required
-                        placeholder="Enter brand name"
-                        autofocus
-                    ></b-form-input>
-                  </b-form-group>
-                  <b-button type="submit" variant="danger" class="">Удалить</b-button>
-                  <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
-                  <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
+  <b-container fluid>
 
 
-                </b-form>
-              </div>
+    <b-row >
 
-              <div class="card fluid p-0 my-5" id="tblres" >
-                <h4 class="card-header"> <small class="text-muted">Формализованный запрос</small></h4>
-                  <div class="card-body">
-                    <pre class="m-0">{{ form }}</pre>
-                  </div>
-              </div>
-        </div>
-      </div>
+      <b-col class="mb-3 mb-lg-0" >
 
-      <div class="card col-4 p-0 ml-5 " id="treechild" >
-        <h4 class="card-header"> <small class="text-muted">Дочерние категории</small></h4>
-          <div class="card-body">
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Заказ</small></h4>
+          </template>
+
+          <b-card-text>
+            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+
+              <b-form-group id="input-group-1" label="ID:" label-for="input-1">
+                <b-form-input
+                    readonly
+                    id="input-1"
+                    v-model="form.id"
+                    required
+
+                ></b-form-input>
+              </b-form-group>
+
+              <b-form-group id="input-group-2" label="Name:" label-for="input-2">
+                <b-form-input
+                    id="input-2"
+                    v-model="form.name"
+                    required
+                    placeholder="Enter brand name"
+                    autofocus
+                ></b-form-input>
+              </b-form-group>
+
+
+              <b-row class="justify-content-between">
+                <b-col >
+                  <b-row >
+
+                    <b-col order="2" class="" >
+                      <b-button type="submit" variant="danger" class="">Удалить</b-button>
+                    </b-col>
+                    <b-col order="1" >
+                      <b-button type="reset" variant="secondary" class="mb-3">Сбросить</b-button>
+                    </b-col>
+
+
+                  </b-row>
+                </b-col>
+                <b-col class="text-right" >
+                  <b-button type="submit" variant="primary" class="">Сохранить</b-button>
+                </b-col>
+              </b-row>
+
+
+
+            </b-form>
+            <hr>
+            <pre class="m-0">{{ form }}</pre>
+
+          </b-card-text>
+
+        </b-card>
+
+      </b-col>
+
+
+      <b-col >
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Позиции</small></h4>
+          </template>
+          <b-card-text>
 
             <tree :url="url" :tree-data="treeById[0]"></tree>
-          </div>
-      </div>
 
-    </div>
+          </b-card-text>
+        </b-card>
+      </b-col>
 
-  </div>
+    </b-row>
+
+
+
+
+  </b-container>
 </template>
 
 <script>

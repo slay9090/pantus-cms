@@ -10,7 +10,7 @@
       </template>
 
     </table-dynamic>
-
+<!---->
     <table-paginations
         v-if="this.items"
         v-bind="{ itemsCount: itemsCount, itemsOnPage: itemsOnPage,}"
@@ -72,10 +72,15 @@ export default {
 
       $route() {
         console.log('route')
-        !this.isLoading ? this.isLoading = true : this.isLoading = false
+
+        this.isLoading = true
       }
 
   },
+  mounted() {
+    this.isLoading = false
+    //
+  }
 
 
 }

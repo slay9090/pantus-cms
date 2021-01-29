@@ -1,158 +1,182 @@
 <template>
-  <div>
-  <div class="mx-3" v-if="!initFailed">
+  <b-container fluid>
+
 
     <b-overlay :show="spinerLoaderIsShow" no-fade rounded="sm">
-    <div class="row  align-items-start " v-if="!spinerLoaderIsShow">
-
-      <div class="parts-edit-form px-0 col-auto col-xl-6 mr-xl-5 order-1 order-xl-0 " >
-        <div class="card shadow" id="tbl">
-          <h4 class="card-header"><small class="text-muted">Редактирование товар</small></h4>
-          <div class="card-body">
-
-            <div>
-              <b-form @submit="onSubmit" @reset="onReset" >
-
-
-                <b-form-group id="input-group-product-id" label="ID:" label-for="input-product-id">
-                  <b-form-input readonly :id="identifierComponents.input.id" v-model="formData.id" required></b-form-input>
-                </b-form-group>
-
-                <b-form-group id="input-group-product-name" label="Наименование:" label-for="product-name">
-                  <b-form-input :id="identifierComponents.input.name" v-model="formData.name" required
-                                placeholder="Enter brand name"></b-form-input>
-                </b-form-group>
-
-                <b-form-group id="input-group-brand" label="Брэнд:" label-for="product-part-brand-edit">
-                  <input-catalog
-                      v-if="currentItemBrandInput"
-                      :id="identifierComponents.input.brand"
-                      type-catalog="singleSelect"
-                      :items="allItemsCatalogBrands"
-                      modal-id="modal-product-part-brand-edit"
-                      modal-title-name="Выбор бренда"
-                  >
-                    <router-link v-if="currentItemBrandInput" :to="'/catalog/brands/edit?id='+currentItemBrandInput.id">
-                      {{ currentItemBrandInput.name }}
-                    </router-link>
-                  </input-catalog>
-                </b-form-group>
-
-
-                <b-form-group id="input-group-categories" label="Категории:" label-for="product-part-categories-edit">
-                  <input-catalog
-                      v-if="currentItemsCategoriesInput"
-                      :id="identifierComponents.input.categories"
-                      type-catalog="multiSelectTree"
-                      :items="allItemsCatalogCategories"
-                      modal-id="modal-product-part-categories-edit"
-                      multi-mode="only-last-node"
-                      modal-title-name="Выбор категорий"
-                  >
-                    <router-link v-for="(item, index) in currentItemsCategoriesInput" :key="index"
-                                 :to="'/catalog/category/edit?id='+item.id">
-                      {{ item.name }},
-                    </router-link>
-                  </input-catalog>
-                </b-form-group>
-
-                <b-form-group id="input-group-applicabilities" label="Применяемости:"
-                              label-for="product-part-applicabilities-edit">
-                  <input-catalog
-                      v-if="currentItemsApplicabilitiesInput"
-                      :id="identifierComponents.input.applicabilities"
-                      type-catalog="multiSelectTree"
-                      :items="allItemsCatalogApplicabilities"
-                      modal-id="modal-product-part-applicabilities-edit"
-                      multi-mode="only-last-node"
-                      modal-title-name="Выбор применяемостей"
-                  >
-                    <router-link v-for="(item, index) in currentItemsApplicabilitiesInput" :key="index"
-                                 :to="'/catalog/applicabilities/edit?id='+item.id">
-                      {{ item.name }},
-                    </router-link>
-                  </input-catalog>
-                </b-form-group>
-
-                <b-form-group id="input-group-sku" label="Артикул:" :label-for="identifierComponents.input.sku">
-                  <input-sku
-                  :id="identifierComponents.input.sku"
-                  />
-                </b-form-group>
-
-                <b-form-group id="input-group-productCardImages_main" label="Изображения:"
-                              label-for="image-carousel-products-parts-edit">
-
-
-                  <image-carousel
-                      id="image-carousel-products-parts-edit"
-                      :images="formData.images"
-                      heigh-block="400"
-                  >
-                    <template #btn>
-                      <image-manager
-
-                          :id="identifierComponents.input.imageManagerId"
-                          modal-id="news-edit-image-preview"
-                          :images="getImagesProduct()"
-                      >
-                        <template #btn>
-                          <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i>
-                        </template>
-                      </image-manager>
-                    </template>
-                  </image-carousel>
+  <b-row  v-if="!initFailed" cols="1" cols-xl="2">
 
 
 
 
-                </b-form-group>
 
-                <b-form-group label="Активный:" v-slot="{ ariaDescribedby }" >
-                  <b-container >
-                    <b-row align-h="start">
-                      <b-col cols="1"><b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="true">Да</b-form-radio></b-col>
-                      <b-col cols="1"> <b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="false">Нет</b-form-radio></b-col>
-                    </b-row>
-                  </b-container>
-                </b-form-group>
+      <b-col  class="mb-3 mb-xl-0" >
+
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Редактирование карточки</small></h4>
+          </template>
+
+          <b-card-text>
+
+            <b-form @submit="onSubmit" @reset="onReset" >
+
+
+              <b-form-group id="input-group-product-id" label="ID:" label-for="input-product-id">
+                <b-form-input readonly :id="identifierComponents.input.id" v-model="formData.id" required></b-form-input>
+              </b-form-group>
+
+              <b-form-group id="input-group-product-name" label="Наименование:" label-for="product-name">
+                <b-form-input :id="identifierComponents.input.name" v-model="formData.name" required
+                              placeholder="Enter brand name"></b-form-input>
+              </b-form-group>
+
+              <b-form-group id="input-group-brand" label="Брэнд:" label-for="product-part-brand-edit">
+                <input-catalog
+                    v-if="currentItemBrandInput"
+                    :id="identifierComponents.input.brand"
+                    type-catalog="singleSelect"
+                    :items="allItemsCatalogBrands"
+                    modal-id="modal-product-part-brand-edit"
+                    modal-title-name="Выбор бренда"
+                >
+                  <router-link v-if="currentItemBrandInput" :to="'/catalog/brands/edit?id='+currentItemBrandInput.id">
+                    {{ currentItemBrandInput.name }}
+                  </router-link>
+                </input-catalog>
+              </b-form-group>
+
+
+              <b-form-group id="input-group-categories" label="Категории:" label-for="product-part-categories-edit">
+                <input-catalog
+                    v-if="currentItemsCategoriesInput"
+                    :id="identifierComponents.input.categories"
+                    type-catalog="multiSelectTree"
+                    :items="allItemsCatalogCategories"
+                    modal-id="modal-product-part-categories-edit"
+                    multi-mode="only-last-node"
+                    modal-title-name="Выбор категорий"
+                >
+                  <router-link v-for="(item, index) in currentItemsCategoriesInput" :key="index"
+                               :to="'/catalog/category/edit?id='+item.id">
+                    {{ item.name }},
+                  </router-link>
+                </input-catalog>
+              </b-form-group>
+
+              <b-form-group id="input-group-applicabilities" label="Применяемости:"
+                            label-for="product-part-applicabilities-edit">
+                <input-catalog
+                    v-if="currentItemsApplicabilitiesInput"
+                    :id="identifierComponents.input.applicabilities"
+                    type-catalog="multiSelectTree"
+                    :items="allItemsCatalogApplicabilities"
+                    modal-id="modal-product-part-applicabilities-edit"
+                    multi-mode="only-last-node"
+                    modal-title-name="Выбор применяемостей"
+                >
+                  <router-link v-for="(item, index) in currentItemsApplicabilitiesInput" :key="index"
+                               :to="'/catalog/applicabilities/edit?id='+item.id">
+                    {{ item.name }},
+                  </router-link>
+                </input-catalog>
+              </b-form-group>
+
+              <b-form-group id="input-group-sku" label="Артикул:" :label-for="identifierComponents.input.sku">
+                <input-sku
+                    :id="identifierComponents.input.sku"
+                />
+              </b-form-group>
+
+              <b-form-group id="input-group-productCardImages_main" label="Изображения:"
+                            label-for="image-carousel-products-parts-edit">
+
+
+                <image-carousel
+                    v-if="formData.images"
+                    id="image-carousel-products-parts-edit"
+                    :images="formData.images"
+                    heigh-block="400"
+                >
+                  <template #btn>
+                    <image-manager
+
+                        :id="identifierComponents.input.imageManagerId"
+                        modal-id="news-edit-image-preview"
+                        :images="getImagesProduct()"
+                    >
+                      <template #btn>
+                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i>
+                      </template>
+                    </image-manager>
+                  </template>
+                </image-carousel>
 
 
 
-                <b-button type="submit" variant="danger" class="">Удалить</b-button>
-                <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
-                <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
 
-              </b-form>
+              </b-form-group>
 
-            </div>
-          </div>
-        </div>
+              <b-form-group label="Активный:" v-slot="{ ariaDescribedby }" >
+                <b-container >
+                  <b-row align-h="start">
+                    <b-col cols="1"><b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="true">Да</b-form-radio></b-col>
+                    <b-col cols="1"> <b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="false">Нет</b-form-radio></b-col>
+                  </b-row>
+                </b-container>
+              </b-form-group>
+
+
+
+              <b-button type="submit" variant="danger" class="">Удалить</b-button>
+              <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
+              <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
+
+            </b-form>
+
+          </b-card-text>
+
+        </b-card>
+
+      </b-col>
+
+
+      <b-col class="">
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Предложения</small></h4>
+          </template>
+          <b-card-text>
+
+            <table-static
+                v-if="formData.offers.length > 0 "
+                :id="identifierComponents.table.offers"
+                :fields="fields"
+            />
+            <span v-else>Нет предложений</span>
+
+          </b-card-text>
+        </b-card>
+      </b-col>
+
+
+
+
+
+
+
+
+
+
+
+
+  </b-row>
+      <div v-else>
+        <h5 class="text-center text-danger " >Ошибка инициализации данных </h5>
+        <h5 class="text-center text-danger ">или указанный ID не существует</h5>
       </div>
-
-
-      <div class="parts-view-offers px-0 card col-xl-auto shadow  order-0 order-xl-1 mb-3 mb-xl-0" >
-        <h4 class="card-header"><small class="text-muted">Торговые предложения</small></h4>
-        <div class="card-body">
-
-          <table-static
-              v-if="formData.offers.length > 0"
-              :id="identifierComponents.table.offers"
-              :fields="fields"
-          />
-          <span v-else>Нет предложений</span>
-        </div>
-      </div>
-
-
-    </div>
     </b-overlay>
-  </div>
-    <div v-else>
-      <h5 class="text-center text-danger " >Ошибка инициализации данных </h5>
-      <h5 class="text-center text-danger ">или указанный ID не существует</h5>
-    </div>
-  </div>
+
+  </b-container>
 </template>
 
 <script>
@@ -238,6 +262,7 @@ export default {
   async mounted() {
    await this.dataInit();
     this.spinerLoaderIsShow = false;
+    console.log(this.formData)
    // console.log(this.formData)
   },
 
@@ -248,8 +273,8 @@ export default {
       const brand = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.brand);
       const categories = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.categories);
       const applicabilities = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.applicabilities);
-      const images = this.$store.getters["NewFileManager/getCurrentFiles"](this.identifierComponents.input.imageManagerId);
-      const offers = this.$store.getters["BaseComponents/getDataLimitTable"](this.identifierComponents.table.offers)
+      const images = this.$store.getters["NewFileManager/getCurrentFiles"](this.identifierComponents.input.imageManagerId)
+      const offers = this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers) ? this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers) : []
       const vendorCode = this.$store.getters["BaseComponents/getValueInputVendorCode"](this.identifierComponents.input.sku)
       const activity = this.activity
       return {id, name, brand, categories, applicabilities, images, offers, vendorCode, activity}

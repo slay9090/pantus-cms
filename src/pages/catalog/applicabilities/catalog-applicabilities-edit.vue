@@ -1,13 +1,17 @@
 <template>
-  <div>
+  <b-container fluid>
 
-    <div class="d-flex align-items-start">
 
-      <div class="card col-4 p-0  mr-5 shadow" id="tbl" >
-        <h4 class="card-header"> <small class="text-muted">Редактирование категорий</small></h4>
-        <div class="card-body">
+    <b-row >
 
-          <div>
+      <b-col class="mb-3 mb-lg-0" >
+
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Заказ</small></h4>
+          </template>
+
+          <b-card-text>
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
               <b-form-group id="input-group-1" label="ID:" label-for="input-1">
@@ -29,33 +33,94 @@
                     autofocus
                 ></b-form-input>
               </b-form-group>
-              <b-button type="submit" variant="danger" class="">Удалить</b-button>
-              <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
-              <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
+<!--              <b-button type="submit" variant="danger" class="">Удалить</b-button>-->
+<!--              <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>-->
+<!--              <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>-->
+
+
+              <b-row class="justify-content-between">
+                <b-col >
+                  <b-row >
+
+                    <b-col order="2" class="" >
+                      <b-button type="submit" variant="danger" class="">Удалить</b-button>
+                    </b-col>
+                    <b-col order="1" >
+                      <b-button type="reset" variant="secondary" class="mb-3">Сбросить</b-button>
+                    </b-col>
+
+
+                  </b-row>
+                </b-col>
+                <b-col class="text-right" >
+                  <b-button type="submit" variant="primary" class="">Сохранить</b-button>
+                </b-col>
+              </b-row>
 
 
             </b-form>
-          </div>
+            <hr>
+            <pre class="m-0">{{ form }}</pre>
 
-          <div class="card fluid p-0 my-5" id="tblres" >
-            <h4 class="card-header"> <small class="text-muted">Формализованный запрос</small></h4>
-            <div class="card-body">
-              <pre class="m-0">{{ form }}</pre>
-            </div>
-          </div>
-        </div>
-      </div>
+          </b-card-text>
 
-      <div class="card col-4 p-0 ml-5 " id="treechild" >
-        <h4 class="card-header"> <small class="text-muted">Дочерние категории</small></h4>
-        <div class="card-body">
-          <tree :url="url" :tree-data="treeById[0]"></tree>
-        </div>
-      </div>
+        </b-card>
 
-    </div>
+      </b-col>
 
-  </div>
+
+      <b-col >
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Позиции</small></h4>
+          </template>
+          <b-card-text>
+
+            <tree :url="url" :tree-data="treeById[0]"></tree>
+
+          </b-card-text>
+        </b-card>
+      </b-col>
+
+    </b-row>
+
+
+
+<!--    -->
+
+
+
+
+
+<!--    <div class="d-flex align-items-start">-->
+
+<!--      <div class="card col-4 p-0  mr-5 shadow" id="tbl" >-->
+<!--        <h4 class="card-header"> <small class="text-muted">Редактирование категорий</small></h4>-->
+<!--        <div class="card-body">-->
+
+<!--          <div>-->
+
+<!--          </div>-->
+
+<!--          <div class="card fluid p-0 my-5" id="tblres" >-->
+<!--            <h4 class="card-header"> <small class="text-muted">Формализованный запрос</small></h4>-->
+<!--            <div class="card-body">-->
+<!--              <pre class="m-0">{{ form }}</pre>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="card col-4 p-0 ml-5 " id="treechild" >-->
+<!--        <h4 class="card-header"> <small class="text-muted">Дочерние категории</small></h4>-->
+<!--        <div class="card-body">-->
+
+<!--        </div>-->
+<!--      </div>-->
+
+<!--    </div>-->
+
+  </b-container>
 </template>
 
 <script>

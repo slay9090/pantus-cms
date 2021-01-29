@@ -14,6 +14,10 @@
           <h4><small class="text-muted">Заказ</small></h4>
         </template>
 
+        <b-card-text>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet dicta dolor enim explicabo facilis illo illum ipsum libero magni maxime obcaecati odio, officiis perspiciatis, quam quasi quis ratione, reiciendis totam.
+        </b-card-text>
+
       </b-card>
 
     </b-col>
@@ -24,7 +28,9 @@
         <template #header>
           <h4><small class="text-muted">Позиции</small></h4>
         </template>
-
+        <b-card-text>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet dicta dolor enim explicabo facilis illo illum ipsum libero magni maxime obcaecati odio, officiis perspiciatis, quam quasi quis ratione, reiciendis totam.
+        </b-card-text>
       </b-card>
     </b-col>
 

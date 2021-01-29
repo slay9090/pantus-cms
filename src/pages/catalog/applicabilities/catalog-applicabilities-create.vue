@@ -1,14 +1,20 @@
 <template>
-  <div>
+  <b-container>
 
-    <div class="d-flex align-items-start">
 
-      <div class="card col-4 p-0  mr-5 shadow" id="tbl" >
-        <h4 class="card-header"> <small class="text-muted">Создание Применяемости</small></h4>
-        <div class="card-body">
+    <b-row>
 
-          <div>
+      <b-col >
+
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Заказ</small></h4>
+          </template>
+
+          <b-card-text>
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+
+
 
               <b-form-group id="input-group-2" label="Название:" label-for="input-2">
                 <b-form-input
@@ -19,33 +25,42 @@
                     autofocus
                 ></b-form-input>
               </b-form-group>
+
               <b-button type="reset" variant="secondary" class="mx-0">Сбросить</b-button>
               <b-button type="submit" variant="primary" class="pull-right">Создать</b-button>
 
 
             </b-form>
-          </div>
+            <hr>
+            <pre class="m-0">{{ form }}</pre>
 
-          <div class="card fluid p-0 my-5" id="tblres" >
-            <h4 class="card-header"> <small class="text-muted">Формализованный запрос</small></h4>
-            <div class="card-body">
-              <pre class="m-0">{{ form }}</pre>
+          </b-card-text>
+
+        </b-card>
+
+      </b-col>
+
+
+      <b-col >
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Позиции</small></h4>
+          </template>
+          <b-card-text>
+
+            <div class="card-body" v-on:click.prevent="select($event)" >
+
+              <a :href="'catalog/applicabilities/edit?id=null'" class="label font-weight-bold" :myid="'null'" :myname="'root'">Корневая</a>
+              <hr>
+              <tree :tree-data="tree "></tree>
             </div>
-          </div>
-        </div>
-      </div>
+          </b-card-text>
+        </b-card>
+      </b-col>
 
-      <div class="card col-4 p-0 ml-5 " id="treechild" >
-        <h4 class="card-header"> <small class="text-muted">Выбор директории </small></h4>
-        <div class="card-body" v-on:click.prevent="select($event)" >
+    </b-row>
 
-          <a :href="'/catalog/category/edit?id=null'" class="label font-weight-bold" :myid="'null'" :myname="'root'">Корневая</a>
-          <hr>
-          <tree :tree-data="tree "></tree>
-        </div>
-      </div>
-    </div>
-  </div>
+  </b-container>
 </template>
 
 <script>

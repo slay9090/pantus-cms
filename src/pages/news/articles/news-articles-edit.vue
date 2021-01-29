@@ -1,13 +1,19 @@
 <template>
-  <div>
+  <b-container fluid>
 
-    <div class="d-flex align-items-start">
 
-      <div class="card col-6 p-0  mr-5 shadow" id="tbl">
-        <h4 class="card-header"><small class="text-muted">Редактирование статей</small></h4>
-        <div class="card-body">
 
-          <div>
+    <b-row >
+
+      <b-col class="mb-3 mb-lg-0" md="6">
+
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Редактирование статьи</small></h4>
+          </template>
+
+          <b-card-text>
+
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
               <b-form-group id="input-group-1" label="ID:" label-for="news-articles-edit-id-input">
@@ -66,7 +72,7 @@
                     :tags="tags"
                     @tags-changed="newTags => tags = newTags"
                     :maxlength="40"
-                    placeholder="Добавте тэг"
+                    placeholder="Добавте тэги"
 
                 />
 
@@ -74,12 +80,12 @@
 
 
               <b-form-group label="Активная:" v-slot="{ ariaDescribedby }" >
-                <b-container class="b-cont">
+
                   <b-row align-h="start">
-                    <b-col cols="1"><b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="true">Да</b-form-radio></b-col>
-                    <b-col cols="1"> <b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="false">Нет</b-form-radio></b-col>
+                    <b-col cols="1"  class="mr-4"><b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="true">Да</b-form-radio></b-col>
+                    <b-col cols="1" > <b-form-radio v-model="activity" :aria-describedby="ariaDescribedby" name="some-radios" :value="false">Нет</b-form-radio></b-col>
                   </b-row>
-                </b-container>
+
               </b-form-group>
 
               <b-button type="submit" variant="danger" class="">Удалить</b-button>
@@ -87,48 +93,60 @@
               <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
             </b-form>
 
-          </div>
+          </b-card-text>
 
-        </div>
-      </div>
+        </b-card>
 
-      <div class=" card col-3 p-0   shadow">
-        <h4 class="card-header"><small class="text-muted">Изображение в заголовке</small></h4>
-        <div class="card-body ">
-
-          <b-form-group id="input-group-title-images" label="Image:" label-for="image-carousel-news-edit">
+      </b-col>
 
 
-            <image-carousel
-                id="image-carousel-news-edit"
+      <b-col md="3">
+        <b-card header-tag="header">
+          <template #header>
+            <h4><small class="text-muted">Изображение в заголовке</small></h4>
+          </template>
+          <b-card-text>
+
+            <b-form-group id="input-group-title-images" label="Image:" label-for="image-carousel-news-edit">
+
+
+              <image-carousel
+                  id="image-carousel-news-edit"
+                  v-if="initDataSet.preview"
+                  :images="formData.previewImage"
+                  heigh-block="200"
+              />
+
+            </b-form-group>
+
+
+            <image-manager
                 v-if="initDataSet.preview"
-                :images="formData.previewImage"
-                heigh-block="200"
-            />
+                :id="imageManagerId"
+                modal-id="news-edit-image-preview"
+                :images="[initDataSet.preview.image]"
+            >
+              <template #btn>
+                <b-button >Выбрать</b-button>
+                <!--              <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i>-->
+              </template>
+            </image-manager>
 
-          </b-form-group>
+          </b-card-text>
+        </b-card>
+      </b-col>
 
-
-          <image-manager
-              v-if="initDataSet.preview"
-          :id="imageManagerId"
-          modal-id="news-edit-image-preview"
-          :images="[initDataSet.preview.image]"
-          >
-            <template #btn>
-            <b-button >Выбрать</b-button>
-<!--              <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i>-->
-            </template>
-          </image-manager>
+    </b-row>
 
 
-        </div>
-      </div>
 
 
-    </div>
 
-  </div>
+<!--    -->
+
+
+
+  </b-container>
 </template>
 
 <script>
@@ -230,7 +248,11 @@ export default {
 </script>
 
 <style scoped>
-#news-article-edit-tags {
-  max-width: none;
+/*#news-article-edit-tags {*/
+/*  max-width: none;*/
+/*}*/
+
+.tags-input{
+  max-width: 100% !important;
 }
 </style>

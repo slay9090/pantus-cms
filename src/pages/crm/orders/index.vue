@@ -4,15 +4,16 @@
 <!--        <b-col>-->
 
 
-          <b-card
-              header-tag="header"
-              class="shadow w-100"
-          >
-            <template #header>
-              <h4> <small class="text-muted">Заказы</small></h4>
-            </template>
+      <b-col>
+        <b-card
+            header-tag="header"
+            class="shadow w-100"
+        >
+          <template #header>
+            <h4><small class="text-muted">Заказы</small></h4>
+          </template>
 
-            <b-card-text>
+          <b-card-text>
             <table-dynamic
                 v-if="ordersList"
                 :table-id="identifierComponents.tables.ordersList"
@@ -22,7 +23,7 @@
                 :items-on-page="20"
 
             >
-<!--               <router-link :to="'/products/list/edit?id='+data.item.id"  class="mb-0 title-block__text-limit" >{{ data.value }} </router-link>-->
+              <!--               <router-link :to="'/products/list/edit?id='+data.item.id"  class="mb-0 title-block__text-limit" >{{ data.value }} </router-link>-->
               <template v-slot:cell(id)="data">
                 <router-link :to="'/crm/orders/edit/'+data.value">
                   {{ data.value }}
@@ -40,12 +41,15 @@
               </template>
 
               <template v-slot:cell(address)="data">
-                <span class="">{{  data.value.city ? 'г. '+data.value.city : null }} <br> {{data.value.detailed ? 'Адрес: ' +  data.value.detailed : null}}</span>
+                <span class="">{{
+                    data.value.city ? 'г. ' + data.value.city : null
+                  }} <br> {{ data.value.detailed ? 'Адрес: ' + data.value.detailed : null }}</span>
               </template>
 
             </table-dynamic>
-              </b-card-text>
-          </b-card>
+          </b-card-text>
+        </b-card>
+      </b-col>
 
 
 

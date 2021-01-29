@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container>
 
     <div class="shadow card " id="tbl" >
       <h4 class="card-header ">
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-  </div>
+  </b-container>
 </template>
 
 <script>

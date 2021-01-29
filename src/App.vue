@@ -10,15 +10,22 @@
 
       <div class="d-flex " id="body-row">
         <SideBar/>
-        <div class="w-100 my-3 mx-4">
-          <div class="text-muted">
-            <breadcrumbs/>
+        <b-container fluid class="my-4">
+          <b-container fluid>
+            <b-row>
+              <b-col>
+                <div class="text-muted">
+                  <breadcrumbs/>
+                </div>
+              </b-col>
+            </b-row>
+          </b-container>
 
-          </div>
           <!-- DYNAMIC PAGES -->
           <router-view/>
 
-        </div>
+
+        </b-container>
         <!-- Main Col END -->
 
       </div>
@@ -37,6 +44,10 @@
 <style>
 *:focus {
   outline: none;
+}
+/*вынести в базовые*/
+.card {
+  min-width: 290px;
 }
 </style>
 
