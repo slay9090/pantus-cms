@@ -11,6 +11,7 @@ const state = () => ({
     input_price_value: {},
     input_vendor_code_value: {},  // Артикул
     text_area_value: {},
+    input_phone_value: {},
 
 })
 
@@ -51,6 +52,10 @@ const mutations = {
         Vue.set(state.input_vendor_code_value, data.key, data.value)
     },
 
+    setValueInputPhone(state, data){
+        Vue.set(state.input_phone_value, data.key, data.value)
+    },
+
 }
 
 const actions = {
@@ -88,11 +93,15 @@ const getters = {
     },
 
     getValueInputPrice: state => key => {
-        return state.input_slug_value[key];
+        return state.input_price_value[key];
     },
     /// Получить значение артикул-инпута
     getValueInputVendorCode: state => key => {
         return state.input_vendor_code_value[key];
+    },
+
+    getValueInputPhone: state => key => {
+        return state.input_phone_value[key];
     },
 
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <b-container fluid>
 
     <div class="card shadow" id="tbl" >
       <h4 class="card-header"> <small class="text-muted">Редактор новостей</small></h4>
@@ -45,7 +45,7 @@
     </div>
 
 
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -93,7 +93,7 @@ name: "NewsCategory",
   },
   async mounted() {
     await this.$store.dispatch("NewsCategory/GetData");
-    this.$store.commit('BaseComponents/setDataLimitTable',
+    this.$store.commit('BaseComponents/setDataTable',
         {'key': 'news-categories-list', 'value': this.$store.getters["NewsCategory/AllItems"]}
         );
   }

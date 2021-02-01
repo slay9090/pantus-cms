@@ -1,5 +1,5 @@
 <template>
-  <div class="price-input my-3">
+  <div class="price-input ">
   <b-form-input
       v-model="valueInputText"
       type="text"
@@ -52,13 +52,13 @@ export default {
   computed: {
     valueInputText: {
       get() {
-        return this.$store.getters["BaseComponents/getValueInputVendorCode"](this.id)
+        return this.$store.getters["BaseComponents/getValueInputPrice"](this.id)
       },
       set(val) {
         //запустить валидацию
         this.checkIsIncorrectValue(val) ? this.isValid = false : this.isValid = null
 
-        this.$store.commit('BaseComponents/setValueInputVendorCode', {'key': this.id, 'value': val})
+        this.$store.commit('BaseComponents/setValueInputPrice', {key: this.id, value: val})
 
       },
 

@@ -88,9 +88,23 @@
 
               </b-form-group>
 
-              <b-button type="submit" variant="danger" class="">Удалить</b-button>
-              <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
-              <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
+              <b-row class="button-group justify-content-between mt-4 mt-xl-0" align-v="end" >
+                <b-col  >
+                  <b-row class="unsave-button " cols-xl="2" align-v="end">
+                    <b-col order="1" class="" xl="auto">
+                      <b-button type="submit" variant="danger" class="">Удалить</b-button>
+                    </b-col>
+                    <b-col order="2" xl="auto" class="mt-3">
+                      <b-button type="reset" variant="secondary"  class="">Сбросить</b-button>
+                    </b-col>
+                  </b-row>
+                </b-col>
+
+                <b-col   class="text-right" >
+                  <b-button type="submit" variant="primary" class="">Сохранить</b-button>
+                </b-col>
+              </b-row>
+
             </b-form>
 
           </b-card-text>

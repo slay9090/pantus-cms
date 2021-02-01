@@ -59,7 +59,7 @@ name: "text-area",
       },
       set(val) {
         //запустить валидацию
-        this.$store.commit('BaseComponents/setValueTextArea', {'key': this.id, 'value': val})
+        this.$store.commit('BaseComponents/setValueTextArea', {key: this.id, value: val})
         //  val === 'q' ? this.isValid=false : this.isValid=null
       },
 

@@ -46,22 +46,6 @@ const actions = {
 
     },
 
-
-    // действие получение данных по апи
-    // async getDataAllItems({commit},  urlParams){
-    //     const formattedUrl = jsonMaps.crmOrdersMapedUrlFilter(urlParams)
-    //     return  await Axios.get(process.env.VUE_APP_API_URL_CRM_ORDERS,
-    //         {
-    //             params: {
-    //                 ...formattedUrl
-    //             }
-    //         }
-    //         ).then( res =>{
-    //         commit("setDataAllItems", jsonMaps.crmOrdersMapedList(res.data));
-    //
-    //     })
-    // },
-
     async getDetailsById({commit}, id){
         //https://api.pantus.ru/orders/88
         return  await Axios.get(process.env.VUE_APP_API_URL_CRM_ORDERS+'/'+id).then( res =>{

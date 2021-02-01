@@ -35,21 +35,19 @@
               </b-form-group>
 
 
-              <b-row class="justify-content-between">
-                <b-col >
-                  <b-row >
-
-                    <b-col order="2" class="" >
+              <b-row class="button-group justify-content-between mt-4 mt-xl-0" align-v="end" >
+                <b-col  >
+                  <b-row class="unsave-button " cols-xl="2" align-v="end">
+                    <b-col order="1" class="" xl="auto">
                       <b-button type="submit" variant="danger" class="">Удалить</b-button>
                     </b-col>
-                    <b-col order="1" >
-                      <b-button type="reset" variant="secondary" class="mb-3">Сбросить</b-button>
+                    <b-col order="2" xl="auto" class="mt-3">
+                      <b-button type="reset" variant="secondary"  class="">Сбросить</b-button>
                     </b-col>
-
-
                   </b-row>
                 </b-col>
-                <b-col class="text-right" >
+
+                <b-col   class="text-right" >
                   <b-button type="submit" variant="primary" class="">Сохранить</b-button>
                 </b-col>
               </b-row>
@@ -176,5 +174,7 @@ export default {
 </script>
 
 <style scoped>
-
+.unsave-button .btn {
+  width: 100px !important;
+}
 </style>

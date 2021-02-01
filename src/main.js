@@ -43,6 +43,7 @@ import textArea from '@/components/base/input/text-area'
 import skuInput from '@/components/base/input/sku-input'
 import dynamicTable from '@/components/base/table/dynamic-table/index'
 import staticTable from '@/components/base/table/static-table/static-table'
+import phoneInput from '@/components/base/input/phone-input'
 
 Vue.component("button-base", baseButton);
 Vue.component("input-search", searchInput);
@@ -56,6 +57,7 @@ Vue.component("input-price", priceInput);
 Vue.component("text-area", textArea);
 Vue.component("input-sku", skuInput);
 Vue.component("table-dynamic", dynamicTable);
+Vue.component("input-phone", phoneInput);
 
 
 
