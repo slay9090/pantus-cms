@@ -14,6 +14,19 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
 import TreeModel from 'tree-model'
 
+/// Валидаторы
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
+import { extend } from 'vee-validate';
+import * as rules from 'vee-validate/dist/rules';
+import { localize } from 'vee-validate';
+import ru from 'vee-validate/dist/locale/ru.json';
+localize('ru', ru);
+Object.keys(rules).forEach(rule => {
+  extend(rule, rules[rule]);
+});
+/// -- Валидаторы
 
 Vue.use(VueVirtualScroller)
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
@@ -21,6 +34,7 @@ import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 Vue.config.productionTip = false
 Vue.use(BootstrapVueIcons);
 Vue.use(BootstrapVue);
+
 
 
 Vue.prototype.$http = axios;

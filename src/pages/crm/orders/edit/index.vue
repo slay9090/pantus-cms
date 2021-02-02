@@ -2,12 +2,9 @@
 
 <b-container fluid>
 
-  form
-  {{formData.orderPrice}}
-
   <b-row>
 
-    <b-col >
+    <b-col xl="5" lg="7" >
 
       <b-card header-tag="header">
         <template #header>
@@ -16,7 +13,12 @@
 
         <b-card-text>
 
-          <b-form @submit="onSubmit" @reset="onReset">
+
+          <ValidationObserver v-slot="{valid}">
+
+          <b-form @submit.prevent="onSubmit" @reset="onReset">
+
+
             <b-form-group
 
                 label="Заказ:"
@@ -36,11 +38,13 @@
               </b-form-group>
 
               <b-form-group label-align-sm="right" label-cols-sm="3" label="Сумма:" :label-for="identifierComponents.input.orderPrice" class="form-label">
+
                 <input-price
                     :id="identifierComponents.input.orderPrice"
                     v-model="formData.orderPrice"
                 >
                 </input-price>
+
               </b-form-group>
 
               <b-form-group label-align-sm="right" label-cols-sm="3" label="Комментарий менеджера:" :label-for="identifierComponents.input.commentsAdmin" class="form-label">
@@ -54,15 +58,30 @@
 
               <b-form-group label-align-sm="right" label-cols-sm="3" label="Комментарий пользователя:" :label-for="identifierComponents.input.commentsUser" class="form-label">
                 <text-area
+                    readonly
                     :id="identifierComponents.input.commentsUser"
                     v-model="formData.commentsUser"
                 >
                 </text-area>
               </b-form-group>
 
+              <b-form-group label-align-sm="right" label-cols-sm="3" label="Статус:" :label-for="identifierComponents.formSelect.status" class="form-label">
+                <b-form-select
+
+                    :id="identifierComponents.formSelect.status"
+                    v-model="formData.status.code"
+                    :options="statuses"
+                    text-field="name"
+                    value-field="code"
+                >
+                </b-form-select>
+              </b-form-group>
+
             </b-form-group>
 
 
+
+<!--            <template v-if="formData.status !== null">{{ formData.status.code }}</template>-->
           <hr>
 
 
@@ -127,11 +146,17 @@
               </b-col>
 
               <b-col   class="text-right" >
-                <b-button type="submit" variant="primary" class="">Сохранить</b-button>
+                <b-button type="submit" variant="primary" :disabled="!valid" class="">Сохранить</b-button>
               </b-col>
             </b-row>
 
+<!--            <button type="submit" :disabled="!valid">-->
+<!--              Отправить форму-->
+<!--            </button>-->
+
           </b-form>
+
+            </ValidationObserver >
         </b-card-text>
 
       </b-card>
@@ -139,13 +164,24 @@
     </b-col>
 
 
-    <b-col >
+    <b-col xl="7" lg="5" >
       <b-card header-tag="header">
         <template #header>
           <h4><small class="text-muted">Позиции</small></h4>
         </template>
         <b-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet dicta dolor enim explicabo facilis illo illum ipsum libero magni maxime obcaecati odio, officiis perspiciatis, quam quasi quis ratione, reiciendis totam.
+
+<!--          {{formData.offers.length}}-->
+
+          <table-static
+              v-if="formData.offers.length > 0 "
+              :id="identifierComponents.table.offers"
+              :fields="fields"
+              :per-page="10"
+              class="offres-table"
+          />
+          <span v-else>Нет товаров</span>
+
         </b-card-text>
       </b-card>
     </b-col>
@@ -159,10 +195,26 @@
 <script>
 import init from "./init";
 
+
 export default {
 name: "index",
   mixins: [init,],
+
   data:() =>({
+      value: null,
+      dataSet: null,
+
+    fields: [
+      {key: 'id', thStyle: {width: '70px'}},
+      {key: 'guid', class:"d-xl-table-cell d-none",  label: 'guid', thStyle: {width: '90px'}},
+      // { key: 'guidByOrder', label: 'guid_o'  ,  thStyle: {  width: '100px' }},
+      { key: 'name', label: 'Имя'  ,  thStyle: {  width: '100px' }},
+      {key: 'supplierCode', class:"d-xl-table-cell d-none", label: 'Код поставщика',  thStyle: {width: '90px'}},
+      {key: 'price', label: 'Цена, руб.', thStyle: {width: '30px'}},
+      {key: 'quantity', label: 'Кол-во', thStyle: {width: '30px'}},
+      {key: 'priceTypeName', label: 'Тип прайса', thStyle: {width: '30px'}},
+
+    ],
 
   }),
 
@@ -179,6 +231,26 @@ name: "index",
       const commentsAdmin = this.$store.getters["BaseComponents/getValueTextArea"](this.identifierComponents.input.commentsAdmin);
       const commentsUser = this.$store.getters["BaseComponents/getValueTextArea"](this.identifierComponents.input.commentsUser);
 
+      let status = this.dataSet ? this.dataSet.orderStatus : {}
+
+      // let status = {}
+      // status = this.dataSet.orderStatus
+
+      // status: {
+      //   get() {
+      //     return this.$store.getters["BaseComponents/getValueHtmlEditor"](this.id)
+      //   },
+      //   set(val) {
+      //     //запустить валидацию
+      //     this.$store.commit('BaseComponents/setValueHtmlEditor', {'key': this.id, 'value': val})
+      //     // val === 'q' ? this.isValid = false : this.isValid = null
+      //   },
+      //
+      // }
+
+      const offers = this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers) ? this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers)
+      : [];
+
       // const name = this.$store.getters["BaseComponents/getValueInputText"](this.identifierComponents.input.name);
       // const brand = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.brand);
       // const categories = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.categories);
@@ -187,8 +259,14 @@ name: "index",
       // const offers = this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers) ? this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers) : []
       // const vendorCode = this.$store.getters["BaseComponents/getValueInputVendorCode"](this.identifierComponents.input.sku)
       // const activity = this.activity
-      return {id, userId, userFirstName, userLastName, userPhone, orderPrice, commentsAdmin, commentsUser}
+      return {id, userId, userFirstName, userLastName, userPhone, orderPrice, commentsAdmin, commentsUser, offers, status}
     },
+
+    statuses(){
+      return this.$store.getters["CrmOrders/statuses"]
+    }
+
+
   },
 
   methods: {
@@ -217,9 +295,18 @@ name: "index",
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Caption&display=swap');
+
+
 .form-label{
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
+}
+
+.offres-table{
+  font-size: 12px;
+  font-family: 'PT Sans Caption', sans-serif;
+  /*font-weight: 500;*/
 }
 </style>

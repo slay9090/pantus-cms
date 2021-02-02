@@ -6,6 +6,7 @@ const jsonMaps = require ("@/store/json-config"); // json data-maps
 const state = () => ({
     all_items: [],
     item_details_by_id: {},
+    all_statuses: {},
 
 })
 
@@ -15,7 +16,12 @@ const mutations = {
     },
     setDataDetailsItemById(state ,data){
         state.item_details_by_id = data;
-    }
+    },
+
+    setDataStatuses(state ,data){
+        state.all_statuses = data;
+    },
+
 }
 
 const actions = {
@@ -52,6 +58,15 @@ const actions = {
             commit("setDataDetailsItemById", jsonMaps.crmOrderDetail(res.data) );
         })
     },
+
+    //http://api.pantus.ru/orders/statuses
+    async getOrderStatuses({commit}){
+        //https://api.pantus.ru/orders/88
+        return  await Axios.get('http://api.pantus.ru/orders/statuses').then( res =>{
+            commit("setDataStatuses", jsonMaps.crmOrderStatuses(res.data) );
+        })
+    },
+
 }
 
 const getters = {
@@ -59,6 +74,8 @@ const getters = {
     allItems: state => state.all_items,
 
     itemDetailsById: state => state.item_details_by_id,
+
+    statuses: state => state.all_statuses,
 
 }
 export  default {

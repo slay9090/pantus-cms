@@ -29,4 +29,5 @@ exports.crmOrdersMapedList = crmOrdersList.crmOrdersMapedList;
 exports.crmOrdersMapedUrlFilter = crmOrdersList.crmOrdersMapedUrlFilter;
 
 
-exports.crmOrderDetail = crmOrderDetail;
+exports.crmOrderDetail = crmOrderDetail.crmOrderDetail;
+exports.crmOrderStatuses = crmOrderDetail.crmOrderStatuses;

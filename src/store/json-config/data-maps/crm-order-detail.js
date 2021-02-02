@@ -65,4 +65,18 @@ function crmOrderDetail (data) {
 
 }
 
-module.exports = crmOrderDetail;
+module.exports.crmOrderDetail = crmOrderDetail;
+
+function crmOrderStatuses (data) {
+    const mapData = []
+    data.forEach((elem, ) =>{
+        mapData.push({
+            code: elem.id,
+            name: elem.name,
+            description: elem.description
+        })
+    })
+    return mapData;
+}
+
+module.exports.crmOrderStatuses = crmOrderStatuses;
