@@ -7,6 +7,9 @@ const state = () => ({
     all_items: [],
     item_details_by_id: {},
     all_statuses: {},
+    all_delivery_service: {},
+    all_payment_systems: {},
+    tree_conformity: {},
 
 })
 
@@ -21,6 +24,20 @@ const mutations = {
     setDataStatuses(state ,data){
         state.all_statuses = data;
     },
+
+    setDataDeliveryService(state ,data){
+        state.all_delivery_service = data;
+    },
+
+    setDataPaymentSystems(state ,data){
+    state. all_payment_systems = data;
+    },
+
+    setTreeConformity(state ,data){
+        state.tree_conformity = data;
+    }
+
+
 
 }
 
@@ -67,6 +84,27 @@ const actions = {
         })
     },
 
+    async getOrderDeliveryService({commit}){
+        //http://api.pantus.ru/orders/delivery_services
+        return  await Axios.get('http://api.pantus.ru/orders/delivery_services').then( res =>{
+            commit("setDataDeliveryService", jsonMaps.crmOrderDeliveryServises(res.data) );
+        })
+    },
+
+    async getOrderPaySystems({commit}){
+        //http://api.pantus.ru/orders/payment_services
+        return  await Axios.get('http://api.pantus.ru/orders/payment_services').then( res =>{
+            commit("setDataPaymentSystems", jsonMaps.crmOrderPaySystems(res.data) );
+        })
+    },
+
+    //conformity
+    async getTreeConformity({commit}){
+        //http://api.pantus.ru/orders/payment_services
+        return  await Axios.get('http://api.pantus.ru/orders/user_to_delivery_to_paysystem_map').then( res =>{
+            commit("setTreeConformity", jsonMaps.crmOrderTreeConformity(res.data) );
+        })
+    },
 }
 
 const getters = {
@@ -76,6 +114,12 @@ const getters = {
     itemDetailsById: state => state.item_details_by_id,
 
     statuses: state => state.all_statuses,
+
+    deliveryServices: state => state.all_delivery_service,
+
+    paymentSystems: state => state.all_payment_systems,
+
+    tree_conformity: state => state.tree_conformity,
 
 }
 export  default {

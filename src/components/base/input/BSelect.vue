@@ -1,29 +1,26 @@
 <template>
-
-  <ValidationProvider :vid="vid" :name="$attrs.name" :rules="rules">
+  <ValidationProvider ref="validator" :vid="vid" :name="$attrs.name" :rules="rules">
     <b-form-group
-        slot-scope="{ valid, errors }"
-        v-bind="$attrs"
+                  slot-scope="{ valid, errors }"
+                  v-bind="$attrs"
     >
-      <b-form-input
-          v-model="innerValue"
-          v-bind="$attrs"
-          :state="errors[0] ? false : (valid ? true : null)"
+      <b-form-select
+                     v-bind="$attrs"
+                     :state="errors[0] ? false : (valid ? null : null)"
+                     v-model="innerValue"
       >
-      </b-form-input>
+        <slot />
+      </b-form-select>
       <b-form-invalid-feedback id="inputLiveFeedback">
         {{ errors[0] }}
       </b-form-invalid-feedback>
     </b-form-group>
   </ValidationProvider>
-
-
 </template>
 
 <script>
 export default {
-  name: "index-input",
-
+name: "BSelect",
   props: {
     vid: {
       type: String
@@ -55,7 +52,6 @@ export default {
       this.innerValue = this.value;
     }
   }
-
 }
 </script>
 

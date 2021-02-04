@@ -11,13 +11,12 @@
           <h4><small class="text-muted">Заказ</small></h4>
         </template>
 
-        <b-card-text>
+        <b-card-text v-if="!initFailed">
 
 
-          <ValidationObserver v-slot="{valid}">
+          <ValidationObserver >
 
-          <b-form @submit.prevent="onSubmit" @reset="onReset">
-
+          <b-form @submit.prevent="validate().then(onSubmit)" slot-scope="{ validate, valid }" class="order-form">
 
             <b-form-group
 
@@ -27,63 +26,79 @@
                 label-cols-lg="12"
             >
 
-              <b-form-group label-align-sm="right" label-cols-sm="3" label="Id:" :label-for="identifierComponents.input.id">
-                <input-index
-                    readonly
-                    :id="identifierComponents.input.id"
-                    v-model="formData.id"
-                    required
-                >
-                </input-index>
-              </b-form-group>
 
-              <b-form-group label-align-sm="right" label-cols-sm="3" label="Сумма:" :label-for="identifierComponents.input.orderPrice" class="form-label">
 
-                <input-price
-                    :id="identifierComponents.input.orderPrice"
-                    v-model="formData.orderPrice"
-                >
-                </input-price>
+                <BTextInput
+                    label-align-sm="right"
+                    label-cols-sm="3"
+                    label-cols-lg="4"
+                    rules="required"
+                    type="number"
+                    label="id:"
+                    name="orderId"
+                    v-model="orderDetail.id"
+                    placeholder="Enter id"
+                />
 
-              </b-form-group>
 
-              <b-form-group label-align-sm="right" label-cols-sm="3" label="Комментарий менеджера:" :label-for="identifierComponents.input.commentsAdmin" class="form-label">
-                <text-area
-                    :id="identifierComponents.input.commentsAdmin"
-                    v-model="formData.commentsAdmin"
+              <BTextInput
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules="required|double"
+                  type="text"
+                  label="Сумма:"
+                  name="price"
+                  v-model="orderDetail.price"
 
-                >
-                </text-area>
-              </b-form-group>
+                  placeholder="Enter price"
+              />
 
-              <b-form-group label-align-sm="right" label-cols-sm="3" label="Комментарий пользователя:" :label-for="identifierComponents.input.commentsUser" class="form-label">
-                <text-area
-                    readonly
-                    :id="identifierComponents.input.commentsUser"
-                    v-model="formData.commentsUser"
-                >
-                </text-area>
-              </b-form-group>
 
-              <b-form-group label-align-sm="right" label-cols-sm="3" label="Статус:" :label-for="identifierComponents.formSelect.status" class="form-label">
-                <b-form-select
+              <BTextArea
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  type="text"
+                  label="Комментарий менеджера:"
+                  name="commentsAdmin"
+                  v-model="orderDetail.comments.admin"
+                  placeholder="Enter comment"
+                  rows="1"
+                  max-rows="3"
+              />
 
-                    :id="identifierComponents.formSelect.status"
-                    v-model="formData.status.code"
-                    :options="statuses"
-                    text-field="name"
-                    value-field="code"
-                >
-                </b-form-select>
-              </b-form-group>
+              <BTextArea
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  type="text"
+                  label="Комментарий клиента:"
+                  name="commentsUser"
+                  v-model="orderDetail.comments.user"
+                  placeholder="Enter comment"
+                  rows="1"
+                  max-rows="3"
+              />
 
+              <BSelect
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules="required"
+                  name="orderStatus"
+                  label="Статус:"
+                  v-model="orderDetail.orderStatus.code"
+                  >
+                  <b-form-select-option v-for="(item, index) in statuses" :key="index" :value="item.code">
+                    {{ item.name }}
+                  </b-form-select-option>
+              </BSelect>
             </b-form-group>
 
-
-
-<!--            <template v-if="formData.status !== null">{{ formData.status.code }}</template>-->
           <hr>
-
 
             <b-form-group
                 label="Пользователь:"
@@ -92,41 +107,235 @@
                 label-cols-lg="12"
             >
 
-              <b-form-group label-align-sm="right" label-cols-sm="3" label="Id:" :label-for="identifierComponents.input.userId">
-                <input-index
-                    readonly
-                    :id="identifierComponents.input.userId"
-                    v-model="formData.userId"
-                    required
-                >
-                </input-index>
-              </b-form-group>
+              <BTextInput
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules="required"
+                  type="number"
+                  label="id:"
+                  name="userId"
+                  v-model="orderDetail.userId"
 
-              <b-form-group label-align-sm="right" label-cols-sm="3" label="Имя:" :label-for="identifierComponents.input.userFirstName">
-                <input-text
-                    :id="identifierComponents.input.userFirstName"
-                    v-model="formData.userFirstName"
-                >
-                </input-text>
-              </b-form-group>
+                  placeholder="Enter id"
+              />
 
-              <b-form-group label-align-sm="right" label-cols-sm="3" label="Фамилия:" :label-for="identifierComponents.input.userLastName">
-                <input-text
-                    :id="identifierComponents.input.userLastName"
-                    v-model="formData.userLastName"
-                >
-                </input-text>
-              </b-form-group>
+              <BTextInput
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules="alpha"
+                  type="text"
+                  label="Имя:"
+                  name="userFirstName"
+                  v-model="orderDetail.userName.firstName"
 
-              <b-form-group label-align-sm="right" label-cols-sm="3" label="Телефон:" :label-for="identifierComponents.input.userPhone">
-                <input-phone
-                    :id="identifierComponents.input.userPhone"
-                    v-model="formData.userPhone"
-                >
-                </input-phone>
-              </b-form-group>
+                  placeholder="Enter FirstName"
+              />
+
+              <BTextInput
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules="alpha"
+                  type="text"
+                  label="Фамилия:"
+                  name="userLastName"
+                  v-model="orderDetail.userName.lastName"
+
+                  placeholder="Enter LastName"
+              />
+
+              <BTextInput
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  type="text"
+                  label="Телефон:"
+                  name="userPhone"
+                  v-model="orderDetail.userPhone"
+              />
+
+              <BSelect
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules="required"
+                  name="orderStatus"
+                  label="Тип:"
+                  v-model="orderDetail.userType.id"
+                  @input="setConformityDelivery"
+              >
+                <b-form-select-option :value="1">розница</b-form-select-option>
+                <b-form-select-option :value="2">опт</b-form-select-option>
+              </BSelect>
 
             </b-form-group>
+
+            <hr>
+
+            <b-form-group
+                label="Доставка:"
+                label-size="md"
+                label-class="font-weight-bold pt-0"
+                label-cols-lg="12"
+            >
+
+              <BTextInput
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  type="text"
+                  label="Город:"
+                  name="deliveryCity"
+                  v-model="orderDetail.address.city"
+                  placeholder="Enter city"
+              />
+
+              <BTextArea
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  type="text"
+                  label="Улица:"
+                  name="deliveryDetailed"
+                  v-model="orderDetail.address.detailed"
+                  placeholder="Enter detailed"
+              />
+
+              <BTextInput
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  type="text"
+                  label="Код трекинга:"
+                  name="trackingCode"
+                  v-model="orderDetail.delivery.trackingCode"
+                  placeholder="Enter trackingCode"
+              />
+
+              <BTextInput
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules="double"
+                  type="text"
+                  label="Цена:"
+                  name="deliveryPrice"
+                  v-model="orderDetail.delivery.price"
+                  placeholder="Enter price"
+              />
+
+              <BSelect
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  name="deliveryService"
+                  label="Способ:"
+                  v-model="orderDetail.delivery.service.id"
+                  @input="setConformityPayment"
+              >
+                <b-form-select-option v-for="(item, index) in deliveryService" :key="index" :value="item.id" :disabled="!item.active">
+                  {{ item.active }} {{ item.name }}
+                </b-form-select-option>
+              </BSelect>
+
+              <BRadio
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  name="deliveryActive"
+                  rules="required"
+                  label="Активна:"
+                  v-model="orderDetail.delivery.allow"
+              >
+                <b-form-radio size="lg" :value="true" >Да</b-form-radio>
+                <b-form-radio size="lg" :value="false">Нет</b-form-radio>
+              </BRadio>
+
+
+
+            </b-form-group>
+
+            <hr>
+
+            <b-form-group
+                label="Оплата:"
+                label-size="md"
+                label-class="font-weight-bold pt-0"
+                label-cols-lg="12"
+            >
+              <BSelect
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  name="paySystem"
+                  label="Способ:"
+                  v-model="orderDetail.paySystem.id"
+              >
+                <b-form-select-option v-for="(item, index) in paymentSystems" :key="index" :value="item.id" :disabled="!item.active">
+                  {{ item.active }} {{ item.name }}
+                </b-form-select-option>
+              </BSelect>
+
+
+
+
+
+            </b-form-group>
+
+
+            <hr>
+
+            <b-form-group
+                label="Дата:"
+                label-size="md"
+                label-class="font-weight-bold pt-0"
+                label-cols-lg="12"
+            >
+              <BTextInput
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  type="text"
+                  label="Создан:"
+                  name="dateCreate"
+                  v-model="orderDetail.dates.created"
+              />
+              <BTextInput
+
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  type="text"
+                  label="Изменён:"
+                  name="dateModified"
+                  v-model="orderDetail.dates.modified"
+              />
+              <BTextInput
+
+                  label-align-sm="right"
+                  label-cols-sm="3"
+                  label-cols-lg="4"
+                  rules=""
+                  type="text"
+                  label="Статус:"
+                  class="long-label"
+                  name="dateStatusUpdate"
+                  v-model="orderDetail.dates.statusUpdate"
+              />
+
+
+            </b-form-group>
+
 
 
 
@@ -137,7 +346,7 @@
               <b-col  >
                 <b-row class="unsave-button " cols-xl="2" align-v="end">
                   <b-col order="1" class="" xl="auto">
-                    <b-button type="submit" variant="danger" class="">Удалить</b-button>
+                    <b-button type="submit" variant="danger" class=""> Удалить </b-button>
                   </b-col>
                   <b-col order="2" xl="auto" class="mt-3">
                     <b-button type="reset" variant="secondary"  class="">Сбросить</b-button>
@@ -150,9 +359,7 @@
               </b-col>
             </b-row>
 
-<!--            <button type="submit" :disabled="!valid">-->
-<!--              Отправить форму-->
-<!--            </button>-->
+
 
           </b-form>
 
@@ -165,20 +372,21 @@
 
 
     <b-col xl="7" lg="5" >
-      <b-card header-tag="header">
+      <b-card header-tag="header" >
         <template #header>
           <h4><small class="text-muted">Позиции</small></h4>
         </template>
-        <b-card-text>
+        <b-card-text class="overflow-auto">
 
-<!--          {{formData.offers.length}}-->
+
 
           <table-static
-              v-if="formData.offers.length > 0 "
+
+              v-if="orderDetail.offers"
               :id="identifierComponents.table.offers"
               :fields="fields"
               :per-page="10"
-              class="offres-table"
+              class="offres-table w-100"
           />
           <span v-else>Нет товаров</span>
 
@@ -201,14 +409,11 @@ name: "index",
   mixins: [init,],
 
   data:() =>({
-      value: null,
-      dataSet: null,
-
     fields: [
       {key: 'id', thStyle: {width: '70px'}},
       {key: 'guid', class:"d-xl-table-cell d-none",  label: 'guid', thStyle: {width: '90px'}},
       // { key: 'guidByOrder', label: 'guid_o'  ,  thStyle: {  width: '100px' }},
-      { key: 'name', label: 'Имя'  ,  thStyle: {  width: '100px' }},
+      { key: 'name', label: 'Имя'  ,  thStyle: {  width: '10px' }},
       {key: 'supplierCode', class:"d-xl-table-cell d-none", label: 'Код поставщика',  thStyle: {width: '90px'}},
       {key: 'price', label: 'Цена, руб.', thStyle: {width: '30px'}},
       {key: 'quantity', label: 'Кол-во', thStyle: {width: '30px'}},
@@ -216,63 +421,57 @@ name: "index",
 
     ],
 
+
+
   }),
 
   computed: {
-    formData() {
-      const id = this.$store.getters["BaseComponents/getValueInputIndex"](this.identifierComponents.input.id);
 
-      const userId = this.$store.getters["BaseComponents/getValueInputIndex"](this.identifierComponents.input.userId);
-      const userFirstName = this.$store.getters["BaseComponents/getValueInputText"](this.identifierComponents.input.userFirstName);
-      const userLastName = this.$store.getters["BaseComponents/getValueInputText"](this.identifierComponents.input.userLastName);
-      const userPhone = this.$store.getters["BaseComponents/getValueInputPhone"](this.identifierComponents.input.userPhone);
+    orderDetail:{
+      get(){
 
-      const orderPrice = this.$store.getters["BaseComponents/getValueInputPhone"](this.identifierComponents.input.orderPrice);
-      const commentsAdmin = this.$store.getters["BaseComponents/getValueTextArea"](this.identifierComponents.input.commentsAdmin);
-      const commentsUser = this.$store.getters["BaseComponents/getValueTextArea"](this.identifierComponents.input.commentsUser);
+        return this.$store.getters["CrmOrders/itemDetailsById"]
+      },
+      set(val) {
+        // console.log('asdasdasdad')
+        // this.setConformity(this.deliveryService, this.$store.getters["CrmOrders/itemDetailsById"].delivery.service.id)
+        this.$store.commit('CrmOrders/setDataDetailsItemById', {val})
 
-      let status = this.dataSet ? this.dataSet.orderStatus : {}
-
-      // let status = {}
-      // status = this.dataSet.orderStatus
-
-      // status: {
-      //   get() {
-      //     return this.$store.getters["BaseComponents/getValueHtmlEditor"](this.id)
-      //   },
-      //   set(val) {
-      //     //запустить валидацию
-      //     this.$store.commit('BaseComponents/setValueHtmlEditor', {'key': this.id, 'value': val})
-      //     // val === 'q' ? this.isValid = false : this.isValid = null
-      //   },
-      //
-      // }
-
-      const offers = this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers) ? this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers)
-      : [];
-
-      // const name = this.$store.getters["BaseComponents/getValueInputText"](this.identifierComponents.input.name);
-      // const brand = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.brand);
-      // const categories = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.categories);
-      // const applicabilities = this.$store.getters["TempDataCatalog/getValueInputCatalog"](this.identifierComponents.input.applicabilities);
-      // const images = this.$store.getters["NewFileManager/getCurrentFiles"](this.identifierComponents.input.imageManagerId)
-      // const offers = this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers) ? this.$store.getters["BaseComponents/getDataTable"](this.identifierComponents.table.offers) : []
-      // const vendorCode = this.$store.getters["BaseComponents/getValueInputVendorCode"](this.identifierComponents.input.sku)
-      // const activity = this.activity
-      return {id, userId, userFirstName, userLastName, userPhone, orderPrice, commentsAdmin, commentsUser, offers, status}
+      }
     },
 
     statuses(){
       return this.$store.getters["CrmOrders/statuses"]
-    }
+    },
+
+    deliveryService:{
+      get(){return this.$store.getters["CrmOrders/deliveryServices"]},
+      set(val){
+        this.$store.commit('CrmOrders/setDataDeliveryService', {val})
+      }
+
+    },
+
+    paymentSystems:{
+      get(){return this.$store.getters["CrmOrders/paymentSystems"]},
+      set(val)
+      {
+        this.$store.commit('CrmOrders/setDataPaymentSystems', {val})
+      }
+
+    },
+
+    treeConformity(){
+      return this.$store.getters["CrmOrders/tree_conformity"]
+    },
 
 
   },
 
+
   methods: {
 
-    onSubmit(evt) {
-      evt.preventDefault()
+    onSubmit() {
       alert(JSON.stringify(this.formData))
     },
 
@@ -281,6 +480,35 @@ name: "index",
       this.$nextTick(() => {
 
       })
+    },
+
+    setConformityDelivery(){
+
+      const arrToUserIds = this.treeConformity.filter(elem => elem['user_type_id'] === this.orderDetail.userType.id);
+      for (const key in this.deliveryService) {
+        const count = arrToUserIds.filter(rules => rules.delivery_type_id === this.deliveryService[key].id);
+        if (count.length !== 0) {
+          this.deliveryService[key].active = true
+        }
+        else {
+          this.deliveryService[key].active = false
+        }
+      }
+    },
+
+    setConformityPayment(){
+
+      const arrToDeliveryIds = this.treeConformity.filter(elem => elem.delivery_type_id === this.orderDetail.delivery.service.id);
+      for (const key in this.paymentSystems) {
+        const count = arrToDeliveryIds.filter(rules => rules.paysystem_type_id === this.paymentSystems[key].id);
+        if (count.length !== 0) {
+          this.paymentSystems[key].active = true
+        }
+        else {
+          this.paymentSystems[key].active = false
+          console.log(this.paymentSystems[key])
+        }
+      }
     },
 
 
@@ -308,5 +536,10 @@ name: "index",
   font-size: 12px;
   font-family: 'PT Sans Caption', sans-serif;
   /*font-weight: 500;*/
+}
+
+#__BVID__164__BV_label_{
+  display: flex;
+  align-items: center;
 }
 </style>

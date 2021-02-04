@@ -10,6 +10,11 @@ function crmOrderDetail (data) {
                     lastName: data.user.name.last
                 },
             userPhone: data.user.phone,
+            userType:
+                {
+                    id: 1,
+                    name: 'розница'
+                },
             price: data.price,
             orderStatus: data.status,
             delivery: {
@@ -21,6 +26,8 @@ function crmOrderDetail (data) {
                     name: data.delivery.service.name
                 }
             },
+
+
 
             address: {
                 city: data.address.city,
@@ -80,3 +87,56 @@ function crmOrderStatuses (data) {
 }
 
 module.exports.crmOrderStatuses = crmOrderStatuses;
+
+function crmOrderDeliveryServises (data) {
+    const mapData = []
+    data.forEach((elem, ) =>{
+        mapData.push({
+            id: elem.id,
+            name: elem.name,
+            active: elem.active,
+            sort: elem.sort,
+            description: elem.description,
+
+        })
+    })
+
+    return mapData;
+}
+
+module.exports.crmOrderDeliveryServises = crmOrderDeliveryServises;
+
+function crmOrderPaySystems (data) {
+    const mapData = []
+    data.forEach((elem, ) =>{
+        mapData.push({
+            id: elem.id,
+            name: elem.name,
+            active: elem.active,
+            sort: elem.sort,
+            description: elem.description,
+
+        })
+    })
+
+    return mapData;
+}
+
+module.exports.crmOrderPaySystems = crmOrderPaySystems;
+
+function crmOrderTreeConformity (data) {
+    const mapData = []
+    data.forEach((elem, ) =>{
+        mapData.push({
+            user_type_id: elem.user_type_id,
+            delivery_type_id: elem.delivery_type_id,
+            paysystem_type_id: elem.paysystem_type_id,
+
+
+        })
+    })
+
+    return mapData;
+}
+
+module.exports.crmOrderTreeConformity = crmOrderTreeConformity;

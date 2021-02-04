@@ -1,21 +1,22 @@
 <template>
   <div class="price-input ">
-    <ValidationProvider name="Сумма" :rules="{double: true, required: true,}" v-slot="{ errors }">
-  <b-form-input
-      v-model="valueInputText"
-      type="text"
-      :size="size"
-      :placeholder="placeholder"
-      :state="!!errors[0] ? false : null"
-      :aria-describedby="id+'-feedback'"
-      required
-  >
-  </b-form-input>
+    <ValidationProvider name="Сумма" :rules="{double: true, required: required,}" v-slot="{ errors }">
 
-    <b-form-invalid-feedback :id="id+'-feedback'" class="mb-3">
-      {{errors[0]}}
-    </b-form-invalid-feedback>
-<!--      <span class="text-fail-validations">{{errors[0]}}</span>-->
+      <b-form-input
+          v-model="valueData"
+          v-on="$listeners"
+          type="text"
+          :placeholder="placeholder"
+          :state="!!errors[0] ? false : null"
+          :aria-describedby="id+'-feedback'"
+
+      >
+      </b-form-input>
+
+      <b-form-invalid-feedback :id="id+'-feedback'" class="mb-3">
+        {{ errors[0] }}
+      </b-form-invalid-feedback>
+
     </ValidationProvider>
 
   </div>
@@ -28,51 +29,35 @@ export default {
   props: {
     id: {
       type: String,
-      required: true,
+      default: 'price-input'
     },
-
-    size: {
-      validator(value) {
-        return ['', 'sm', 'lg'].indexOf(value) !== -1
-      },
-      default: '',
-    },
-
     placeholder: {
       type: String,
       default: '99.99',
     },
+    value: {},
+    required: {
+      type: Boolean,
+      default: false
+    },
 
-  },
-
-  data(){
-    return{
-    }
   },
 
   computed: {
-    valueInputText: {
+    valueData: {
       get() {
-        return this.$store.getters["BaseComponents/getValueInputPrice"](this.id)
+        return this.value
       },
       set(val) {
-        //запустить валидацию
-
-        this.$store.commit('BaseComponents/setValueInputPrice', {key: this.id, value: val})
-
+        // some logic
+        this.$emit('update:value', val)
       },
-
     }
-  },
-
-
+  }
 
 }
 </script>
 
 <style scoped>
-  .text-fail-validations{
-    display: block;
-    margin-bottom: 1rem;
-  }
+
 </style>

@@ -1,29 +1,25 @@
 <template>
-
   <ValidationProvider :vid="vid" :name="$attrs.name" :rules="rules">
     <b-form-group
         slot-scope="{ valid, errors }"
         v-bind="$attrs"
     >
-      <b-form-input
+      <b-form-textarea
           v-model="innerValue"
           v-bind="$attrs"
-          :state="errors[0] ? false : (valid ? true : null)"
+          :state="errors[0] ? false : (valid ? null : null)"
       >
-      </b-form-input>
+      </b-form-textarea>
       <b-form-invalid-feedback id="inputLiveFeedback">
         {{ errors[0] }}
       </b-form-invalid-feedback>
     </b-form-group>
   </ValidationProvider>
-
-
 </template>
 
 <script>
 export default {
-  name: "index-input",
-
+  name: "BTextArea",
   props: {
     vid: {
       type: String
@@ -42,20 +38,19 @@ export default {
   }),
   watch: {
     // Handles internal model changes.
-    innerValue (newVal) {
+    innerValue(newVal) {
       this.$emit('input', newVal);
     },
     // Handles external model changes.
-    value (newVal) {
+    value(newVal) {
       this.innerValue = newVal;
     }
   },
-  created () {
+  created() {
     if (this.value) {
       this.innerValue = this.value;
     }
   }
-
 }
 </script>
 

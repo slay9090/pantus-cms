@@ -50,7 +50,7 @@ import searchInput from '@/components/base/input/search-input'
 import indexInput from '@/components/base/input/index-input'
 import previewRequestBody from '@/components/base/preview-request-body'
 import htmlEditorInput from '@/components/base/input/html-editor'
-import textInput from '@/components/base/input/text-input'
+import textInput from '@/components/base/input/bottle-input'
 import slugInput from '@/components/base/input/slug-input'
 import priceInput from '@/components/base/input/price-input'
 import textArea from '@/components/base/input/text-area'
@@ -72,6 +72,15 @@ Vue.component("text-area", textArea);
 Vue.component("input-sku", skuInput);
 Vue.component("table-dynamic", dynamicTable);
 Vue.component("input-phone", phoneInput);
+
+import BTextInput from "@/components/base/input/BTextInput";
+import BTextArea from "@/components/base/input/BTextArea";
+import BSelect from "@/components/base/input/BSelect";
+import BRadio from "@/components/base/input/BRadio";
+Vue.component("BTextInput", BTextInput);
+Vue.component("BTextArea", BTextArea);
+Vue.component("BSelect", BSelect);
+Vue.component("BRadio", BRadio);
 
 
 

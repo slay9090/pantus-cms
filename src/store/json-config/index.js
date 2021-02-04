@@ -31,3 +31,6 @@ exports.crmOrdersMapedUrlFilter = crmOrdersList.crmOrdersMapedUrlFilter;
 
 exports.crmOrderDetail = crmOrderDetail.crmOrderDetail;
 exports.crmOrderStatuses = crmOrderDetail.crmOrderStatuses;
+exports.crmOrderDeliveryServises = crmOrderDetail.crmOrderDeliveryServises;
+exports.crmOrderPaySystems = crmOrderDetail.crmOrderPaySystems;
+exports.crmOrderTreeConformity = crmOrderDetail.crmOrderTreeConformity;
