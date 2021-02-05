@@ -24,15 +24,15 @@
 
             >
               <!--               <router-link :to="'/products/list/edit?id='+data.item.id"  class="mb-0 title-block__text-limit" >{{ data.value }} </router-link>-->
-              <template v-slot:cell(id)="data">
-                <router-link :to="'/crm/orders/edit/'+data.value">
-                  {{ data.value }}
-                </router-link>
-              </template>
+<!--              <template v-slot:cell(id)="data">-->
+<!--                <router-link :to="'/crm/orders/edit/'+data.value">-->
+<!--                  {{ data.value }}-->
+<!--                </router-link>-->
+<!--              </template>-->
 
               <template v-slot:cell(user.name)="data">
-                <router-link :to="'/crm/orders'">
-                  {{ data.value.firstname + ' ' + data.value.lastname }}
+                <router-link :to="'/crm/orders/edit/'+data.item.id">
+                  {{ data.item.user.name.firstname + ' ' + data.item.user.name.lastname }}
                 </router-link>
               </template>
 
@@ -84,7 +84,7 @@ export default {
         { key: 'user.name', sortable: true , label: 'Пользователь',  thStyle: {  width: '200px' }},
         { key: 'address', label: 'Адрес'  ,  thStyle: {  width: '100px' }},
         { key: 'status.name', label: 'Статус'  ,  thStyle: {  width: '100px' }},
-        { key: 'offersCount', label: 'Заказов'  ,  thStyle: {  width: '50px' }},
+        { key: 'offersCount', label: 'Кол-во'  ,  thStyle: {  width: '50px' }},
         { key: 'price', sortable: true , label: 'Сумма' , thStyle: {  width: '100px' }},
         { key: 'date', sortable: true , label: 'Дата' , thStyle: {  width: '100px' }},
       ],

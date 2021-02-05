@@ -12,8 +12,8 @@ function crmOrderDetail (data) {
             userPhone: data.user.phone,
             userType:
                 {
-                    id: 1,
-                    name: 'розница'
+                    id: data.user.type.id,
+                    name: data.user.type.name,
                 },
             price: data.price,
             orderStatus: data.status,

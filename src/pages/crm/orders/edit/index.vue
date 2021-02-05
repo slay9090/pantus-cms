@@ -37,7 +37,8 @@
                     label="id:"
                     name="orderId"
                     v-model="orderDetail.id"
-                    placeholder="Enter id"
+                    placeholder="Введите ID"
+                    readonly
                 />
 
 
@@ -50,8 +51,8 @@
                   label="Сумма:"
                   name="price"
                   v-model="orderDetail.price"
-
                   placeholder="Enter price"
+                  readonly
               />
 
 
@@ -64,9 +65,10 @@
                   label="Комментарий менеджера:"
                   name="commentsAdmin"
                   v-model="orderDetail.comments.admin"
-                  placeholder="Enter comment"
+                  placeholder="Введите комментарий"
                   rows="1"
                   max-rows="3"
+                  readonly
               />
 
               <BTextArea
@@ -78,9 +80,10 @@
                   label="Комментарий клиента:"
                   name="commentsUser"
                   v-model="orderDetail.comments.user"
-                  placeholder="Enter comment"
+                  placeholder="Введите комментарий"
                   rows="1"
                   max-rows="3"
+                  readonly
               />
 
               <BSelect
@@ -116,8 +119,8 @@
                   label="id:"
                   name="userId"
                   v-model="orderDetail.userId"
-
-                  placeholder="Enter id"
+                  placeholder="Введите ID"
+                  readonly
               />
 
               <BTextInput
@@ -129,8 +132,8 @@
                   label="Имя:"
                   name="userFirstName"
                   v-model="orderDetail.userName.firstName"
-
-                  placeholder="Enter FirstName"
+                  placeholder="Введите имя"
+                  readonly
               />
 
               <BTextInput
@@ -142,8 +145,8 @@
                   label="Фамилия:"
                   name="userLastName"
                   v-model="orderDetail.userName.lastName"
-
-                  placeholder="Enter LastName"
+                  placeholder="Введите фамилию"
+                  readonly
               />
 
               <BTextInput
@@ -155,6 +158,7 @@
                   label="Телефон:"
                   name="userPhone"
                   v-model="orderDetail.userPhone"
+                  readonly
               />
 
               <BSelect
@@ -166,6 +170,7 @@
                   label="Тип:"
                   v-model="orderDetail.userType.id"
                   @input="setConformityDelivery"
+                  readonly
               >
                 <b-form-select-option :value="1">розница</b-form-select-option>
                 <b-form-select-option :value="2">опт</b-form-select-option>
@@ -191,7 +196,8 @@
                   label="Город:"
                   name="deliveryCity"
                   v-model="orderDetail.address.city"
-                  placeholder="Enter city"
+                  placeholder="Введите город"
+                  readonly
               />
 
               <BTextArea
@@ -203,7 +209,8 @@
                   label="Улица:"
                   name="deliveryDetailed"
                   v-model="orderDetail.address.detailed"
-                  placeholder="Enter detailed"
+                  placeholder="Введите адрес"
+                  readonly
               />
 
               <BTextInput
@@ -215,7 +222,7 @@
                   label="Код трекинга:"
                   name="trackingCode"
                   v-model="orderDetail.delivery.trackingCode"
-                  placeholder="Enter trackingCode"
+                  placeholder="Введите Идентификатор отправления"
               />
 
               <BTextInput
@@ -224,17 +231,18 @@
                   label-cols-lg="4"
                   rules="double"
                   type="text"
-                  label="Цена:"
+                  label="Стоимость:"
                   name="deliveryPrice"
                   v-model="orderDetail.delivery.price"
-                  placeholder="Enter price"
+                  placeholder="Введите стоимость"
+                  description="пример: 999.90"
               />
 
               <BSelect
                   label-align-sm="right"
                   label-cols-sm="3"
                   label-cols-lg="4"
-                  rules=""
+                  rules="required"
                   name="deliveryService"
                   label="Способ:"
                   v-model="orderDetail.delivery.service.id"
@@ -274,7 +282,7 @@
                   label-align-sm="right"
                   label-cols-sm="3"
                   label-cols-lg="4"
-                  rules=""
+                  rules="required"
                   name="paySystem"
                   label="Способ:"
                   v-model="orderDetail.paySystem.id"
@@ -308,6 +316,7 @@
                   label="Создан:"
                   name="dateCreate"
                   v-model="orderDetail.dates.created"
+                  readonly
               />
               <BTextInput
 
@@ -319,6 +328,7 @@
                   label="Изменён:"
                   name="dateModified"
                   v-model="orderDetail.dates.modified"
+                  readonly
               />
               <BTextInput
 
@@ -331,6 +341,7 @@
                   class="long-label"
                   name="dateStatusUpdate"
                   v-model="orderDetail.dates.statusUpdate"
+                  readonly
               />
 
 
@@ -472,7 +483,7 @@ name: "index",
   methods: {
 
     onSubmit() {
-      alert(JSON.stringify(this.formData))
+      alert(JSON.stringify(this.orderDetail))
     },
 
     onReset(evt) {
@@ -483,6 +494,8 @@ name: "index",
     },
 
     setConformityDelivery(){
+
+      this.orderDetail.delivery.service.id = null;
 
       const arrToUserIds = this.treeConformity.filter(elem => elem['user_type_id'] === this.orderDetail.userType.id);
       for (const key in this.deliveryService) {
@@ -497,6 +510,8 @@ name: "index",
     },
 
     setConformityPayment(){
+
+      this.orderDetail.paySystem.id = null;
 
       const arrToDeliveryIds = this.treeConformity.filter(elem => elem.delivery_type_id === this.orderDetail.delivery.service.id);
       for (const key in this.paymentSystems) {
