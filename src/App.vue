@@ -16,10 +16,12 @@
               <b-col>
                 <div class="text-muted">
                   <breadcrumbs/>
+                  <alert />
                 </div>
               </b-col>
             </b-row>
           </b-container>
+
 
           <!-- DYNAMIC PAGES -->
           <router-view/>
@@ -60,6 +62,7 @@ import SideBar from "@/components/navigations/side-bar/sidebar-index";
 import Breadcrumbs from './components/navigations/the-breadcrumbs';
 import login from "@/pages/login";
 import Axios from 'axios';
+import Alert from '@/components/alert/index'
 
 
 
@@ -71,6 +74,7 @@ export default {
     SideBar,
     Breadcrumbs,
     login,
+    Alert,
   },
 
   data() {

@@ -6,11 +6,11 @@
 
     <b-col xl="5" lg="7" >
 
-      <b-card header-tag="header">
+      <b-card header-tag="header" class="shadow">
         <template #header>
           <h4><small class="text-muted">Заказ</small></h4>
         </template>
-
+        <b-overlay :show="initFailed" no-fade rounded="sm">
         <b-card-text v-if="!initFailed">
 
 
@@ -37,7 +37,7 @@
                     label="id:"
                     name="orderId"
                     v-model="orderDetail.id"
-                    placeholder="Введите ID"
+                    placeholder="111111"
                     readonly
                 />
 
@@ -46,13 +46,15 @@
                   label-align-sm="right"
                   label-cols-sm="3"
                   label-cols-lg="4"
-                  rules="required|double"
+                  rules="required|is_not:₽ "
                   type="text"
                   label="Сумма:"
                   name="price"
                   v-model="orderDetail.price"
-                  placeholder="Enter price"
+                  placeholder="₽ 0.00"
+                  :mask="maskPrice"
                   readonly
+
               />
 
 
@@ -229,13 +231,13 @@
                   label-align-sm="right"
                   label-cols-sm="3"
                   label-cols-lg="4"
-                  rules="double"
+                  rules="is_not:₽ "
                   type="text"
                   label="Стоимость:"
                   name="deliveryPrice"
                   v-model="orderDetail.delivery.price"
-                  placeholder="Введите стоимость"
-                  description="пример: 999.90"
+                  placeholder="₽ 0.00"
+                  :mask="maskPrice"
               />
 
               <BSelect
@@ -249,7 +251,7 @@
                   @input="setConformityPayment"
               >
                 <b-form-select-option v-for="(item, index) in deliveryService" :key="index" :value="item.id" :disabled="!item.active">
-                  {{ item.active }} {{ item.name }}
+                  {{ item.name }}
                 </b-form-select-option>
               </BSelect>
 
@@ -288,7 +290,7 @@
                   v-model="orderDetail.paySystem.id"
               >
                 <b-form-select-option v-for="(item, index) in paymentSystems" :key="index" :value="item.id" :disabled="!item.active">
-                  {{ item.active }} {{ item.name }}
+                  {{ item.name }}
                 </b-form-select-option>
               </BSelect>
 
@@ -376,17 +378,18 @@
 
             </ValidationObserver >
         </b-card-text>
-
+        </b-overlay>
       </b-card>
 
     </b-col>
 
 
     <b-col xl="7" lg="5" >
-      <b-card header-tag="header" >
+      <b-card header-tag="header" class="shadow">
         <template #header>
           <h4><small class="text-muted">Позиции</small></h4>
         </template>
+        <b-overlay :show="initFailed" no-fade rounded="sm">
         <b-card-text class="overflow-auto">
 
 
@@ -402,6 +405,7 @@
           <span v-else>Нет товаров</span>
 
         </b-card-text>
+        </b-overlay>
       </b-card>
     </b-col>
 
@@ -413,7 +417,13 @@
 
 <script>
 import init from "./init";
-
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+const currencyMask = createNumberMask({
+  prefix: '₽ ',
+  allowDecimal: true,
+  includeThousandsSeparator: true,
+  allowNegative: false,
+});
 
 export default {
 name: "index",
@@ -432,7 +442,7 @@ name: "index",
 
     ],
 
-
+    maskPrice: currencyMask,
 
   }),
 

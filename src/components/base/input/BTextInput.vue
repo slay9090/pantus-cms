@@ -7,7 +7,7 @@
 
     >
       <b-form-input
-
+          v-mask="mask"
           v-model="innerValue"
           v-bind="$attrs"
           :state="errors[0] ? false : (valid ? null : null)"
@@ -21,8 +21,10 @@
 </template>
 
 <script>
+
 export default {
   name: "BTextInput",
+
   props: {
     vid: {
       type: String
@@ -34,10 +36,12 @@ export default {
     // must be included in props
     value: {
       type: null
-    }
+    },
+    mask: {},
   },
   data: () => ({
-    innerValue: ''
+    innerValue: '',
+
   }),
   watch: {
     // Handles internal model changes.

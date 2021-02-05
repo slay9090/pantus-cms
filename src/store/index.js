@@ -14,6 +14,8 @@ import TempDataCatalog from '@/store/temp-data/catalog'
 import NewFileManager from '@/store/temp-data/new-file-manager'
 import CrmOrders from '@/store/module/crm/orders'
 
+import AlertMessages from '@/store/module/services/alert-messages'
+
 
 
 Vue.use(Vuex)
@@ -33,6 +35,7 @@ export default new Vuex.Store({
       TempDataCatalog,
       NewFileManager,
       CrmOrders,
+      AlertMessages,
 
 
   },

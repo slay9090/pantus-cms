@@ -14,6 +14,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
 import TreeModel from 'tree-model'
 
+// import { VueMaskDirective } from 'v-mask'
+// Vue.directive('mask', VueMaskDirective);
+
+import VueMask from 'v-mask'
+Vue.use(VueMask);
+
+
 /// Валидаторы
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 Vue.component('ValidationProvider', ValidationProvider);
