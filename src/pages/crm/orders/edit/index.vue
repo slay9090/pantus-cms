@@ -359,7 +359,7 @@
               <b-col  >
                 <b-row class="unsave-button " cols-xl="2" align-v="end">
                   <b-col order="1" class="" xl="auto">
-                    <b-button type="submit" variant="danger" class=""> Удалить </b-button>
+                    <b-button type="submit" variant="danger" class="" @click="msg"> Удалить </b-button>
                   </b-col>
                   <b-col order="2" xl="auto" class="mt-3">
                     <b-button type="reset" variant="secondary"  class="">Сбросить</b-button>
@@ -491,6 +491,11 @@ name: "index",
 
 
   methods: {
+
+    msg(evt){
+      evt.preventDefault()
+      this.$globalFunc.setAlertMessage('warning', 'TEST');
+    },
 
     onSubmit() {
       alert(JSON.stringify(this.orderDetail))

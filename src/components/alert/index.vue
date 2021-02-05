@@ -2,12 +2,12 @@
   <b-alert
       :show="dismissCountDown"
       dismissible
-      variant="warning"
+      :variant="alertMessages.type"
       @dismissed="dismissCountDown=0"
       @dismiss-count-down="countDownChanged"
+      class="shadow"
   >
-    Default Alert
-
+    {{alertMessages.text}}
   </b-alert>
 </template>
 
@@ -28,8 +28,8 @@ name: "index",
   },
   watch:{
     alertMessages(){
-      console.log('alert comp');
-      this.showDismissibleAlert = true
+      window.scrollTo(0,0)
+      this.showAlert();
       return this.$store.getters["AlertMessages/alert"]
     },
   },

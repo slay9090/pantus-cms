@@ -13,6 +13,8 @@ import VueAxios from 'vue-axios'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
 import TreeModel from 'tree-model'
+import {baseFunc} from '@/mixins/global'
+Vue.prototype.$globalFunc = baseFunc
 
 // import { VueMaskDirective } from 'v-mask'
 // Vue.directive('mask', VueMaskDirective);
