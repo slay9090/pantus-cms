@@ -86,10 +86,14 @@ import BTextInput from "@/components/base/input/BTextInput";
 import BTextArea from "@/components/base/input/BTextArea";
 import BSelect from "@/components/base/input/BSelect";
 import BRadio from "@/components/base/input/BRadio";
+import BHtml from "@/components/base/input/BHtml";
+import BTagsInput from "@/components/base/input/BTagsInput";
 Vue.component("BTextInput", BTextInput);
 Vue.component("BTextArea", BTextArea);
 Vue.component("BSelect", BSelect);
 Vue.component("BRadio", BRadio);
+Vue.component("BHtml", BHtml);
+Vue.component("BTagsInput", BTagsInput);
 
 
 

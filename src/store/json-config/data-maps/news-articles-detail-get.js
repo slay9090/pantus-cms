@@ -1,14 +1,14 @@
 
 function newsArticleItemDetail (data) {
-    let serialisationData = [];
-    serialisationData.push(
+    let serialisationData = {};
+    serialisationData =
         {
             id: data.id,
             name: data.name,
-            activity: data.name,
+            activity: data.activity,
 
             preview: {
-                image: data.preview.image,
+                image: [data.preview.image], // потому что на многокартинок расчитан компонент
                 text: data.preview.text
             },
             content: data.content,
@@ -23,9 +23,11 @@ function newsArticleItemDetail (data) {
                 updated: data.dates.updated,
                 active_from: data.dates.active_from,
             },
+            tags: ['test1', 'test2'],
+
 
         }
-    )
+
 
     return serialisationData;
 

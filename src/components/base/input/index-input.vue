@@ -1,23 +1,14 @@
 <template>
+  <b-form-input
+      v-model="valueInputIndex"
+      :size="size"
+      type="number"
+      :placeholder="placeholder"
+      :state="isValid"
+      required
+  >
 
-  <ValidationProvider :vid="vid" :name="$attrs.name" :rules="rules">
-    <b-form-group
-        slot-scope="{ valid, errors }"
-        v-bind="$attrs"
-    >
-      <b-form-input
-          v-model="innerValue"
-          v-bind="$attrs"
-          :state="errors[0] ? false : (valid ? true : null)"
-      >
-      </b-form-input>
-      <b-form-invalid-feedback id="inputLiveFeedback">
-        {{ errors[0] }}
-      </b-form-invalid-feedback>
-    </b-form-group>
-  </ValidationProvider>
-
-
+  </b-form-input>
 </template>
 
 <script>
@@ -25,36 +16,58 @@ export default {
   name: "index-input",
 
   props: {
-    vid: {
-      type: String
+
+    id: {
+      type: String,
+      required: true,
     },
-    rules: {
-      type: [Object, String],
-      default: ''
+
+    size: {
+      validator(value) {
+        return ['', 'sm', 'lg'].indexOf(value) !== -1
+      },
+      default: '',
     },
-    // must be included in props
-    value: {
-      type: null
+
+    placeholder: {
+      type: String,
+      default: 'Id',
+    },
+
+  },
+
+  data(){
+    return{
+      isValid: null,
     }
   },
-  data: () => ({
-    innerValue: ''
-  }),
-  watch: {
-    // Handles internal model changes.
-    innerValue (newVal) {
-      this.$emit('input', newVal);
-    },
-    // Handles external model changes.
-    value (newVal) {
-      this.innerValue = newVal;
+
+  computed: {
+
+    valueInputIndex: {
+      get() {
+
+        return this.$store.getters["BaseComponents/getValueInputIndex"](this.id)
+      },
+      set(val) {
+        //запустить валидацию
+
+       // this.valid(val)
+
+        this.$store.commit('BaseComponents/setValueInputIndex', {'key': this.id, 'value': val})
+        val === 'q' ? this.isValid = false : this.isValid = null
+
+      },
+
     }
+
   },
-  created () {
-    if (this.value) {
-      this.innerValue = this.value;
-    }
-  }
+  methods: {
+    // valid(val) {
+    //   console.log('VALIDA ', val)
+    // }
+  },
+
 
 }
 </script>

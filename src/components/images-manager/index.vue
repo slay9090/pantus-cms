@@ -6,7 +6,6 @@
         v-if="images"
         :id="id"
         :modal-id="modalId"
-
     />
   </div>
 
@@ -30,16 +29,28 @@ name: "image-manager",
     images: {
      type: Array
     },
+
   },
 
 
+
+  computed:{
+    selectImages(){
+      return this.$store.getters["NewFileManager/getSelectedFiles"](this.id)
+    }
+  },
+
+  watch: {
+    selectImages(newVal){
+      this.$emit('update:images', newVal);
+    },
+  },
 
 
 
   mounted() {
       this.$store.commit('NewFileManager/setDataCurrentFiles', {key: this.id, value: this.images.slice()})
       this.$store.commit('NewFileManager/setDataSelectedFiles', {key: this.id, value: this.images.slice()})
-
   }
 
 

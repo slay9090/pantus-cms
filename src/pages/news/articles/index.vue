@@ -56,7 +56,7 @@
                   </template>
 
                   <template v-slot:cell(name)="data">
-                    <router-link :to="'/news/articles/edit?id='+data.item.id" class="mb-0">{{ data.value }}</router-link>
+                    <router-link :to="'/news/articles/edit/'+data.item.id" class="mb-0">{{ data.value }}</router-link>
                   </template>
                 </table-static>
               </b-overlay>
@@ -124,8 +124,8 @@ name: "NewsArticle",
   },
 
   async mounted() {
-    await this.$store.dispatch("NewsArticles/GetData");
-    let data = await this.$store.getters["NewsArticles/AllItems"];
+    await this.$store.dispatch("NewsArticles/pullNewsList");
+    let data = await this.$store.getters["NewsArticles/getNewsList"];
     this.$store.commit('BaseComponents/setDataTable', {'key': 'news-articles-list-table', 'value': data});
     this.spinerLoaderIsShow = false
   },
