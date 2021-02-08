@@ -1,23 +1,23 @@
 <template>
-  <div>
-    <router-link :to="{ name: 'home'}" class="btn">Назад</router-link>
-    <b-card-group deck>
-      <b-card title="Title" header-tag="header" footer-tag="footer" class="shadow">
-        <template #header>
-          <h6 class="mb-0">Header Slot</h6>
-        </template>
-        <b-card-text class="d-flex justify-content-left">
-          Header and footers using slots.
-        </b-card-text>
-        <div class="d-flex justify-content-center mb-3">
-                <div class="block-diagram-circle">
-                  <div class="block-diagram-circle__draw">
-                    <span class="block-diagram-circle__text">15%</span>
-                  </div>
-                </div>
-        </div>
+  <b-container fluid>
 
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+    <b-card-group deck>
+      <b-card title="Нагрузка на сервер" header-tag="header" footer-tag="footer" class="shadow">
+        <template #header>
+          <h6 class="mb-0">ЦП</h6>
+        </template>
+        <b-card-text class="d-flex justify-content-center">
+<!--          <div class="d-flex justify-content-center mt-4">-->
+<!--            <div class="block-diagram-circle">-->
+<!--              <div class="block-diagram-circle__draw">-->
+<!--                <span class="block-diagram-circle__text">15%</span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+          <apexchart type="donut" :options="performanceSys.chartOptions" :series="performanceSys.series" :labels="performanceSys.labels" class="w-100"></apexchart>
+
+        </b-card-text>
 
       </b-card>
 
@@ -26,20 +26,11 @@
           <h6 class="mb-0">Header Slot</h6>
         </template>
         <b-card-text>
-          Header and footers using slots.
-          <dl>
-            <dt>
-              Browser market share June 2015
-            </dt>
-            <dd class="percentage percentage-11"><span class="text">IE 11: 11.33%</span></dd>
-            <dd class="percentage percentage-49"><span class="text">Chrome: 49.77%</span></dd>
-            <dd class="percentage percentage-16"><span class="text">Firefox: 16.09%</span></dd>
-            <dd class="percentage percentage-5"><span class="text">Safari: 5.41%</span></dd>
-            <dd class="percentage percentage-2"><span class="text">Opera: 1.62%</span></dd>
-            <dd class="percentage percentage-2"><span class="text">Android 4.4: 2%</span></dd>
-          </dl>
+
+            <apexchart type="bar" :options="ordersMonth.options" :series="ordersMonth.series" class="w-100"></apexchart>
+
         </b-card-text>
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+
 
       </b-card>
 
@@ -82,8 +73,79 @@
 
 
 
-  </div>
+  </b-container>
 </template>
+
+
+
+
+
+<script>
+import VueApexCharts from 'vue-apexcharts'
+export default {
+  data() {
+    return {
+      transProps: {
+        // Transition name
+        name: 'flip-list'
+      },
+      items: [
+        { a: 2, b: 'Two', c: 'Moose' },
+        { a: 1, b: 'Three', c: 'Dog' },
+        { a: 3, b: 'Four', c: 'Cat' },
+        { a: 4, b: 'One', c: 'Mouse' }
+      ],
+      fields: [
+        { key: 'a', sortable: true },
+        { key: 'b', sortable: true },
+        { key: 'c', sortable: true }
+      ],
+      ordersMonth: {
+        options: {
+          chart: {
+            id: 'vuechart-example'
+          },
+          xaxis: {
+            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+          }
+        },
+        series: [{
+          name: 'series-1',
+          data: [30, 40, 45, 50, 49, 60, 70, 91]
+        }]
+      },
+
+
+      performanceSys:{
+        series: [75, 25],
+
+        chartOptions: {
+          labels: ["Свободно", "Занято"],
+          colors: ['#99CC66', '#D32F2F'],
+          // chart: {
+          //   type: 'category',
+          // },
+          // responsive: [{
+          //   breakpoint: 480,
+          //   options: {
+          //     chart: {
+          //       width: 500,
+          //     },
+          //     legend: {
+          //       position: 'bottom'
+          //     }
+          //   }
+          // }]
+        },
+      },
+    }
+
+
+    }
+
+}
+</script>
+
 
 <style scoped>
 table#table-transition-example .flip-list-move {
@@ -122,27 +184,3 @@ table#table-transition-example .flip-list-move {
 
 
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      transProps: {
-        // Transition name
-        name: 'flip-list'
-      },
-      items: [
-        { a: 2, b: 'Two', c: 'Moose' },
-        { a: 1, b: 'Three', c: 'Dog' },
-        { a: 3, b: 'Four', c: 'Cat' },
-        { a: 4, b: 'One', c: 'Mouse' }
-      ],
-      fields: [
-        { key: 'a', sortable: true },
-        { key: 'b', sortable: true },
-        { key: 'c', sortable: true }
-      ]
-    }
-  }
-}
-</script>

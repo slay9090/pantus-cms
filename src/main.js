@@ -37,6 +37,13 @@ Object.keys(rules).forEach(rule => {
 });
 /// -- Валидаторы
 
+
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+
+Vue.component('apexchart', VueApexCharts)
+
+
 Vue.use(VueVirtualScroller)
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
