@@ -121,7 +121,8 @@ export default {
 
         chartOptions: {
           labels: ["Свободно", "Занято"],
-          colors: ['#99CC66', '#D32F2F'],
+          colors: ['#99CC66', '#E74C3C'],
+
           // chart: {
           //   type: 'category',
           // },
