@@ -10,15 +10,24 @@
 
       <div class="d-flex " id="body-row">
         <SideBar/>
-        <div class="w-100 my-3 mx-4">
-          <div class="text-muted">
-            <breadcrumbs/>
+        <b-container fluid class="my-4">
+          <b-container fluid>
+            <b-row>
+              <b-col>
+                <div class="text-muted">
+                  <breadcrumbs/>
+                  <alert />
+                </div>
+              </b-col>
+            </b-row>
+          </b-container>
 
-          </div>
+
           <!-- DYNAMIC PAGES -->
           <router-view/>
 
-        </div>
+
+        </b-container>
         <!-- Main Col END -->
 
       </div>
@@ -38,6 +47,10 @@
 *:focus {
   outline: none;
 }
+/*вынести в базовые*/
+.card {
+  min-width: 290px;
+}
 </style>
 
 
@@ -49,6 +62,7 @@ import SideBar from "@/components/navigations/side-bar/sidebar-index";
 import Breadcrumbs from './components/navigations/the-breadcrumbs';
 import login from "@/pages/login";
 import Axios from 'axios';
+import Alert from '@/components/alert/index'
 
 
 
@@ -60,6 +74,7 @@ export default {
     SideBar,
     Breadcrumbs,
     login,
+    Alert,
   },
 
   data() {

@@ -6,11 +6,12 @@ const state = () => ({
     input_index_value: {},
     html_editor: {},
     input_text_value: {},
-    table_limit_data: {},
+    table_data: {},
     input_slug_value: {},
     input_price_value: {},
     input_vendor_code_value: {},  // Артикул
     text_area_value: {},
+    input_phone_value: {},
 
 })
 
@@ -35,8 +36,8 @@ const mutations = {
         Vue.set(state.text_area_value, data.key, data.value)
     },
 
-    setDataLimitTable(state, data){
-        Vue.set(state.table_limit_data, data.key, data.value)
+    setDataTable(state, data){
+        Vue.set(state.table_data, data.key, data.value)
     },
 
     setValueInputSlug(state, data){
@@ -49,6 +50,10 @@ const mutations = {
     /// Установить значение Артикул-инпута
     setValueInputVendorCode(state, data){
         Vue.set(state.input_vendor_code_value, data.key, data.value)
+    },
+
+    setValueInputPhone(state, data){
+        Vue.set(state.input_phone_value, data.key, data.value)
     },
 
 }
@@ -79,8 +84,8 @@ const getters = {
         return state.text_area_value[key];
     },
 
-    getDataLimitTable: state => key => {
-        return state.table_limit_data[key];
+    getDataTable: state => key => {
+        return state.table_data[key];
     },
 
     getValueInputSlug: state => key => {
@@ -88,11 +93,15 @@ const getters = {
     },
 
     getValueInputPrice: state => key => {
-        return state.input_slug_value[key];
+        return state.input_price_value[key];
     },
     /// Получить значение артикул-инпута
     getValueInputVendorCode: state => key => {
         return state.input_vendor_code_value[key];
+    },
+
+    getValueInputPhone: state => key => {
+        return state.input_phone_value[key];
     },
 
 }

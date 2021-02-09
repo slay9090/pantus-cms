@@ -4,42 +4,41 @@ const jsonMaps = require ("@/store/json-config"); // json data-maps
 
 
 const state = () => ({
-    state_data: [],
+    news_list: [],
+    news_details: {},
 
 })
 
 const mutations = {
-    SetData(state ,data){
-        state.state_data = data;
+    setNewsList(state ,data){
+        state.news_list = data;
+    },
+    setNewsItemDetails(state ,data){
+        state.news_details = data;
     },
 }
 
 const actions = {
 
     // действие получение данных по апи
-    async GetData({commit}){
+    async pullNewsList({commit}){
         return  await Axios.get(process.env.VUE_APP_API_URL_NEWS_ARTICLES,  ).then( res =>{
-           //  Axios.defaults.headers.common['Authorization'] = 'token'
-            commit("SetData",jsonMaps.newsArticlesItemsList(res.data));
+            commit("setNewsList",jsonMaps.newsArticlesItemsList(res.data));
         })
     },
-    async GetDetalail({commit}, id){
+    async pullNewsItemDetails({commit}, id){
         //https://www.pantus.ru/api/rest/2.0/news/2333
         return  await Axios.get(process.env.VUE_APP_API_URL_NEWS_ARTICLES+'/'+id).then( res =>{
-            commit("SetData", res.data);
-
+            commit("setNewsItemDetails", jsonMaps.newsArticleItemDetail(res.data) );
         })
     },
 }
 
 const getters = {
     //получить весь массив
-    AllItems: arr => arr.state_data,
+    getNewsList: state => state.news_list,
     //получить одну запись по ид
-    ItemById: arr => id => {
-        // console.log('In store = ',arr.state_data.find(todo => todo.id === id))
-        return arr.state_data.find(todo => todo.id === id);
-    }
+    getNewsItemDetails: state => state.news_details,
 
 }
 export  default {

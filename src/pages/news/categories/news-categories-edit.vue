@@ -1,50 +1,84 @@
 <template>
-<div class="bloсk-form-edit row  align-items-start">
 
-    <div class="bloсk-form-edit__card card col-5 px-0 ml-3 shadow">
-      <h4 class="bloсk-form-edit__card-header card-header"><small class="text-muted">Редактирование товар</small></h4>
-      <div class="bloсk-form-edit__card-body card-body">
-
-          <b-form @submit="onSubmit" @reset="onReset" >
-
-            <b-form-group id="input-group-product-id" label="ID:" label-for="news-categories-edit-id-input">
-              <input-index id="news-categories-edit-id-input" readonly />
-            </b-form-group>
+  <b-container fluid>
 
 
+    <b-row>
+
+      <b-col class="mb-3 mr-lg-5 mb-lg-0" md="6" lg="5">
+
+        <b-card header-tag="header" class="shadow">
+          <template #header>
+            <h4><small class="text-muted">Редактирование статьи</small></h4>
+          </template>
+
+          <b-card-text>
+
+            <b-form @submit="onSubmit" @reset="onReset">
+
+              <b-form-group id="input-group-product-id" label="ID:" label-for="news-categories-edit-id-input">
+                <input-index id="news-categories-edit-id-input" readonly/>
+              </b-form-group>
 
 
-            <b-form-group id="input-group-product-name" label="Название:" label-for="news-categories-edit-name-input">
-              <input-text id="news-categories-edit-name-input" />
-            </b-form-group>
+              <b-form-group id="input-group-product-name" label="Название:" label-for="news-categories-edit-name-input">
+                <input-text id="news-categories-edit-name-input"/>
+              </b-form-group>
 
-            <b-form-group id="input-group-product-slug" label="Код:" label-for="news-categories-edit-slug-input">
-              <input-slug
-              id="news-categories-edit-slug-input"
-              target-id="news-categories-edit-name-input"
-              />
-            </b-form-group>
+              <b-form-group id="input-group-product-slug" label="Код:" label-for="news-categories-edit-slug-input">
+                <input-slug
+                    id="news-categories-edit-slug-input"
+                    target-id="news-categories-edit-name-input"
+                />
+              </b-form-group>
 
 
-            <b-button type="submit" variant="danger" class="">Удалить</b-button>
-            <b-button type="reset" variant="secondary" class="mx-2">Сбросить</b-button>
-            <b-button type="submit" variant="primary" class="pull-right">Сохранить</b-button>
+              <b-row class="button-group justify-content-between mt-4 mt-xl-0" align-v="end" >
+                <b-col  >
+                  <b-row class="unsave-button " cols-xl="2" align-v="end">
+                    <b-col order="1" class="" xl="auto">
+                      <b-button type="submit" variant="danger" class="">Удалить</b-button>
+                    </b-col>
+                    <b-col order="2" xl="auto" class="mt-3">
+                      <b-button type="reset" variant="secondary"  class="">Сбросить</b-button>
+                    </b-col>
+                  </b-row>
+                </b-col>
 
-          </b-form>
+                <b-col   class="text-right" >
+                  <b-button type="submit" variant="primary" class="">Сохранить</b-button>
+                </b-col>
+              </b-row>
 
-      </div>
-  </div>
+            </b-form>
 
-  <preview-request-body
-  :data="formData"
-  />
+          </b-card-text>
 
-</div>
+        </b-card>
+
+      </b-col>
+
+
+      <b-col md="3">
+        <b-card header-tag="header" class="shadow">
+          <template #header>
+            <h4><small class="text-muted">Изображение в заголовке</small></h4>
+          </template>
+          <b-card-text>
+            <pre class="m-0">{{ formData }}</pre>
+          </b-card-text>
+        </b-card>
+      </b-col>
+
+    </b-row>
+
+
+  </b-container>
 </template>
 
 <script>
 export default {
-name: "news-categories-edit",
+  name: "news-categories-edit",
   props: ["query"],
   computed: {
 
@@ -63,14 +97,14 @@ name: "news-categories-edit",
 
     onSubmit(evt) {
       evt.preventDefault()
-     alert(JSON.stringify(this.formData))
+      alert(JSON.stringify(this.formData))
     },
 
     onReset(evt) {
       evt.preventDefault()
       this.$store.commit('BaseComponents/setValueInputText',
           {'key': 'news-categories-edit-name-input', 'value': null}
-          )
+      )
       this.$nextTick(() => {
         //this.show = true
       })
@@ -81,15 +115,18 @@ name: "news-categories-edit",
     await this.$store.dispatch("NewsCategory/GetData");
     let data = await this.$store.getters["NewsCategory/itemById"](this.query);
     this.$store.commit('BaseComponents/setValueInputIndex', {'key': 'news-categories-edit-id-input', 'value': data.id})
-    this.$store.commit('BaseComponents/setValueInputText', {'key': 'news-categories-edit-name-input', 'value': data.name})
+    this.$store.commit('BaseComponents/setValueInputText', {
+      'key': 'news-categories-edit-name-input',
+      'value': data.name
+    })
   },
-
-
 
 
 }
 </script>
 
 <style scoped>
-
+.unsave-button .btn {
+  min-width: 100px !important;
+}
 </style>

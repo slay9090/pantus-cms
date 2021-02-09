@@ -91,7 +91,7 @@ name: "UpLoader",
   props: {
   modalId: {
     type: String,
-    require: true
+    required: true
   },
   },
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container fluid>
 
     <div class="shadow card " id="tbl" >
       <h4 class="card-header ">
@@ -34,7 +34,7 @@
       </b-overlay>
     </div>
 
-  </div>
+  </b-container>
 </template>
 
 <script>

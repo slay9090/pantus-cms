@@ -1,20 +1,24 @@
 <template>
-  <div class="price-input my-3">
-  <b-form-input
-      v-model="valueInputText"
-      type="text"
-      :size="size"
-      :placeholder="placeholder"
-      :state="isValid"
-      :aria-describedby="id+'-feedback'"
-      required
-  >
-  </b-form-input>
+  <div class="price-input ">
+    <ValidationProvider name="Сумма" :rules="{double: true, required: required,}" v-slot="{ errors }">
 
-    <b-form-invalid-feedback :id="id+'-feedback'" class="mb-3">
-      {{textFailValidations}}
-    </b-form-invalid-feedback>
-<!--    <span class="text-fail-validations"></span>-->
+      <b-form-input
+          v-model="valueData"
+          v-on="$listeners"
+          type="text"
+          :placeholder="placeholder"
+          :state="!!errors[0] ? false : null"
+          :aria-describedby="id+'-feedback'"
+
+      >
+      </b-form-input>
+
+      <b-form-invalid-feedback :id="id+'-feedback'" class="mb-3">
+        {{ errors[0] }}
+      </b-form-invalid-feedback>
+
+    </ValidationProvider>
+
   </div>
 </template>
 
@@ -25,81 +29,35 @@ export default {
   props: {
     id: {
       type: String,
-      required: true,
+      default: 'price-input'
     },
-
-    size: {
-      validator(value) {
-        return ['', 'sm', 'lg'].indexOf(value) !== -1
-      },
-      default: '',
-    },
-
     placeholder: {
       type: String,
-      default: 'Текст',
+      default: '99.99',
+    },
+    value: {},
+    required: {
+      type: Boolean,
+      default: false
     },
 
-  },
-
-  data(){
-    return{
-      isValid: null,
-      textFailValidations: null,
-    }
   },
 
   computed: {
-    valueInputText: {
+    valueData: {
       get() {
-        return this.$store.getters["BaseComponents/getValueInputVendorCode"](this.id)
+        return this.value
       },
       set(val) {
-        //запустить валидацию
-        this.checkIsIncorrectValue(val) ? this.isValid = false : this.isValid = null
-
-        this.$store.commit('BaseComponents/setValueInputVendorCode', {'key': this.id, 'value': val})
-
+        // some logic
+        this.$emit('update:value', val)
       },
-
     }
-  },
-
-  methods: {
-    /// • В поле можно вводить только цифры.
-    checkIsNumbersValue(text) {
-      this.textFailValidations = 'В поле можно вводить только цифры';
-      return (!/^[0-9/.]+$/.test(text.trim()));
-    },
-    /// • Недопустимые символы нельзя ни вводить, ни вставлять из буфера обмена Price:
-    checkIsIncorrectValue(text) {
-    //  /youregexp/.test(yourString)
-      this.textFailValidations = 'Недопустимые символы';
-      return (!/^$|^\d+$/.test(text.trim())); // только положительные цифры
-    },
-
-
-    // • При завершении редактирования (когда поле теряет фокус ввода) значение должно форматироваться как валюта RUB:
-    //   разряды отделены запятыми, в начале стоит знак доллара ($12,123,343.25)
-    priceTextFormatOutFocus(text) {
-
-
-    },
-    // • При редактировании значения поля его содержимое отображается и вводится как число (12123343.25)
-    priceTextFormatInFocus(text) {
-
-    }
-
-
-  },
-
+  }
 
 }
 </script>
 
 <style scoped>
-  .text-fail-validations{
-    display: block;
-    margin-bottom: 1rem;
-  }
+
 </style>

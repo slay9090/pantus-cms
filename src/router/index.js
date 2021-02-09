@@ -13,12 +13,12 @@ import newsCategories from "@/router/module/news/categories";
 import newsArticles from "@/router/module/news/articles";
 import productsList from "@/router/module/products/list";
 import test from "@/router/module/test";
+import orders from "@/router/module/crm/orders";
 
 Vue.use(VueRouter)
 
   const routes = [
       ...test,
-
       ...login,
       ...home,
       ...page404,
@@ -29,6 +29,7 @@ Vue.use(VueRouter)
       ...newsCategories,
       ...newsArticles,
       ...productsList,
+      ...orders,
 
 
 ]

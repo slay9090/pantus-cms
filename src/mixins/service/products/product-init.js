@@ -23,7 +23,7 @@ export default {
                this.getImagesProduct(); // записываем картинки
                this.getOffersProduct(); // оферы
 
-               this.$store.commit('NewFileManager/setDataCurrentFiles', {key: this.identifierComponents.input.imageManagerId, value: this.getOffersProduct()})
+               this.$store.commit('NewFileManager/setDataCurrentFiles', {key: this.identifierComponents.input.imageManagerId, value: this.getImagesProduct()})
 
                await this.$store.dispatch('CatalogBrands/getDataAllItems')
                await this.$store.dispatch('CatalogCategories/getDataAllItems')
@@ -107,7 +107,7 @@ export default {
 
                 })
                 console.log('off', offers   )
-                this.$store.commit('BaseComponents/setDataLimitTable', {key: this.identifierComponents.table.offers, value: offers})
+                this.$store.commit('BaseComponents/setDataTable', {key: this.identifierComponents.table.offers, value: offers})
             }
 
 

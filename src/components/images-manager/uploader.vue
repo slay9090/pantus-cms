@@ -80,7 +80,7 @@ export default {
     //value: FileList,
     id: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   data() {

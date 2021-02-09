@@ -93,11 +93,11 @@ name: "modal",
   props: {
     id: {
       type: String,
-      require: true,
+      required: true,
     },
     modalId: {
       type: String,
-      require: true,
+      required: true,
     },
 
   },

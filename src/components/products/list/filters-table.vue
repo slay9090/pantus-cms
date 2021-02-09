@@ -113,14 +113,15 @@ export default {
 
       let url = jsonMaps.urlMapFilterPartsGetList(
           {
-            substr: this.filterValue.subString,
-            brand: this.filterValue.brand,
-            categories: this.filterValue.categories,
-            applicabilities: this.filterValue.applicabilities,
+            filter_substr: this.filterValue.subString,
+            filter_brands: this.filterValue.brand.id.toString(),
+            filter_categories: this.filterValue.categories.map(prop => prop.id).toString(),
+            filter_applicabilities: this.filterValue.applicabilities.map(prop => prop.id).toString(),
           }
       );
 
     if(this.$route.query){
+
       if(JSON.stringify(url)!==JSON.stringify(this.$route.query)){
         await this.$router.push({ name: 'ProductsList', query: {...url} })
       }
@@ -129,10 +130,20 @@ export default {
     },
 
     clearAllFilters () {
-      this.$store.commit('BaseComponents/setValueInputSearch', {'key': this.searchInputId, 'value': null})
-      this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.brandInputId, 'value': {id: 0}})
-      this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.categoriesInputId, 'value': []})
-      this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.applicabilitiesInputId, 'value': []})
+
+      if(Object.keys(this.$route.query).length > 0) {
+        this.$router.push({name: 'ProductsList', query: {}})
+        this.$store.commit('BaseComponents/setValueInputSearch', {'key': this.searchInputId, 'value': null})
+        this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.brandInputId, 'value': {id: 0}})
+        this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.categoriesInputId, 'value': []})
+        this.$store.commit('TempDataCatalog/setValueInputCatalog', {'key': this.applicabilitiesInputId, 'value': []})
+        this.$store.commit('TempDataCatalog/setDataParentsSelectedNodes', {'key': this.categoriesInputId, 'value': []})
+        this.$store.commit('TempDataCatalog/setDataParentsSelectedNodes', {
+          'key': this.applicabilitiesInputId,
+          'value': []
+        })
+      }
+
     },
 
     setFiltersByRoute(url){

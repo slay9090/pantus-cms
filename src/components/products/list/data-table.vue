@@ -103,25 +103,6 @@
     </b-table>
 
 
-
-<!--  <b-pagination-nav-->
-<!--      :link-gen="linkGen"-->
-<!--      :number-of-pages="(rows/perPage)+1"-->
-<!--      use-router-->
-<!--      v-model="currentPage"-->
-<!--  ></b-pagination-nav>-->
-
-
-<!--  <p class="mt-3">Current Page: {{ currentPage }}</p>-->
-
-
-<!--  <div>-->
-<!--    <p>-->
-<!--      Selected Rows:<br>-->
-<!--      {{ selected }}-->
-<!--    </p>-->
-<!--  </div>-->
-
   </div>
 </template>
 
@@ -153,6 +134,11 @@ name: "dynamics-table",
       type: Boolean,
       default: false,
     },
+
+    // fields: {
+    //   type: Array,
+    //   required: true,
+    // },
 
   },
 
@@ -198,8 +184,8 @@ name: "dynamics-table",
 
     },
     countItems() {
-      if (this.$store.getters["TempDataTableDymamic/getDataInputCatalog"]('table-products-parts-list')) {
-        return this.$store.getters["TempDataTableDymamic/getDataInputCatalog"]('table-products-parts-list').meta.count;
+      if (this.$store.getters["TempDataTableDymamic/getDataInputCatalog"](this.id)) {
+        return this.$store.getters["TempDataTableDymamic/getDataInputCatalog"](this.id).meta.count;
       }
       else {return 0}
     }

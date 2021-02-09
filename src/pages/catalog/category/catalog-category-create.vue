@@ -1,13 +1,18 @@
 <template>
-<div>
+<b-container fluid>
 
-  <div class="d-flex align-items-start">
 
-    <div class="card col-4 p-0  mr-5 shadow" id="tbl" >
-      <h4 class="card-header"> <small class="text-muted">Создание категории</small></h4>
-      <div class="card-body">
 
-        <div>
+  <b-row>
+
+    <b-col >
+
+      <b-card header-tag="header">
+        <template #header>
+          <h4><small class="text-muted">Заказ</small></h4>
+        </template>
+
+        <b-card-text>
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
 
@@ -26,36 +31,39 @@
 
 
           </b-form>
-        </div>
+          <hr>
+          <pre class="m-0">{{ form }}</pre>
 
-        <div class="card fluid p-0 my-5" id="tblres" >
-          <h4 class="card-header"> <small class="text-muted">Формализованный запрос</small></h4>
-          <div class="card-body">
-            <pre class="m-0">{{ form }}</pre>
+        </b-card-text>
+
+      </b-card>
+
+    </b-col>
+
+
+    <b-col >
+      <b-card header-tag="header">
+        <template #header>
+          <h4><small class="text-muted">Позиции</small></h4>
+        </template>
+        <b-card-text>
+
+          <div class="card-body" v-on:click.prevent="select($event)" >
+
+            <a :href="'/catalog/category/edit?id=null'" class="label font-weight-bold" :myid="'null'" :myname="'root'">Корневая</a>
+            <hr>
+            <tree :tree-data="tree "></tree>
           </div>
-        </div>
-      </div>
-    </div>
+        </b-card-text>
+      </b-card>
+    </b-col>
 
-    <div class="card col-4 p-0 ml-5 " id="treechild" >
-      <h4 class="card-header"> <small class="text-muted">Выбор директории </small></h4>
-      <div class="card-body" v-on:click.prevent="select($event)" >
-
-        <a :href="'/catalog/category/edit?id=null'" class="label font-weight-bold" :myid="'null'" :myname="'root'">Корневая</a>
-        <hr>
-          <tree :tree-data="tree "></tree>
-      </div>
-
-
-
-    </div>
+  </b-row>
 
 
 
 
-  </div>
-
-</div>
+</b-container>
 </template>
 
 <script>

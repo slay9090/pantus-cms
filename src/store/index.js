@@ -10,8 +10,11 @@ import ProductParts from "@/store/module/products/parts";
 import FileManager from "@/store/module/services/file-manager";
 import BaseComponents from "@/store/temp-data/base-components"
 import TempDataCatalog from '@/store/temp-data/catalog'
-import TempDataTableDymamic from '@/store/temp-data/dynamic-table'
+// import TempDataTableDymamic from '@/store/temp-data/dynamic-table'
 import NewFileManager from '@/store/temp-data/new-file-manager'
+import CrmOrders from '@/store/module/crm/orders'
+
+import AlertMessages from '@/store/module/services/alert-messages'
 
 
 
@@ -30,9 +33,10 @@ export default new Vuex.Store({
       FileManager,
       BaseComponents,
       TempDataCatalog,
-      TempDataTableDymamic,
       NewFileManager,
-    //  FileManager,
+      CrmOrders,
+      AlertMessages,
+
 
   },
 })

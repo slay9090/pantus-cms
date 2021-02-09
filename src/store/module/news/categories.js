@@ -19,7 +19,7 @@ const actions = {
     async GetData({commit}){
         return  await Axios.get(process.env.VUE_APP_API_URL_NEWS_CATEGORIES).then( res =>{
             commit("SetData", jsonMaps.newsCategoriesItemList( res.data));
-           // console.log('мы в действиях получили ', jsonMaps( res.data));
+           // console.log('мы в действиях получили ', jsonMaps.newsCategoriesItemList( res.data));
         })
     },
 }
