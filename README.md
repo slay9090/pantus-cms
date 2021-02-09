@@ -2,6 +2,8 @@
 
 ###Релизы:
 
+- add full orders view and edit  
+
 - Realise: full refactory and decompositions on base components
 
 - pre realise product list filters, edit item product
