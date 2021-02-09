@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import {baseFunc as $globalFunc} from "@/mixins/global";
 const jsonMaps = require ("@/store/json-config"); // json data-maps
 
 
@@ -105,6 +106,23 @@ const actions = {
             commit("setTreeConformity", jsonMaps.crmOrderTreeConformity(res.data) );
         })
     },
+
+    async sendFormOrder({getters} , id){
+        console.log(jsonMaps.crmOrderFormDataForSend(getters.itemDetailsById))
+        await Axios.patch(`http://api.pantus.ru/orders/${id}`,
+            jsonMaps.crmOrderFormDataForSend(getters.itemDetailsById),
+            {}
+        ).then( res =>{
+            console.log(res.data)
+            if(res.data.success){$globalFunc.setAlertMessage('success', 'Запрос выполнен успешно');}
+            if(res.data.error){$globalFunc.setAlertMessage('danger', `Запрос не выполнен, ошибка: ${res.data.error.description}`);}
+
+        }).catch(function (error) {
+            console.error(error)
+            $globalFunc.setAlertMessage('danger', `Запрос не выполнен, ошибка: ${error}`);
+        });
+    },
+
 }
 
 const getters = {

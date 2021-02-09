@@ -140,3 +140,32 @@ function crmOrderTreeConformity (data) {
 }
 
 module.exports.crmOrderTreeConformity = crmOrderTreeConformity;
+
+
+////////////////////////////////////
+// Отправка
+////////////////////////////////////
+
+function crmOrderFormDataForSend (data) {
+
+    //      "status_id": "N",
+    //     "payment_service_id": 1,
+    //     "delivery_service_id": 8,
+    //     "delivery_price": 1000,
+    //     "tracking_number": 22222,
+    //     "allow_delivery": false,
+    //     "allow_pay": true
+
+      const  mapData = {
+          status_id: data.orderStatus.code,
+          delivery_price : data.delivery.price ? Number(data.delivery.price.replace(/₽ /g,'').replace(/,/g,'')) : 0,
+          tracking_number: data.delivery.trackingCode ? data.delivery.trackingCode : '',
+          allow_delivery: data.delivery.allow,
+        }
+        data.paySystem.active ? mapData.payment_service_id=data.paySystem.id : null
+        data.delivery.service.active ? mapData.delivery_service_id=data.delivery.service.id : null
+
+    return mapData;
+}
+
+module.exports.crmOrderFormDataForSend = crmOrderFormDataForSend;

@@ -16,7 +16,7 @@
 
           <ValidationObserver >
 
-          <b-form @submit.prevent="validate().then(onSubmit)" slot-scope="{ validate, valid }" class="order-form">
+          <b-form @submit.prevent="validate().then(onSubmit(valid))" slot-scope="{ validate, valid }" class="order-form">
 
             <b-form-group
 
@@ -46,7 +46,7 @@
                   label-align-sm="right"
                   label-cols-sm="3"
                   label-cols-lg="4"
-                  rules="required|is_not:₽ "
+                  rules=""
                   type="text"
                   label="Сумма:"
                   name="price"
@@ -172,7 +172,8 @@
                   label="Тип:"
                   v-model="orderDetail.userType.id"
                   @input="setConformityDelivery"
-                  readonly
+                  disabled
+
               >
                 <b-form-select-option :value="1">розница</b-form-select-option>
                 <b-form-select-option :value="2">опт</b-form-select-option>
@@ -219,7 +220,7 @@
                   label-align-sm="right"
                   label-cols-sm="3"
                   label-cols-lg="4"
-                  rules=""
+                  rules="integer"
                   type="text"
                   label="Код трекинга:"
                   name="trackingCode"
@@ -368,7 +369,7 @@
               </b-col>
 
               <b-col   class="text-right" >
-                <b-button type="submit" variant="primary" :disabled="!valid" class="">Сохранить</b-button>
+                <b-button type="submit" variant="primary" :disabled="!valid"  class="">Сохранить</b-button>
               </b-col>
             </b-row>
 
@@ -390,7 +391,7 @@
           <h4><small class="text-muted">Позиции</small></h4>
         </template>
         <b-overlay :show="initFailed" no-fade rounded="sm">
-        <b-card-text class="overflow-auto">
+        <b-card-text class="overflow-auto" v-if="!initFailed">
 
 
 
@@ -497,8 +498,16 @@ name: "index",
       this.$globalFunc.setAlertMessage('warning', 'TEST');
     },
 
-    onSubmit() {
-      alert(JSON.stringify(this.orderDetail))
+   async onSubmit(valid) {
+
+      if(valid)
+      {
+        await this.$store.dispatch('CrmOrders/sendFormOrder', this.$route.params.id)
+       await this.dataInit();
+      }
+      else{
+        this.$globalFunc.setAlertMessage('danger', 'не валидная форма');
+      }
     },
 
     onReset(evt) {
@@ -512,7 +521,7 @@ name: "index",
 
       this.orderDetail.delivery.service.id = null;
 
-      const arrToUserIds = this.treeConformity.filter(elem => elem['user_type_id'] === this.orderDetail.userType.id);
+      const arrToUserIds = this.treeConformity.filter(elem => elem.user_type_id === this.orderDetail.userType.id);
       for (const key in this.deliveryService) {
         const count = arrToUserIds.filter(rules => rules.delivery_type_id === this.deliveryService[key].id);
         if (count.length !== 0) {
@@ -528,7 +537,7 @@ name: "index",
 
       this.orderDetail.paySystem.id = null;
 
-      const arrToDeliveryIds = this.treeConformity.filter(elem => elem.delivery_type_id === this.orderDetail.delivery.service.id);
+      const arrToDeliveryIds = this.treeConformity.filter(elem => elem.delivery_type_id === this.orderDetail.delivery.service.id && elem.user_type_id === this.orderDetail.userType.id);
       for (const key in this.paymentSystems) {
         const count = arrToDeliveryIds.filter(rules => rules.paysystem_type_id === this.paymentSystems[key].id);
         if (count.length !== 0) {
@@ -536,7 +545,7 @@ name: "index",
         }
         else {
           this.paymentSystems[key].active = false
-          console.log(this.paymentSystems[key])
+          // console.log(this.paymentSystems[key])
         }
       }
     },

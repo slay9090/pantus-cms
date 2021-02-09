@@ -38,7 +38,7 @@ export default {
 
     methods: {
        async dataInit () {
-
+           this.initFailed = true
             try {
                await this.$store.dispatch('CrmOrders/getDetailsById', this.$route.params.id);
                await this.$store.dispatch('CrmOrders/getOrderStatuses');

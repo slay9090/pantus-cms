@@ -34,3 +34,4 @@ exports.crmOrderStatuses = crmOrderDetail.crmOrderStatuses;
 exports.crmOrderDeliveryServises = crmOrderDetail.crmOrderDeliveryServises;
 exports.crmOrderPaySystems = crmOrderDetail.crmOrderPaySystems;
 exports.crmOrderTreeConformity = crmOrderDetail.crmOrderTreeConformity;
+exports.crmOrderFormDataForSend = crmOrderDetail.crmOrderFormDataForSend;
