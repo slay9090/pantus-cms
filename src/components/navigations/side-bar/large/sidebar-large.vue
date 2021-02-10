@@ -202,7 +202,9 @@
 
       <!-- Logo -->
       <li class="list-group-item logo-separator d-flex justify-content-center">
-        <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30">
+        <a href="https://www.pantus.ru/" target="_blank">
+          <img :src="require('../media/favicon_by_site.png')" alt="pantus-ru" />
+        </a>
       </li>
     </ul>
     <!-- edit Group END-->
@@ -217,6 +219,7 @@ name: "SideBar",
 
   data(){
     return{
+      // url: require('@/components/navigations/side-bar/media/favicon_site.ico'),
       isActiveItem:null,
     }
   },

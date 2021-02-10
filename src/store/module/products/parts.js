@@ -87,7 +87,7 @@ const mutations = {
 const actions = {
     async dataDetailPartsById({commit}, id){
 
-        return  await Axios.get(`http://api.pantus.ru/products_filter?id=${id}`).then( res =>{
+        return  await Axios.get(process.env.VUE_APP_API_URL_PRODUCTS_PARTS+`?id=${id}`).then( res =>{
            commit("setDataDetailPartsById", jsonMaps.productsPartsItemsList(res.data));
 
         })
@@ -97,7 +97,7 @@ const actions = {
 
         const formattedUrl = jsonMaps.urlMapFilterPartsGetList(urlParams)
 
-        return await Axios.get('http://api.pantus.ru/products_filter',
+        return await Axios.get(process.env.VUE_APP_API_URL_PRODUCTS_PARTS,
             {
                 params: {
                     ...formattedUrl

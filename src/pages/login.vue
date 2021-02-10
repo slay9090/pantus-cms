@@ -5,7 +5,7 @@
 
       <b-form @submit="login" class="align-items-center" @keyup.enter="login">
 
-        <span class="d-block mb-3">Авторизация</span>
+        <span class="d-block mb-3">PANTUS-CMS</span>
         <hr>
         <b-form-group id="input-group-username-input" label-for="username-input">
           <div class="input-group form-group" id="username-input">
@@ -132,17 +132,22 @@ export default {
 
 .login-page {
   height: 100vh;
-  background-image: url('http://getwallpapers.com/wallpaper/full/d/c/9/57345.jpg');
+  /*background-image: url('http://getwallpapers.com/wallpaper/full/d/c/9/57345.jpg');*/
+  background: #70e1f5;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, rgba(39, 105, 219, 0.3), rgba(255, 165, 0, 0.2));  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, rgba(39, 105, 219, 0.3), rgba(255, 165, 0, 0.2)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center top;
+
   font-family: 'Numans', sans-serif;
 }
 
 .login-page__form {
 
   background: linear-gradient(90deg, #b9deed, #efefef);
+  /*background-color: #eee;*/
   border-radius: 10px;
 }
 

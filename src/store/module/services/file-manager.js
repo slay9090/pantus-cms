@@ -49,7 +49,7 @@ const actions = {
 
     /// Получить все урлы изображений на сервере
     async getDataAllImageOnServer({commit}){
-        return  await Axios.get('https://www.pantus.ru/images_uploader/script.php').then( res =>{
+        return  await Axios.get(process.env.VUE_APP_API_URL_FILES_STORAGE).then( res =>{
             commit("setAllImagesOnServer", res.data);
            // console.log('мы в действиях получили IMG', res.data);
         })

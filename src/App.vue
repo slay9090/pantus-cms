@@ -103,7 +103,7 @@ export default {
 
     async forbidden() {
 
-      await Axios.get("http://adm.pantus.ru:8081/api/catalog/testprotected").then(res => {
+      await Axios.get("https://auth.pantus.ru/api/catalog/testprotected").then(res => {
         if (res.data.text !== 'THIS IS PROTECTED') {
           this.logout();
         }

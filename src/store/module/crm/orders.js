@@ -56,7 +56,7 @@ const actions = {
                     }
                 }
             ),
-            Axios.get('http://api.pantus.ru/orders/count')
+            Axios.get(process.env.VUE_APP_API_URL_CRM_ORDERS+'/count')
         ])
             .then(Axios.spread(function (items, count) {
                 let data = { data: [], meta: []}
@@ -80,21 +80,21 @@ const actions = {
     //http://api.pantus.ru/orders/statuses
     async getOrderStatuses({commit}){
         //https://api.pantus.ru/orders/88
-        return  await Axios.get('http://api.pantus.ru/orders/statuses').then( res =>{
+        return  await Axios.get(process.env.VUE_APP_API_URL_CRM_ORDERS+'/statuses').then( res =>{
             commit("setDataStatuses", jsonMaps.crmOrderStatuses(res.data) );
         })
     },
 
     async getOrderDeliveryService({commit}){
         //http://api.pantus.ru/orders/delivery_services
-        return  await Axios.get('http://api.pantus.ru/orders/delivery_services').then( res =>{
+        return  await Axios.get(process.env.VUE_APP_API_URL_CRM_ORDERS+'/delivery_services').then( res =>{
             commit("setDataDeliveryService", jsonMaps.crmOrderDeliveryServises(res.data) );
         })
     },
 
     async getOrderPaySystems({commit}){
         //http://api.pantus.ru/orders/payment_services
-        return  await Axios.get('http://api.pantus.ru/orders/payment_services').then( res =>{
+        return  await Axios.get(process.env.VUE_APP_API_URL_CRM_ORDERS+'/payment_services').then( res =>{
             commit("setDataPaymentSystems", jsonMaps.crmOrderPaySystems(res.data) );
         })
     },
@@ -102,14 +102,14 @@ const actions = {
     //conformity
     async getTreeConformity({commit}){
         //http://api.pantus.ru/orders/payment_services
-        return  await Axios.get('http://api.pantus.ru/orders/user_to_delivery_to_paysystem_map').then( res =>{
+        return  await Axios.get(process.env.VUE_APP_API_URL_CRM_ORDERS+'/user_to_delivery_to_paysystem_map').then( res =>{
             commit("setTreeConformity", jsonMaps.crmOrderTreeConformity(res.data) );
         })
     },
 
     async sendFormOrder({getters} , id){
-        console.log(jsonMaps.crmOrderFormDataForSend(getters.itemDetailsById))
-        await Axios.patch(`http://api.pantus.ru/orders/${id}`,
+        // console.log(jsonMaps.crmOrderFormDataForSend(getters.itemDetailsById))
+        await Axios.patch(process.env.VUE_APP_API_URL_CRM_ORDERS+`/${id}`,
             jsonMaps.crmOrderFormDataForSend(getters.itemDetailsById),
             {}
         ).then( res =>{

@@ -16,6 +16,9 @@ import TreeModel from 'tree-model'
 import {baseFunc} from '@/mixins/global'
 Vue.prototype.$globalFunc = baseFunc
 
+Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
+
 // import { VueMaskDirective } from 'v-mask'
 // Vue.directive('mask', VueMaskDirective);
 
@@ -48,8 +51,8 @@ Vue.use(VueVirtualScroller)
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 Vue.config.productionTip = false
-Vue.use(BootstrapVueIcons);
-Vue.use(BootstrapVue);
+
+
 
 
 
