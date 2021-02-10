@@ -203,7 +203,20 @@
       <!-- Logo -->
       <li class="list-group-item logo-separator d-flex justify-content-center">
         <a href="https://www.pantus.ru/" target="_blank">
-          <img :src="require('../media/favicon_by_site.png')" alt="pantus-ru" />
+          <img :src="require('../media/ico-pantus.png')" alt="pantus-ru" class="services-pantus-ico mx-1"/>
+        </a>
+
+        <a href="https://vk.com/pantusclub" target="_blank">
+          <img :src="require('../media/ico-vk.svg')" alt="pantus-ru" class="services-pantus-ico mx-1"/>
+        </a>
+        <a href="https://www.youtube.com/channel/UCwXbMkU-NXMp72xINxamRWQ" target="_blank">
+          <img :src="require('../media/ico-youtube.svg')" alt="pantus-ru" class="services-pantus-ico mx-1"/>
+        </a>
+        <a href="https://tgclick.com/pantusclub" target="_blank">
+          <img :src="require('../media/ico-telegram.svg')" alt="pantus-ru" class="services-pantus-ico mx-1"/>
+        </a>
+        <a href="https://www.instagram.com/pantus.ru" target="_blank">
+          <img :src="require('../media/ico-instagram.svg')" alt="pantus-ru" class="services-pantus-ico mx-1"/>
         </a>
       </li>
     </ul>
@@ -300,6 +313,13 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
   background-color: rgba(86, 122, 213, 1) !important;
   box-shadow: 5px 5px 1px 0px rgba(0,0,0,0.75);
   z-index: 2;
+}
+
+.services-pantus-ico{
+  width: 30px;
+  /*background-color: #ffffff;*/
+  /*background-size: 2px;*/
+
 }
 
 
