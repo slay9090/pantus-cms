@@ -33,7 +33,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit('auth_request')
           // console.log(user.email, user.password)
-            Axios({url: 'http://adm.pantus.ru:8081/auth/login', data: user, method: 'POST' })
+            Axios({url: 'https://auth.pantus.ru/auth/login', data: user, method: 'POST' })
                 .then(resp => {
                     const token = resp.data.token
 
