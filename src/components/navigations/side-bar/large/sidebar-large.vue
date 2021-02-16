@@ -159,12 +159,31 @@
       </li>
       <!-- /END Separator -->
 
-      <a href="#" class="bg-dark list-group-item list-group-item-action">
+
+
+
+      <!-- Menu with submenu -->
+      <a v-b-toggle.statistic  class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-line-chart fa-fw mr-3"></span>
           <span class="menu-collapsed">Статистика</span>
+          <span class="submenu-icon ml-auto"></span>
         </div>
       </a>
+
+      <!-- Submenu content -->
+      <b-collapse id="statistic" class="">
+        <router-link :to="{ name: 'statisticYandex'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
+          <span class="fa fa-yahoo fa-fw pl-4 ml-3 mr-4"></span>
+          <span class="menu-collapsed ml-2">Яндекс</span>
+        </router-link>
+        <router-link :to="{ name: 'statisticGoogle'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
+          <span class="fa fa-google fa-fw pl-4 ml-3 mr-4"></span>
+          <span class="menu-collapsed ml-2">Google</span>
+        </router-link>
+      </b-collapse>
+
+
 
       <!-- Separator with title -->
       <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
@@ -207,16 +226,16 @@
         </a>
 
         <a href="https://vk.com/pantusclub" target="_blank">
-          <img :src="require('../media/ico-vk.svg')" alt="pantus-ru" class="services-pantus-ico mx-1"/>
+          <img :src="require('../media/ico-vk.svg')" alt="vk" class="services-pantus-ico mx-1"/>
         </a>
         <a href="https://www.youtube.com/channel/UCwXbMkU-NXMp72xINxamRWQ" target="_blank">
-          <img :src="require('../media/ico-youtube.svg')" alt="pantus-ru" class="services-pantus-ico mx-1"/>
+          <img :src="require('../media/ico-youtube.svg')" alt="youtube" class="services-pantus-ico mx-1"/>
         </a>
         <a href="https://tgclick.com/pantusclub" target="_blank">
-          <img :src="require('../media/ico-telegram.svg')" alt="pantus-ru" class="services-pantus-ico mx-1"/>
+          <img :src="require('../media/ico-telegram.svg')" alt="telegram" class="services-pantus-ico mx-1"/>
         </a>
         <a href="https://www.instagram.com/pantus.ru" target="_blank">
-          <img :src="require('../media/ico-instagram.svg')" alt="pantus-ru" class="services-pantus-ico mx-1"/>
+          <img :src="require('../media/ico-instagram.svg')" alt="instagram" class="services-pantus-ico mx-1"/>
         </a>
       </li>
     </ul>

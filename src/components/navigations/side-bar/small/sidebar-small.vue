@@ -198,12 +198,35 @@
       <items-menu
           name-item="Статистика"
           collapse-icon
-          v-b-toggle.collapse-statistic
+          v-b-toggle.statistic
       >
         <template #itemicon>
           <span class="fa fa-line-chart fa-fw icon-size"></span>
         </template>
       </items-menu>
+
+      <!-- Submenu content -->
+      <b-collapse id="statistic" >
+
+        <items-menu
+            name-item="Яндекс"
+            name-router="statisticYandex"
+            active-item
+        >
+          <template #itemicon> <span class="fa fa-yahoo fa-fw icon-size"></span> </template>
+        </items-menu>
+
+        <items-menu
+            name-item="Google"
+            name-router="statisticGoogle"
+            active-item
+        >
+          <template #itemicon> <span class="fa fa-google fa-fw icon-size"></span> </template>
+        </items-menu>
+
+      </b-collapse>
+
+
 
 
 

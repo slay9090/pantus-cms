@@ -14,6 +14,10 @@ import newsArticles from "@/router/module/news/articles";
 import productsList from "@/router/module/products/list";
 import test from "@/router/module/test";
 import orders from "@/router/module/crm/orders";
+import statisticYandex from "@/router/module/statistic/yandex"
+import statisticGoogle from "@/router/module/statistic/google"
+
+
 
 Vue.use(VueRouter)
 
@@ -30,6 +34,8 @@ Vue.use(VueRouter)
       ...newsArticles,
       ...productsList,
       ...orders,
+      ...statisticYandex,
+      ...statisticGoogle,
 
 
 ]

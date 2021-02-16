@@ -7,13 +7,7 @@
           <h6 class="mb-0">ЦП</h6>
         </template>
         <b-card-text class="d-flex justify-content-center">
-<!--          <div class="d-flex justify-content-center mt-4">-->
-<!--            <div class="block-diagram-circle">-->
-<!--              <div class="block-diagram-circle__draw">-->
-<!--                <span class="block-diagram-circle__text">15%</span>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+
 
           <apexchart type="donut" :options="performanceSys.chartOptions" :series="performanceSys.series" :labels="performanceSys.labels" class="w-100"></apexchart>
 
@@ -82,6 +76,7 @@
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
+//https://metrika.yandex.ru/legacy/load?period=month&id=21081355&stateHash=602b931a5170ec004ae5f778 сделать по нагрузке
 export default {
   data() {
     return {

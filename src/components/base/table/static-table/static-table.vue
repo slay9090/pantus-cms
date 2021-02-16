@@ -2,8 +2,7 @@
 
 <template>
 
-  <b-overlay :show="!dataTable" no-fade rounded="sm">
-
+  <b-overlay :show="isLoad" no-fade rounded="sm" class="w-100">
     <div class="" v-if="dataTable">
       <b-table
           :id="id"
@@ -67,9 +66,15 @@ export default {
       type: String,
       required: true,
     },
+    items: {
+
+    },
     fields: {
       type: Array,
       required: true,
+    },
+    isLoad: {
+      type: Boolean
     },
     perPage: {
       type: Number,
@@ -167,36 +172,31 @@ export default {
       return this.dataTableLength
     },
 
-    dataTable: {
-      get() {
-        return this.$store.getters["BaseComponents/getDataTable"](this.id)
-      },
-      set(val) {
-        this.$store.commit('BaseComponents/setDataTable', {'key': this.id, 'value': val})
-      },
-
-    }
+    dataTable() {
+      return this.$store.getters["BaseComponents/getDataTable"](this.id)
+    },
 
   },
-
-  beforeCreate() {
-
-    this.debugStartTime = window.performance.now();
-  },
-
-
-  updated() {
-    let seconds = (this.debugStartTime) ? 'error' : (((window.performance.now() - this.debugStartTime) % 60000) / 1000).toFixed(2)
-    console.log('UPDATE: ',seconds, 'sec.')
-  },
-
-
 
   watch: {
     /// При поиске кидать на 1ю пагинацию
     filteredDataTable() {
       this.currentPage = '1';
-    }
+    },
+
+    items() {
+      console.log('change items table')
+      this.$store.commit('BaseComponents/setDataTable', {
+        'key': this.id,
+        'value': this.items
+      });
+    },
+
+    // isLoad(){
+    //   console.log('isLoad')
+    // }
+
+
   },
 
 

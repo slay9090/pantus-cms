@@ -1,9 +1,8 @@
 
 
-let price = '₽ 1,234,849,434.15'
+var str = "2021-01-20";
+const month = /-(.+)-(.+)/.exec(str)[1];
 
-console.log(parseFloat(price.replace(/₽ /g,'').replace(/,/g,'')))
+const day = /-(.+)-(.+)/.exec(str)[2];
 
-const p = 'The quick brown fox jumps over the lazy dog. If the dog reacted, was it really lazy?';
-
-console.log(p.replace(/dog/g, 'hello!'))
+console.log(month, day)
