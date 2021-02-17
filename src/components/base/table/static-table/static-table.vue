@@ -5,6 +5,7 @@
   <b-overlay :show="isLoad" no-fade rounded="sm" class="w-100">
     <div class="" v-if="dataTable">
       <b-table
+
           :id="id"
           ref="selectableTable"
           selectable
@@ -24,6 +25,7 @@
           small
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
+
 
       >
 
@@ -74,7 +76,8 @@ export default {
       required: true,
     },
     isLoad: {
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     perPage: {
       type: Number,

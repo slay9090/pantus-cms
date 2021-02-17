@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="d-flex">
 
-    <div class="" v-if="isLoggedIn">
+    <div class="w-100" v-if="isLoggedIn">
       <header>
         <div>
           <nav-bar/>
@@ -10,7 +10,7 @@
 
       <div class="d-flex " id="body-row">
         <SideBar/>
-        <b-container fluid class="my-4">
+        <b-container fluid class="my-4 mx-0">
           <b-container fluid>
             <b-row>
               <b-col>
@@ -49,7 +49,7 @@
 }
 /*вынести в базовые*/
 .card {
-  min-width: 290px;
+  min-width: 260px;
 }
 </style>
 

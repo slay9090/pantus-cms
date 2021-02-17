@@ -2,7 +2,7 @@ export default [
     {
         path: '/',
         name: 'Home',
-        component: () => import('@/pages/home'),
+        component: () => import('@/pages/home/index'),
 
         meta: {
             title: 'Home',
