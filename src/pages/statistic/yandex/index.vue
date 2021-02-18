@@ -56,9 +56,9 @@
     <b-card-group deck  class="mt-4" >
 
 
-          <b-card title="Визиты за месяц" header-tag="header" footer-tag="footer" class="shadow">
+          <b-card title="График роста" header-tag="header" footer-tag="footer" class="shadow">
             <template #header>
-              <h6 class="mb-0">Визиты</h6>
+              <h6 class="mb-0">Рост за год</h6>
             </template>
             <b-card-text class="">
 
@@ -85,6 +85,7 @@
                   :fields="fields"
                   :items="sourcesSearchPhrases ? sourcesSearchPhrases.data : []"
                   :is-load="initFailed"
+                  :per-page="7"
 
               >
 
@@ -138,14 +139,21 @@ export default {
             type: 'line',
             zoom: {
               enabled: true,
-              type: 'x',
+              // type: 'x',
             }
           },
+
+          // markers: {
+          //   hover: {
+          //     sizeOffset: 4
+          //   }
+          // },
+
           dataLabels: {
             enabled: false
           },
           stroke: {
-            // curve: 'straight',
+            curve: 'straight',
             // width: 1
           },
 
@@ -156,20 +164,36 @@ export default {
             },
           },
           xaxis: {
+            type: 'datetime',
+            tickAmount: 10,
             categories: this.$store.getters["StatisticYandex/items"]('visitsAllMonth') ?
                 this.$store.getters["StatisticYandex/items"]('visitsAllMonth').time_intervals.map(elem => {
-                  const month = /-(.+)-(.+)/.exec(elem[0])[1];
-                  const day = /-(.+)-(.+)/.exec(elem[0])[2];
-                  return `${day}-${month}`
+                  // const month = /-(.+)-(.+)/.exec(elem[0])[1];
+                  // const day = /-(.+)-(.+)/.exec(elem[0])[2];
+                  // return `${day}-${month}`
+                  return elem[0]
                 })
                 : [],
-            labels: {
-              rotate: -45,
+            // labels: {
+            //   rotate: -45,
+            //
+            // },
+            // tickPlacement: 'on',
 
-            },
-            tickPlacement: 'on',
+            // labels: {
+            //   formatter: function(value, timestamp, opts) {
+            //     return opts.dateFormatter(new Date(timestamp), 'MMM')
+            //   }
+            // }
 
-          }
+          },
+          // yaxis: {
+          //   opposite: false
+          // },
+
+          // legend: {
+          //   horizontalAlign: 'left'
+          // }
         }
       }
 

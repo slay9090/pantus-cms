@@ -24,7 +24,7 @@ export default {
                     endpoint: '/data/bytime',
                     urlParams: {
                         metrics:'ym:s:hits',
-                        date1:'30daysAgo',
+                        date1:'365daysAgo',
                         date2:'today',
                         group:'day',
                     },
