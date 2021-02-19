@@ -26,6 +26,8 @@ import VueMask from 'v-mask'
 Vue.use(VueMask);
 
 
+
+
 /// Валидаторы
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 Vue.component('ValidationProvider', ValidationProvider);
@@ -98,12 +100,16 @@ import BSelect from "@/components/base/input/BSelect";
 import BRadio from "@/components/base/input/BRadio";
 import BHtml from "@/components/base/input/BHtml";
 import BTagsInput from "@/components/base/input/BTagsInput";
+import BSlugInput from "@/components/base/input/BSlugInput";
+import BCurrencyInput from "@/components/base/input/BCurrencyInput";
 Vue.component("BTextInput", BTextInput);
 Vue.component("BTextArea", BTextArea);
 Vue.component("BSelect", BSelect);
 Vue.component("BRadio", BRadio);
 Vue.component("BHtml", BHtml);
 Vue.component("BTagsInput", BTagsInput);
+Vue.component("BSlugInput", BSlugInput);
+Vue.component("BCurrencyInput", BCurrencyInput);
 
 
 

@@ -158,7 +158,8 @@ function crmOrderFormDataForSend (data) {
 
       const  mapData = {
           status_id: data.orderStatus.code,
-          delivery_price : data.delivery.price ? Number(data.delivery.price.replace(/₽ /g,'').replace(/,/g,'')) : 0,
+          // delivery_price : data.delivery.price ? Number(data.delivery.price.replace(/₽ /g,'').replace(/,/g,'')) : 0,
+          delivery_price : data.delivery.price,
           tracking_number: data.delivery.trackingCode ? data.delivery.trackingCode : '',
           allow_delivery: data.delivery.allow,
         }

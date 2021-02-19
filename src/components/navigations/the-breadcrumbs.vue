@@ -1,5 +1,5 @@
 <template>
-  <div class="breadcrumb px-3 py-1">
+  <div class="breadcrumb py-1">
     <ul>
       <li
           v-for="(breadcrumb, idx) in breadcrumbList"
@@ -39,7 +39,7 @@ name: "Breadcrumbs",
 <style scoped>
 
 .breadcrumb {
-
+  padding: 0 20px;
 }
 ul {
   display: flex;

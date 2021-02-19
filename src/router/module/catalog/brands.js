@@ -3,24 +3,30 @@ export default [
     {
         path: '/catalog/brands',
         name: 'Brands',
-        component: () => import('@/pages/catalog/brands/catalog-brands-list.vue'),
-        props: route => ({ query: route.query.page }),
+        component: () => import('@/pages/catalog/brands/index.vue'),
+        // props: route => ({ query: route.query.page }),
         meta: {
-            title: 'brands',
+            title: 'Бренды',
             requiresAuth: true,
 
             breadcrumb: [
-                { name: 'catalog' },
-                { name: 'brands' }
+                { name: 'Каталог' },
+                { name: 'Бренды' }
             ]
         }
     },
 
-    { path: '/catalog/brands/edit',
-        component: () => import('@/pages/catalog/brands/catalog-brands-edit.vue'),
-        props: route => ({ query: route.query.id }),
+    {
+        path: '/catalog/brands/edit/:id',
+        component: () => import('@/pages/catalog/brands/edit/index.vue'),
         meta: {
+            title: 'Бренд редактирование',
             requiresAuth: true,
+            breadcrumb: [
+                { name: 'Каталог' },
+                { name: 'Бренды', link: '/catalog/brands' },
+                { name: 'Редактирование' },
+            ]
         }
 
     },

@@ -49,7 +49,7 @@
 }
 /*вынести в базовые*/
 .card {
-  min-width: 260px;
+  min-width: 280px;
 }
 </style>
 

@@ -18,7 +18,27 @@ function catalogBrandsList (data) {
 
 }
 
-module.exports = catalogBrandsList;
+module.exports.catalogBrandsList = catalogBrandsList;
+
+function catalogBrandDetail (data) {
+    let serialisationData = {};
+
+    serialisationData =
+            {
+                id: data.id,
+                name: data.name,
+                code: data.code,
+                active: data.contains_description,
+                description: data.description,
+
+            }
+    return serialisationData;
+
+}
+
+module.exports.catalogBrandDetail = catalogBrandDetail;
+
+
 
 // JSON EXP:
 //

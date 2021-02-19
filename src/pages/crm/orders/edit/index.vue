@@ -42,18 +42,19 @@
                 />
 
 
-              <BTextInput
+              <BCurrencyInput
                   label-align-sm="right"
                   label-cols-sm="3"
                   label-cols-lg="4"
-                  rules=""
+                  rules="required|max:15"
                   type="text"
                   label="Сумма:"
                   name="price"
                   v-model="orderDetail.price"
                   placeholder="₽ 0.00"
-                  :mask="maskPrice"
                   readonly
+
+
 
               />
 
@@ -228,17 +229,17 @@
                   placeholder="Введите Идентификатор отправления"
               />
 
-              <BTextInput
+              <BCurrencyInput
                   label-align-sm="right"
                   label-cols-sm="3"
                   label-cols-lg="4"
-                  rules="is_not:₽ "
+                  rules="required|max:15"
                   type="text"
                   label="Стоимость:"
                   name="deliveryPrice"
                   v-model="orderDetail.delivery.price"
                   placeholder="₽ 0.00"
-                  :mask="maskPrice"
+
               />
 
               <BSelect
@@ -360,7 +361,7 @@
               <b-col  >
                 <b-row class="unsave-button " cols-xl="2" align-v="end">
                   <b-col order="1" class="" xl="auto">
-                    <b-button type="submit" variant="danger" class="" @click="msg"> Удалить </b-button>
+                    <b-button type="submit" variant="danger" class="" > Удалить </b-button>
                   </b-col>
                   <b-col order="2" xl="auto" class="mt-3">
                     <b-button type="reset" variant="secondary"  class="">Сбросить</b-button>
@@ -402,6 +403,8 @@
               :fields="fields"
               :per-page="10"
               class="offres-table w-100"
+              small
+              hover
           />
           <span v-else>Нет товаров</span>
 
@@ -418,13 +421,6 @@
 
 <script>
 import init from "./init";
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-const currencyMask = createNumberMask({
-  prefix: '₽ ',
-  allowDecimal: true,
-  includeThousandsSeparator: true,
-  allowNegative: false,
-});
 
 export default {
 name: "index",
@@ -443,7 +439,7 @@ name: "index",
 
     ],
 
-    maskPrice: currencyMask,
+
 
   }),
 
@@ -493,10 +489,7 @@ name: "index",
 
   methods: {
 
-    msg(evt){
-      evt.preventDefault()
-      this.$globalFunc.setAlertMessage('warning', 'TEST');
-    },
+
 
    async onSubmit(valid) {
 

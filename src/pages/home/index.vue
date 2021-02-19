@@ -53,9 +53,12 @@
               id="home-popular-pages-chart"
               :items="popularPages? popularPages.data : []"
               :fields="fields"
+              small
+              striped
+              hover
           >
             <template v-slot:cell(dimensions[1].name)="data">
-              <a :href="'https://pantus.ru'+data.value" class="mb-0 title-block__text-limit">
+              <a :href="'https://pantus.ru'+data.value" class="mb-0 title-block__text-limit" target="_blank">
                 {{ 'https://pantus.ru'+data.value }}
               </a>
             </template>

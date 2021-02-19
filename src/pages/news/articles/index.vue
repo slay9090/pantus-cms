@@ -50,6 +50,16 @@
                     :filter="valueSearchInput"
                     sort-by-field="dates.updated"
                     :sort-desc-mode="true"
+                    head-variant="light"
+                    small
+                    responsive="sm"
+                    selectable
+                    select-mode="single"
+                    selected-variant="warning"
+                    :sort-compare="myCompare"
+                    :sort-by="'dates.updated'"
+                    :sort-desc="true"
+
                 >
                   <template v-slot:cell(preview.image)="data">
                     <img :src="data.value" style="max-width: 100%"/>
@@ -107,7 +117,34 @@ name: "NewsArticle",
   },
 
   methods:{
+    myCompare(itemA, itemB, key) {
+      if (key !== 'dates.updated') {
+        // If field is not `date` we let b-table handle the sorting
+        return false
+      } else {
+        // Convert the string formatted date to a number that can be compared
+        // Get the values being compared from the items
+        let a = itemA['dates']['updated']
+        let b = itemB['dates']['updated']
+        // Split them into an array of parts (dd, mm, and yyyy)
+        // console.log(itemA['dates']['updated'])
+        // console.log(a, " ", b)
+        a = a.split(' ')
+        b = b.split(' ')
 
+        // console.log(a[0], " ", b[0])
+        a = a[0].split('.')
+        b = b[0].split('.')
+        // console.log(a, " ", b)
+        //
+        // // convert string parts to numbers
+        a = (parseInt(a[2], 10) * 10000) + (parseInt(a[1], 10) * 100) + parseInt(a[0])
+        b = (parseInt(b[2], 10) * 10000) + (parseInt(b[1], 10) * 100) + parseInt(b[0])
+        // Return the comparison result
+        return a - b
+      }
+
+    },
 
   },
 

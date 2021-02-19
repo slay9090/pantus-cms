@@ -5,18 +5,18 @@
 
   </div >
 
-  <div class="sidebar-panel d-xl-none d-lg-none">
-    <sidebar-small />
-  </div>
+<!--  <div class="sidebar-panel d-xl-none d-lg-none">-->
+<!--    <sidebar-small />-->
+<!--  </div>-->
 </div>
 </template>
 
 <script>
 import SideBarLong from "@/components/navigations/side-bar/large/sidebar-large";
-import SidebarSmall from "@/components/navigations/side-bar/small/sidebar-small";
+// import SidebarSmall from "@/components/navigations/side-bar/small/sidebar-small";
 export default {
 name: "sidebar-index",
-  components: {SidebarSmall, SideBarLong},
+  components: { SideBarLong},
 }
 </script>
 

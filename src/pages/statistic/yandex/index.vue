@@ -267,6 +267,7 @@ export default {
       return {
         series: [{
           name: '',
+
           data: this.$store.getters["StatisticYandex/items"]('visitsGeography').data.map(elem => {
             const precent = elem.metrics[0]/(totalCount/100)
             return precent.toFixed(2)
@@ -276,9 +277,13 @@ export default {
           chart: {
             height: 350,
             type: 'bar',
+
           },
           legend: {
             show: false
+          },
+          markers: {
+            size: 0
           },
           plotOptions: {
             bar: {
@@ -307,12 +312,13 @@ export default {
               show: false,
               rotate: -90
             },
+
             position: 'botton',
             axisBorder: {
               show: false
             },
             axisTicks: {
-              show: false
+              show: true
             },
             crosshairs: {
               fill: {
@@ -327,7 +333,7 @@ export default {
               }
             },
             tooltip: {
-              enabled: true,
+              enabled: false,
             }
           },
           yaxis: {

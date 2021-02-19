@@ -3,7 +3,7 @@
   <div id="sidebar-container-small" class="sidebar-expanded ">
     <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
     <!-- Bootstrap edit Group -->
-    <ul class="list-group sticky-top sticky-offset">
+    <ul class="list-group sticky-offset list-group-top">
       <!-- Separator with title -->
       <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
 <!--        <small>МАГАЗИН</small>-->
@@ -331,7 +331,9 @@ a.bg-dark:focus, a.bg-dark:hover{
   position: absolute;
 }
 
-
+.list-group-top{
+  padding-top: 71px;
+}
 
 
 </style>

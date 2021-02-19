@@ -1,30 +1,36 @@
 <!--Переделать на апдейт, филтер получить дату 2 раза аотрабатывает-->
 
 <template>
-
+<!--  :id="id"-->
+<!--  ref="selectableTable"-->
+<!--  selectable-->
+<!--  select-mode="single"-->
+<!--  selected-variant="warning"-->
+<!--  @row-selected="onRowSelected"-->
+<!--  :items="dataTable"-->
+<!--  :fields="fields"-->
+<!--  :sort-compare="myCompare"-->
+<!--  sort-icon-left-->
+<!--  responsive="sm"-->
+<!--  :per-page="perPage"-->
+<!--  :current-page="currentPage"-->
+<!--  :filter="filter"-->
+<!--  @filtered="setFilteredDataTable"-->
+<!--  head-variant="light"-->
+<!--  small-->
+<!--  :sort-by.sync="sortBy"-->
+<!--  :sort-desc.sync="sortDesc"-->
   <b-overlay :show="isLoad" no-fade rounded="sm" class="w-100">
     <div class="" v-if="dataTable">
       <b-table
-
+          v-bind="$attrs"
           :id="id"
-          ref="selectableTable"
-          selectable
-          select-mode="single"
-          selected-variant="warning"
-          @row-selected="onRowSelected"
           :items="dataTable"
           :fields="fields"
-          :sort-compare="myCompare"
-          sort-icon-left
-          responsive="sm"
           :per-page="perPage"
           :current-page="currentPage"
-          :filter="filter"
           @filtered="setFilteredDataTable"
-          head-variant="light"
-          small
-          :sort-by.sync="sortBy"
-          :sort-desc.sync="sortDesc"
+
 
 
       >
@@ -83,29 +89,15 @@ export default {
       type: Number,
       default: 10,
     },
-    urlPageValue: {
-      type: String,
-      default: '1',
-    },
-    filter: {
-      type: String,
-    },
 
-    sortByField: {
-      type: String,
-      default: null
-    },
-    sortDescMode: {
-      type: Boolean,
-      default: false,
-    },
+
 
   },
 
   data() {
     return {
       selected: [],
-      currentPage: this.urlPageValue,
+      currentPage: this.$route.query.page ? this.$route.query.page : 1,
       filteredDataTable: null,
       sortBy: this.sortByField,
       sortDesc: this.sortDescMode,
@@ -119,8 +111,20 @@ export default {
       this.selected = items
     },
     //генерация урл для пагинации
+    // linkGen(pageNum) {
+    //   return pageNum === 1 ? '?' : `?page=${pageNum}`
+    // },
+
     linkGen(pageNum) {
-      return pageNum === 1 ? '?' : `?page=${pageNum}`
+      // генерация ссылок Page
+      let page;
+      pageNum === 1 ? page = undefined : page = pageNum
+      return {
+        query: {
+          ...this.$route.query,
+          page: page,
+        },
+      };
     },
     //сортировка по дате
     myCompare(itemA, itemB, key) {
@@ -185,6 +189,14 @@ export default {
     /// При поиске кидать на 1ю пагинацию
     filteredDataTable() {
       this.currentPage = '1';
+      if (this.$route.query.page) {
+      this.$router.push({
+        path: this.$route.path, query: {
+          ...this.$route.query,
+          page: undefined,
+        },
+      })
+    }
     },
 
     items() {
@@ -195,9 +207,9 @@ export default {
       });
     },
 
-    // isLoad(){
-    //   console.log('isLoad')
-    // }
+    $route() {
+      this.$route.query.page ?  null : this.currentPage = 1;
+    }
 
 
   },

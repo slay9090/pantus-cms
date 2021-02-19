@@ -1,61 +1,46 @@
 <template>
-
-  <b-form-input
-      v-model="valueSlugField"
-      type="text"
-      :size="size"
-      :placeholder="placeholder"
-      readonly
-  >
-
-  </b-form-input>
+  <ValidationProvider :vid="vid" :name="$attrs.name" :rules="rules">
+    <b-form-group
+        slot-scope="{ valid, errors }"
+        v-bind="$attrs"
+    >
+      <b-form-input
+          v-mask="mask"
+          v-model="innerValue"
+          v-bind="$attrs"
+          :state="errors[0] ? false : (valid ? null : null)"
+      >
+      </b-form-input>
+      <b-form-invalid-feedback id="inputLiveFeedback">
+        {{ errors[0] }}
+      </b-form-invalid-feedback>
+    </b-form-group>
+  </ValidationProvider>
 </template>
 
 <script>
 export default {
-  name: "slug-input",
+  name: "BSlugInput",
+
   props: {
-    id: {
-      type: String,
-      required: true,
+    vid: {
+      type: String
     },
-
-    targetId: {
-      type: String,
-      required: true,
-      description: 'Указать тот ИД текстового поля, который будем генерировать в  слаг',
+    rules: {
+      type: [Object, String],
+      default: ''
     },
-
-    size: {
-      validator(value) {
-        return ['', 'sm', 'lg'].indexOf(value) !== -1
-      },
-      default: '',
+    // must be included in props
+    value: {
+      type: null
     },
-
-    placeholder: {
-      type: String,
-      default: 'Text',
-    },
-
+    mask: {},
+    valueByWatch:{}
   },
+  data: () => ({
+    innerValue: '',
 
-  data() {
-    return {
-
-    }
-  },
-
-  computed: {
-    valueSlugField: {
-      get() {
-       return this.convertTextToSlug( this.$store.getters["BaseComponents/getValueInputText"](this.targetId))
-      },
-      set(val) {
-        this.$store.commit('BaseComponents/setValueInputSlug', {'key': this.id, 'value': val})
-      },
-    },
-  },
+  }),
 
   methods: {
     transliterate(word) {
@@ -158,6 +143,33 @@ export default {
       return str;
     }
   },
+
+  watch: {
+    // Handles internal model changes.
+    innerValue(newVal) {
+
+      this.$emit('input', this.convertTextToSlug(newVal));
+    },
+    // Handles external model changes.
+    value(newVal) {
+      this.innerValue = newVal;
+    },
+
+    valueByWatch(newVal){
+      this.innerValue = newVal
+    },
+
+  },
+  created() {
+    if (this.valueByWatch) {
+      this.innerValue = this.valueByWatch;
+    }
+
+    if (this.value) {
+      this.innerValue = this.value;
+    }
+
+  }
 
 }
 </script>

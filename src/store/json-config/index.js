@@ -3,7 +3,7 @@ const newsArticleItemDetail = require('@/store/json-config/data-maps/news-articl
 const newsCategoriesItemList = require('@/store/json-config/data-maps/news-caregories-list-get');
 const catalogApplicabilitiesList = require('@/store/json-config/data-maps/catalog-applicabilities');
 const catalogCategoriesList = require('@/store/json-config/data-maps/catalog-categories');
-const catalogBrandsList = require('@/store/json-config/data-maps/catalog-brands');
+const catalogBrands = require('@/store/json-config/data-maps/catalog-brands');
 const productParts = require('@/store/json-config/data-maps/products-parts-list-get');
 const crmOrdersList = require('@/store/json-config/data-maps/crm-orders-list')
 const crmOrderDetail = require('@/store/json-config/data-maps/crm-order-detail')
@@ -20,7 +20,8 @@ exports.catalogApplicabilitiesList = catalogApplicabilitiesList;
 /// все категории каталога
 exports.catalogCategoriesList = catalogCategoriesList;
 /// все бренды каталга
-exports.catalogBrandsList = catalogBrandsList;
+exports.catalogBrandsList = catalogBrands.catalogBrandsList;
+exports.catalogBrandDetail = catalogBrands.catalogBrandDetail;
 /// запчасти
 exports.urlMapFilterPartsGetList = productParts.urlMapFilterPartsGetList;
 exports.productsPartsItemsList = productParts.productsPartsItemsList;

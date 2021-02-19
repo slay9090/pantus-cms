@@ -117,7 +117,7 @@
 
       </b-collapse>
 
-      <a v-b-toggle.collapse-5-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+      <a v-b-toggle.collapse-5-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start" :class="{ disabledItem: true }">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-file-code-o fa-fw mr-3"></span>
           <span class="menu-collapsed">Страницы</span>
@@ -132,7 +132,7 @@
 
 
       <!-- Menu with submenu -->
-      <a v-b-toggle.collapse-6-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+      <a v-b-toggle.collapse-6-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start" :class="{ disabledItem: true }">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-wrench fa-fw mr-3"></span>
           <span class="menu-collapsed">Настройки</span>
@@ -146,7 +146,7 @@
       </b-collapse>
 
 
-      <a href="#" class="bg-dark list-group-item list-group-item-action">
+      <a href="#" class="bg-dark list-group-item list-group-item-action" :class="{ disabledItem: true }">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-comments fa-fw mr-3"></span>
           <span class="menu-collapsed">Отзывы</span>
@@ -173,11 +173,11 @@
 
       <!-- Submenu content -->
       <b-collapse id="statistic" class="">
-        <router-link :to="{ name: 'statisticYandex'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
+        <router-link :to="{ name: 'statisticYandex'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected" >
           <span class="fa fa-yahoo fa-fw pl-4 ml-3 mr-4"></span>
           <span class="menu-collapsed ml-2">Яндекс</span>
         </router-link>
-        <router-link :to="{ name: 'statisticGoogle'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
+        <router-link :to="{ name: 'statisticGoogle'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected" :class="{ disabledItem: true }">
           <span class="fa fa-google fa-fw pl-4 ml-3 mr-4"></span>
           <span class="menu-collapsed ml-2">Google</span>
         </router-link>
@@ -192,14 +192,14 @@
       <!-- /END Separator -->
 
 
-      <a href="#" class="bg-dark list-group-item list-group-item-action">
+      <a href="#" class="bg-dark list-group-item list-group-item-action" :class="{ disabledItem: true }">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-envelope-o fa-fw mr-3"></span>
           <span class="menu-collapsed">Messages <span class="badge badge-pill badge-primary ml-2">5</span></span>
         </div>
       </a>
 
-      <a href="#" class="bg-dark list-group-item list-group-item-action">
+      <a href="#" class="bg-dark list-group-item list-group-item-action" :class="{ disabledItem: true }">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-calendar fa-fw mr-3"></span>
           <span class="menu-collapsed">Calendar</span>
@@ -341,5 +341,10 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 
 }
 
+.disabledItem{
+
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 </style>
