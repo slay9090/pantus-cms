@@ -13,7 +13,7 @@
 
 
       <!-- Menu with submenu -->
-      <a v-b-toggle.collapse-1-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+      <a v-b-toggle.collapse-1-inner  class="bg-dark list-group-item list-group-item-action flex-column align-items-start" >
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-cube fa-fw mr-3"></span>
           <span class="menu-collapsed">CRM</span>
@@ -22,7 +22,7 @@
       </a>
 
       <!-- Submenu content -->
-      <b-collapse id="collapse-1-inner" class="">
+      <b-collapse id="collapse-1-inner" class="" :visible="$route.meta.breadcrumb ?  $route.meta.breadcrumb[0].name === 'CRM' : false">
 
         <router-link :to="{ name: 'Orders'}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start" active-class="item-selected" >
           <div class="d-flex w-100 justify-content-start align-items-center">
@@ -49,7 +49,8 @@
       </a>
 
       <!-- Submenu content -->
-      <b-collapse id="collapse-2-inner" class="">
+<!--      {{$route.meta.breadcrumb}}-->
+      <b-collapse id="collapse-2-inner" :visible="$route.meta.breadcrumb ?  $route.meta.breadcrumb[0].name === 'Каталог' : false">
         <router-link :to="{ name: 'Brands'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="fa fa-tags fa-fw pl-4 ml-3 mr-4"></span>
           <span class="menu-collapsed ml-2">Бренды</span>
@@ -75,7 +76,7 @@
       </a>
 
       <!-- Submenu content -->
-      <b-collapse id="collapse-3-inner" class="">
+      <b-collapse id="collapse-3-inner" class="" :visible="$route.meta.breadcrumb ?  $route.meta.breadcrumb[0].name === 'Продукты' : false">
         <router-link :to="{ name: 'ProductsList'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="fa fa-cogs fa-fw pl-4 ml-3 mr-4"></span>
           <span class="menu-collapsed ml-2">Автозапчасти</span>
@@ -105,7 +106,7 @@
       </a>
 
       <!-- Submenu content -->
-      <b-collapse id="collapse-4-inner" class="">
+      <b-collapse id="collapse-4-inner" class="" :visible="$route.meta.breadcrumb ?  $route.meta.breadcrumb[0].name === 'Новости' : false">
         <router-link :to="{ name: 'NewsArticles'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected">
           <span class="fa fa-list-alt fa-fw pl-4 ml-3 mr-4"></span>
           <span class="menu-collapsed ml-2">Статьи</span>
@@ -172,7 +173,7 @@
       </a>
 
       <!-- Submenu content -->
-      <b-collapse id="statistic" class="">
+      <b-collapse id="statistic" class="" :visible="$route.meta.breadcrumb ?  $route.meta.breadcrumb[0].name === 'Статистика' : false">
         <router-link :to="{ name: 'statisticYandex'}" class="list-group-item list-group-item-action bg-dark text-white" active-class="item-selected" >
           <span class="fa fa-yahoo fa-fw pl-4 ml-3 mr-4"></span>
           <span class="menu-collapsed ml-2">Яндекс</span>
@@ -286,6 +287,7 @@ name: "SideBar",
 #sidebar-container .list-group a {
   height: 50px;
   color: white;
+  cursor: pointer;
 }
 
 /* Submenu item*/

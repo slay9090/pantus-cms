@@ -1,8 +1,17 @@
 
+const a = 'aaa'
+const b = 'bbb'
 
-var str = "2021-01-20";
-const month = /-(.+)-(.+)/.exec(str)[1];
+// console.log(a === 'ccc' || a ==='eee' || a === 'a1aa' )
+//
+// console.log(b === 'bbb' || 'ddd' || 'ccc' )
 
-const day = /-(.+)-(.+)/.exec(str)[2];
 
-console.log(month, day)
+
+
+// if (['a','b','aaa','d','e'].includes(a)) {
+//     console.log('true')
+// }
+
+console.log(!!(['a','b','aaa','d','e'].includes(a)))
+
