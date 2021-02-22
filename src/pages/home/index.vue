@@ -122,7 +122,7 @@ export default {
             breakpoint: 1350,
             options: {
               chart: {
-                // width: 200
+                width: '100%',
               },
               legend: {
                 show: false
@@ -221,8 +221,5 @@ export default {
   line-break: anywhere;
 }
 
-.chart-pie {
-  min-width: 250px;
 
-}
 </style>

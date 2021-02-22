@@ -8,7 +8,7 @@
         </div>
       </header>
 
-      <div class="d-flex " id="body-row">
+      <div class="d-flex " >
         <SideBar/>
         <b-container fluid class="my-4 mx-0">
           <b-container fluid>
@@ -34,7 +34,7 @@
       <!-- body-row END -->
     </div>
 
-    <div class="div" v-else>
+    <div class="w-100" v-else>
       <login class=""></login>
     </div>
 
@@ -49,7 +49,7 @@
 }
 /*вынести в базовые*/
 .card {
-  min-width: 280px;
+  min-width: 260px;
 }
 </style>
 
