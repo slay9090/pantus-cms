@@ -40,12 +40,16 @@ const actions = {
     async getDataDetailsItem({commit}, id){
 
         let fetchSummoner = async() => {
+
             const brandDetail = await Axios.get(`${process.env.VUE_APP_API_URL_CATALOG_BRANDS}/${id}`);
-            const descriptonDetail = await Axios.get(`${process.env.VUE_APP_API_URL_CATALOG_BRANDS}/descriptions/${brandDetail.data.description_id}`);
+            const descriptonDetail = brandDetail.data.description_id !== null ?
+                await Axios.get(`${process.env.VUE_APP_API_URL_CATALOG_BRANDS}/descriptions/${brandDetail.data.description_id}`) :
+                null
             const summoner = brandDetail.data;
-            summoner.description = descriptonDetail.data;
+            summoner.description = descriptonDetail !== null ?  descriptonDetail.data : null;
             return summoner;
         }
+        // console.log(await fetchSummoner())
         commit("setDataDetailsItem", jsonMaps.catalogBrandDetail( await fetchSummoner()));
 
     },

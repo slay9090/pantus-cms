@@ -31,7 +31,7 @@ module.exports.catalogBrandsList = catalogBrandsList;
 
 function catalogBrandDetail (data) {
     let serialisationData = {};
-
+    // console.log(data)
     serialisationData =
             {
                 id: data.id,
@@ -46,10 +46,15 @@ function catalogBrandDetail (data) {
                     orientation: data.cert.orientation,
                     description: data.cert.description,
                 } : null,
-                description: data.description
+                description: {
+                    id: data.description ? data.description.id : null,
+                    code: data.description ? data.description.code : null ,
+                    aliases: data.description ? data.description.aliases : null,
+                    description: data.description ? data.description.description : null
+                }
 
             }
-
+    // console.log(serialisationData)
     return serialisationData;
 
 }
