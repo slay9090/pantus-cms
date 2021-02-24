@@ -56,15 +56,7 @@ const getters = {
 
     detailsItem: state => state.details_item,
 
-    // /**
-    //  * ###ПОЛУЧИТЬ ИЗ ХРАНИЛИЩА ВСЮ ИНФОРМАЦИЮ ОБ ЭТОМ БРЕНДЕ ПО ИД
-    //  * @param arr
-    //  * @returns {function(*): *}
-    //  * @summary `await this.$store.getters["имяМодуля/имяГетера"](Аргументы)`
-    //  */
-    // itemById: arr => id => {
-    //     return arr.all_items.find(todo => todo.id === id);
-    // }
+
 
 }
 export  default {

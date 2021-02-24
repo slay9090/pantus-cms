@@ -184,8 +184,7 @@
         </router-link>
       </b-collapse>
 
-<!--fdfd-->
-<!--      dffdfdf-->
+
       <!-- Separator with title -->
       <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
         <small>СЕРВИСЫ</small>

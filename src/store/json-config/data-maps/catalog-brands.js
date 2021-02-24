@@ -8,7 +8,16 @@ function catalogBrandsList (data) {
                 id: elem.id,
                 name: elem.name,
                 code: elem.code,
+                cert: elem.cert !== null ? {
+                    id:  elem.cert.id,
+                    code: elem.cert.code,
+                    img: elem.cert.img,
+                    orientation: elem.cert.orientation,
+                    description: elem.cert.description,
+                } : null,
 
+                contains_description: elem.contains_description,
+                description_id: elem.description_id
             }
         )
 
@@ -30,6 +39,13 @@ function catalogBrandDetail (data) {
                 code: data.code,
                 active: data.contains_description,
                 description: data.description,
+                cert: data.cert !== null ? {
+                    id:  data.cert.id,
+                    code: data.cert.code,
+                    img: [data.cert.img],
+                    orientation: data.cert.orientation,
+                    description: data.cert.description,
+                } : null,
 
             }
     return serialisationData;
@@ -38,14 +54,3 @@ function catalogBrandDetail (data) {
 
 module.exports.catalogBrandDetail = catalogBrandDetail;
 
-
-
-// JSON EXP:
-//
-//     [
-//         {
-//             "id": 255,
-//             "name": "AMT прокладки",
-//             "code": "amtprokladki"
-//         },
-// }

@@ -1,126 +1,137 @@
-
 <template>
 
-  <b-container fluid>
+    <b-container fluid>
 
-    <b-card-group deck>
-
-
-      <b-card title="Список брендов" header-tag="header" footer-tag="footer" class="shadow">
-        <template #header>
-<!--          <h6> <small class="text-muted">Бренды</small></h6>-->
-          <h6 class="mb-0">Бренды</h6>
-        </template>
-        <b-card-text>
-
-          <div class="py-3 d-flex  align-items-center">
-            <div class="flex-grow-1 d-flex">
-              <input-search
-                  id="search-input-catalog-brands"
-                  size="sm"
-                  class="col-4 py-3"
-                  placeholder="Поиск"
-              ></input-search>
-              <b-button class="ml-3 py-1" :disabled="!valueSearchInput" @click="$_inputCleaned(inputType.search,'search-input-catalog-brands')">Clear</b-button>
-            </div>
-            <div class="p-2 px-1">
-              <b-button variant="outline-danger" class="py-1 mx-2" >Удалить</b-button>
-              <b-button variant="outline-success" class="py-1 ">Создать</b-button>
-            </div>
-
-          </div>
-
-          <table-static
-              id="catalog-brands-list"
-              :fields="fields"
-              :items="itemDataTab"
-              :is-load="spinerLoaderIsShow"
-              responsive="sm"
-              :per-page="20"
-              :filter="valueSearchInput"
-              small
-              head-variant="light"
-              hover
-          >
-
-            <template v-slot:cell(name)="data">
-              <router-link :to="`/catalog/brands/edit/${data.item.id}`">{{ data.value }}</router-link>
-            </template>
-
-          </table-static>
+        <b-card-group deck>
 
 
-        </b-card-text>
+            <b-card title="Список брендов" header-tag="header" footer-tag="footer" class="shadow">
+                <template #header>
+                    <!--          <h6> <small class="text-muted">Бренды</small></h6>-->
+                    <h6 class="mb-0">Бренды</h6>
+                </template>
+                <b-card-text>
+
+                    <b-row align-h="between" cols="1" cols-sm="2">
+
+                        <b-col class="mb-3">
+                            <b-row cols="1" cols-sm="2">
+                                <b-col>
+                                    <BTextInput
+                                            v-model="searchValue"
+                                            placeholder="Поиск"
+                                            class="my-auto"
+                                    />
+                                </b-col>
+                                <b-col>
+                                    <b-button class="" :disabled="!searchValue" @click="searchValue=null">Clear
+                                    </b-button>
+                                </b-col>
+                            </b-row>
+                        </b-col>
 
 
-      </b-card>
+                        <b-col>
+
+                            <div class="d-flex justify-content-sm-end justify-content-between mb-3">
+                                <b-button variant="outline-danger" class="mr-3 ">Удалить</b-button>
+                                <b-button variant="outline-success" class="">Создать</b-button>
+                            </div>
+
+                        </b-col>
+
+                    </b-row>
 
 
-    </b-card-group>
+                    <table-static
+                            id="catalog-brands-list"
+                            :fields="fields"
+                            :items="brandsList"
+                            :is-load="spinerLoaderIsShow"
+                            responsive="sm"
+                            :per-page="20"
+                            :filter="searchValue"
+                            small
+                            head-variant="light"
+                            hover
+                            sort-icon-left
+                    >
+
+                        <template v-slot:cell(name)="data">
+                            <router-link :to="`/catalog/brands/edit/${data.item.id}`">{{ data.value }}</router-link>
+                        </template>
+
+                        <template v-slot:cell(contains_description)="data">
+                            {{data.value ? 'есть' : 'нет'}}
+                        </template>
+
+                        <template v-slot:cell(cert.img)="data">
+                            <b-img :src="data.value" width="50px"></b-img>
+                        </template>
+
+                    </table-static>
 
 
+                </b-card-text>
 
-  </b-container>
+
+            </b-card>
+
+
+        </b-card-group>
+
+
+    </b-container>
 
 
 </template>
 
 <script>
-// @ is an alias to /src
-import baseComponentsInputMixin from '@/mixins/base-components/inputs'
+    // @ is an alias to /src
+    import baseComponentsInputMixin from '@/mixins/base-components/inputs'
 
-export default {
-  name: 'Home',
-  mixins: [baseComponentsInputMixin],
+    import {mapGetters} from "vuex";
+
+    export default {
+        name: 'Home',
+        mixins: [baseComponentsInputMixin],
 
 
-  data() {
-    return {
-      spinerLoaderIsShow: true,
-      fields: [
-        { key: 'selected', label: '',  thStyle: {  width: '50px' }},
-        { key: 'id',  sortable: true ,   },
-        { key: 'name', sortable: true , },
-      ],
+        data() {
+            return {
+                spinerLoaderIsShow: true,
+                fields: [
+                    {key: 'selected', label: '', thStyle: {width: '50px'}},
+                    {key: 'id', sortable: true,},
+                    {key: 'name', sortable: true,},
+                    {key: 'contains_description', label: 'Описание', sortable: true, thStyle: {width: '150px'}},
+                    {key: 'description_id', label: 'id описания', thStyle: {width: '150px'}},
+                    {key: 'cert.img', label: 'Сертификат', thStyle: {width: '150px'}},
+                ],
+                searchValue: null,
+            }
+        },
+
+        methods: {},
+
+        components: {},
+        computed: {
+            ...mapGetters({brandsList: "CatalogBrands/allItems"}, {valueSearchInput: "BaseComponents/getValueInputSearch"}),
+        },
+
+        async mounted() {
+            await this.$store.dispatch("CatalogBrands/getDataAllItems");
+            this.spinerLoaderIsShow = false
+        }
 
     }
-  },
-
-  methods:{
-    onRowSelected(items) {
-      this.selected = items
-    },
-
-  },
-
-  components: {
-  },
-  computed: {
-
-    valueSearchInput() {
-      return this.$store.getters["BaseComponents/getValueInputSearch"]('search-input-catalog-brands');
-    },
-
-    // rows() {
-    //   return this.itemDataTab.length
-    // },
-
-    itemDataTab(){
-      return this.$store.getters["CatalogBrands/allItems"];
-    }
-
-
-
-  },
-  async mounted() {
-    await this.$store.dispatch("CatalogBrands/getDataAllItems");
-    this.spinerLoaderIsShow= false
-  }
-
-}
 
 </script>
 
 <style scoped>
+
+    .btn {
+        width: 85px;
+    }
 
 </style>
