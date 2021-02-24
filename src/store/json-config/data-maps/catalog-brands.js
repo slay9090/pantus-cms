@@ -38,7 +38,7 @@ function catalogBrandDetail (data) {
                 name: data.name,
                 code: data.code,
                 active: data.contains_description,
-                description: data.description,
+                // description_id: data.description_id,
                 cert: data.cert !== null ? {
                     id:  data.cert.id,
                     code: data.cert.code,
@@ -46,8 +46,10 @@ function catalogBrandDetail (data) {
                     orientation: data.cert.orientation,
                     description: data.cert.description,
                 } : null,
+                description: data.description
 
             }
+
     return serialisationData;
 
 }

@@ -39,10 +39,15 @@ const actions = {
 
     async getDataDetailsItem({commit}, id){
 
-        return  await Axios.get(`${process.env.VUE_APP_API_URL_CATALOG_BRANDS}/${id}`).then( res =>{
+        let fetchSummoner = async() => {
+            const brandDetail = await Axios.get(`${process.env.VUE_APP_API_URL_CATALOG_BRANDS}/${id}`);
+            const descriptonDetail = await Axios.get(`${process.env.VUE_APP_API_URL_CATALOG_BRANDS}/descriptions/${brandDetail.data.description_id}`);
+            const summoner = brandDetail.data;
+            summoner.description = descriptonDetail.data;
+            return summoner;
+        }
+        commit("setDataDetailsItem", jsonMaps.catalogBrandDetail( await fetchSummoner()));
 
-            commit("setDataDetailsItem", jsonMaps.catalogBrandDetail(res.data) );
-        })
     },
 }
 

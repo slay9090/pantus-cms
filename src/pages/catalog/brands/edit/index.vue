@@ -74,7 +74,7 @@
                     <BHtml
                             name="brandDecs"
                             rules="required"
-                            v-model="formData.description"
+                            v-model="formData.description.description"
                     />
 
 
