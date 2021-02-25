@@ -74,7 +74,7 @@ const actions = {
 
     async getDescriptionDetailItem({commit}, id){
         return  await Axios.get(`${process.env.VUE_APP_API_URL_CATALOG_BRANDS}/descriptions/${id}`).then( res =>{
-            commit("setDataDescriptionDetailItem", jsonMaps.catalogBrandsList(res.data) );
+            commit("setDataDescriptionDetailItem", jsonMaps.catalogBrandDescriptionDetail(res.data) );
         })
     }
 }

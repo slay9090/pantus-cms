@@ -31,18 +31,35 @@ export default [
 
     },
 
-    // {
-    //     path: '/catalog/brands/descriptions/edit/:id',
-    //     component: () => import('@/pages/catalog/brand'),
-    //     meta: {
-    //         title: 'Бренд редактирование',
-    //         requiresAuth: true,
-    //         breadcrumb: [
-    //             { name: 'Каталог' },
-    //             { name: 'Бренды', link: '/catalog/brands' },
-    //             { name: 'Редактирование' },
-    //         ]
-    //     }
-    //
-    // },
+    {
+        path: '/catalog/brands/descriptions/edit/:id',
+        component: () => import('@/pages/catalog/brands/descriptions/edit/index'),
+        meta: {
+            title: 'Редактирование описания',
+            requiresAuth: true,
+            breadcrumb: [
+                { name: 'Каталог' },
+                { name: 'Бренды', link: '/catalog/brands' },
+                { name: 'Описание' },
+                { name: 'Редактирование' },
+            ]
+        }
+
+    },
+
+    {
+        path: '/catalog/brands/descriptions/create',
+        component: () => import('@/pages/catalog/brands/descriptions/create/index'),
+        meta: {
+            title: 'Создание описания',
+            requiresAuth: true,
+            breadcrumb: [
+                { name: 'Каталог' },
+                { name: 'Бренды', link: '/catalog/brands' },
+                { name: 'Описание' },
+                { name: 'Создание' },
+            ]
+        }
+
+    },
 ]

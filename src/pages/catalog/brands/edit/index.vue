@@ -75,6 +75,7 @@
                             name="brandDecs"
                             rules="required"
                             v-model="formData.description.description"
+                            disabled
                     />
 
 

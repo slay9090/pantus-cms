@@ -121,7 +121,7 @@
                             :items="descriptionsList"
                             :is-load="spinerLoaderIsShow"
                             responsive="sm"
-                            :per-page="20"
+                            :per-page="5"
                             :filter="searchValueDescriptions"
                             small
                             head-variant="light"
@@ -135,7 +135,7 @@
                                     v-html="data.value.substr(0, 250).replaceAll('h1', 'h6')+'...'"
                                     class="text-table_cell-descriptions"
                             ></span>
-                            <router-link :to="`/catalog/brands/edit/${data.item.id}`" class="text-table_cell-descriptions">редактировать</router-link>
+                            <router-link :to="`/catalog/brands/descriptions/edit/${data.item.id}`" class="text-table_cell-descriptions">редактировать</router-link>
                         </template>
 
 
@@ -189,7 +189,7 @@
                         {key: 'id', sortable: true, thStyle: {width: '50px'}},
                         {key: 'description', label: 'Текст', thStyle: {width: '250px'}},
                         {key: 'code', sortable: true, thStyle: {width: '50px'}},
-                        {key: 'aliases', label: 'Бренды ИД', thStyle: {width: '100px'}},
+                        {key: 'aliases', label: 'Бренды ИД', thStyle: {width: '100px'}, class: 'text-break'},
 
                     ]
                 },

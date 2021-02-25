@@ -9,6 +9,7 @@
           :init="myinit"
           v-model="innerValue"
           v-bind="$attrs"
+
       />
       <div v-if="errors[0]" class="invalid-validation">
         {{ errors[0] }}
@@ -47,6 +48,7 @@ name: "BHtml",
     myinit:{
       height: 800,
       menubar: true,
+
 
       plugins: [
         'advlist autolink lists link image charmap print preview anchor',
