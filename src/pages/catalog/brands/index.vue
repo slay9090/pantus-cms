@@ -130,9 +130,12 @@
                     >
 
                         <template v-slot:cell(description)="data">
-<!--                            <router-link :to="`/catalog/brands/edit/${data.item.id}`">{{ data.value }}</router-link>-->
-                           <span v-html="data.value.substr(0, 250).replaceAll('h1', 'h6')+'...'" class="text-table_cell-descriptions"></span>
-<!--                            {{ data.value.substr(122, 250) }}-->
+
+                            <span
+                                    v-html="data.value.substr(0, 250).replaceAll('h1', 'h6')+'...'"
+                                    class="text-table_cell-descriptions"
+                            ></span>
+                            <router-link :to="`/catalog/brands/edit/${data.item.id}`" class="text-table_cell-descriptions">редактировать</router-link>
                         </template>
 
 

@@ -30,4 +30,19 @@ export default [
         }
 
     },
+
+    // {
+    //     path: '/catalog/brands/descriptions/edit/:id',
+    //     component: () => import('@/pages/catalog/brand'),
+    //     meta: {
+    //         title: 'Бренд редактирование',
+    //         requiresAuth: true,
+    //         breadcrumb: [
+    //             { name: 'Каталог' },
+    //             { name: 'Бренды', link: '/catalog/brands' },
+    //             { name: 'Редактирование' },
+    //         ]
+    //     }
+    //
+    // },
 ]
