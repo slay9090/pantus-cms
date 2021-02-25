@@ -18,13 +18,13 @@
                             <b-row cols="1" cols-sm="2">
                                 <b-col>
                                     <BTextInput
-                                            v-model="searchValue"
+                                            v-model="searchValueBrands"
                                             placeholder="Поиск"
                                             class="my-auto"
                                     />
                                 </b-col>
                                 <b-col>
-                                    <b-button class="" :disabled="!searchValue" @click="searchValue=null">Clear
+                                    <b-button class="" :disabled="!searchValueBrands" @click="searchValueBrands=null">Clear
                                     </b-button>
                                 </b-col>
                             </b-row>
@@ -34,8 +34,8 @@
                         <b-col>
 
                             <div class="d-flex justify-content-sm-end justify-content-between mb-3">
-                                <b-button variant="outline-danger" class="mr-3 ">Удалить</b-button>
-                                <b-button variant="outline-success" class="">Создать</b-button>
+                                <b-button variant="outline-danger" disabled class="mr-3 ">Удалить</b-button>
+                                <b-button variant="outline-success" disabled class="">Создать</b-button>
                             </div>
 
                         </b-col>
@@ -45,12 +45,12 @@
 
                     <table-static
                             id="catalog-brands-list"
-                            :fields="fields"
+                            :fields="fields.brands"
                             :items="brandsList"
                             :is-load="spinerLoaderIsShow"
                             responsive="sm"
                             :per-page="20"
-                            :filter="searchValue"
+                            :filter="searchValueBrands"
                             small
                             head-variant="light"
                             hover
@@ -77,6 +77,72 @@
 
             </b-card>
 
+            <b-card title="Описания брендов" header-tag="header" footer-tag="footer" class="shadow ">
+                <template #header>
+                    <!--          <h6> <small class="text-muted">Бренды</small></h6>-->
+                    <h6 class="mb-0">Описания</h6>
+                </template>
+                <b-card-text>
+
+                    <b-row align-h="between" cols="1" cols-sm="2">
+
+                        <b-col class="mb-3">
+                            <b-row cols="1" cols-sm="2">
+                                <b-col>
+                                    <BTextInput
+                                            v-model="searchValueDescriptions"
+                                            placeholder="Поиск"
+                                            class="my-auto"
+                                    />
+                                </b-col>
+                                <b-col>
+                                    <b-button class="" :disabled="!searchValueDescriptions" @click="searchValueDescriptions=null">Clear
+                                    </b-button>
+                                </b-col>
+                            </b-row>
+                        </b-col>
+
+
+                        <b-col>
+
+                            <div class="d-flex justify-content-sm-end justify-content-between mb-3">
+                                <b-button variant="outline-danger" class="mr-3 ">Удалить</b-button>
+                                <b-button variant="outline-success" class="">Создать</b-button>
+                            </div>
+
+                        </b-col>
+
+                    </b-row>
+
+
+                    <table-static
+                            id="catalog-brands-list11"
+                            :fields="fields.descriptions"
+                            :items="descriptionsList"
+                            :is-load="spinerLoaderIsShow"
+                            responsive="sm"
+                            :per-page="20"
+                            :filter="searchValueDescriptions"
+                            small
+                            head-variant="light"
+                            hover
+                            sort-icon-left
+                    >
+
+                        <template v-slot:cell(description)="data">
+<!--                            <router-link :to="`/catalog/brands/edit/${data.item.id}`">{{ data.value }}</router-link>-->
+                           <span v-html="data.value.substr(0, 250).replaceAll('h1', 'h6')+'...'" class="text-table_cell-descriptions"></span>
+<!--                            {{ data.value.substr(122, 250) }}-->
+                        </template>
+
+
+                    </table-static>
+
+
+                </b-card-text>
+
+
+            </b-card>
 
         </b-card-group>
 
@@ -88,39 +154,69 @@
 
 <script>
     // @ is an alias to /src
-    import baseComponentsInputMixin from '@/mixins/base-components/inputs'
 
-    import {mapGetters} from "vuex";
+
+    import {createNamespacedHelpers} from 'vuex'
+
+    const {mapGetters, mapActions} = createNamespacedHelpers('CatalogBrands')
+
+
 
     export default {
         name: 'Home',
-        mixins: [baseComponentsInputMixin],
+        // mixins: [baseComponentsInputMixin],
 
+        components: {},
 
         data() {
             return {
                 spinerLoaderIsShow: true,
-                fields: [
-                    {key: 'selected', label: '', thStyle: {width: '50px'}},
-                    {key: 'id', sortable: true,},
-                    {key: 'name', sortable: true,},
-                    {key: 'contains_description', label: 'Описание', sortable: true, thStyle: {width: '150px'}},
-                    {key: 'description_id', label: 'id описания', thStyle: {width: '150px'}},
-                    {key: 'cert.img', label: 'Сертификат', thStyle: {width: '150px'}},
-                ],
-                searchValue: null,
+
+                fields: {
+                    brands : [
+                        {key: 'selected', label: '', thStyle: {width: '50px'}},
+                        {key: 'id', sortable: true,},
+                        {key: 'name', sortable: true,},
+                        {key: 'contains_description', label: 'Описание', sortable: true, thStyle: {width: '150px'}},
+                        {key: 'description_id', label: 'id описания', thStyle: {width: '150px'}},
+                        {key: 'cert.img', label: 'Сертификат', thStyle: {width: '150px'}},
+                    ],
+                    descriptions: [
+                        {key: 'selected', label: '', thStyle: {width: '50px'}},
+                        {key: 'id', sortable: true, thStyle: {width: '50px'}},
+                        {key: 'description', label: 'Текст', thStyle: {width: '250px'}},
+                        {key: 'code', sortable: true, thStyle: {width: '50px'}},
+                        {key: 'aliases', label: 'Бренды ИД', thStyle: {width: '100px'}},
+
+                    ]
+                },
+                searchValueBrands: null,
+                searchValueDescriptions: null,
             }
         },
 
-        methods: {},
+        methods: {
+            ...mapActions(
+                {
+                    getApiBrandsList: "getDataAllItems",
+                    getApiDescriptionsList: "getDescriptionsItemsList"
+                })
+        },
 
-        components: {},
+
         computed: {
-            ...mapGetters({brandsList: "CatalogBrands/allItems"}, {valueSearchInput: "BaseComponents/getValueInputSearch"}),
+            ...mapGetters(
+                {
+                    brandsList: "allItems",
+                    descriptionsList: "descriptionsItemsList",
+                }),
         },
 
         async mounted() {
-            await this.$store.dispatch("CatalogBrands/getDataAllItems");
+
+            await this.getApiBrandsList();
+            await this.getApiDescriptionsList();
+
             this.spinerLoaderIsShow = false
         }
 
@@ -129,9 +225,11 @@
 </script>
 
 <style scoped>
-
     .btn {
         width: 85px;
+    }
+    .text-table_cell-descriptions{
+        font-size: 12px;
     }
 
 </style>

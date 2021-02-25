@@ -4,7 +4,9 @@ const jsonMaps = require ("@/store/json-config"); // json data-maps
 
 const state = () => ({
     all_items: [],
-    details_item: {}
+    details_item: {},
+    descriptions_all_items: [],
+    description_detail_item: {},
 
 })
 
@@ -21,6 +23,15 @@ const mutations = {
     setDataDetailsItem(state ,data){
         state.details_item = data;
     },
+
+    setDataDescriptionsItemsList(state ,data){
+        state.descriptions_all_items = data;
+    },
+
+    setDataDescriptionDetailItem(state ,data){
+        state.description_detail_item = data;
+    }
+
 }
 
 const actions = {
@@ -53,6 +64,19 @@ const actions = {
         commit("setDataDetailsItem", jsonMaps.catalogBrandDetail( await fetchSummoner()));
 
     },
+
+    async getDescriptionsItemsList({commit}){
+        console.log('call')
+        return  await Axios.get(`${process.env.VUE_APP_API_URL_CATALOG_BRANDS}/descriptions`).then( res =>{
+            commit("setDataDescriptionsItemsList", jsonMaps.catalogBrandsDescriptionsList(res.data) );
+        })
+    },
+
+    async getDescriptionDetailItem({commit}, id){
+        return  await Axios.get(`${process.env.VUE_APP_API_URL_CATALOG_BRANDS}/descriptions/${id}`).then( res =>{
+            commit("setDataDescriptionDetailItem", jsonMaps.catalogBrandsList(res.data) );
+        })
+    }
 }
 
 const getters = {
@@ -64,6 +88,10 @@ const getters = {
     allItems: state => state.all_items,
 
     detailsItem: state => state.details_item,
+
+    descriptionsItemsList: state => state.descriptions_all_items,
+
+    descriptionDetailItem: state => state.description_detail_item,
 
 
 

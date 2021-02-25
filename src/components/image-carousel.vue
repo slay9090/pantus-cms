@@ -26,20 +26,21 @@
             <div v-if="!imgIsNotExist && index===0" class="overlay"><i class="fa fa-check-square icon-bookmark"></i>
             </div>
 
-            <img v-if="index===0"
-                 :style="`max-height: ${heighBlock}px;`"
-                 class="w-100"
+            <b-img v-if="index===0"
+                 :style="`max-height: ${heighBlock}px; max-width: 100%;`"
                  :src=item
                  alt="main image"
                  @error="hasImgError()"
             >
 
-            <img v-else
-                 :style="`max-height: ${heighBlock}px;`"
-                 class="w-100"
+              </b-img>
+
+            <b-img v-else
+                 :style="`max-height: ${heighBlock}px; max-width: 100%;`"
                  :src=item
                  alt="album image"
             >
+            </b-img>
 
           </template>
 

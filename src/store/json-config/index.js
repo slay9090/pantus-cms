@@ -22,6 +22,9 @@ exports.catalogCategoriesList = catalogCategoriesList;
 /// все бренды каталга
 exports.catalogBrandsList = catalogBrands.catalogBrandsList;
 exports.catalogBrandDetail = catalogBrands.catalogBrandDetail;
+exports.catalogBrandsDescriptionsList = catalogBrands.catalogBrandsDescriptionsList;
+exports.catalogBrandDescriptionDetail = catalogBrands.catalogBrandDescriptionDetail;
+
 /// запчасти
 exports.urlMapFilterPartsGetList = productParts.urlMapFilterPartsGetList;
 exports.productsPartsItemsList = productParts.productsPartsItemsList;

@@ -8,7 +8,7 @@
       <b-col class="mb-3 mb-lg-0" md="6">
         <b-card header-tag="header" class="shadow">
           <template #header>
-            <h4><small class="text-muted">{{ initBrandName }}</small></h4>
+            <h4><small class="text-muted">{{ initBrandName }} редактирование описания</small></h4>
           </template>
           <b-overlay :show="initFailed" no-fade rounded="sm">
 
