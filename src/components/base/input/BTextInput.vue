@@ -3,8 +3,6 @@
     <b-form-group
         slot-scope="{ valid, errors }"
         v-bind="$attrs"
-
-
     >
       <b-form-input
           v-mask="mask"
@@ -12,6 +10,7 @@
           v-bind="$attrs"
           :state="errors[0] ? false : (valid ? null : null)"
       >
+
       </b-form-input>
       <b-form-invalid-feedback id="inputLiveFeedback">
         {{ errors[0] }}
@@ -41,7 +40,6 @@ export default {
   },
   data: () => ({
     innerValue: '',
-
   }),
   watch: {
     // Handles internal model changes.

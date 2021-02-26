@@ -2,8 +2,6 @@
   <b-container fluid>
 
 
-
-
     <b-card-group deck>
 
 
@@ -15,98 +13,103 @@
 
         <b-card-text>
 
-            <b-overlay :show="spinerLoaderIsShow">
-
-<!--              {{descriptionDetailItem}}-->
-
-          <ValidationObserver>
-
-            <b-form @submit.prevent="validate().then(onSubmit(valid))" slot-scope="{ validate, valid }"
-                    class="order-form">
-
-              <b-form-group
-
-                  label=""
-                  label-size="md"
-                  label-class="font-weight-bold pt-0"
-                  label-cols-lg="12"
-                  v-if="descriptionDetailItem"
-                  readonly
-              >
+          <b-overlay :show="spinerLoaderIsShow">
 
 
-                <BTextInput
-                    rules="required"
-                    type="number"
-                    label="id:"
-                    name="id"
-                    v-model="descriptionDetailItem.id"
-                    placeholder="введите ид опсания"
+            <ValidationObserver>
+
+              <b-form @submit.prevent="validate().then(onSubmit(valid))" slot-scope="{ validate, valid }"
+                      class="order-form">
+
+                <b-form-group
+
+                    label=""
+                    label-size="md"
+                    label-class="font-weight-bold pt-0"
+                    label-cols-lg="12"
+                    v-if="descriptionDetailItem"
                     readonly
-
-                />
-
-                <BTextInput
-                    rules="required"
-                    type="text"
-                    label="code:"
-                    name="code"
-                    v-model="descriptionDetailItem.code"
-                    placeholder="введите слаг"
-                    readonly
-                />
-
-                <BTextInput
-                    rules="required"
-                    type="text"
-                    label="aliases:"
-                    name="aliases"
-                    v-model="descriptionDetailItem.aliases"
-                    placeholder="введите ид брендов"
-                    readonly
-                />
+                >
 
 
-                <BHtml
-                    name="descriptionText"
-                    rules="required"
-                    v-model="descriptionDetailItem.description"
+                  <BTextInput
+                      rules="required"
+                      type="number"
+                      label="id:"
+                      name="id"
+                      v-model="descriptionDetailItem.id"
+                      placeholder="введите ид опсания"
+                      readonly
 
-                />
+                  />
 
-
-              </b-form-group>
-
-
-<!--              <a :href="`https://site.pantus.ru/brands/${initBrandCode}`"-->
-<!--                 target="_blank">{{ `https://site.pantus.ru/brands/${initBrandCode}` }}</a>-->
-
-              <hr>
-
-
-              <b-row class="button-group justify-content-between mt-4 mt-xl-0" align-v="end">
-                <b-col>
-                  <b-row class="unsave-button " cols-xl="2" align-v="end">
-                    <b-col order="1" class="" xl="auto">
-                      <b-button type="submit" variant="danger" class=""> Удалить</b-button>
-                    </b-col>
-                    <b-col order="2" xl="auto" class="mt-3">
-                      <b-button type="reset" variant="secondary" class="">Сбросить</b-button>
-                    </b-col>
-                  </b-row>
-                </b-col>
-
-                <b-col class="text-right">
-                  <b-button type="submit" variant="primary" :disabled="!valid" class="">Сохранить</b-button>
-                </b-col>
-              </b-row>
+                  <BTextInput
+                      rules="required"
+                      type="text"
+                      label="code:"
+                      name="code"
+                      v-model="descriptionDetailItem.code"
+                      placeholder="введите слаг"
+                      readonly
+                  />
 
 
-            </b-form>
+                  <check-box v-slot="scope"
+                             label="Бренды:"
+                             v-model="descriptionDetailItem.aliases"
+                             :items="allItems"
+                             readonly
+                  >
 
-          </ValidationObserver>
+                    <b-button @click="scope.open">Add</b-button>
+                  </check-box>
 
-            </b-overlay>
+
+                  <BHtml
+                      name="descriptionText"
+                      rules="required"
+                      v-model="descriptionDetailItem.description"
+
+                  />
+
+
+                  <template v-if="descriptionDetailItem.aliases">
+                    <h6>Связанные с этим описанием Бренды:</h6>
+                    <span
+                        v-for="(item, index) in descriptionDetailItem.aliases.split(',')"
+                        :key="index"
+                    >
+                     <router-link :to="{ name: 'BrandsEdit', params: { id: item }}">
+                        {{ `https://adm.pantus.ru/catalog/brands/edit/${item}` }}
+                     </router-link>
+
+                    <i class="fa fa-times deleted-icon" aria-hidden="true" @click="removeItemFromAliases(index)"></i>
+                    <br>
+                  </span>
+
+                  </template>
+
+                </b-form-group>
+
+
+                <hr>
+
+
+                <b-row class="button-group justify-content-between mt-4 mt-xl-0" align-v="end">
+                  <b-col>
+                    <b-button type="reset" variant="secondary" class="">Сбросить</b-button>
+                  </b-col>
+                  <b-col class="text-right pl-0">
+                    <b-button type="submit" variant="primary" :disabled="!valid" class="">Сохранить</b-button>
+                  </b-col>
+                </b-row>
+
+
+              </b-form>
+
+            </ValidationObserver>
+
+          </b-overlay>
         </b-card-text>
 
 
@@ -122,23 +125,36 @@
 <script>
 
 import {createNamespacedHelpers} from 'vuex'
+import CheckBox from "@/components/check-box/input";
+
 const {mapGetters, mapActions} = createNamespacedHelpers('CatalogBrands')
 
 export default {
   name: "index",
-
-  data(){
-    return{
+  components: {CheckBox},
+  data() {
+    return {
       spinerLoaderIsShow: true,
     }
   },
 
   methods: {
+
+    removeItemFromAliases(index) {
+      const aliases = this.descriptionDetailItem.aliases.split(',')
+      aliases.splice(index, 1)
+      this.descriptionDetailItem.aliases = aliases.toString()
+    },
+
     async onSubmit(valid) {
 
       if (valid) {
-        // await this.$store.dispatch('CrmOrders/sendFormOrder', this.$route.params.id)
-        // await this.dataInit();
+        this.spinerLoaderIsShow = true
+        await this.sendFormDescriptionEdit(this.$route.params.id)
+        await this.getDescriptionDetailItem(this.$route.params.id)
+        await this.getDataAllItems()
+        this.spinerLoaderIsShow = false
+
       } else {
         this.$globalFunc.setAlertMessage('danger', 'не валидная форма');
       }
@@ -151,18 +167,19 @@ export default {
       })
     },
 
-    ...mapActions(["getDescriptionDetailItem"])
+    ...mapActions(["getDescriptionDetailItem", "getDataAllItems", "sendFormDescriptionEdit"])
 
   },
 
   computed: {
-    ...mapGetters(["descriptionDetailItem"]),
+    ...mapGetters(["descriptionDetailItem", "allItems"]),
   },
 
- async mounted() {
-   await this.getDescriptionDetailItem(this.$route.params.id)
+  async mounted() {
+    await this.getDescriptionDetailItem(this.$route.params.id)
+    await this.getDataAllItems()
 
-   this.spinerLoaderIsShow = false;
+    this.spinerLoaderIsShow = false;
   }
 
 
@@ -170,5 +187,12 @@ export default {
 </script>
 
 <style scoped>
+.deleted-icon {
+  color: #dc3545;
+  cursor: pointer;
+}
 
+.deleted-icon:hover {
+  color: #c82333;
+}
 </style>

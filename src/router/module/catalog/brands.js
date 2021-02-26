@@ -18,6 +18,7 @@ export default [
 
     {
         path: '/catalog/brands/edit/:id',
+        name: 'BrandsEdit',
         component: () => import('@/pages/catalog/brands/edit/index.vue'),
         meta: {
             title: 'Бренд редактирование',
@@ -33,6 +34,7 @@ export default [
 
     {
         path: '/catalog/brands/descriptions/edit/:id',
+
         component: () => import('@/pages/catalog/brands/descriptions/edit/index'),
         meta: {
             title: 'Редактирование описания',
@@ -49,6 +51,7 @@ export default [
 
     {
         path: '/catalog/brands/descriptions/create',
+        name: 'BrandsDescriptionCreate',
         component: () => import('@/pages/catalog/brands/descriptions/create/index'),
         meta: {
             title: 'Создание описания',

@@ -187,7 +187,7 @@
 
 
     .sidebar-panel {
-        z-index: 1;
+        z-index: 2;
         position: fixed;
         top: 0;
         height: 100vh;

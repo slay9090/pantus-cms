@@ -30,9 +30,7 @@
           :per-page="perPage"
           :current-page="currentPage"
           @filtered="setFilteredDataTable"
-
-
-
+          @row-selected="onRowSelected"
       >
 
         <!--        Принимаем все слоты -->
@@ -108,7 +106,8 @@ export default {
   methods: {
     //выбраная строка в таблице
     onRowSelected(items) {
-      this.selected = items
+      console.log(items)
+      this.$emit('input', items);
     },
     //генерация урл для пагинации
     // linkGen(pageNum) {

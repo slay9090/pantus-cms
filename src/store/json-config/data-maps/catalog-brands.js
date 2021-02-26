@@ -62,32 +62,7 @@ function catalogBrandDetail (data) {
 module.exports.catalogBrandDetail = catalogBrandDetail;
 
 function catalogBrandsDescriptionsList (data) {
-    // let serialisationData = {};
-    // // console.log(data)
-    // serialisationData =
-    //     {
-    //         id: data.id,
-    //         name: data.name,
-    //         code: data.code,
-    //         active: data.contains_description,
-    //         // description_id: data.description_id,
-    //         cert: data.cert !== null ? {
-    //             id:  data.cert.id,
-    //             code: data.cert.code,
-    //             img: [data.cert.img],
-    //             orientation: data.cert.orientation,
-    //             description: data.cert.description,
-    //         } : null,
-    //         description: {
-    //             id: data.description ? data.description.id : null,
-    //             code: data.description ? data.description.code : null ,
-    //             aliases: data.description ? data.description.aliases : null,
-    //             description: data.description ? data.description.description : null
-    //         }
-    //
-    //     }
-    // // console.log(serialisationData)
-    // return serialisationData;
+
 
     return data.map(elem => {
         return {
@@ -116,3 +91,14 @@ function catalogBrandDescriptionDetail (elem) {
 }
 
 module.exports.catalogBrandDescriptionDetail = catalogBrandDescriptionDetail;
+
+function catalogBrandDescriptionFormDataForSend (elem) {
+    console.log('in add map', elem)
+    return {
+        code: elem.code,
+        aliases: elem.aliases,
+        description: elem.description,
+    };
+}
+
+module.exports.catalogBrandDescriptionFormDataForSend = catalogBrandDescriptionFormDataForSend;

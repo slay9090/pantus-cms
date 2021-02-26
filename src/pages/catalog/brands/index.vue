@@ -106,8 +106,11 @@
                         <b-col>
 
                             <div class="d-flex justify-content-sm-end justify-content-between mb-3">
-                                <b-button variant="outline-danger" class="mr-3 ">Удалить</b-button>
-                                <b-button variant="outline-success" class="">Создать</b-button>
+                                <b-button variant="outline-danger" class="mr-3 " @click="deleteItemDescription">Удалить</b-button>
+                                <b-button variant="outline-success" class=""
+                                          @click="$router.push({ name: 'BrandsDescriptionCreate',  })"
+                                >Создать
+                                </b-button>
                             </div>
 
                         </b-col>
@@ -127,6 +130,9 @@
                             head-variant="light"
                             hover
                             sort-icon-left
+                            select-mode="single"
+                            selectable
+                            v-model="selectedRowDescription"
                     >
 
                         <template v-slot:cell(description)="data">
@@ -175,6 +181,8 @@
             return {
                 spinerLoaderIsShow: true,
 
+              selectedRowDescription: null,
+
                 fields: {
                     brands : [
                         {key: 'selected', label: '', thStyle: {width: '50px'}},
@@ -202,8 +210,17 @@
             ...mapActions(
                 {
                     getApiBrandsList: "getDataAllItems",
-                    getApiDescriptionsList: "getDescriptionsItemsList"
-                })
+                    getApiDescriptionsList: "getDescriptionsItemsList",
+                    deleteApiDescriptionsById: "sendDescriptionDelete",
+                }),
+
+        async  deleteItemDescription(){
+              this.spinerLoaderIsShow = true
+            await  this.deleteApiDescriptionsById(this.selectedRowDescription[0].id);
+              await this.getApiDescriptionsList()
+              this.spinerLoaderIsShow = false
+          },
+
         },
 
 

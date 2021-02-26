@@ -24,6 +24,7 @@ exports.catalogBrandsList = catalogBrands.catalogBrandsList;
 exports.catalogBrandDetail = catalogBrands.catalogBrandDetail;
 exports.catalogBrandsDescriptionsList = catalogBrands.catalogBrandsDescriptionsList;
 exports.catalogBrandDescriptionDetail = catalogBrands.catalogBrandDescriptionDetail;
+exports.catalogBrandDescriptionFormDataForSend = catalogBrands.catalogBrandDescriptionFormDataForSend;
 
 /// запчасти
 exports.urlMapFilterPartsGetList = productParts.urlMapFilterPartsGetList;
