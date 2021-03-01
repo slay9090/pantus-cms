@@ -11,7 +11,7 @@
         <b-navbar toggleable="md" class="navbar shadow" type="dark">
 
             <b-navbar-brand :to="{ name: 'home'}" class="d-none d-md-flex">
-                <b-img src="https://www.pantus.ru/images_uploader/images/logo_white.png"
+                <b-img src="https://bx.pantus.ru/images_uploader/images/logo_white.png"
                        alt="logo"/>
             </b-navbar-brand>
 
