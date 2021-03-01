@@ -2,6 +2,12 @@
 
 ###Релизы:
 
+v0.2 
+
+- Add functional manages Brands 
+
+v0.1:
+
 - add full orders view and edit  
 
 - Realise: full refactory and decompositions on base components
