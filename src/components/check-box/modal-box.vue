@@ -5,12 +5,16 @@
       @ok="handleOk"
   >
     <b-form-group
-        label="Выбор элементов"
-    >
 
+
+    >
+      <BTextInput
+        v-model="inputSearchText"
+        placeholder="Введите название"
+      />
       <RecycleScroller
           class="scrollblock"
-          :items="items"
+          :items="filteredList()"
           :item-size="30"
           key-field="id"
           v-slot="{ item }"
@@ -40,7 +44,7 @@ export default {
   data(){
     return{
       innerValue: null,
-      innerItems: []
+      inputSearchText: '',
     }
   },
 
@@ -50,7 +54,6 @@ export default {
         return this.modalshow;
       },
       set(val) {
-        // console.log(val)
         this.$emit('update:modalshow', val)
       }
     },
@@ -60,6 +63,14 @@ export default {
     handleOk(bvModalEvt) {
       console.log(this.innerValue)
       this.$emit('input', this.innerValue)
+    },
+
+    filteredList() {
+      if (this.items) {
+        return this.items.filter(elem => {
+          return elem.name.toLowerCase().includes(this.inputSearchText.toLowerCase())
+        })
+      }
     },
   },
 
@@ -75,13 +86,10 @@ export default {
 </script>
 
 <style scoped>
-
-
 .scrollblock {
   height: 500px;
   width: 100%;
 }
-
 .scrollblock-items{
   padding-left: 32px;
 }
