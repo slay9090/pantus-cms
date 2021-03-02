@@ -3,6 +3,8 @@
       v-bind="$attrs"
       v-model="innerState"
       @ok="handleOk"
+      @show="handleClose"
+      @hidden="handleClose"
   >
     <b-form-group
 
@@ -11,6 +13,7 @@
       <BTextInput
         v-model="inputSearchText"
         placeholder="Введите название"
+        type="text"
       />
       <RecycleScroller
           class="scrollblock"
@@ -63,6 +66,10 @@ export default {
     handleOk(bvModalEvt) {
       console.log(this.innerValue)
       this.$emit('input', this.innerValue)
+    },
+
+    handleClose(){
+      this.inputSearchText = ''
     },
 
     filteredList() {
