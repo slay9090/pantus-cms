@@ -7,14 +7,27 @@
     <b-form-group
         label="Выбор элементов"
     >
-      <b-form-checkbox-group
-          v-model="innerValue"
-          :options="items"
-          value-field="id"
-          text-field="name"
-          disabled-field="contains_description"
-          stacked
-      ></b-form-checkbox-group>
+
+      <RecycleScroller
+          class="scrollblock"
+          :items="items"
+          :item-size="30"
+          key-field="id"
+          v-slot="{ item }"
+          content-tag="b-form-checkbox"
+      >
+
+          <b-form-checkbox
+              class="scrollblock-items"
+              v-model="innerValue"
+              :value="item.id"
+              :disabled="item.contains_description"
+          >
+            {{ item.name }}
+          </b-form-checkbox>
+
+      </RecycleScroller>
+
     </b-form-group>
   </b-modal>
 </template>
@@ -53,7 +66,7 @@ export default {
   mounted() {
     if(this.value){
       this.innerValue = this.value
-      // console.log('sel ',this.innerValue)
+
     }
 
   }
@@ -63,4 +76,13 @@ export default {
 
 <style scoped>
 
+
+.scrollblock {
+  height: 500px;
+  width: 100%;
+}
+
+.scrollblock-items{
+  padding-left: 32px;
+}
 </style>

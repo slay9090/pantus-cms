@@ -124,7 +124,7 @@ const {mapActions, mapGetters} = createNamespacedHelpers('CatalogBrands')
           spinerLoaderIsShow: true,
           formData: {
                 code: null,
-                aliases: null,
+                aliases: [],
                 description: null
           }
         }

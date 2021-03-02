@@ -5,12 +5,6 @@
   >
 
   <b-input-group  v-bind="$attrs"  >
-
-<!--    <b-form-input-->
-<!--        v-bind="$attrs"-->
-<!--        v-model="innerValue"-->
-<!--    ></b-form-input>-->
-
     <div
         class="input-catalog form-control d-flex justify-content-between"
             v-bind="$attrs"
@@ -26,11 +20,9 @@
 
 
     <modal-box
-
         v-bind:modalshow.sync="showModal"
         v-model="innerValue"
         :items="items"
-        scrollable
     ></modal-box>
 
   </b-input-group>

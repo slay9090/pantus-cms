@@ -34,7 +34,7 @@
             :item-size="30"
             key-field="id"
             v-slot="{ item }"
-            content-tag="b-form-radio-group"
+            content-tag="b-form-radio"
         >
           <div class="ml-2" >
             <b-form-radio v-model="selectItemId" :value="item.id" @change="setSelectItems(item)">
