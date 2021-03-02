@@ -42,15 +42,18 @@
 
 
                     <check-box
-
-                        v-slot="scope"
                         label="Бренды:"
                         v-model="formData.aliases"
                         :items="allItems"
                         readonly
                     >
+                      <template #values>
+                        {{formData.aliases}}
+                      </template>
 
-                      <b-button @click="scope.open">Add</b-button>
+                      <template v-slot="scope">
+                        <b-button @click="scope.open">Add</b-button>
+                      </template>
                     </check-box>
 
 
@@ -62,16 +65,16 @@
                     />
 
 
-                    <template v-if="formData.aliases">
+                    <template v-if="!spinerLoaderIsShow">
                       <h6>Связанные с этим описанием Бренды:</h6>
                       <span
-                          v-for="(item, index) in formData.aliases.split(',')"
+                          v-for="(item, index) in formData.aliases"
                           :key="index"
                       >
                      <router-link :to="{ name: 'BrandsEdit', params: { id: item }}">
                         {{ `https://adm.pantus.ru/catalog/brands/edit/${item}` }}
                      </router-link>
-
+                         ({{getBrandsNameById(item)}})
                     <i class="fa fa-times deleted-icon" aria-hidden="true" @click="removeItemFromAliases(index)"></i>
                     <br>
                   </span>
@@ -129,8 +132,15 @@ const {mapActions, mapGetters} = createNamespacedHelpers('CatalogBrands')
       
       methods: {
 
+        getBrandsNameById(id){
+          const name =  this.allItems
+              .filter(elem => elem.id === id)
+              .map(elem => {return elem.name})
+          return  name.length > 0 ?   name[0] : id
+        },
+
         removeItemFromAliases(index) {
-          const aliases = this.formData.aliases.split(',')
+          const aliases = this.formData.aliases
           aliases.splice(index, 1)
           this.formData.aliases = aliases.toString()
         },
