@@ -37,7 +37,7 @@ export default {
         return this.modalshow;
       },
       set(val) {
-        console.log(val)
+        // console.log(val)
         this.$emit('update:modalshow', val)
       }
     },
@@ -45,14 +45,15 @@ export default {
 
   methods:{
     handleOk(bvModalEvt) {
-      this.$emit('input', this.innerValue.toString())
+      console.log(this.innerValue)
+      this.$emit('input', this.innerValue)
     },
   },
 
   mounted() {
     if(this.value){
-      this.innerValue = this.value.split(',')
-      console.log('sel ',this.innerValue)
+      this.innerValue = this.value
+      // console.log('sel ',this.innerValue)
     }
 
   }

@@ -6,10 +6,19 @@
 
   <b-input-group  v-bind="$attrs"  >
 
-    <b-form-input
-        v-bind="$attrs"
-        v-model="innerValue"
-    ></b-form-input>
+<!--    <b-form-input-->
+<!--        v-bind="$attrs"-->
+<!--        v-model="innerValue"-->
+<!--    ></b-form-input>-->
+
+    <div
+        class="input-catalog form-control d-flex justify-content-between"
+            v-bind="$attrs"
+    >
+      <div >
+        <slot name="values"></slot>
+      </div>
+    </div>
 
     <b-input-group-append>
       <slot :open="callModal"></slot>
@@ -36,7 +45,7 @@ name: "check-box",
   components: {ModalBox},
   props:{
     value: {
-      type: null
+
     },
     items: {},
   },
@@ -63,6 +72,7 @@ name: "check-box",
   created() {
 
     if (this.value) {
+      console.log('value in inputs',this.value)
       this.innerValue = this.value;
     }
   }

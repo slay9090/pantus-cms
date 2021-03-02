@@ -79,11 +79,15 @@ module.exports.catalogBrandsDescriptionsList = catalogBrandsDescriptionsList;
 
 function catalogBrandDescriptionDetail (elem) {
 
+    // console.log(elem.aliases.split(','))
+
     return {
 
         id: elem.id,
         code: elem.code,
-        aliases: elem.aliases,
+        aliases: elem.aliases.split(',').map(elem => {
+            return parseInt(elem)
+        }),
         description: elem.description,
 
     };
@@ -96,7 +100,7 @@ function catalogBrandDescriptionFormDataForSend (elem) {
     console.log('in add map', elem)
     return {
         code: elem.code,
-        aliases: elem.aliases,
+        aliases: elem.aliases.toString(),
         description: elem.description,
     };
 }

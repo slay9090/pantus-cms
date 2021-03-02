@@ -27,7 +27,7 @@
                     label-size="md"
                     label-class="font-weight-bold pt-0"
                     label-cols-lg="12"
-                    v-if="descriptionDetailItem"
+                    v-if="!spinerLoaderIsShow"
                     readonly
                 >
 
@@ -54,15 +54,24 @@
                   />
 
 
-                  <check-box v-slot="scope"
+                  <check-box
                              label="Бренды:"
                              v-model="descriptionDetailItem.aliases"
                              :items="allItems"
                              readonly
-                  >
 
+                  >
+                    <template #values>
+                      {{descriptionDetailItem.aliases}}
+                    </template>
+
+                    <template v-slot="scope">
                     <b-button @click="scope.open">Add</b-button>
+                    </template>
+
                   </check-box>
+
+
 
 
                   <BHtml
@@ -73,16 +82,19 @@
                   />
 
 
-                  <template v-if="descriptionDetailItem.aliases">
+                  <template v-if="!spinerLoaderIsShow">
                     <h6>Связанные с этим описанием Бренды:</h6>
                     <span
-                        v-for="(item, index) in descriptionDetailItem.aliases.split(',')"
+                        v-for="(item, index) in descriptionDetailItem.aliases"
                         :key="index"
                     >
+
+
+
                      <router-link :to="{ name: 'BrandsEdit', params: { id: item }}">
                         {{ `https://adm.pantus.ru/catalog/brands/edit/${item}` }}
                      </router-link>
-
+                       ({{getBrandsNameById(item)}})
                     <i class="fa fa-times deleted-icon" aria-hidden="true" @click="removeItemFromAliases(index)"></i>
                     <br>
                   </span>
@@ -140,10 +152,17 @@ export default {
 
   methods: {
 
+    getBrandsNameById(id){
+    const name =  this.allItems
+        .filter(elem => elem.id === id)
+        .map(elem => {return elem.name})
+     return  name.length > 0 ?   name[0] : id
+    },
+
     removeItemFromAliases(index) {
-      const aliases = this.descriptionDetailItem.aliases.split(',')
+      const aliases = this.descriptionDetailItem.aliases
       aliases.splice(index, 1)
-      this.descriptionDetailItem.aliases = aliases.toString()
+      this.descriptionDetailItem.aliases = aliases
     },
 
     async onSubmit(valid) {

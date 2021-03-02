@@ -67,7 +67,7 @@ name: "BHtml",
         var xhr, formData;
         xhr = new XMLHttpRequest();
         xhr.withCredentials = false;
-        xhr.open('POST', 'https://www.pantus.ru/images_uploader/script.php');
+        xhr.open('POST', 'https://bx.pantus.ru/images_uploader/script.php');
         xhr.onload = function() {
           var json;
 
@@ -87,7 +87,7 @@ name: "BHtml",
         formData =  new FormData();
         formData.append('file', blobInfo.blob(), blobInfo.filename());
         xhr.send(formData);
-        await success('https://www.pantus.ru/images_uploader/images/'+blobInfo.filename())
+        await success('https://bx.pantus.ru/images_uploader/images/'+blobInfo.filename())
       }
     },
 

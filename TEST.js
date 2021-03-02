@@ -1,17 +1,6 @@
 
-const a = 'aaa'
-const b = 'bbb'
+let str = ''
 
-// console.log(a === 'ccc' || a ==='eee' || a === 'a1aa' )
-//
-// console.log(b === 'bbb' || 'ddd' || 'ccc' )
+let arr = str.split(',')
 
-
-
-
-// if (['a','b','aaa','d','e'].includes(a)) {
-//     console.log('true')
-// }
-
-console.log(!!(['a','b','aaa','d','e'].includes(a)))
-
+console.log(arr)
