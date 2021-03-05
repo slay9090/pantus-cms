@@ -44,6 +44,11 @@
 
 
 <style>
+
+#app{
+  min-width: 310px;
+}
+
 *:focus {
   outline: none;
 }

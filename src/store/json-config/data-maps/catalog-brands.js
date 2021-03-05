@@ -78,20 +78,14 @@ function catalogBrandsDescriptionsList (data) {
 module.exports.catalogBrandsDescriptionsList = catalogBrandsDescriptionsList;
 
 function catalogBrandDescriptionDetail (elem) {
-
-    // console.log(elem.aliases.split(','))
-
     return {
-
         id: elem.id,
         code: elem.code,
-        aliases: elem.aliases.split(',').map(elem => {
-            return parseInt(elem)
-        }),
+        aliases: elem.aliases ? elem.aliases.split(',').map(elem => {
+                    return parseInt(elem)
+                    }):[],
         description: elem.description,
-
     };
-
 }
 
 module.exports.catalogBrandDescriptionDetail = catalogBrandDescriptionDetail;
