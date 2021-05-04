@@ -1,37 +1,17 @@
 # Система управления интернет-магазином
 
-###Релизы:
 
-v0.2 
+![alt text](https://d.radikal.ru/d41/2105/57/f26cc94cd0d2.png)
 
-- Add functional manages Brands 
+![alt text](https://d.radikal.ru/d36/2105/6a/3fca70a7c244.png)
 
-v0.1:
+![alt text](https://b.radikal.ru/b13/2105/be/39d083ed3126.png)
 
-- add full orders view and edit  
+![alt text](https://b.radikal.ru/b35/2105/45/041bdf1f832c.png)
 
-- Realise: full refactory and decompositions on base components
+![alt text](https://a.radikal.ru/a05/2105/65/a2d8c713339a.png)
 
-- pre realise product list filters, edit item product
-
-- search in filters, news edit finished components, parts edit finished components
-
-
-###Инфо:
-
-- Без использования БД
-
-- API 
-
-
-
-![alt text](https://b.radikal.ru/b37/2010/b7/b3c0acd1f5d2.jpg)
-
-![alt text](https://d.radikal.ru/d00/2010/ae/89c8202ed7b0.jpg)
-
-![alt text](https://b.radikal.ru/b25/2010/22/e6f9c2ef6263.jpg)
-
-![alt text](https://b.radikal.ru/b37/2010/b7/b3c0acd1f5d2.jpg)
+![alt text](https://d.radikal.ru/d04/2105/e9/d6512ef00f57.png)
 
 ![alt text](https://c.radikal.ru/c41/2010/27/5034e10d2162.jpg)
 
@@ -39,9 +19,9 @@ v0.1:
 
 ![alt text](https://a.radikal.ru/a39/2010/4c/4e9ed49ade33.jpg)
 
-![alt text](https://b.radikal.ru/b01/2010/e5/a5bc13409380.jpg)
 
-![alt text](https://c.radikal.ru/c33/2010/1c/fa7b9da9fab5.jpg)
+
+Example: https://adm.pantus.ru
 
 
 ## Project setup
@@ -75,4 +55,4 @@ cd {prj dir}
 docker build -t adm-dev ./
 docker run -d --name adm-dev -p 8080:80 adm-dev
 ```
-Go to: http://localhost:8080
+
